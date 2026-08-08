@@ -66,8 +66,9 @@ case). O que é citável e o que é nosso está separado no slide de referência
 
 ### Artefatos
 
-- Deck: `aulas/aula01.html`, 32 slides, com três GIFs e dois diagramas
-- Figuras: `tools/gerar_figuras_aula01.py`
+- Deck: `aulas/aula01.html`, 32 slides, com três GIFs e dois diagramas.
+  Gerado por `tools/montar_deck_aula01.py`, não editado à mão
+- Figuras: `tools/gerar_figuras_aula01.py`, desenhadas em 1168px e renderizadas 1:1
 - Notebook: `notebooks/aula01_hipoteses.ipynb`
 - Material do aluno: `materiais/caderno-de-hipoteses.md`
 - Condução: `docs/notas-do-professor/aula01.md` (não distribuído)

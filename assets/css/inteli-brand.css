@@ -132,3 +132,22 @@ body.portal th {
 body.portal .eyebrow {
   font-family: var(--fonte-mono);
 }
+
+/* Rotulo da faixa de conclusao. Declarado aqui porque font-family so pode
+   existir neste arquivo (brandbook p.69). */
+.faixa-conclusao .rotulo { font-family: var(--fonte-mono); }
+
+/* Componentes acrescentados na revisao de diagramacao. font-family so pode ser
+   declarado neste arquivo (brandbook p.69), entao as familias dos componentes
+   novos vivem aqui e o tema cuida de tamanho, cor e caixa. */
+.pratica-trilho .tempo,
+.quiz-cenario .numerao { font-family: var(--fonte-titulo); }
+
+.pratica-passo .num,
+.prompt-literal,
+.quiz-options li::before,
+.secao-condicoes .num { font-family: var(--fonte-mono); }
+
+/* O divisor usa a sem serifa na linha de apoio: 58px serifado contra 25px
+   serifado na mesma familia nao separava titulo de enunciado. */
+.section-slide h3 { font-family: var(--fonte-texto); }

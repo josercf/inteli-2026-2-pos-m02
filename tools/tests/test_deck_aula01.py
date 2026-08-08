@@ -90,9 +90,84 @@ def test_as_figuras_do_deck_sao_as_que_o_gerador_produz(html):
 
 def test_o_deck_apresenta_os_frameworks_da_aula(html):
     """Se um framework sair do deck sem sair do planejamento, a aula passa a
-    prometer no papel o que nao entrega na sala."""
-    for termo in ("CRISP-DM", "Nível 0", "Nível 2", "critérios para escolher o alvo"):
+    prometer no papel o que nao entrega na sala.
+
+    Os termos verificados sao de conteudo, nao de titulo: o titulo e reescrito
+    com frequencia e a checagem nao pode quebrar por causa disso.
+    """
+    for termo in ("CRISP-DM", "Nível 0", "Nível 2", "Observabilidade",
+                  "Verificabilidade", "aula01-arvore-hipoteses"):
         assert termo in html, termo
+
+
+# Padroes de titulo rejeitados na revisao de diagramacao. Nao sao "erros de
+# portugues": sao registros que o professor recusou explicitamente, e que
+# reapareceriam a cada aula nova sem um teste para segura-los.
+TITULO_PROIBIDO = [
+    ("pergunta retórica em slide de conteúdo", lambda t: t.endswith("?")),
+    ("abertura conversacional", lambda t: t.lower().startswith(("onde ", "o que a ", "o que o ", "como a ", "como o "))),
+    ("metáfora conhecida", lambda t: any(m in t.lower() for m in ("escada", "máquina", "desemboca", "anatomia", "guarda-chuva"))),
+    ("título de percurso", lambda t: t.lower().startswith("da ") and " às " in t.lower()),
+]
+
+
+def _titulos_por_tipo(html: str) -> dict[str, list[str]]:
+    import re as _re
+
+    fora = {"cover-slide", "section-slide", "end-slide", "exercise-slide", "quiz-slide"}
+    achados: dict[str, list[str]] = {}
+    for bloco in _re.findall(r'<section class="([^"]+)">(.*?)</section>', html, _re.S):
+        classe, corpo = bloco
+        titulo = _re.search(r"<h2>(.*?)</h2>", corpo, _re.S)
+        if not titulo:
+            continue
+        chave = "conteudo" if classe not in fora else classe
+        achados.setdefault(chave, []).append(_re.sub(r"<[^>]+>", "", titulo.group(1)).strip())
+    return achados
+
+
+def test_titulos_de_conteudo_sao_afirmativos_e_sobrios(html):
+    titulos = _titulos_por_tipo(html).get("conteudo", [])
+    assert len(titulos) >= 10, len(titulos)
+    problemas = [
+        (t, motivo) for t in titulos for motivo, regra in TITULO_PROIBIDO if regra(t)
+    ]
+    assert not problemas, problemas
+
+
+def test_titulo_de_conteudo_cabe_em_duas_linhas(html):
+    """Convencao de titulo afirmativo: ate 15 palavras, no maximo duas linhas.
+
+    O limite de caracteres vem da medida real: a 38px, com max-width de 1030px,
+    duas linhas comportam cerca de 100 caracteres. Acima disso o titulo invade
+    a area do logo ou empurra a faixa de conclusao para fora do slide.
+    """
+    longos = [t for t in _titulos_por_tipo(html).get("conteudo", []) if len(t) > 100]
+    assert not longos, longos
+    prolixos = [t for t in _titulos_por_tipo(html).get("conteudo", []) if len(t.split()) > 15]
+    assert not prolixos, prolixos
+
+
+def test_slide_de_quiz_nao_entrega_o_gabarito_no_titulo(html):
+    """Titulo afirmativo em quiz mata o exercicio: ele nomeia o objeto avaliado."""
+    for titulo in _titulos_por_tipo(html).get("quiz-slide", []):
+        assert not titulo.endswith("."), titulo
+        assert len(titulo.split()) <= 8, titulo
+
+
+def test_todo_slide_de_conteudo_fecha_com_implicacao(html):
+    """A faixa de conclusao e o que ocupa o fundo do slide e o que obriga o
+    autor a declarar o "e dai" de cada pagina."""
+    import re as _re
+
+    sem_fecho = []
+    for classe, corpo in _re.findall(r'<section class="([^"]+)">(.*?)</section>', html, _re.S):
+        if classe != "content-slide":
+            continue
+        if "faixa-conclusao" not in corpo:
+            titulo = _re.search(r"<h2>(.*?)</h2>", corpo, _re.S)
+            sem_fecho.append(titulo.group(1)[:60] if titulo else "?")
+    assert not sem_fecho, sem_fecho
 
 
 def test_quiz_tem_uma_resposta_correta_por_pergunta(html):

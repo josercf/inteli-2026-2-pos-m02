@@ -22,6 +22,9 @@ python3 -m http.server 8931                  # preview local (Reveal exige http,
 .venv/bin/python tools/build_site.py         # monta _site/ e confere referencias locais
 .venv/bin/python dados/gerar_painel_kovan.py # regera o painel
 .venv/bin/python tools/montar_notebook_aula01.py
+.venv/bin/python tools/montar_deck_aula01.py    # regera o deck (nao editar o HTML a mao)
+.venv/bin/python tools/gerar_figuras_aula01.py  # regera GIFs e diagramas
+.venv/bin/python tools/medir_ocupacao.py        # faixa morta e ocupacao por slide
 
 # push como josercf (o ssh-agent autentica primeiro como canaldoovidio)
 GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_josercf -o IdentitiesOnly=yes -F /dev/null' git push
@@ -61,6 +64,21 @@ que cita dado inexistente.
   exhibit ficam transcritos de forma literal no teste.
 - **Slide que estoura os 720px não é detectável por `scrollHeight`**: a `section`
   tem altura fixa. Use `tools/check_slides.py`.
+- **`aulas/aula01.html` é gerado, não editado.** A fonte é
+  `tools/montar_deck_aula01.py`. Editar o HTML direto já custou duas vezes: a
+  numeração de rodapé saiu errada ao inserir slides no meio, e uma substituição
+  comeu um `</section>`, fazendo o Reveal juntar dois slides sem erro nenhum.
+- **Figura é governada pela largura, nunca pela altura.** Com `max-height`, as
+  figuras renderizavam entre 0,687 e 0,816 de escala: texto declarado em 16px
+  chegava ao projetor com 11px e sobravam 26 a 35% da largura em branco. Elas
+  são desenhadas em 1168px e renderizam 1:1.
+- **Todo slide de conteúdo fecha com faixa de conclusão.** É o que ocupa o fundo
+  do quadro e o que obriga a declarar o "e daí" da página. A faixa e a linha de
+  fonte saem juntas dentro de `.fecho`: com `margin-top: auto` só na faixa, a
+  linha de fonte caía fora do slide.
+- **Título de slide de conteúdo é afirmativo; de prática, quiz e divisor, não.**
+  Em quiz, título afirmativo entrega o gabarito. `test_deck_aula01.py` trava os
+  dois casos e a lista de registros rejeitados.
 - **`concept-cards` é uma grade de três colunas.** Para quatro blocos, use o
   modificador `quatro`, senão o quarto fica sozinho com meio slide vazio ao lado.
   O layout passa no validador e mesmo assim lê como erro de montagem.

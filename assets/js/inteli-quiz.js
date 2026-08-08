@@ -22,12 +22,21 @@
       }
     }
 
-    var feedback = document.createElement('p');
-    feedback.className = 'quiz-feedback';
+    // Reaproveita o paragrafo que ja existe no HTML. Criar o elemento no
+    // clique empurrava o layout no momento da resposta, ao vivo e projetado,
+    // porque o container e flex com gap: a mensagem de acerto tem mais de 100
+    // caracteres e o bloco crescia de uma vez. O CSS reserva a altura com
+    // min-height, entao o slide nao se mexe quando o texto entra.
+    var feedback = quiz.querySelector('.quiz-feedback');
+    var novo = !feedback;
+    if (novo) {
+      feedback = document.createElement('p');
+      feedback.className = 'quiz-feedback';
+    }
     feedback.textContent = certa
       ? (opcao.dataset.correctMsg || 'Correto.')
       : (opcao.dataset.incorrectMsg || 'Nao e essa.');
-    quiz.appendChild(feedback);
+    if (novo) { quiz.appendChild(feedback); }
   }
 
   function ligar() {

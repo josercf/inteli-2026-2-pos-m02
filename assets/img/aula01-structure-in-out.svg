@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 552" width="1060" height="552"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 334" width="1168" height="334"
      font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" role="img"
      aria-label="Os cinco elementos de um prompt de análise e o modo de falha de cada ausência">
   <defs>
@@ -7,41 +7,46 @@
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#b2b6bf"/>
     </marker>
   </defs>
-  <rect width="1060" height="552" fill="#ffffff"/>
-  <text x="40" y="48" font-size="27" font-weight="700" fill="#2e2640">Estrutura na entrada, estrutura na saída</text>
-  <text x="40" y="80" font-size="16" fill="#2e2640">Cada ausência tem um modo de falha próprio, e todos chegam com cara de resposta boa.</text>
-  <rect x="40" y="100" width="980" height="4" fill="#066d73"/>
+  <rect width="1168" height="334" fill="#ffffff"/>
   
-  <rect x="40" y="122" width="340" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
-  <text x="58" y="147" font-size="19" font-weight="600" fill="#2e2640">Papel</text>
-  <text x="58" y="168" font-size="15" fill="#2e2640">analista de revenue analytics</text>
-  <path d="M 392 151 L 470 151" stroke="#b2b6bf" stroke-width="2"
+  <rect x="0" y="2" width="470" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
+  <text x="22" y="32" font-size="25" font-weight="600" fill="#2e2640">Papel</text>
+  <text x="22" y="59" font-size="19" fill="#2e2640">analista de revenue analytics</text>
+  <path d="M 486 38 L 566 38" stroke="#b2b6bf" stroke-width="2.5"
         marker-end="url(#seta)"/>
-  <text x="486" y="157" font-size="16" fill="#ff4545">sem isso: resposta de consultor genérico</text>
-  <rect x="40" y="194" width="340" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
-  <text x="58" y="219" font-size="19" font-weight="600" fill="#2e2640">Schema</text>
-  <text x="58" y="240" font-size="15" fill="#2e2640">as 20 colunas, coladas no prompt</text>
-  <path d="M 392 223 L 470 223" stroke="#b2b6bf" stroke-width="2"
+  <rect x="590" y="18" width="4" height="40" fill="#ff4545"/>
+  <text x="608" y="35" font-size="16" fill="#2e2640" letter-spacing="0.06em">SEM ISSO</text>
+  <text x="608" y="59" font-size="22" fill="#2e2640">resposta de consultor genérico</text>
+  <rect x="0" y="68" width="470" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
+  <text x="22" y="98" font-size="25" font-weight="600" fill="#2e2640">Schema</text>
+  <text x="22" y="125" font-size="19" fill="#2e2640">as 20 colunas, coladas no prompt</text>
+  <path d="M 486 104 L 566 104" stroke="#b2b6bf" stroke-width="2.5"
         marker-end="url(#seta)"/>
-  <text x="486" y="229" font-size="16" fill="#ff4545">sem isso: coluna que não existe</text>
-  <rect x="40" y="266" width="340" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
-  <text x="58" y="291" font-size="19" font-weight="600" fill="#2e2640">Recorte</text>
-  <text x="58" y="312" font-size="15" fill="#2e2640">segmento, janela, agrupamento</text>
-  <path d="M 392 295 L 470 295" stroke="#b2b6bf" stroke-width="2"
+  <rect x="590" y="84" width="4" height="40" fill="#ff4545"/>
+  <text x="608" y="101" font-size="16" fill="#2e2640" letter-spacing="0.06em">SEM ISSO</text>
+  <text x="608" y="125" font-size="22" fill="#2e2640">coluna que não existe</text>
+  <rect x="0" y="134" width="470" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
+  <text x="22" y="164" font-size="25" font-weight="600" fill="#2e2640">Recorte</text>
+  <text x="22" y="191" font-size="19" fill="#2e2640">segmento, janela, agrupamento</text>
+  <path d="M 486 170 L 566 170" stroke="#b2b6bf" stroke-width="2.5"
         marker-end="url(#seta)"/>
-  <text x="486" y="301" font-size="16" fill="#ff4545">sem isso: média da base inteira</text>
-  <rect x="40" y="338" width="340" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
-  <text x="58" y="363" font-size="19" font-weight="600" fill="#2e2640">Formato</text>
-  <text x="58" y="384" font-size="15" fill="#2e2640">a tabela que você espera de volta</text>
-  <path d="M 392 367 L 470 367" stroke="#b2b6bf" stroke-width="2"
+  <rect x="590" y="150" width="4" height="40" fill="#ff4545"/>
+  <text x="608" y="167" font-size="16" fill="#2e2640" letter-spacing="0.06em">SEM ISSO</text>
+  <text x="608" y="191" font-size="22" fill="#2e2640">média da base inteira</text>
+  <rect x="0" y="200" width="470" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
+  <text x="22" y="230" font-size="25" font-weight="600" fill="#2e2640">Formato</text>
+  <text x="22" y="257" font-size="19" fill="#2e2640">a tabela que você espera de volta</text>
+  <path d="M 486 236 L 566 236" stroke="#b2b6bf" stroke-width="2.5"
         marker-end="url(#seta)"/>
-  <text x="486" y="373" font-size="16" fill="#ff4545">sem isso: prosa, sem número</text>
-  <rect x="40" y="410" width="340" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
-  <text x="58" y="435" font-size="19" font-weight="600" fill="#2e2640">Restrição</text>
-  <text x="58" y="456" font-size="15" fill="#2e2640">não estimar o que não existe</text>
-  <path d="M 392 439 L 470 439" stroke="#b2b6bf" stroke-width="2"
+  <rect x="590" y="216" width="4" height="40" fill="#ff4545"/>
+  <text x="608" y="233" font-size="16" fill="#2e2640" letter-spacing="0.06em">SEM ISSO</text>
+  <text x="608" y="257" font-size="22" fill="#2e2640">prosa, sem número</text>
+  <rect x="0" y="266" width="470" height="58" rx="8" fill="#e6eaeb" stroke="#caced6"/>
+  <text x="22" y="296" font-size="25" font-weight="600" fill="#2e2640">Restrição</text>
+  <text x="22" y="323" font-size="19" fill="#2e2640">não estimar o que não existe</text>
+  <path d="M 486 302 L 566 302" stroke="#b2b6bf" stroke-width="2.5"
         marker-end="url(#seta)"/>
-  <text x="486" y="445" font-size="16" fill="#ff4545">sem isso: número plausível sem origem</text>
-  <rect x="40" y="492" width="980" height="44" rx="8" fill="#066d73"/>
-  <text x="58" y="520" font-size="17" fill="#ffffff">O que se pede de volta é o código, nunca o resultado: número citado de cabeça não tem origem para conferir.</text>
+  <rect x="590" y="282" width="4" height="40" fill="#ff4545"/>
+  <text x="608" y="299" font-size="16" fill="#2e2640" letter-spacing="0.06em">SEM ISSO</text>
+  <text x="608" y="323" font-size="22" fill="#2e2640">número plausível sem origem</text>
 </svg>

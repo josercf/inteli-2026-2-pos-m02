@@ -48,6 +48,17 @@ BRANCO = "#ffffff"
 
 FONTE = "DejaVu Sans"
 
+# A figura ocupa a faixa util do slide (1168px de largura) e e renderizada 1:1.
+# Antes as figuras eram desenhadas em 1100 a 1150px de largura e o CSS as
+# limitava por ALTURA (max-height: 408px), o que impunha fator de escala entre
+# 0,687 e 0,816: texto declarado em 16px chegava ao projetor com 11px, abaixo
+# do piso de legibilidade que o proprio tema declara, e a figura usava so 65 a
+# 74% da largura disponivel. Desenhar na proporcao da faixa resolve os dois de
+# uma vez.
+LARGURA_FAIXA = 1168
+ALTURA_FAIXA = 334
+DPI = 100
+
 # Duracao de um quadro, em milissegundos.
 QUADRO_MS = 1500
 # O ultimo quadro segura mais tempo: e onde esta a leitura, e um loop que passa
@@ -59,6 +70,8 @@ plt.rcParams["text.color"] = ROXO
 plt.rcParams["axes.labelcolor"] = ROXO
 plt.rcParams["xtick.color"] = ROXO
 plt.rcParams["ytick.color"] = ROXO
+plt.rcParams["xtick.labelsize"] = 15
+plt.rcParams["ytick.labelsize"] = 15
 
 
 def salvar_gif(desenhar, n_quadros: int, destino: Path) -> None:
@@ -94,10 +107,10 @@ def _figura_ciclo():
     # A area util do slide e larga e baixa. Com ylim folgado o desenho ficava
     # numa faixa fina no meio, com metade da figura em branco, e a figura
     # projetada aparecia menor do que precisava.
-    fig, ax = plt.subplots(figsize=(10, 4.9), dpi=115)
+    fig, ax = plt.subplots(figsize=(LARGURA_FAIXA / DPI, ALTURA_FAIXA / DPI), dpi=DPI)
     fig.patch.set_facecolor(BRANCO)
-    ax.set_xlim(-1.66, 1.66)
-    ax.set_ylim(-1.06, 1.06)
+    ax.set_xlim(-1.80, 1.80)
+    ax.set_ylim(-1.00, 1.00)
     ax.set_position([0, 0, 1, 1])
     ax.axis("off")
     return fig, ax
@@ -121,7 +134,7 @@ def _desenha_ciclo(ax, itens, pos, arco_cor):
         )
 
 
-def _posicoes(n, rx=1.14, ry=0.80):
+def _posicoes(n, rx=1.26, ry=0.74):
     angulos = [math.pi / 2 - 2 * math.pi * i / n for i in range(n)]
     return [(rx * math.cos(a), ry * math.sin(a)) for a in angulos]
 
@@ -154,7 +167,7 @@ def gif_crisp_dm(destino: Path) -> None:
             hoje = i in CRISP_HOJE
             ax.add_patch(
                 plt.Rectangle(
-                    (x - 0.46, y - 0.20), 0.92, 0.40,
+                    (x - 0.52, y - 0.21), 1.04, 0.42,
                     facecolor=VERDE_ESCURO if ativo else (CINZA_CLARO if hoje else BRANCO),
                     edgecolor=VERDE_ESCURO if hoje else CINZA_MEDIO,
                     linewidth=2.4 if hoje else 1.4,
@@ -162,16 +175,16 @@ def gif_crisp_dm(destino: Path) -> None:
                 )
             )
             ax.text(x, y + 0.05, nome, ha="center", va="center", zorder=4,
-                    fontsize=10.5, color=BRANCO if ativo else ROXO)
+                    fontsize=15, color=BRANCO if ativo else ROXO)
             ax.text(x, y - 0.10, encontro, ha="center", va="center", zorder=4,
-                    fontsize=9.5, color=CINZA_CLARO if ativo else ROXO)
+                    fontsize=13, color=CINZA_CLARO if ativo else ROXO)
 
         ax.text(0, 0.13, "CRISP-DM", ha="center", va="center",
-                fontsize=19, color=ROXO, weight="bold")
+                fontsize=26, color=ROXO, weight="bold")
         ax.text(0, -0.03, "o ciclo que o módulo percorre inteiro", ha="center",
-                va="center", fontsize=10.5, color=ROXO)
+                va="center", fontsize=15, color=ROXO)
         ax.text(0, -0.20, "hoje: fases 1 e 2" if k in CRISP_HOJE else "",
-                ha="center", va="center", fontsize=12, color=VERDE_ESCURO, weight="bold")
+                ha="center", va="center", fontsize=16, color=VERDE_ESCURO, weight="bold")
         return fig
 
     salvar_gif(desenhar, n, destino)
@@ -210,22 +223,22 @@ def gif_ciclo_eda(destino: Path) -> None:
             cor = COR_ATOR[ator]
             ax.add_patch(
                 plt.Rectangle(
-                    (x - 0.44, y - 0.19), 0.88, 0.38,
+                    (x - 0.52, y - 0.20), 1.04, 0.40,
                     facecolor=cor if ativo else BRANCO,
                     edgecolor=cor, linewidth=2.0, zorder=3,
                 )
             )
             ax.text(x, y + 0.05, nome, ha="center", va="center", zorder=4,
-                    fontsize=10, color=BRANCO if ativo else ROXO)
+                    fontsize=14.5, color=BRANCO if ativo else ROXO)
             ax.text(x, y - 0.09, ator, ha="center", va="center", zorder=4,
-                    fontsize=9.5, style="italic", color=CINZA_CLARO if ativo else cor)
+                    fontsize=13, style="italic", color=CINZA_CLARO if ativo else cor)
 
         ax.text(0, 0.13, "EDA assistida por IA", ha="center", va="center",
-                fontsize=17, color=ROXO, weight="bold")
+                fontsize=24, color=ROXO, weight="bold")
         ax.text(0, -0.03, "quatro dos seis passos continuam com você", ha="center",
-                va="center", fontsize=10.5, color=ROXO)
+                va="center", fontsize=15, color=ROXO)
         ax.text(0, -0.20, "a IA escreve, ela não decide" if CICLO[k][1] == "a IA" else "",
-                ha="center", va="center", fontsize=12, color=VERDE_ESCURO, weight="bold")
+                ha="center", va="center", fontsize=16, color=VERDE_ESCURO, weight="bold")
         return fig
 
     salvar_gif(desenhar, n, destino)
@@ -279,14 +292,14 @@ def gif_talvera_andira(destino: Path) -> None:
     passos = max(len(talvera), len(andira))
 
     def desenhar(k):
-        fig, ax = plt.subplots(figsize=(10, 5.4), dpi=110)
+        fig, ax = plt.subplots(figsize=(LARGURA_FAIXA / DPI, ALTURA_FAIXA / DPI), dpi=DPI)
         fig.patch.set_facecolor(BRANCO)
         ax.set_facecolor(BRANCO)
         ax.set_xlim(-0.30, passos - 0.45)
         ax.set_ylim(35, 140)
         ax.set_xticks(range(passos))
-        ax.set_xticklabels(["t-1", "t", "t+1", "t+2"][:passos], fontsize=12)
-        ax.set_ylabel("receita do trimestre (t-1 = 100)", fontsize=11)
+        ax.set_xticklabels(["t-1", "t", "t+1", "t+2"][:passos], fontsize=17)
+        ax.set_ylabel("receita do trimestre (t-1 = 100)", fontsize=15)
         ax.axhline(100, color=CINZA_MEDIO, linewidth=1.2, zorder=1)
         for lado in ("top", "right"):
             ax.spines[lado].set_visible(False)
@@ -296,7 +309,7 @@ def gif_talvera_andira(destino: Path) -> None:
         ax.set_axisbelow(True)
 
         titulo, nota = TITULOS_CONTAS[min(k, len(TITULOS_CONTAS) - 1)]
-        ax.set_title(titulo, fontsize=13.5, color=ROXO, loc="left", pad=16)
+        ax.set_title(titulo, fontsize=18, color=ROXO, loc="left", pad=14)
 
         for serie, cor, nome in ((talvera, ROXO, "Grupo Talvera"), (andira, VERDE_ESCURO, "Grupo Andirá")):
             ate = min(k + 1, len(serie))
@@ -306,11 +319,11 @@ def gif_talvera_andira(destino: Path) -> None:
             # No primeiro quadro as duas partem de 100 e os rotulos ficariam um
             # por cima do outro.
             if xs and k >= 1:
-                ax.text(xs[-1] + 0.07, serie[ate - 1], nome, fontsize=12,
+                ax.text(xs[-1] + 0.06, serie[ate - 1], nome, fontsize=17,
                         color=cor, va="center")
         if k == 0:
             ax.text(0.07, 100, "as duas contas partem do mesmo patamar indexado",
-                    fontsize=11, color=ROXO, va="center")
+                    fontsize=15, color=ROXO, va="center")
         # A serie do Talvera termina antes: ele encerra o contrato em janeiro de
         # 2026, ja fora da janela do painel. Sem esta marca a linha parece ter
         # sido cortada por engano. So no ultimo quadro: no penultimo, a pergunta
@@ -320,10 +333,10 @@ def gif_talvera_andira(destino: Path) -> None:
             ax.annotate("encerra o contrato\nem janeiro de 2026",
                         xy=(len(talvera) - 1, talvera[-1]),
                         xytext=(len(talvera) - 1.30, talvera[-1] + 21),
-                        fontsize=11, color=CORAL, ha="center",
+                        fontsize=15, color=CORAL, ha="center",
                         arrowprops=dict(arrowstyle="-", color=CORAL, linewidth=1.4))
         if nota:
-            ax.text(0.0, 41, nota, fontsize=13, color=CORAL, weight="bold")
+            ax.text(0.0, 41, nota, fontsize=18, color=CORAL, weight="bold")
         fig.tight_layout()
         return fig
 
@@ -346,19 +359,27 @@ ENTRADAS = [
 
 
 def svg_structure_in_out(destino: Path) -> None:
-    """O que entra num prompt de analise, e o modo de falha de cada ausencia."""
+    """O que entra num prompt de analise, e o modo de falha de cada ausencia.
+
+    Sem titulo interno: o titulo do slide faz esse trabalho, e dois cabecalhos
+    empilhados custavam 100 unidades de altura, que eram exatamente as que
+    espremiam o diagrama. Sem barra de conclusao interna: ela virou a faixa de
+    conclusao do slide, em HTML, onde o corpo e o do deck e nao o da figura.
+    """
     linhas = []
     for i, (rotulo, detalhe, falha) in enumerate(ENTRADAS):
-        y = 122 + i * 72
+        y = 2 + i * 66
         linhas.append(f"""
-  <rect x="40" y="{y}" width="340" height="58" rx="8" fill="{CINZA_CLARO}" stroke="{CINZA_MEDIO}"/>
-  <text x="58" y="{y + 25}" font-size="19" font-weight="600" fill="{ROXO}">{rotulo}</text>
-  <text x="58" y="{y + 46}" font-size="15" fill="{ROXO}">{detalhe}</text>
-  <path d="M 392 {y + 29} L 470 {y + 29}" stroke="{CINZA_ESCURO}" stroke-width="2"
+  <rect x="0" y="{y}" width="470" height="58" rx="8" fill="{CINZA_CLARO}" stroke="{CINZA_MEDIO}"/>
+  <text x="22" y="{y + 30}" font-size="25" font-weight="600" fill="{ROXO}">{rotulo}</text>
+  <text x="22" y="{y + 57}" font-size="19" fill="{ROXO}">{detalhe}</text>
+  <path d="M 486 {y + 36} L 566 {y + 36}" stroke="{CINZA_ESCURO}" stroke-width="2.5"
         marker-end="url(#seta)"/>
-  <text x="486" y="{y + 35}" font-size="16" fill="{CORAL}">sem isso: {falha}</text>""")
+  <rect x="590" y="{y + 16}" width="4" height="40" fill="{CORAL}"/>
+  <text x="608" y="{y + 33}" font-size="16" fill="{ROXO}" letter-spacing="0.06em">SEM ISSO</text>
+  <text x="608" y="{y + 57}" font-size="22" fill="{ROXO}">{falha}</text>""")
 
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 552" width="1060" height="552"
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 334" width="1168" height="334"
      font-family="{FONTES_SVG}" role="img"
      aria-label="Os cinco elementos de um prompt de análise e o modo de falha de cada ausência">
   <defs>
@@ -367,13 +388,8 @@ def svg_structure_in_out(destino: Path) -> None:
       <path d="M 0 0 L 10 5 L 0 10 z" fill="{CINZA_ESCURO}"/>
     </marker>
   </defs>
-  <rect width="1060" height="552" fill="{BRANCO}"/>
-  <text x="40" y="48" font-size="27" font-weight="700" fill="{ROXO}">Estrutura na entrada, estrutura na saída</text>
-  <text x="40" y="80" font-size="16" fill="{ROXO}">Cada ausência tem um modo de falha próprio, e todos chegam com cara de resposta boa.</text>
-  <rect x="40" y="100" width="980" height="4" fill="{VERDE_ESCURO}"/>
+  <rect width="1168" height="334" fill="{BRANCO}"/>
   {''.join(linhas)}
-  <rect x="40" y="492" width="980" height="44" rx="8" fill="{VERDE_ESCURO}"/>
-  <text x="58" y="520" font-size="17" fill="{BRANCO}">O que se pede de volta é o código, nunca o resultado: número citado de cabeça não tem origem para conferir.</text>
 </svg>
 """
     destino.write_text(svg, encoding="utf-8")
@@ -393,41 +409,47 @@ FOLHAS = [
 
 
 def svg_arvore_hipoteses(destino: Path) -> None:
-    """Decomposicao MECE da pergunta de negocio ate hipoteses testaveis."""
+    """Decomposicao MECE da pergunta de negocio ate hipoteses testaveis.
+
+    Os ramos que a tarde nao persegue ficam rebaixados (borda cinza), e nao
+    apagados: a decomposicao so e MECE se os tres aparecerem. A legenda de
+    rodape saiu do SVG e virou a faixa de conclusao do slide.
+    """
     partes = []
     for i, (titulo, l1, l2, foco) in enumerate(RAMOS):
-        x = 55 + i * 325
+        x = 20 + i * 386
         cor = VERDE_ESCURO if foco else CINZA_MEDIO
         partes.append(f"""
-  <path d="M 530 142 L 530 172 L {x + 133} 172 L {x + 133} 200" fill="none"
+  <path d="M 584 110 L 584 134 L {x + 173} 134 L {x + 173} 156" fill="none"
         stroke="{CINZA_ESCURO}" stroke-width="2"/>
-  <rect x="{x}" y="200" width="266" height="80" rx="8" fill="{BRANCO}"
-        stroke="{cor}" stroke-width="{3 if foco else 1.6}"/>
-  <text x="{x + 20}" y="230" font-size="19" font-weight="600" fill="{ROXO}">{titulo}</text>
-  <text x="{x + 20}" y="252" font-size="14" fill="{ROXO}">{l1}</text>
-  <text x="{x + 20}" y="270" font-size="14" fill="{ROXO}">{l2}</text>""")
+  <rect x="{x}" y="156" width="346" height="74" rx="8" fill="{BRANCO}"
+        stroke="{cor}" stroke-width="{3.5 if foco else 1.8}"/>
+  <text x="{x + 22}" y="184" font-size="21" font-weight="600" fill="{ROXO}">{titulo}</text>
+  <text x="{x + 22}" y="208" font-size="16" fill="{ROXO}">{l1}</text>
+  <text x="{x + 22}" y="226" font-size="16" fill="{ROXO}">{l2}</text>""")
 
     for i, (l1, l2, colunas) in enumerate(FOLHAS):
-        x = 48 + i * 246
+        x = 14 + i * 290
         partes.append(f"""
-  <path d="M 513 280 L 513 320 L {x + 108} 320 L {x + 108} 348" fill="none"
+  <path d="M 579 230 L 579 256 L {x + 133} 256 L {x + 133} 278" fill="none"
         stroke="{VERDE_ESCURO}" stroke-width="2"/>
-  <rect x="{x}" y="348" width="216" height="104" rx="8" fill="{CINZA_CLARO}"
+  <rect x="{x}" y="278" width="266" height="98" rx="8" fill="{CINZA_CLARO}"
         stroke="{CINZA_MEDIO}"/>
-  <text x="{x + 16}" y="376" font-size="15" font-weight="600" fill="{ROXO}">{l1}</text>
-  <text x="{x + 16}" y="396" font-size="15" font-weight="600" fill="{ROXO}">{l2}</text>
-  <text x="{x + 16}" y="428" font-size="12.5" fill="{VERDE_ESCURO}">{colunas}</text>""")
+  <text x="{x + 18}" y="304" font-size="17" font-weight="600" fill="{ROXO}">{l1}</text>
+  <text x="{x + 18}" y="326" font-size="17" font-weight="600" fill="{ROXO}">{l2}</text>
+  <rect x="{x + 18}" y="340" width="4" height="22" fill="{VERDE_ESCURO}"/>
+  <text x="{x + 32}" y="357" font-size="15" fill="{VERDE_ESCURO}">{colunas}</text>"""
+        )
 
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 500" width="1060" height="500"
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 350" width="1168" height="350"
      font-family="{FONTES_SVG}" role="img"
      aria-label="Árvore de hipóteses decompondo a queda do NRR em três componentes mutuamente exclusivos e quatro hipóteses testáveis">
-  <rect width="1060" height="500" fill="{BRANCO}"/>
-  <rect x="320" y="26" width="420" height="116" rx="8" fill="{ROXO}"/>
-  <text x="348" y="62" font-size="20" font-weight="700" fill="{BRANCO}">Por que o NRR caiu de</text>
-  <text x="348" y="90" font-size="20" font-weight="700" fill="{BRANCO}">109% para 93%?</text>
-  <text x="348" y="120" font-size="14" fill="{CINZA_CLARO}">a pergunta que o Comitê faz em 3 de março</text>
+  <rect width="1168" height="350" fill="{BRANCO}"/>
+  <rect x="380" y="8" width="408" height="98" rx="8" fill="{ROXO}"/>
+  <text x="406" y="42" font-size="21" font-weight="700" fill="{BRANCO}">Por que o NRR caiu de</text>
+  <text x="406" y="70" font-size="21" font-weight="700" fill="{BRANCO}">109% para 93%?</text>
+  <text x="406" y="93" font-size="15" fill="{CINZA_CLARO}">a pergunta do Comitê de 3 de março</text>
   {''.join(partes)}
-  <text x="48" y="480" font-size="13" fill="{ROXO}">Os três ramos são mutuamente exclusivos e cobrem o indicador inteiro. As folhas são o que a tarde consegue testar, e cada uma nomeia a coluna que a testa.</text>
 </svg>
 """
     destino.write_text(svg, encoding="utf-8")

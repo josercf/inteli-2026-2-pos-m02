@@ -69,6 +69,8 @@ jobs:
           pip install -r requirements-dev.txt
           python dados/gerar_painel_kovan.py
           python tools/gerar_figuras_aula01.py
+          python tools/montar_deck_aula01.py
+          python tools/montar_notebook_aula01.py
 
       - name: Montar o site (allowlist + conferencia de referencias)
         run: python tools/build_site.py _site

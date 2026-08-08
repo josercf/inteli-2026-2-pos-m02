@@ -70,6 +70,9 @@ case). O que é citável e o que é nosso está separado no slide de referência
   Gerado por `tools/montar_deck_aula01.py`, não editado à mão
 - Figuras: `tools/gerar_figuras_aula01.py`, desenhadas em 1168px e renderizadas 1:1
 - Notebook: `notebooks/aula01_hipoteses.ipynb`
+- Material de apoio: `materiais/aula01-material-de-apoio.html`, sete seções com
+  as contas que a projeção não comporta (derivação do intervalo do AUC,
+  mecanismos de ausência aplicados coluna a coluna, prompts completos)
 - Material do aluno: `materiais/caderno-de-hipoteses.md`
 - Condução: `docs/notas-do-professor/aula01.md` (não distribuído)
 

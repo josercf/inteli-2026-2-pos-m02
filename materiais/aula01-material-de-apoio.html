@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de apoio &middot; Aula 01 &middot; Da hipótese à evidência</title>
+  <meta name="description" content="Material de apoio da Aula 01 do Módulo 2 do MBA Inteli x Lenovo: por que modelos de linguagem erram em tabela, especificação de prompt para análise, anatomia do teste falseável, mecanismos de ausência e o tamanho de amostra que a validação exige.">
+
+  <!-- Este material NAO e o roteiro do deck em prosa. Ele aprofunda o que o
+       slide so pode apontar, e traz as contas que a projecao nao comporta.
+       Todo numero citado vem de dados/kovan_painel_contas.csv ou da fonte
+       nomeada ao lado dele. -->
+
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-material.css">
+</head>
+<body>
+  <div class="doc">
+
+    <header class="doc-header">
+      <p class="doc-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo &middot; Módulo 2 &middot; Aula 01 &middot; 08/08/2026</p>
+      <h1>Da hipótese à evidência</h1>
+      <p class="doc-subtitulo">O que o slide só pôde apontar. Cada seção responde uma pergunta
+      que costuma aparecer depois da aula, sobre o painel de contas da Kovan Technologies
+      LATAM que abre o business case do módulo.</p>
+    </header>
+
+    <nav class="doc-toc" aria-label="Sumário">
+      <h2>Nesta página</h2>
+      <ol>
+        <li><a href="#erro-em-tabela">Por que um modelo de linguagem erra em tabela</a></li>
+        <li><a href="#especificacao">Especificação de prompt para análise</a></li>
+        <li><a href="#falseavel">Anatomia de um teste falseável</a></li>
+        <li><a href="#ausencia">Os três mecanismos de ausência</a></li>
+        <li><a href="#rotulo">O rótulo e o tamanho de amostra que ele exige</a></li>
+        <li><a href="#erros">Erros que este material existe para evitar</a></li>
+        <li><a href="#referencias">Referências</a></li>
+      </ol>
+    </nav>
+
+    <main class="doc-conteudo">
+
+      <section class="doc-secao" id="erro-em-tabela">
+        <h2>1. Por que um modelo de linguagem erra em tabela</h2>
+
+        <p>A regra da casa da aula ("todo número vem de código que a IA escreveu e que você
+        rodou") não é desconfiança da ferramenta. Ela é a consequência prática de três limites
+        de arquitetura, e vale a pena entender cada um, porque nenhum deles se resolve com um
+        modelo maior nem com um prompt melhor.</p>
+
+        <h3>Tokenização linear</h3>
+        <p>Um modelo de linguagem recebe texto como uma sequência de tokens. Uma tabela é uma
+        estrutura de duas dimensões: o significado de uma célula depende da linha e da coluna
+        em que ela está. Ao ser serializada para virar sequência, essa relação some. O modelo
+        precisa reconstruir, por padrão estatístico, uma estrutura que o arquivo original
+        carregava explicitamente <a href="#r1">[1]</a>.</p>
+        <p>A consequência é medível e contraintuitiva: o erro cresce com a <strong>complexidade
+        estrutural</strong> da planilha (número de colunas, cabeçalhos de dois níveis, blocos
+        empilhados) e não com a dificuldade conceitual da pergunta.</p>
+
+        <h3>Janela de contexto</h3>
+        <p>O painel da Kovan tem 16.618 linhas. Ele não cabe na janela de contexto de um chat.
+        O que entra é uma amostra, quase sempre as primeiras linhas mais um resumo estatístico.
+        A resposta que volta fala do arquivo inteiro, e nada na resposta distingue o que o
+        modelo <em>leu</em> do que ele <em>completou</em>.</p>
+
+        <h3>Cálculo implícito</h3>
+        <p>Somar 16.618 valores por previsão do próximo token não é uma operação aritmética: é
+        uma imitação estatística de uma. A saída tem a forma de um cálculo, com casas decimais
+        e unidade, e não passou por um. Pré-computar as agregações e entregá-las prontas ao
+        modelo melhora o resultado de forma substancial, o que confirma que o gargalo está na
+        conta e não na compreensão da pergunta <a href="#r2">[2]</a>.</p>
+
+        <h3>Os números</h3>
+        <p>Um benchmark de 2026 avaliou dez configurações de modelo de três fornecedores sobre
+        24 planilhas financeiras sintéticas, modeladas em estruturas reais de fundos de private
+        equity <a href="#r3">[3]</a>:</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Medida</th><th>Valor</th><th>Leitura</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Melhor modelo, média geral</td><td>82,4%</td><td>cerca de 1 erro a cada 6 perguntas</td></tr>
+              <tr><td>Planilha mais fácil</td><td>86,2%</td><td>teto do que se obtém sem supervisão</td></tr>
+              <tr><td>Planilha maior, média de todos</td><td>48,6%</td><td>152 empresas em 8 fundos</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A conclusão dos autores é a frase que organiza esta aula: extração confiável de
+        planilha vai exigir arquiteturas que <strong>separem a compreensão do documento da
+        computação determinística</strong>. É a regra da casa, com outro nome.</p>
+
+        <p>E o efeito da separação é mensurável. Num estudo de 2025 sobre perguntas
+        aritméticas em tabelas, o mesmo modelo passou de <strong>29% de acerto exato</strong>
+        quando respondia direto para <strong>58%</strong> quando gerava e executava código;
+        descontados os erros de escala de unidade, 80% <a href="#r4">[4]</a>.</p>
+
+        <div class="doc-nota">
+          <p><strong>O que levar disto.</strong> Dobrar o acerto não exigiu trocar de modelo.
+          Exigiu trocar o que se pede a ele. Pedir o número e pedir o código não são o mesmo
+          pedido, e a diferença entre os dois é auditabilidade: um número com célula de origem
+          pode ser contestado por quem recebe.</p>
+        </div>
+      </section>
+
+      <section class="doc-secao" id="especificacao">
+        <h2>2. Especificação de prompt para análise</h2>
+
+        <p>A estrutura CREATE que vocês viram de manhã (Character, Request, Examples,
+        Additions, Type of output, Extras) foi desenhada para tarefas de texto. Ela continua
+        valendo. O que ela não tem, porque não faz sentido em texto, é a restrição contra
+        estimativa.</p>
+
+        <p>Em texto, preencher a lacuna é o serviço que você contratou: você pede um parágrafo
+        de abertura e o modelo escreve um. Em análise, preencher a lacuna é o defeito. Por isso
+        a cláusula entra explícita, em todo prompt, a partir desta aula.</p>
+
+        <h3>Os cinco elementos, e o modo de falha de cada ausência</h3>
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Elemento</th><th>O que você declara</th><th>Sem ele</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Papel</td><td>analista de revenue analytics da Kovan LATAM</td><td>resposta de consultor genérico</td></tr>
+              <tr><td>Schema</td><td>as colunas que existem, coladas no prompt</td><td>coluna que não existe</td></tr>
+              <tr><td>Recorte</td><td>segmento, janela, agrupamento</td><td>média da base inteira</td></tr>
+              <tr><td>Formato</td><td>a tabela que você espera de volta</td><td>prosa, sem número</td></tr>
+              <tr><td>Restrição</td><td>não estimar o que não existe</td><td>número plausível sem origem</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Nenhuma dessas falhas chega com cara de erro. Todas chegam com cara de resposta boa,
+        e é por isso que a verificação não é opcional.</p>
+
+        <h3>Os quatro níveis, com o texto completo</h3>
+
+        <p><strong>Nível 0.</strong> Sem estrutura.</p>
+        <pre class="doc-codigo"><code>analise este arquivo e diga o que há de interessante</code></pre>
+        <p>Volta um resumo de colunas e três observações genéricas. Descrição não é análise.</p>
+
+        <p><strong>Nível 2.</strong> Estrutura na entrada e na saída. O nível 1 (CREATE puro)
+        fica no meio do caminho: melhora o tom e não muda o recorte.</p>
+        <pre class="doc-codigo"><code>Você é analista de revenue analytics da Kovan LATAM.
+
+Use o DataFrame `painel`. Colunas disponíveis:
+conta_id, trimestre, segmento, regiao, am_id, receita_brl,
+pedidos, linhas_produto_ativas, valor_medio_pedido_brl,
+recencia_dias, devolucoes_brl, desconto_medio_pct,
+oportunidades_abertas, oportunidades_perdidas,
+valor_pipeline_brl, visitas_registradas, interacoes_crm,
+troca_de_am_no_trimestre, status_conta, taxonomia_mix.
+
+Devolva o código pandas que compara a receita de 2025 contra
+a de 2024, por conta, no segmento estratégico, distribuída em
+faixas de variação de 10 pontos percentuais.
+
+Se faltar informação para responder, diga que falta, em vez
+de estimar. Devolva o código, não o resultado.</code></pre>
+
+        <p><strong>Nível 3.</strong> Postura adversarial, aplicada depois de você já ter o
+        número.</p>
+        <pre class="doc-codigo"><code>Liste três explicações alternativas para este padrão que não
+sejam deterioração de relacionamento, e para cada uma diga qual
+coluna do painel a testaria. Classifique a evidência que temos
+como Confirmada, Insuficiente ou Contraditada.</code></pre>
+
+        <div class="doc-nota">
+          <p>O nível 2 é o piso para qualquer pedido que precise produzir um número. Abaixo
+          dele, o recorte que gerou o resultado foi decisão do modelo, não sua, e você não tem
+          como saber qual foi.</p>
+        </div>
+      </section>
+
+      <section class="doc-secao" id="falseavel">
+        <h2>3. Anatomia de um teste falseável</h2>
+
+        <p>Karl Popper propôs em 1934 que uma afirmação só é científica se puder ser refutada
+        por observação <a href="#r5">[5]</a>. A versão operacional disso, num painel de contas,
+        tem quatro linhas.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Linha</th><th>O que entra</th><th>Exemplo no painel</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Variável</td><td>qual coluna carrega o sinal</td><td><code>linhas_produto_ativas</code></td></tr>
+              <tr><td>Operação</td><td>o que se calcula, e sobre quais grupos</td><td>mediana por segmento, dois grupos</td></tr>
+              <tr><td>Janela</td><td>quais trimestres entram, e por que os outros ficam de fora</td><td>2023Q2 a 2025Q4, onze trimestres</td></tr>
+              <tr><td>Critério de refutação</td><td>qual resultado derruba a hipótese</td><td>diferença menor que 10 pontos percentuais</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A quarta linha é a que separa hipótese de opinião, e é a que todo grupo tenta pular.
+        Ela precisa ser escrita <strong>antes</strong> de rodar. Escrita depois, ela vira
+        justificativa do resultado que apareceu.</p>
+
+        <h3>Os três vereditos</h3>
+        <p><strong>Confirmada</strong>: o número atendeu ao critério e a hipótese se sustenta.
+        <strong>Contraditada</strong>: o número atendeu ao critério de refutação.
+        <strong>Insuficiente</strong>: o painel não tem a coluna, a janela ou o número de casos
+        para decidir.</p>
+
+        <p>Insuficiente não é fracasso. É o resultado honesto quando o dado não responde, e vai
+        aparecer no caderno de vocês, porque há perguntas legítimas que estas 20 colunas não
+        alcançam: rentabilidade por conta (não há custo), engajamento completo (a cobertura é
+        parcial) e efeito de intervenção comercial (não há registro de quem recebeu plano).</p>
+
+        <p>A memória organizacional do próprio case explica por que isso importa. O Radar de
+        Contas sinalizou 340 contas em 2024 e acertou 31, precisão de 9,1%. O uso ativo do
+        painel caiu de 62% no primeiro mês para 3% no décimo primeiro, e o sistema foi
+        desligado sem substituto. Dizer que o dado não responde é um resultado; inventar que
+        responde é o que já custou a credibilidade uma vez.</p>
+      </section>
+
+      <section class="doc-secao" id="ausencia">
+        <h2>4. Os três mecanismos de ausência</h2>
+
+        <p>Donald Rubin propôs em 1976 uma taxonomia para dados faltantes que continua sendo a
+        referência <a href="#r6">[6]</a>. A distinção não é técnica: ela decide o que você pode
+        corrigir.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Mecanismo</th><th>A falta depende de</th><th>O que dá para fazer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Completamente ao acaso (MCAR)</td><td>nada</td><td>excluir a linha não enviesa, só perde potência</td></tr>
+              <tr><td>Ao acaso, dado o observado (MAR)</td><td>algo que está na base</td><td>corrigir condicionando a esse algo</td></tr>
+              <tr><td>Não ao acaso (MNAR)</td><td>justamente o que ela esconde</td><td>não dá, com o que existe na base</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Aplicado ao painel da Kovan</h3>
+
+        <p><strong>Receita ausente.</strong> Cerca de 1% dos trimestres de conta ativa não tem
+        receita registrada, por atraso no fechamento contábil. A taxa é praticamente a mesma
+        entre segmentos: 1,07% na cauda, 0,85% no estratégico, 0,78% no médio. A razão entre o
+        pior e o melhor é de 1,37, o que é compatível com ausência completamente ao acaso.
+        Excluir essas linhas custa potência e não introduz viés.</p>
+
+        <p><strong>Engajamento comercial ausente.</strong> Visitas registradas e interações no
+        CRM existem para parte da base, e a cobertura não é uniforme: 10,2% de ausência no
+        segmento estratégico contra 40,4% na cauda, razão de 3,97. Isso <em>não</em> é
+        completamente ao acaso. Como o segmento está na base, ainda é corrigível condicionando
+        a ele.</p>
+
+        <p><strong>O caso que não se corrige.</strong> O case registra que contas que compram
+        por portais de procurement produzem muito menos registro de atividade comercial do que
+        contas que compram por relacionamento direto. A ausência passa a depender do modo de
+        compra, que se relaciona com o próprio comportamento que se quer prever, e o modo de
+        compra não é uma coluna do painel. Aqui a correção exigiria informação que a base não
+        tem.</p>
+
+        <div class="doc-nota">
+          <p>O case escreve isso em uma linha, no diagnóstico que Renata enviou ao Comitê: a
+          ausência de compra não é um dado, é a falta de um dado. Tratar os três casos da mesma
+          forma foi a decisão que fez as mesas chegarem a contagens diferentes de ruptura na
+          Prática 4.</p>
+        </div>
+      </section>
+
+      <section class="doc-secao" id="rotulo">
+        <h2>5. O rótulo e o tamanho de amostra que ele exige</h2>
+
+        <p>O painel tem 20 colunas e nenhuma delas diz quem está em risco. Isso não é lacuna: é
+        a decisão em aberto do case. Otávio Rangel formula assim, em ata: o problema não é
+        escolher o algoritmo, é escolher o rótulo.</p>
+
+        <h3>Prevalência e eventos efetivos</h3>
+        <p>O segmento estratégico tem 118 contas por 14 trimestres, o que dá 1.652 observações
+        conta-trimestre. Nele há 34 rupturas, prevalência de 2,1%. Como as variáveis exigem
+        janelas históricas de quatro trimestres, o conjunto efetivo de treino cai para 24
+        eventos positivos.</p>
+
+        <h3>Por que 24 eventos não decidem</h3>
+        <p>Priscila Nakamura afirma, no case, que com 24 eventos a validação não distingue um
+        desempenho de AUC 0,71 de um de 0,84. Isso é verificável. Hanley e McNeil derivaram em
+        1982 o erro padrão do AUC a partir do número de positivos e de negativos
+        <a href="#r7">[7]</a>:</p>
+
+        <pre class="doc-codigo"><code>Q1 = AUC / (2 - AUC)
+Q2 = 2 * AUC² / (1 + AUC)
+
+           AUC(1-AUC) + (n₊-1)(Q1 - AUC²) + (n₋-1)(Q2 - AUC²)
+EP = √ ( ───────────────────────────────────────────────────── )
+                              n₊ · n₋</code></pre>
+
+        <p>Com AUC suposto de 0,78 sobre as 1.652 observações do segmento:</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Cenário</th><th>Eventos</th><th>Erro padrão</th><th>Intervalo de 95%</th><th>Largura</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Caminho A, eventos efetivos</td><td>24</td><td>0,0562</td><td>0,67 a 0,89</td><td>0,220</td></tr>
+              <tr><td>Caminho A, todos observados</td><td>34</td><td>0,0472</td><td>0,69 a 0,87</td><td>0,185</td></tr>
+              <tr><td>Caminho B, episódios de erosão</td><td>176</td><td>0,0212</td><td>0,74 a 0,82</td><td>0,083</td></tr>
+              <tr><td>Referência da literatura</td><td>1.000</td><td>0,0111</td><td>0,76 a 0,80</td><td>0,043</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Com 24 eventos, o intervalo de 95% vai de 0,67 a 0,89. Ele contém 0,71 e 0,84 ao
+        mesmo tempo. Ao fim de 26 semanas e de R$ 1,842 milhão, a Kovan não saberia dizer se o
+        modelo do Caminho A funciona. Não é opinião de ninguém na mesa: é o tamanho da
+        amostra.</p>
+
+        <p>Um estudo de simulação de 2025 confirma que o comportamento ruim do AUC em eventos
+        raros é dirigido pelo <strong>número de eventos</strong>, e não pela taxa de eventos, e
+        que o viés só chega perto de zero por volta de mil eventos <a href="#r8">[8]</a>. É por
+        isso que aumentar a base de 1.652 para 16.618 observações não resolve: o que precisa
+        crescer é o numerador.</p>
+
+        <h3>Cinco critérios para escolher o alvo</h3>
+        <p>Estes cinco critérios não são framework publicado. Foram construídos a partir das
+        restrições do próprio case, e servem para tornar explícito um trade-off que costuma
+        ficar implícito.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Critério</th><th>A pergunta que ele faz</th><th>Caminho A</th><th>Caminho B</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Observabilidade</td><td>o rótulo existe no sistema?</td><td>existe</td><td>precisa ser construído</td></tr>
+              <tr><td>Prevalência</td><td>há eventos suficientes para treinar?</td><td>34, sendo 24 efetivos</td><td>176 episódios</td></tr>
+              <tr><td>Antecedência</td><td>o sinal acende a tempo de agir?</td><td>depois da decisão do cliente</td><td>com o relacionamento aberto</td></tr>
+              <tr><td>Acionabilidade</td><td>a fila cabe na capacidade?</td><td>6 a 10 por trimestre</td><td>120 a 190, teto de 138</td></tr>
+              <tr><td>Verificabilidade</td><td>dá para auditar se acertou?</td><td>direta</td><td>depende do limiar escolhido</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Nenhum dos dois vence nos cinco. A decisão que o Comitê precisa tomar em 3 de março
+        não é qual caminho é melhor: é qual critério a Kovan aceita perder.</p>
+      </section>
+
+      <section class="doc-secao" id="erros">
+        <h2>6. Erros que este material existe para evitar</h2>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Erro</th><th>Como ele aparece</th><th>O que fazer</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hipótese que não pode perder</td>
+                <td>"existe algum padrão que explica o churn"</td>
+                <td>reescrever com uma variável e um corte que decide</td>
+              </tr>
+              <tr>
+                <td>Número sem origem</td>
+                <td>um valor no caderno que ninguém rastreia até uma célula</td>
+                <td>rodar de novo e colar o código ao lado</td>
+              </tr>
+              <tr>
+                <td>Confirmação em vez de teste</td>
+                <td>todos os vereditos são Confirmada</td>
+                <td>testar algo em que vocês acreditam e podem perder</td>
+              </tr>
+              <tr>
+                <td>Confundidor não tratado</td>
+                <td>"menos visitas causa churn"</td>
+                <td>checar <code>troca_de_am_no_trimestre</code>: a atividade cai quando o território troca de responsável, sem a conta ter mudado</td>
+              </tr>
+              <tr>
+                <td>Ausência tratada como zero</td>
+                <td>contagem de rupturas diferente da mesa ao lado</td>
+                <td>usar <code>pedidos == 0</code>, não receita ausente, e declarar o critério ao lado do número</td>
+              </tr>
+              <tr>
+                <td>Comparar mix antes e depois de 2023</td>
+                <td>toda conta parece ter "expandido o mix" em 2023Q1</td>
+                <td>até 2022Q4 as três linhas de infraestrutura eram registradas como uma só (coluna <code>taxonomia_mix</code>)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="doc-secao doc-referencias" id="referencias">
+        <h2>7. Referências</h2>
+        <ol>
+          <li id="r1">The Structural Challenge: Why Language Models Fail with Tabular Data.
+          <em>Journal of Computational Analysis and Applications</em>, 2026.</li>
+          <li id="r2">Zhou, F. et al. TaCube: Pre-computing Data Cubes for Answering
+          Numerical-Reasoning Questions over Tabular Data. <em>EMNLP</em>, 2022.</li>
+          <li id="r3">Ravnik, J. et al. FinSheet-Bench: From Simple Lookups to Complex
+          Reasoning, Where LLMs Break on Financial Spreadsheets. <em>arXiv</em>, 2026.</li>
+          <li id="r4">Pándy, Á., Lakatos, R. e Hajdu, A. Arithmetic-Aware Question-Answering on
+          Tabular Data Using a Large Language Model-Based Code Generation Agent.
+          <em>IEEE INES</em>, 2025.</li>
+          <li id="r5">Popper, K. <em>A lógica da pesquisa científica</em>, 1934.</li>
+          <li id="r6">Rubin, D. B. Inference and missing data. <em>Biometrika</em>, 1976.</li>
+          <li id="r7">Hanley, J. A. e McNeil, B. J. The meaning and use of the area under a
+          receiver operating characteristic (ROC) curve. <em>Radiology</em>, 1982.</li>
+          <li id="r8">Minus, E. et al. Behavior of prediction performance metrics with rare
+          events. <em>Journal of Clinical Epidemiology</em>, 2025.</li>
+          <li>Wirth, R. e Hipp, J. CRISP-DM: Towards a Standard Process Model for Data Mining,
+          2000.</li>
+          <li>Conn, C. e Sarrazin, H. Issue Tree e MECE. <em>McKinsey</em>, 2019. Autoestudo
+          citado no bloco da manhã.</li>
+          <li>Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão
+          v2, e Caderno de Exhibits 1 a 5.</li>
+        </ol>
+      </section>
+
+    </main>
+
+    <footer class="doc-rodape">
+      <p>Módulo 2 &middot; Aula 01 &middot; Prof. José Romualdo da Costa Filho &middot;
+      MBA em IA e Dados para Negócios, Inteli x Lenovo.</p>
+      <p>Os números do painel citados aqui são reproduzíveis a partir de
+      <code>dados/kovan_painel_contas.csv</code> e estão travados por teste em
+      <code>dados/tests/test_painel_kovan.py</code>.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

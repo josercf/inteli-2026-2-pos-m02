@@ -33,6 +33,7 @@ ARQUIVOS = [
     ("index.html", "index.html"),
     ("aulas/aula01.html", "aulas/aula01.html"),
     ("materiais/caderno-de-hipoteses.md", "materiais/caderno-de-hipoteses.md"),
+    ("materiais/aula01-material-de-apoio.html", "materiais/aula01-material-de-apoio.html"),
     ("notebooks/aula01_hipoteses.ipynb", "notebooks/aula01_hipoteses.ipynb"),
     ("dados/kovan_painel_contas.csv", "dados/kovan_painel_contas.csv"),
 ]

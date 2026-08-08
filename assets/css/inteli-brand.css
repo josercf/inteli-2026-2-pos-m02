@@ -160,3 +160,8 @@ body.portal .eyebrow {
 /* Token de linha de tabela. O cinza de borda mede 1,58:1 sobre branco e some
    projetado; este e o mesmo roxo da marca a baixa opacidade, que sobrevive. */
 :root { --seg-cinza-linha: color-mix(in srgb, var(--inteli-roxo) 28%, var(--inteli-branco)); }
+
+/* O SVG embutido herda a familia do documento; estes dois papeis pedem a
+   serifa da marca, como qualquer titulo. */
+.diagrama-ciclo .fase-titulo { font-family: var(--fonte-titulo); }
+.diagrama-ciclo .fase-num { font-family: var(--fonte-mono); }

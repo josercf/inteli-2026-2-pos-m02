@@ -148,111 +148,6 @@ def _posicoes(n, rx=1.26, ry=0.74):
 
 
 # ---------------------------------------------------------------------------
-# 1. CRISP-DM: onde cada encontro do modulo cai no ciclo
-# ---------------------------------------------------------------------------
-
-CRISP = [
-    ("Entendimento do negócio", "S1"),
-    ("Entendimento dos dados", "S1 a S3"),
-    ("Preparação dos dados", "S2 e S3"),
-    ("Modelagem", "S6"),
-    ("Avaliação", "S6 tarde"),
-    ("Implantação", "S7 e S8"),
-]
-CRISP_HOJE = {0, 1}  # fases que a Aula 01 cobre
-
-
-def gif_crisp_dm(destino: Path) -> None:
-    n = len(CRISP)
-    pos = _posicoes(n)
-
-    def desenhar(k):
-        fig, ax = _figura_ciclo()
-        _desenha_ciclo(ax, CRISP, pos, ROXO)
-        for i, (nome, encontro) in enumerate(CRISP):
-            x, y = pos[i]
-            ativo = i == k
-            hoje = i in CRISP_HOJE
-            ax.add_patch(
-                plt.Rectangle(
-                    (x - 0.52, y - 0.21), 1.04, 0.42,
-                    facecolor=VERDE_ESCURO if ativo else (CINZA_CLARO if hoje else BRANCO),
-                    edgecolor=VERDE_ESCURO if hoje else CINZA_MEDIO,
-                    linewidth=2.4 if hoje else 1.4,
-                    zorder=3,
-                )
-            )
-            ax.text(x, y + 0.05, nome, ha="center", va="center", zorder=4,
-                    fontsize=15, color=BRANCO if ativo else ROXO)
-            ax.text(x, y - 0.10, encontro, ha="center", va="center", zorder=4,
-                    fontsize=13, color=CINZA_CLARO if ativo else ROXO)
-
-        ax.text(0, 0.13, "CRISP-DM", ha="center", va="center",
-                fontsize=26, color=ROXO, weight="bold")
-        ax.text(0, -0.03, "o ciclo que o módulo percorre inteiro", ha="center",
-                va="center", fontsize=15, color=ROXO)
-        ax.text(0, -0.20, "hoje: fases 1 e 2" if k in CRISP_HOJE else "",
-                ha="center", va="center", fontsize=16, color=VERDE_ESCURO, weight="bold")
-        return fig
-
-    salvar_gif(desenhar, n, destino)
-
-
-# ---------------------------------------------------------------------------
-# 2. O ciclo de EDA assistida: o que a IA faz e o que fica com voce
-# ---------------------------------------------------------------------------
-
-CICLO = [
-    ("Pergunta de negócio", "você"),
-    ("Contexto: o schema", "você"),
-    ("Prompt com restrição", "você"),
-    ("Código", "a IA"),
-    ("Execução", "a máquina"),
-    ("Verificação e refutação", "você"),
-]
-# Duas cores, tres rotulos: roxo e o que continua com voce, verde escuro e o
-# que nao e voce. A distincao entre "a IA" e "a maquina" fica no rotulo, nao na
-# cor, porque cinza escuro sobre branco mede 2,03:1 de contraste (WCAG) e nao
-# le numa sala projetada. Onde o texto precisa de menos peso, o caminho e
-# reduzir o corpo, nunca clarear a cor.
-COR_ATOR = {"você": ROXO, "a IA": VERDE_ESCURO, "a máquina": VERDE_ESCURO}
-
-
-def gif_ciclo_eda(destino: Path) -> None:
-    n = len(CICLO)
-    pos = _posicoes(n, rx=1.16)
-
-    def desenhar(k):
-        fig, ax = _figura_ciclo()
-        _desenha_ciclo(ax, CICLO, pos, ROXO)
-        for i, (nome, ator) in enumerate(CICLO):
-            x, y = pos[i]
-            ativo = i == k
-            cor = COR_ATOR[ator]
-            ax.add_patch(
-                plt.Rectangle(
-                    (x - 0.52, y - 0.20), 1.04, 0.40,
-                    facecolor=cor if ativo else BRANCO,
-                    edgecolor=cor, linewidth=2.0, zorder=3,
-                )
-            )
-            ax.text(x, y + 0.05, nome, ha="center", va="center", zorder=4,
-                    fontsize=14.5, color=BRANCO if ativo else ROXO)
-            ax.text(x, y - 0.09, ator, ha="center", va="center", zorder=4,
-                    fontsize=13, style="italic", color=CINZA_CLARO if ativo else cor)
-
-        ax.text(0, 0.13, "EDA assistida por IA", ha="center", va="center",
-                fontsize=24, color=ROXO, weight="bold")
-        ax.text(0, -0.03, "quatro dos seis passos continuam com você", ha="center",
-                va="center", fontsize=15, color=ROXO)
-        ax.text(0, -0.20, "a IA escreve, ela não decide" if CICLO[k][1] == "a IA" else "",
-                ha="center", va="center", fontsize=16, color=VERDE_ESCURO, weight="bold")
-        return fig
-
-    salvar_gif(desenhar, n, destino)
-
-
-# ---------------------------------------------------------------------------
 # 3. Talvera e Andira: a magnitude da queda nao antecipa o desfecho
 # ---------------------------------------------------------------------------
 
@@ -578,8 +473,6 @@ def svg_arvore_hipoteses(destino: Path) -> None:
 # ---------------------------------------------------------------------------
 
 FIGURAS = {
-    "aula01-crisp-dm.gif": gif_crisp_dm,
-    "aula01-ciclo-eda-ia.gif": gif_ciclo_eda,
     "aula01-talvera-andira.gif": gif_talvera_andira,
     "aula01-incerteza-auc.gif": gif_incerteza_auc,
     "aula01-structure-in-out.svg": svg_structure_in_out,

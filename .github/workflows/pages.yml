@@ -69,6 +69,7 @@ jobs:
           pip install -r requirements-dev.txt
           python dados/gerar_painel_kovan.py
           python tools/gerar_figuras_aula01.py
+          python tools/gerar_diagramas_svg.py
           python tools/montar_deck_aula01.py
           python tools/montar_notebook_aula01.py
 

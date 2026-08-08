@@ -141,6 +141,21 @@ def figura(titulo, arquivo, alt, sobrelinha=None, contexto=None, conclusao=None,
                     rotulo_conclusao, conclusao_clara=True, fonte=fonte)
 
 
+def figura_embutida(titulo, arquivo, sobrelinha=None, contexto=None, conclusao=None,
+                    rotulo_conclusao="Implicação", fonte=None) -> str:
+    """Slide de diagrama vetorial embutido no proprio HTML.
+
+    Embutido, e nao em <img>: so assim o fragment do Reveal alcanca cada grupo
+    de dentro da figura, e o professor revela fase a fase em vez de assistir a
+    um GIF rodar sozinho. Imprime como vetor, sem congelar num quadro.
+    """
+    svg = (RAIZ / "assets" / "img" / arquivo).read_text(encoding="utf-8")
+    corpo = "".join(f"        {linha}\n" for linha in svg.strip().splitlines())
+    return conteudo(titulo, corpo, sobrelinha, contexto, conclusao,
+                    rotulo_conclusao, conclusao_clara=True, fonte=fonte,
+                    por_passos=True)
+
+
 def pratica(numero, tarefa, minutos, formato, entrega, checkpoint, passos, criterio) -> str:
     linhas = []
     for i, passo in enumerate(passos, 1):
@@ -372,10 +387,9 @@ SLIDES.append(conteudo(
 ))
 
 # 6. CRISP-DM
-SLIDES.append(figura(
+SLIDES.append(figura_embutida(
     "As fases 1 e 2 do CRISP-DM consomem 6 das 26 semanas do projeto",
-    "aula01-crisp-dm.gif",
-    "Ciclo CRISP-DM com as seis fases e o encontro do módulo que cobre cada uma",
+    "aula01-crisp-dm.svg",
     conclusao="As duas primeiras fases não são preâmbulo do projeto: são 23% da janela que a Kovan tem para entregar o modelo.",
     fonte="Fonte: cronograma do projeto Kovan, 26 semanas, Exhibit 5. CRISP-DM conforme Wirth e Hipp (2000).",
 ))
@@ -396,10 +410,9 @@ SLIDES.append(conteudo(
 ))
 
 # 8. Ciclo de EDA assistida
-SLIDES.append(figura(
+SLIDES.append(figura_embutida(
     "Quatro dos seis passos da EDA assistida permanecem com o analista",
-    "aula01-ciclo-eda-ia.gif",
-    "Ciclo de seis passos da análise exploratória assistida por IA, indicando quem executa cada passo",
+    "aula01-ciclo-eda-ia.svg",
     conclusao="Decidir o que medir e decidir se o número derruba a hipótese não são delegáveis.",
 ))
 

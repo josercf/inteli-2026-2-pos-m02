@@ -1220,3 +1220,48 @@
 .reveal .slides section.section-slide h2 { margin-top: 8px; }
 .secao-condicoes { margin-top: auto; padding-top: 24px; }
 .reveal .secao-numero { margin: 0 0 auto; }
+
+/* ---------------------------------------------------------------------------
+   Diagrama de ciclo embutido
+
+   O SVG entra no HTML sem cor literal: quem pinta e este bloco, consumindo os
+   tokens da marca. Isso mantem o validador de fidelidade valendo depois que o
+   SVG passa a viver dentro do deck, e faz o diagrama acompanhar uma eventual
+   troca de segmento sem regerar arquivo.
+   --------------------------------------------------------------------------- */
+.diagrama-ciclo { display: block; width: 100%; height: auto; }
+
+.diagrama-ciclo .arco {
+  fill: none;
+  /* Os arcos do GIF anterior mediam 2,03:1 sobre branco: eram as marcas que
+     carregavam a direcao do ciclo e as menos visiveis da figura. */
+  stroke: var(--seg-primaria);
+  stroke-width: 2;
+}
+
+.diagrama-ciclo .ponta { fill: var(--seg-primaria); }
+
+.diagrama-ciclo .fase rect {
+  fill: var(--seg-base);
+  stroke: var(--seg-primaria);
+  stroke-width: 1.6;
+}
+
+.diagrama-ciclo .fase.destaque rect {
+  fill: var(--seg-secundaria);
+  stroke: var(--seg-secundaria);
+}
+
+.diagrama-ciclo .fase-titulo { font-size: 17px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-ciclo .fase-apoio { font-size: 15px; fill: var(--seg-texto); }
+.diagrama-ciclo .fase-num { font-size: 15px; fill: var(--seg-secundaria); letter-spacing: 0.06em; }
+.diagrama-ciclo .fase.destaque .fase-num { fill: var(--seg-texto-sobre-secundaria); }
+.diagrama-ciclo .retorno { stroke-dasharray: 7 5; }
+
+/* Uma codificacao, dois estados. O GIF usava dois tratamentos graficos para o
+   mesmo estado (preenchido em uma caixa, borda na outra) e o leitor inferia
+   hierarquia onde nao havia. */
+.diagrama-ciclo .fase.destaque .fase-titulo,
+.diagrama-ciclo .fase.destaque .fase-apoio { fill: var(--seg-texto-sobre-secundaria); }
+
+.diagrama-ciclo .centro-apoio { font-size: 18px; fill: var(--seg-texto); }

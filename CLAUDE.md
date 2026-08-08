@@ -23,7 +23,8 @@ python3 -m http.server 8931                  # preview local (Reveal exige http,
 .venv/bin/python dados/gerar_painel_kovan.py # regera o painel
 .venv/bin/python tools/montar_notebook_aula01.py
 .venv/bin/python tools/montar_deck_aula01.py    # regera o deck (nao editar o HTML a mao)
-.venv/bin/python tools/gerar_figuras_aula01.py  # regera GIFs e diagramas
+.venv/bin/python tools/gerar_figuras_aula01.py  # regera os GIFs de dado
+.venv/bin/python tools/gerar_diagramas_svg.py   # regera os diagramas de ciclo
 .venv/bin/python tools/medir_ocupacao.py        # faixa morta e ocupacao por slide
 
 # push como josercf (o ssh-agent autentica primeiro como canaldoovidio)
@@ -79,6 +80,10 @@ que cita dado inexistente.
 - **Título de slide de conteúdo é afirmativo; de prática, quiz e divisor, não.**
   Em quiz, título afirmativo entrega o gabarito. `test_deck_aula01.py` trava os
   dois casos e a lista de registros rejeitados.
+- **Diagrama de ciclo é SVG embutido, não `<img>`.** Em `<img>` o fragment do
+  Reveal não alcança o interior da figura. As cores vêm do tema, não do arquivo:
+  se o SVG trouxesse hex literal, ele entraria no HTML e o `check_brand.py`
+  passaria a reprovar o deck.
 - **`concept-cards` é uma grade de três colunas.** Para quatro blocos, use o
   modificador `quatro`, senão o quarto fica sozinho com meio slide vazio ao lado.
   O layout passa no validador e mesmo assim lê como erro de montagem.

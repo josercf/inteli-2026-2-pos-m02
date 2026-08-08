@@ -179,3 +179,71 @@ def test_quiz_tem_uma_resposta_correta_por_pergunta(html):
     for bloco in blocos:
         corretas = bloco.count('data-correct="true"')
         assert corretas == 1, corretas
+
+
+# ---------------------------------------------------------------------------
+# Construcao do item de quiz
+# ---------------------------------------------------------------------------
+
+
+def _quizzes(html: str) -> list[list[tuple[str, bool]]]:
+    saida = []
+    for bloco in re.findall(r'<ul class="quiz-options">(.*?)</ul>', html, re.S):
+        itens = []
+        for li in re.findall(r"<li\b(.*?)</li>", bloco, re.S):
+            correta = 'data-correct="true"' in li
+            texto = re.sub(r"<[^>]+>", "", li.split(">", 1)[1]).strip()
+            itens.append((texto, correta))
+        saida.append(itens)
+    return saida
+
+
+def test_a_alternativa_correta_nao_e_a_mais_longa(html):
+    """A correta media 112 caracteres contra 49 a 58 dos distratores, e era a
+    unica em duas linhas: 97px contra 63px de altura. Numa turma senior, "a
+    mais longa e a mais qualificada e a certa" resolve o item sem ler o painel.
+    """
+    for i, itens in enumerate(_quizzes(html), 1):
+        tamanhos = [len(t) for t, _ in itens]
+        correta = next(len(t) for t, c in itens if c)
+        assert correta != max(tamanhos), (i, tamanhos)
+
+
+def test_as_alternativas_tem_comprimento_comparavel(html):
+    for i, itens in enumerate(_quizzes(html), 1):
+        tamanhos = [len(t) for t, _ in itens]
+        assert max(tamanhos) - min(tamanhos) <= 25, (i, tamanhos)
+
+
+def test_a_correta_nao_fica_sempre_na_mesma_posicao(html):
+    posicoes = [
+        next(j for j, (_, c) in enumerate(itens) if c) for itens in _quizzes(html)
+    ]
+    assert len(set(posicoes)) > 1, posicoes
+
+
+# ---------------------------------------------------------------------------
+# Revelacao por passos
+# ---------------------------------------------------------------------------
+
+
+def test_os_slides_de_sequencia_revelam_por_passos(html):
+    """Onde o argumento tem ordem, a turma nao pode ler o fim antes do comeco.
+
+    O caso mais claro e o slide dos quatro niveis de prompt: a tese e que cada
+    nivel ACRESCENTA uma restricao, e com os quatro visiveis de uma vez ninguem
+    sente o acrescimo.
+    """
+    assert html.count("fragment") >= 15, html.count("fragment")
+
+
+def test_a_implicacao_e_o_ultimo_passo_onde_ha_revelacao(html):
+    """Se a faixa aparece junto com o corpo, a turma le a conclusao antes da
+    primeira frase e o resto do slide vira confirmacao."""
+    import re as _re
+
+    for classe, corpo in _re.findall(r'<section class="([^"]+)">(.*?)</section>', html, _re.S):
+        if classe != "content-slide" or "fragment" not in corpo:
+            continue
+        faixa = _re.search(r'<div class="faixa-conclusao([^"]*)"', corpo)
+        assert faixa and "fragment" in faixa.group(1), corpo[:120]

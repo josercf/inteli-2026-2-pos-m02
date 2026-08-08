@@ -48,6 +48,11 @@ BASE_UTIL = 660
 MEDIDA = """
 (seletorMoldura) => {
   const slides = [...document.querySelectorAll('.slides > section')];
+  // Revela todo fragment antes de medir. O Reveal os esconde com
+  // `visibility: hidden`, e a varredura so conta tinta visivel: sem isto, um
+  // slide que revela por passos aparece quase vazio na medicao, e a faixa
+  // morta media saltou de 31px para 98px so por causa disso.
+  for (const f of document.querySelectorAll('.fragment')) f.classList.add('visible');
   return slides.map((s, i) => {
     const anterior = s.style.display;
     s.style.display = 'flex';

@@ -134,12 +134,12 @@
           <h2>O erro em tabela vem da arquitetura, não da falta de capacidade do modelo</h2>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>Tokenização linear</h3><p>A tabela entra como sequência de texto. A relação entre linha e coluna não sobrevive à serialização.</p><p class="fonte-nota">O erro cresce com o número de colunas</p></div>
-          <div class="concept-card"><h3>Janela de contexto</h3><p>16.618 linhas não cabem no contexto. O modelo lê uma amostra e responde sobre o arquivo inteiro.</p><p class="fonte-nota">A resposta não distingue o que ele leu do que completou</p></div>
-          <div class="concept-card"><h3>Cálculo implícito</h3><p>Somar dezesseis mil valores por previsão do próximo token não é uma operação aritmética.</p><p class="fonte-nota">A saída tem a forma de um cálculo e não passou por um</p></div>
+          <div class="concept-card fragment"><h3>Tokenização linear</h3><p>A tabela entra como sequência de texto. A relação entre linha e coluna não sobrevive à serialização.</p><p class="fonte-nota">O erro cresce com o número de colunas</p></div>
+          <div class="concept-card fragment"><h3>Janela de contexto</h3><p>16.618 linhas não cabem no contexto. O modelo lê uma amostra e responde sobre o arquivo inteiro.</p><p class="fonte-nota">A resposta não distingue o que ele leu do que completou</p></div>
+          <div class="concept-card fragment"><h3>Cálculo implícito</h3><p>Somar dezesseis mil valores por previsão do próximo token não é uma operação aritmética.</p><p class="fonte-nota">A saída tem a forma de um cálculo e não passou por um</p></div>
         </div>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
           <p>Nenhum dos três se resolve com um modelo maior. A saída é separar leitura de computação.</p>
         </div>
@@ -344,21 +344,21 @@
               <p class="quiz-question">Você pediu a margem média por conta e recebeu R$ 412 mil. O que aconteceu?</p>
               <ul class="quiz-options">
               <li data-letra="A"
-                  data-correct="true"
-                  data-correct-msg="O modelo completou por plausibilidade. Ele não distingue lembrar de calcular: o número tem a forma certa e origem nenhuma."
-                  data-incorrect-msg="Reveja: o painel não traz custo nem margem em nenhuma das 20 colunas.">O modelo produziu um número plausível sem nenhuma origem no dado</li>
-              <li data-letra="B"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="Não existe: nenhuma combinação das 20 colunas produz margem sem dado de custo.">Ele derivou a margem de receita e desconto</li>
+                  data-incorrect-msg="Não existe: nenhuma combinação das 20 colunas produz margem sem dado de custo.">Ele derivou a margem a partir de receita e do desconto médio</li>
+              <li data-letra="B"
+                  data-correct="true"
+                  data-correct-msg="O modelo completou por plausibilidade. Ele não distingue lembrar de calcular: o número tem a forma certa e origem nenhuma."
+                  data-incorrect-msg="Reveja: o painel não traz custo nem margem em nenhuma das 20 colunas.">Ele completou um número plausível, sem origem em coluna</li>
               <li data-letra="C"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="O painel foi carregado por inteiro na célula anterior.">Ele leu um arquivo diferente do que carregamos</li>
+                  data-incorrect-msg="O painel foi carregado por inteiro na célula anterior.">Ele leu um arquivo diferente daquele que foi carregado</li>
               <li data-letra="D"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="Um erro de cálculo pressupõe que houve cálculo. Não houve.">Foi um erro de cálculo que se corrige pedindo de novo</li>
+                  data-incorrect-msg="Um erro de cálculo pressupõe que houve cálculo. Não houve.">Foi erro de cálculo, e some quando se pede novamente</li>
               </ul>
             </div>
             <div>
@@ -393,13 +393,13 @@
           <h2>Cada nível acrescenta uma restrição e reduz o espaço de resposta do modelo</h2>
         </div>
         <div class="concept-cards quatro">
-          <div class="concept-card"><h3>Nível 0</h3><p>Sem estrutura. Pedido em linguagem natural, sem recorte.</p><p class="fonte-nota">Volta: resumo de colunas e três observações genéricas</p></div>
-          <div class="concept-card"><h3>Nível 1</h3><p>CREATE: papel, pedido, exemplos, ajustes, formato e extras.</p><p class="fonte-nota">Volta: prosa estruturada, ainda sem recorte</p></div>
-          <div class="concept-card"><h3>Nível 2</h3><p>Estrutura na entrada e na saída: colunas, recorte e formato da tabela.</p><p class="fonte-nota">Volta: código pandas, faixas de variação por conta</p></div>
-          <div class="concept-card"><h3>Nível 3</h3><p>Postura adversarial: o que refutaria o achado.</p><p class="fonte-nota">Volta: o código e as explicações que o derrubam</p></div>
+          <div class="concept-card fragment"><h3>Nível 0</h3><p>Sem estrutura. Pedido em linguagem natural, sem recorte.</p><p class="fonte-nota">Volta: resumo de colunas e três observações genéricas</p></div>
+          <div class="concept-card fragment"><h3>Nível 1</h3><p>CREATE: papel, pedido, exemplos, ajustes, formato e extras.</p><p class="fonte-nota">Volta: prosa estruturada, ainda sem recorte</p></div>
+          <div class="concept-card fragment"><h3>Nível 2</h3><p>Estrutura na entrada e na saída: colunas, recorte e formato da tabela.</p><p class="fonte-nota">Volta: código pandas, faixas de variação por conta</p></div>
+          <div class="concept-card fragment"><h3>Nível 3</h3><p>Postura adversarial: o que refutaria o achado.</p><p class="fonte-nota">Volta: o código e as explicações que o derrubam</p></div>
         </div>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
           <p>O nível 2 é o piso para qualquer pedido que precise produzir um número.</p>
         </div>
@@ -580,12 +580,12 @@ falta. Não estime.</span></code></pre>
           <h2>Uma hipótese só é testável se especifica variável, operação, janela e critério de refutação</h2>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>Variável</h3><p>Qual coluna do painel carrega o sinal.</p><p class="fonte-nota">receita_brl, linhas_produto_ativas</p></div>
-          <div class="concept-card"><h3>Operação</h3><p>O que se calcula sobre ela, e sobre quais grupos.</p><p class="fonte-nota">mediana por segmento, dois grupos</p></div>
-          <div class="concept-card"><h3>Janela</h3><p>Quais trimestres entram, e por que os outros ficam de fora.</p><p class="fonte-nota">2023Q2 a 2025Q4, onze trimestres</p></div>
+          <div class="concept-card fragment"><h3>Variável</h3><p>Qual coluna do painel carrega o sinal.</p><p class="fonte-nota">receita_brl, linhas_produto_ativas</p></div>
+          <div class="concept-card fragment"><h3>Operação</h3><p>O que se calcula sobre ela, e sobre quais grupos.</p><p class="fonte-nota">mediana por segmento, dois grupos</p></div>
+          <div class="concept-card fragment"><h3>Janela</h3><p>Quais trimestres entram, e por que os outros ficam de fora.</p><p class="fonte-nota">2023Q2 a 2025Q4, onze trimestres</p></div>
         </div>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">O quarto</span>
           <p>Critério de refutação: qual resultado derruba a hipótese, escrito antes de rodar. Sem esta linha, a análise vira busca por confirmação.</p>
         </div>
@@ -625,12 +625,12 @@ falta. Não estime.</span></code></pre>
           <h2>Rentabilidade, engajamento e efeito de intervenção não são testáveis com estas 20 colunas</h2>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>Rentabilidade</h3><p>Não há custo nem margem. Nenhuma hipótese sobre lucro por conta é testável.</p><p class="fonte-nota">coluna ausente: custo, margem</p></div>
-          <div class="concept-card"><h3>Engajamento completo</h3><p>Visitas e interações existem para parte da base, e a cobertura não é uniforme entre segmentos.</p><p class="fonte-nota">cobertura parcial: visitas_registradas</p></div>
-          <div class="concept-card"><h3>Efeito da intervenção</h3><p>Não há registro de quem recebeu plano de intervenção.</p><p class="fonte-nota">coluna ausente: plano_intervencao</p></div>
+          <div class="concept-card fragment"><h3>Rentabilidade</h3><p>Não há custo nem margem. Nenhuma hipótese sobre lucro por conta é testável.</p><p class="fonte-nota">coluna ausente: custo, margem</p></div>
+          <div class="concept-card fragment"><h3>Engajamento completo</h3><p>Visitas e interações existem para parte da base, e a cobertura não é uniforme entre segmentos.</p><p class="fonte-nota">cobertura parcial: visitas_registradas</p></div>
+          <div class="concept-card fragment"><h3>Efeito da intervenção</h3><p>Não há registro de quem recebeu plano de intervenção.</p><p class="fonte-nota">coluna ausente: plano_intervencao</p></div>
         </div>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
           <p>Insuficiente é um veredito legítimo e vai aparecer no caderno. Dizer que o dado não responde é resultado; inventar que responde é o que a Kovan já fez uma vez, com o Radar de Contas.</p>
         </div>
@@ -651,13 +651,13 @@ falta. Não estime.</span></code></pre>
         <table class="tabela-criterios">
           <thead><tr><th>Mecanismo</th><th>Onde aparece no painel</th><th>O que fazer</th></tr></thead>
           <tbody>
-            <tr><td>Completamente ao acaso</td><td>receita não registrada por atraso no fechamento contábil, cerca de 1% dos trimestres</td><td class="vence">excluir a linha não enviesa, só perde potência</td></tr>
-            <tr><td>Ao acaso, dado o observado</td><td>engajamento comercial ausente, e a cobertura é pior nas contas menores</td><td>corrigível condicionando ao segmento, que está na base</td></tr>
-            <tr class="decisiva"><td>Não ao acaso</td><td>contas que compram por portal de procurement registram menos atividade comercial</td><td>não corrigível com o que existe na base</td></tr>
+            <tr class="fragment"><td>Completamente ao acaso</td><td>receita não registrada por atraso no fechamento contábil, cerca de 1% dos trimestres</td><td class="vence">excluir a linha não enviesa, só perde potência</td></tr>
+            <tr class="fragment"><td>Ao acaso, dado o observado</td><td>engajamento comercial ausente, e a cobertura é pior nas contas menores</td><td>corrigível condicionando ao segmento, que está na base</td></tr>
+            <tr class="decisiva fragment"><td>Não ao acaso</td><td>contas que compram por portal de procurement registram menos atividade comercial</td><td>não corrigível com o que existe na base</td></tr>
           </tbody>
         </table>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
           <p>Taxonomia de Rubin. Tratar os três casos da mesma forma foi a decisão que separou a contagem das mesas.</p>
         </div>
@@ -745,28 +745,28 @@ falta. Não estime.</span></code></pre>
               <p class="quiz-question">Qual destas hipóteses pode ser testada sobre o painel e pode perder?</p>
               <ul class="quiz-options">
               <li data-letra="A"
-                  data-correct="true"
-                  data-correct-msg="Tem variável, grupos comparados, janela declarada e um corte que decide. Dá para rodar e dá para perder."
-                  data-incorrect-msg="Volte e procure a que traz variável, janela e um número que decide.">Contas que estreitam o mix antes de reduzir receita rompem mais que as que só reduzem receita, entre 2023 e 2025</li>
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="Não tem variável nem janela, e nenhum resultado a derrubaria.">Clientes insatisfeitos com o atendimento deixam a Kovan mais cedo</li>
               <li data-letra="B"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="Não tem variável nem janela, e nenhum resultado a derrubaria.">Os clientes estão insatisfeitos com o atendimento da Kovan</li>
+                  data-incorrect-msg="O painel não registra concorrência. Sem coluna, não há teste.">A concorrência ficou mais agressiva nas contas que saíram em 2025 e 2024</li>
               <li data-letra="C"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="O painel não registra concorrência. Sem coluna, não há teste.">A concorrência está mais agressiva nas contas que saíram</li>
+                  data-incorrect-msg="Confirma-se sempre: qualquer resultado cabe nela. Uma hipótese que não pode perder não informa nada.">Existe no painel algum padrão capaz de explicar o churn das contas</li>
               <li data-letra="D"
-                  data-correct="false"
-                  data-correct-msg="Correto."
-                  data-incorrect-msg="Confirma-se sempre: qualquer resultado cabe nela. Uma hipótese que não pode perder não informa nada.">Existe algum padrão nos dados que explica o churn</li>
+                  data-correct="true"
+                  data-correct-msg="Tem variável, grupos comparados, janela declarada e um corte que decide. Dá para rodar e dá para perder."
+                  data-incorrect-msg="Volte e procure a que traz variável, janela e um número que decide.">Contas que estreitam o mix antes da receita rompem mais</li>
               </ul>
             </div>
             <div>
               <dl class="quiz-cenario">
               <dt>O painel oferece</dt><dd>20 colunas, 14 trimestres</dd>
-              <dt>A hipótese precisa de</dt><dd>variável, operação, janela e um corte que decide</dd>
-              <dt>O teste</dt><dd>se nenhum resultado a derruba, não é hipótese</dd>
+              <dt>As hipóteses</dt><dd>vieram do backlog que os grupos escreveram de manhã</dd>
+              <dt>A janela</dt><dd>14 trimestres, de 2022Q3 a 2025Q4</dd>
               </dl>
               <p class="quiz-feedback"></p>
             </div>
@@ -832,15 +832,15 @@ falta. Não estime.</span></code></pre>
         <table class="tabela-criterios">
           <thead><tr><th>Critério</th><th>A pergunta que ele faz</th><th>Caminho A &middot; ruptura</th><th>Caminho B &middot; erosão</th></tr></thead>
           <tbody>
-            <tr><td>Observabilidade</td><td>o rótulo existe no sistema?</td><td class="vence">existe</td><td>precisa ser construído</td></tr>
+            <tr class="fragment"><td>Observabilidade</td><td>o rótulo existe no sistema?</td><td class="vence">existe</td><td>precisa ser construído</td></tr>
             <tr class="decisiva"><td>Prevalência</td><td>há eventos suficientes para treinar?</td><td>34 eventos, 24 efetivos</td><td class="vence">176 episódios</td></tr>
-            <tr><td>Antecedência</td><td>o sinal acende a tempo de agir?</td><td>depois da decisão do cliente</td><td class="vence">com o relacionamento aberto</td></tr>
-            <tr><td>Acionabilidade</td><td>a fila cabe na capacidade?</td><td>6 a 10 por trimestre</td><td class="vence">120 a 190, teto de 138</td></tr>
-            <tr><td>Verificabilidade</td><td>dá para auditar se acertou?</td><td class="vence">direta</td><td>depende do limiar escolhido</td></tr>
+            <tr class="fragment"><td>Antecedência</td><td>o sinal acende a tempo de agir?</td><td>depois da decisão do cliente</td><td class="vence">com o relacionamento aberto</td></tr>
+            <tr class="fragment"><td>Acionabilidade</td><td>a fila cabe na capacidade?</td><td>6 a 10 por trimestre</td><td class="vence">120 a 190, teto de 138</td></tr>
+            <tr class="fragment"><td>Verificabilidade</td><td>dá para auditar se acertou?</td><td class="vence">direta</td><td>depende do limiar escolhido</td></tr>
           </tbody>
         </table>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
           <p>A decisão não é qual caminho é melhor, é qual critério a Kovan aceita perder.</p>
         </div>
@@ -973,21 +973,21 @@ falta. Não estime.</span></code></pre>
               <p class="quiz-question">Duas mesas contaram rupturas com o mesmo critério e chegaram a números diferentes. Qual a explicação mais provável?</p>
               <ul class="quiz-options">
               <li data-letra="A"
-                  data-correct="true"
-                  data-correct-msg="Trimestre sem receita registrada não é trimestre sem compra. Excluir a linha e imputar o valor produzem séries diferentes, e a contagem muda junto."
-                  data-incorrect-msg="Pense no que cada mesa fez com as linhas em que a receita não está registrada.">Cada mesa tratou de um jeito os trimestres sem receita registrada</li>
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="O painel é o mesmo arquivo, carregado da mesma URL.">Uma das mesas carregou um arquivo diferente do painel oficial da Kovan</li>
               <li data-letra="B"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="O painel é o mesmo arquivo, carregado da mesma URL.">Uma das mesas carregou um arquivo diferente</li>
+                  data-incorrect-msg="O modelo escreveu o código, mas quem rodou foi você, sobre a base inteira.">A IA alucinou o resultado da contagem em uma das duas mesas</li>
               <li data-letra="C"
-                  data-correct="false"
-                  data-correct-msg="Correto."
-                  data-incorrect-msg="O modelo escreveu o código, mas quem rodou foi você, sobre a base inteira.">A IA alucinou o resultado em uma das mesas</li>
+                  data-correct="true"
+                  data-correct-msg="Trimestre sem receita registrada não é trimestre sem compra. Excluir a linha e imputar o valor produzem séries diferentes, e a contagem muda junto."
+                  data-incorrect-msg="Pense no que cada mesa fez com as linhas em que a receita não está registrada.">Cada mesa tratou de um jeito o trimestre sem receita</li>
               <li data-letra="D"
                   data-correct="false"
                   data-correct-msg="Correto."
-                  data-incorrect-msg="Contagem de eventos raros não depende de arredondamento.">É arredondamento e não importa</li>
+                  data-incorrect-msg="Contagem de eventos raros não depende de arredondamento.">É diferença de arredondamento e não altera a leitura</li>
               </ul>
             </div>
             <div>
@@ -1014,13 +1014,13 @@ falta. Não estime.</span></code></pre>
           <h2>Encadeamento entre a entrega de hoje, a Aula 02 e o Artefato 1</h2>
         </div>
         <div class="linha-tempo">
-          <div class="etapa"><p class="quando">08/08 &middot; hoje</p><h3>Fica pronto</h3><p>Caderno de hipóteses com veredito, painel carregado e conferido, e a contagem de rupturas do Caminho A.</p></div>
-          <div class="etapa"><p class="quando">15/08 &middot; manhã</p><h3>Continua com o Rafael</h3><p>A discussão de alvo volta pelo lado de negócio, com a recomendação que o Comitê precisa assinar.</p></div>
-          <div class="etapa"><p class="quando">15/08 &middot; tarde</p><h3>Trata o dado</h3><p>As quatro advertências de qualidade do painel. Foi uma delas que separou a contagem das mesas hoje.</p></div>
-          <div class="etapa avaliada"><p class="quando">Semana 5 &middot; 05/09</p><h3>Artefato 1</h3><p>Análise Exploratória de Dados, com a segmentação que a trilha de Negócios entrega no mesmo marco.</p></div>
+          <div class="etapa fragment"><p class="quando">08/08 &middot; hoje</p><h3>Fica pronto</h3><p>Caderno de hipóteses com veredito, painel carregado e conferido, e a contagem de rupturas do Caminho A.</p></div>
+          <div class="etapa fragment"><p class="quando">15/08 &middot; manhã</p><h3>Continua com o Rafael</h3><p>A discussão de alvo volta pelo lado de negócio, com a recomendação que o Comitê precisa assinar.</p></div>
+          <div class="etapa fragment"><p class="quando">15/08 &middot; tarde</p><h3>Trata o dado</h3><p>As quatro advertências de qualidade do painel. Foi uma delas que separou a contagem das mesas hoje.</p></div>
+          <div class="etapa avaliada fragment"><p class="quando">Semana 5 &middot; 05/09</p><h3>Artefato 1</h3><p>Análise Exploratória de Dados, com a segmentação que a trilha de Negócios entrega no mesmo marco.</p></div>
         </div>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
           <p>A divergência de contagem de hoje não é erro de ninguém: é o insumo da aula de qualidade de dado em 15/08.</p>
         </div>

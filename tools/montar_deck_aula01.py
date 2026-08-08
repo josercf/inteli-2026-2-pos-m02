@@ -66,10 +66,23 @@ def _cabecalho(sobrelinha: str | None, titulo: str, contexto: str | None) -> str
     return "".join(partes)
 
 
-def _conclusao(texto: str | None, rotulo: str = "Implicação", clara: bool = False) -> str:
+def _conclusao(texto: str | None, rotulo: str = "Implicação", clara: bool = False,
+               fragmento: bool = False) -> str:
+    """A faixa de implicacao.
+
+    Quando o slide revela por passos, ela e o ultimo fragment: o titulo afirma
+    o achado, a exposicao o constroi e a implicacao fecha. Sem isso a turma le
+    a conclusao antes da primeira frase do professor, e o resto do slide vira
+    confirmacao do que ja foi lido.
+
+    O Reveal esconde fragment com `visibility: hidden`, nao com `display: none`:
+    o espaco continua reservado e o layout nao pula ao revelar.
+    """
     if not texto:
         return ""
     classe = "faixa-conclusao clara" if clara else "faixa-conclusao"
+    if fragmento:
+        classe += " fragment"
     return (
         f'        <div class="{classe}">\n'
         f'          <span class="rotulo">{rotulo}</span>\n'
@@ -82,26 +95,29 @@ def _fonte(texto: str | None) -> str:
     return f'        <p class="fonte-nota">{texto}</p>\n' if texto else ""
 
 
-def _fecho(conclusao, rotulo, clara, fonte) -> str:
+def _fecho(conclusao, rotulo, clara, fonte, fragmento=False) -> str:
     """Faixa de conclusao e linha de fonte, no mesmo bloco, coladas na base.
 
     Precisam sair juntas: com `margin-top: auto` na faixa sozinha, a linha de
     fonte vinha depois dela e caia fora da area util. Quatro slides estouravam
     por 10 a 63px exatamente por isso.
     """
-    corpo = _conclusao(conclusao, rotulo, clara) + _fonte(fonte)
+    corpo = _conclusao(conclusao, rotulo, clara, fragmento) + _fonte(fonte)
     return f'        <div class="fecho">\n{corpo}        </div>\n' if corpo else ""
 
 
 def conteudo(titulo, corpo, sobrelinha=None, contexto=None, conclusao=None,
-             rotulo_conclusao="Implicação", conclusao_clara=False, fonte=None) -> str:
+             rotulo_conclusao="Implicação", conclusao_clara=False, fonte=None,
+             por_passos=False) -> str:
+    """Slide de conteudo. `por_passos` faz a faixa de implicacao ser o ultimo
+    fragment, para os slides cujo corpo tambem e revelado por partes."""
     return (
         '      <section class="content-slide">\n'
         '        <div class="top-bar"></div>\n'
         f"        {LOGO}\n"
         + _cabecalho(sobrelinha, titulo, contexto)
         + corpo
-        + _fecho(conclusao, rotulo_conclusao, conclusao_clara, fonte)
+        + _fecho(conclusao, rotulo_conclusao, conclusao_clara, fonte, por_passos)
         + _rodape()
         + "      </section>\n"
     )
@@ -315,17 +331,18 @@ SLIDES.append(conteudo(
 SLIDES.append(conteudo(
     "O erro em tabela vem da arquitetura, não da falta de capacidade do modelo",
     '        <div class="concept-cards">\n'
-    '          <div class="concept-card"><h3>Tokenização linear</h3>'
+    '          <div class="concept-card fragment"><h3>Tokenização linear</h3>'
     "<p>A tabela entra como sequência de texto. A relação entre linha e coluna não sobrevive à serialização.</p>"
     '<p class="fonte-nota">O erro cresce com o número de colunas</p></div>\n'
-    '          <div class="concept-card"><h3>Janela de contexto</h3>'
+    '          <div class="concept-card fragment"><h3>Janela de contexto</h3>'
     "<p>16.618 linhas não cabem no contexto. O modelo lê uma amostra e responde sobre o arquivo inteiro.</p>"
     '<p class="fonte-nota">A resposta não distingue o que ele leu do que completou</p></div>\n'
-    '          <div class="concept-card"><h3>Cálculo implícito</h3>'
+    '          <div class="concept-card fragment"><h3>Cálculo implícito</h3>'
     "<p>Somar dezesseis mil valores por previsão do próximo token não é uma operação aritmética.</p>"
     '<p class="fonte-nota">A saída tem a forma de um cálculo e não passou por um</p></div>\n'
     "        </div>\n",
     conclusao="Nenhum dos três se resolve com um modelo maior. A saída é separar leitura de computação.",
+    por_passos=True,
     fonte="Fontes: The Structural Challenge, 2026; TaCube, EMNLP 2022.",
 ))
 
@@ -419,16 +436,16 @@ SLIDES.append(quiz(
     "Margem média em painel sem coluna de margem",
     "Você pediu a margem média por conta e recebeu R$ 412 mil. O que aconteceu?",
     [
-        {"texto": "O modelo produziu um número plausível sem nenhuma origem no dado", "certa": True,
-         "certo": "O modelo completou por plausibilidade. Ele não distingue lembrar de calcular: o número tem a forma certa e origem nenhuma.",
-         "errado": "Reveja: o painel não traz custo nem margem em nenhuma das 20 colunas."},
-        {"texto": "Ele derivou a margem de receita e desconto", "certa": False,
+        {"texto": "Ele derivou a margem a partir de receita e do desconto médio", "certa": False,
          "certo": "Correto.",
          "errado": "Não existe: nenhuma combinação das 20 colunas produz margem sem dado de custo."},
-        {"texto": "Ele leu um arquivo diferente do que carregamos", "certa": False,
+        {"texto": "Ele completou um número plausível, sem origem em coluna", "certa": True,
+         "certo": "O modelo completou por plausibilidade. Ele não distingue lembrar de calcular: o número tem a forma certa e origem nenhuma.",
+         "errado": "Reveja: o painel não traz custo nem margem em nenhuma das 20 colunas."},
+        {"texto": "Ele leu um arquivo diferente daquele que foi carregado", "certa": False,
          "certo": "Correto.",
          "errado": "O painel foi carregado por inteiro na célula anterior."},
-        {"texto": "Foi um erro de cálculo que se corrige pedindo de novo", "certa": False,
+        {"texto": "Foi erro de cálculo, e some quando se pede novamente", "certa": False,
          "certo": "Correto.",
          "errado": "Um erro de cálculo pressupõe que houve cálculo. Não houve."},
     ],
@@ -450,17 +467,18 @@ SLIDES.append(secao(
 SLIDES.append(conteudo(
     "Cada nível acrescenta uma restrição e reduz o espaço de resposta do modelo",
     '        <div class="concept-cards quatro">\n'
-    '          <div class="concept-card"><h3>Nível 0</h3><p>Sem estrutura. Pedido em linguagem natural, sem recorte.</p>'
+    '          <div class="concept-card fragment"><h3>Nível 0</h3><p>Sem estrutura. Pedido em linguagem natural, sem recorte.</p>'
     '<p class="fonte-nota">Volta: resumo de colunas e três observações genéricas</p></div>\n'
-    '          <div class="concept-card"><h3>Nível 1</h3><p>CREATE: papel, pedido, exemplos, ajustes, formato e extras.</p>'
+    '          <div class="concept-card fragment"><h3>Nível 1</h3><p>CREATE: papel, pedido, exemplos, ajustes, formato e extras.</p>'
     '<p class="fonte-nota">Volta: prosa estruturada, ainda sem recorte</p></div>\n'
-    '          <div class="concept-card"><h3>Nível 2</h3><p>Estrutura na entrada e na saída: colunas, recorte e formato da tabela.</p>'
+    '          <div class="concept-card fragment"><h3>Nível 2</h3><p>Estrutura na entrada e na saída: colunas, recorte e formato da tabela.</p>'
     '<p class="fonte-nota">Volta: código pandas, faixas de variação por conta</p></div>\n'
-    '          <div class="concept-card"><h3>Nível 3</h3><p>Postura adversarial: o que refutaria o achado.</p>'
+    '          <div class="concept-card fragment"><h3>Nível 3</h3><p>Postura adversarial: o que refutaria o achado.</p>'
     '<p class="fonte-nota">Volta: o código e as explicações que o derrubam</p></div>\n'
     "        </div>\n",
     sobrelinha="Pergunta de negócio: a queda de receita é uniforme na carteira?",
     conclusao="O nível 2 é o piso para qualquer pedido que precise produzir um número.",
+    por_passos=True,
 ))
 
 # 14. Nivel 0 contra nivel 2
@@ -545,14 +563,15 @@ SLIDES.append(secao(
 SLIDES.append(conteudo(
     "Uma hipótese só é testável se especifica variável, operação, janela e critério de refutação",
     '        <div class="concept-cards">\n'
-    '          <div class="concept-card"><h3>Variável</h3><p>Qual coluna do painel carrega o sinal.</p>'
+    '          <div class="concept-card fragment"><h3>Variável</h3><p>Qual coluna do painel carrega o sinal.</p>'
     '<p class="fonte-nota">receita_brl, linhas_produto_ativas</p></div>\n'
-    '          <div class="concept-card"><h3>Operação</h3><p>O que se calcula sobre ela, e sobre quais grupos.</p>'
+    '          <div class="concept-card fragment"><h3>Operação</h3><p>O que se calcula sobre ela, e sobre quais grupos.</p>'
     '<p class="fonte-nota">mediana por segmento, dois grupos</p></div>\n'
-    '          <div class="concept-card"><h3>Janela</h3><p>Quais trimestres entram, e por que os outros ficam de fora.</p>'
+    '          <div class="concept-card fragment"><h3>Janela</h3><p>Quais trimestres entram, e por que os outros ficam de fora.</p>'
     '<p class="fonte-nota">2023Q2 a 2025Q4, onze trimestres</p></div>\n'
     "        </div>\n",
     conclusao="Critério de refutação: qual resultado derruba a hipótese, escrito antes de rodar. Sem esta linha, a análise vira busca por confirmação.",
+    por_passos=True,
     rotulo_conclusao="O quarto",
 ))
 
@@ -569,14 +588,15 @@ SLIDES.append(figura(
 SLIDES.append(conteudo(
     "Rentabilidade, engajamento e efeito de intervenção não são testáveis com estas 20 colunas",
     '        <div class="concept-cards">\n'
-    '          <div class="concept-card"><h3>Rentabilidade</h3><p>Não há custo nem margem. Nenhuma hipótese sobre lucro por conta é testável.</p>'
+    '          <div class="concept-card fragment"><h3>Rentabilidade</h3><p>Não há custo nem margem. Nenhuma hipótese sobre lucro por conta é testável.</p>'
     '<p class="fonte-nota">coluna ausente: custo, margem</p></div>\n'
-    '          <div class="concept-card"><h3>Engajamento completo</h3><p>Visitas e interações existem para parte da base, e a cobertura não é uniforme entre segmentos.</p>'
+    '          <div class="concept-card fragment"><h3>Engajamento completo</h3><p>Visitas e interações existem para parte da base, e a cobertura não é uniforme entre segmentos.</p>'
     '<p class="fonte-nota">cobertura parcial: visitas_registradas</p></div>\n'
-    '          <div class="concept-card"><h3>Efeito da intervenção</h3><p>Não há registro de quem recebeu plano de intervenção.</p>'
+    '          <div class="concept-card fragment"><h3>Efeito da intervenção</h3><p>Não há registro de quem recebeu plano de intervenção.</p>'
     '<p class="fonte-nota">coluna ausente: plano_intervencao</p></div>\n'
     "        </div>\n",
     conclusao="Insuficiente é um veredito legítimo e vai aparecer no caderno. Dizer que o dado não responde é resultado; inventar que responde é o que a Kovan já fez uma vez, com o Radar de Contas.",
+    por_passos=True,
 ))
 
 # 21b. Mecanismos de ausencia
@@ -585,18 +605,19 @@ SLIDES.append(conteudo(
     '        <table class="tabela-criterios">\n'
     "          <thead><tr><th>Mecanismo</th><th>Onde aparece no painel</th><th>O que fazer</th></tr></thead>\n"
     "          <tbody>\n"
-    "            <tr><td>Completamente ao acaso</td>"
+    '            <tr class="fragment"><td>Completamente ao acaso</td>'
     "<td>receita não registrada por atraso no fechamento contábil, cerca de 1% dos trimestres</td>"
     '<td class="vence">excluir a linha não enviesa, só perde potência</td></tr>\n'
-    "            <tr><td>Ao acaso, dado o observado</td>"
+    '            <tr class="fragment"><td>Ao acaso, dado o observado</td>'
     "<td>engajamento comercial ausente, e a cobertura é pior nas contas menores</td>"
     "<td>corrigível condicionando ao segmento, que está na base</td></tr>\n"
-    '            <tr class="decisiva"><td>Não ao acaso</td>'
+    '            <tr class="decisiva fragment"><td>Não ao acaso</td>'
     "<td>contas que compram por portal de procurement registram menos atividade comercial</td>"
     "<td>não corrigível com o que existe na base</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
     conclusao="Taxonomia de Rubin. Tratar os três casos da mesma forma foi a decisão que separou a contagem das mesas.",
+    por_passos=True,
     fonte="Fonte: advertências de qualidade do Exhibit 3. Taxonomia conforme Rubin, Inference and missing data, Biometrika, 1976.",
 ))
 
@@ -624,23 +645,23 @@ SLIDES.append(quiz(
     "Hipótese pronta para virar código",
     "Qual destas hipóteses pode ser testada sobre o painel e pode perder?",
     [
-        {"texto": "Contas que estreitam o mix antes de reduzir receita rompem mais que as que só reduzem receita, entre 2023 e 2025", "certa": True,
-         "certo": "Tem variável, grupos comparados, janela declarada e um corte que decide. Dá para rodar e dá para perder.",
-         "errado": "Volte e procure a que traz variável, janela e um número que decide."},
-        {"texto": "Os clientes estão insatisfeitos com o atendimento da Kovan", "certa": False,
+        {"texto": "Clientes insatisfeitos com o atendimento deixam a Kovan mais cedo", "certa": False,
          "certo": "Correto.",
          "errado": "Não tem variável nem janela, e nenhum resultado a derrubaria."},
-        {"texto": "A concorrência está mais agressiva nas contas que saíram", "certa": False,
+        {"texto": "A concorrência ficou mais agressiva nas contas que saíram em 2025 e 2024", "certa": False,
          "certo": "Correto.",
          "errado": "O painel não registra concorrência. Sem coluna, não há teste."},
-        {"texto": "Existe algum padrão nos dados que explica o churn", "certa": False,
+        {"texto": "Existe no painel algum padrão capaz de explicar o churn das contas", "certa": False,
          "certo": "Correto.",
          "errado": "Confirma-se sempre: qualquer resultado cabe nela. Uma hipótese que não pode perder não informa nada."},
+        {"texto": "Contas que estreitam o mix antes da receita rompem mais", "certa": True,
+         "certo": "Tem variável, grupos comparados, janela declarada e um corte que decide. Dá para rodar e dá para perder.",
+         "errado": "Volte e procure a que traz variável, janela e um número que decide."},
     ],
     {"fichas": [
         ("O painel oferece", "20 colunas, 14 trimestres"),
-        ("A hipótese precisa de", "variável, operação, janela e um corte que decide"),
-        ("O teste", "se nenhum resultado a derruba, não é hipótese"),
+        ("As hipóteses", "vieram do backlog que os grupos escreveram de manhã"),
+        ("A janela", "14 trimestres, de 2022Q3 a 2025Q4"),
     ]},
 ))
 
@@ -678,20 +699,25 @@ SLIDES.append(conteudo(
     "          <thead><tr><th>Critério</th><th>A pergunta que ele faz</th>"
     "<th>Caminho A &middot; ruptura</th><th>Caminho B &middot; erosão</th></tr></thead>\n"
     "          <tbody>\n"
-    "            <tr><td>Observabilidade</td><td>o rótulo existe no sistema?</td>"
+    '            <tr class="fragment"><td>Observabilidade</td>'
+            "<td>o rótulo existe no sistema?</td>"
     '<td class="vence">existe</td><td>precisa ser construído</td></tr>\n'
     '            <tr class="decisiva"><td>Prevalência</td><td>há eventos suficientes para treinar?</td>'
     '<td>34 eventos, 24 efetivos</td><td class="vence">176 episódios</td></tr>\n'
-    "            <tr><td>Antecedência</td><td>o sinal acende a tempo de agir?</td>"
+    '            <tr class="fragment"><td>Antecedência</td>'
+            "<td>o sinal acende a tempo de agir?</td>"
     '<td>depois da decisão do cliente</td><td class="vence">com o relacionamento aberto</td></tr>\n'
-    "            <tr><td>Acionabilidade</td><td>a fila cabe na capacidade?</td>"
+    '            <tr class="fragment"><td>Acionabilidade</td>'
+            "<td>a fila cabe na capacidade?</td>"
     '<td>6 a 10 por trimestre</td><td class="vence">120 a 190, teto de 138</td></tr>\n'
-    "            <tr><td>Verificabilidade</td><td>dá para auditar se acertou?</td>"
+    '            <tr class="fragment"><td>Verificabilidade</td>'
+            "<td>dá para auditar se acertou?</td>"
     '<td class="vence">direta</td><td>depende do limiar escolhido</td></tr>\n'
     "          </tbody>\n"
     "        </table>\n",
     contexto="O Caminho A vence em observabilidade e verificabilidade; o Caminho B, nos outros três.",
     conclusao="A decisão não é qual caminho é melhor, é qual critério a Kovan aceita perder.",
+    por_passos=True,
     fonte="Fonte: Exhibits 2 a 5, Caderno Kovan PL-02-2026 v2. Os cinco critérios são construção deste módulo, não framework publicado.",
 ))
 
@@ -739,16 +765,16 @@ SLIDES.append(quiz(
     "Divergência entre contagens de ruptura",
     "Duas mesas contaram rupturas com o mesmo critério e chegaram a números diferentes. Qual a explicação mais provável?",
     [
-        {"texto": "Cada mesa tratou de um jeito os trimestres sem receita registrada", "certa": True,
-         "certo": "Trimestre sem receita registrada não é trimestre sem compra. Excluir a linha e imputar o valor produzem séries diferentes, e a contagem muda junto.",
-         "errado": "Pense no que cada mesa fez com as linhas em que a receita não está registrada."},
-        {"texto": "Uma das mesas carregou um arquivo diferente", "certa": False,
+        {"texto": "Uma das mesas carregou um arquivo diferente do painel oficial da Kovan", "certa": False,
          "certo": "Correto.",
          "errado": "O painel é o mesmo arquivo, carregado da mesma URL."},
-        {"texto": "A IA alucinou o resultado em uma das mesas", "certa": False,
+        {"texto": "A IA alucinou o resultado da contagem em uma das duas mesas", "certa": False,
          "certo": "Correto.",
          "errado": "O modelo escreveu o código, mas quem rodou foi você, sobre a base inteira."},
-        {"texto": "É arredondamento e não importa", "certa": False,
+        {"texto": "Cada mesa tratou de um jeito o trimestre sem receita", "certa": True,
+         "certo": "Trimestre sem receita registrada não é trimestre sem compra. Excluir a linha e imputar o valor produzem séries diferentes, e a contagem muda junto.",
+         "errado": "Pense no que cada mesa fez com as linhas em que a receita não está registrada."},
+        {"texto": "É diferença de arredondamento e não altera a leitura", "certa": False,
          "certo": "Correto.",
          "errado": "Contagem de eventos raros não depende de arredondamento."},
     ],
@@ -763,16 +789,17 @@ SLIDES.append(quiz(
 SLIDES.append(conteudo(
     "Encadeamento entre a entrega de hoje, a Aula 02 e o Artefato 1",
     '        <div class="linha-tempo">\n'
-    '          <div class="etapa"><p class="quando">08/08 &middot; hoje</p><h3>Fica pronto</h3>'
+    '          <div class="etapa fragment"><p class="quando">08/08 &middot; hoje</p><h3>Fica pronto</h3>'
     "<p>Caderno de hipóteses com veredito, painel carregado e conferido, e a contagem de rupturas do Caminho A.</p></div>\n"
-    '          <div class="etapa"><p class="quando">15/08 &middot; manhã</p><h3>Continua com o Rafael</h3>'
+    '          <div class="etapa fragment"><p class="quando">15/08 &middot; manhã</p><h3>Continua com o Rafael</h3>'
     "<p>A discussão de alvo volta pelo lado de negócio, com a recomendação que o Comitê precisa assinar.</p></div>\n"
-    '          <div class="etapa"><p class="quando">15/08 &middot; tarde</p><h3>Trata o dado</h3>'
+    '          <div class="etapa fragment"><p class="quando">15/08 &middot; tarde</p><h3>Trata o dado</h3>'
     "<p>As quatro advertências de qualidade do painel. Foi uma delas que separou a contagem das mesas hoje.</p></div>\n"
-    '          <div class="etapa avaliada"><p class="quando">Semana 5 &middot; 05/09</p><h3>Artefato 1</h3>'
+    '          <div class="etapa avaliada fragment"><p class="quando">Semana 5 &middot; 05/09</p><h3>Artefato 1</h3>'
     "<p>Análise Exploratória de Dados, com a segmentação que a trilha de Negócios entrega no mesmo marco.</p></div>\n"
     "        </div>\n",
     conclusao="A divergência de contagem de hoje não é erro de ninguém: é o insumo da aula de qualidade de dado em 15/08.",
+    por_passos=True,
 ))
 
 # 31. Referencias

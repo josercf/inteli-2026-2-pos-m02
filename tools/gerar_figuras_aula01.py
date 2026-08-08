@@ -94,13 +94,21 @@ def salvar_gif(desenhar, n_quadros: int, destino: Path) -> None:
         quadros.append(imagem)
         plt.close(fig)
     duracoes = [QUADRO_MS] * (n_quadros - 1) + [FINAL_MS]
+    # Toca uma vez e para no ultimo quadro. Em loop infinito (`loop=0`), a
+    # figura fica reiniciando durante a discussao, disputa a atencao com quem
+    # esta falando e nunca permanece no estado que sustenta o argumento.
+    # Omitir o parametro `loop` e o que produz "tocar uma vez" num GIF.
     quadros[0].save(
         destino,
         save_all=True,
         append_images=quadros[1:],
         duration=duracoes,
-        loop=0,
     )
+
+    # O ultimo quadro tambem vai como PNG: o PDF exportado congela um GIF no
+    # PRIMEIRO quadro, e o handout da aula sai desse PDF. Sem isto, o aluno
+    # recebe o grafico pela metade.
+    quadros[-1].save(destino.with_suffix(".png"))
 
 
 def _figura_ciclo():
@@ -343,6 +351,110 @@ def gif_talvera_andira(destino: Path) -> None:
     salvar_gif(desenhar, passos, destino)
 
 
+
+# ---------------------------------------------------------------------------
+# 6. Quantos eventos decidem: incerteza do AUC contra numero de eventos
+# ---------------------------------------------------------------------------
+
+
+def erro_padrao_auc(auc: float, n_pos: int, n_neg: int) -> float:
+    """Erro padrao do AUC pela formula de Hanley e McNeil (1982).
+
+    Serve para pos um numero no argumento de Priscila Nakamura, que no case e
+    afirmado sem conta: com 24 eventos efetivos, a validacao nao distingue um
+    desempenho de 0,71 de um de 0,84. Com esta formula da para mostrar que o
+    intervalo de confianca de 95% contem os dois valores ao mesmo tempo, em vez
+    de pedir que a turma acredite.
+    """
+    q1 = auc / (2 - auc)
+    q2 = 2 * auc**2 / (1 + auc)
+    num = auc * (1 - auc) + (n_pos - 1) * (q1 - auc**2) + (n_neg - 1) * (q2 - auc**2)
+    return math.sqrt(num / (n_pos * n_neg))
+
+
+# Observacoes conta-trimestre do segmento estrategico (Exhibit 3).
+N_OBSERVACOES = 1652
+AUC_SUPOSTO = 0.78
+
+
+def gif_incerteza_auc(destino: Path) -> None:
+    eventos = [8, 12, 16, 24, 34, 50, 80, 120, 176, 260, 400, 700, 1000]
+    metades = []
+    for n in eventos:
+        se = erro_padrao_auc(AUC_SUPOSTO, n, N_OBSERVACOES - n)
+        metades.append(1.96 * se)
+
+    marcos = [
+        (24, "Caminho A\n24 eventos efetivos", CORAL),
+        (176, "Caminho B\n176 episódios", VERDE_ESCURO),
+    ]
+
+    def desenhar(k):
+        fig, ax = plt.subplots(figsize=(LARGURA_FAIXA / DPI, ALTURA_FAIXA / DPI), dpi=DPI)
+        fig.patch.set_facecolor(BRANCO)
+        ax.set_xscale("log")
+        ax.set_xlim(7, 1200)
+        ax.set_ylim(0, 0.20)
+        ax.set_xlabel("eventos positivos disponíveis para validação (escala log)", fontsize=15)
+        ax.set_ylabel("metade do intervalo\nde 95% do AUC", fontsize=14)
+        ax.set_xticks([10, 24, 50, 100, 176, 400, 1000])
+        ax.set_xticklabels(["10", "24", "50", "100", "176", "400", "1000"], fontsize=14)
+        ax.tick_params(axis="y", labelsize=14)
+        for lado in ("top", "right"):
+            ax.spines[lado].set_visible(False)
+        for lado in ("left", "bottom"):
+            ax.spines[lado].set_color(CINZA_MEDIO)
+        ax.grid(axis="y", color=CINZA_CLARO, linewidth=1)
+        ax.set_axisbelow(True)
+
+        ax.plot(eventos, metades, color=ROXO, linewidth=3, zorder=3)
+
+        # Faixa do que a decisao precisa distinguir: 0,84 menos 0,71 e 0,13, e
+        # metade disso e o que o intervalo precisa caber para separar os dois.
+        ax.axhline(0.065, color=CINZA_ESCURO, linewidth=1.6, linestyle=(0, (6, 4)), zorder=2)
+        if k >= 1:
+            # Abaixo da linha e a direita: sobre a linha, o rotulo cruzava a
+            # propria curva no trecho em que ela ainda esta alta.
+            # Encostado na ponta direita da linha tracejada: e o unico trecho
+            # em que a curva ja desceu e nada mais disputa o espaco.
+            ax.text(1150, 0.072, "limite para separar 0,71 de 0,84",
+                    fontsize=14, color=ROXO, ha="right")
+
+        if k >= 2:
+            for n, rotulo, cor in marcos:
+                y = 1.96 * erro_padrao_auc(AUC_SUPOSTO, n, N_OBSERVACOES - n)
+                ax.plot([n], [y], marker="o", markersize=13, color=cor, zorder=5)
+                # O marco de baixo recebe rotulo abaixo da curva e o de cima
+                # acima dela: com os dois para cima, o rotulo do Caminho B
+                # batia na legenda da linha de limite.
+                acima = y > 0.07
+                if acima:
+                    destino_texto, alinha = (n * 1.45, y + 0.032), "left"
+                else:
+                    # Abaixo e a esquerda: a direita esta a legenda da linha de
+                    # limite, e logo abaixo estao os rotulos do eixo x.
+                    destino_texto, alinha = (n * 0.42, 0.014), "right"
+                ax.annotate(
+                    rotulo,
+                    xy=(n, y),
+                    xytext=destino_texto,
+                    fontsize=14, color=cor, weight="bold",
+                    ha=alinha, va="bottom",
+                    arrowprops=dict(arrowstyle="-", color=cor, linewidth=1.6),
+                )
+
+        titulos = [
+            "A incerteza da validação cai com o número de eventos",
+            "A decisão exige separar um AUC de 0,71 de um de 0,84",
+            "Com 24 eventos o intervalo de 95% vai de 0,67 a 0,89, e contém os dois",
+        ]
+        ax.set_title(titulos[min(k, 2)], fontsize=18, color=ROXO, loc="left", pad=14)
+        fig.tight_layout()
+        return fig
+
+    salvar_gif(desenhar, 3, destino)
+
+
 # ---------------------------------------------------------------------------
 # 4 e 5. Diagramas em SVG
 # ---------------------------------------------------------------------------
@@ -461,6 +573,7 @@ FIGURAS = {
     "aula01-crisp-dm.gif": gif_crisp_dm,
     "aula01-ciclo-eda-ia.gif": gif_ciclo_eda,
     "aula01-talvera-andira.gif": gif_talvera_andira,
+    "aula01-incerteza-auc.gif": gif_incerteza_auc,
     "aula01-structure-in-out.svg": svg_structure_in_out,
     "aula01-arvore-hipoteses.svg": svg_arvore_hipoteses,
 }

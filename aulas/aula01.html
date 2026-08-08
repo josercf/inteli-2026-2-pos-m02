@@ -131,9 +131,71 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
+          <h2>O erro em tabela vem da arquitetura, não da falta de capacidade do modelo</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>Tokenização linear</h3><p>A tabela entra como sequência de texto. A relação entre linha e coluna não sobrevive à serialização.</p><p class="fonte-nota">O erro cresce com o número de colunas</p></div>
+          <div class="concept-card"><h3>Janela de contexto</h3><p>16.618 linhas não cabem no contexto. O modelo lê uma amostra e responde sobre o arquivo inteiro.</p><p class="fonte-nota">A resposta não distingue o que ele leu do que completou</p></div>
+          <div class="concept-card"><h3>Cálculo implícito</h3><p>Somar dezesseis mil valores por previsão do próximo token não é uma operação aritmética.</p><p class="fonte-nota">A saída tem a forma de um cálculo e não passou por um</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Nenhum dos três se resolve com um modelo maior. A saída é separar leitura de computação.</p>
+        </div>
+        <p class="fonte-nota">Fontes: The Structural Challenge, 2026; TaCube, EMNLP 2022.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">5</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Nenhum modelo isolado atinge erro baixo o bastante para uso não supervisionado</h2>
+        </div>
+        <div class="stat-tiles">
+          <div class="stat-tile"><p class="stat-numero">82,4%</p><p class="stat-rotulo">melhor modelo em planilhas financeiras, cerca de 1 erro a cada 6 perguntas</p></div>
+          <div class="stat-tile"><p class="stat-numero">48,6%</p><p class="stat-rotulo">média de todos os modelos na maior planilha do benchmark</p></div>
+          <div class="stat-tile"><p class="stat-numero">29%</p><p class="stat-rotulo">acerto exato pedindo a resposta direto ao modelo</p></div>
+          <div class="stat-tile"><p class="stat-numero">58%</p><p class="stat-rotulo">acerto exato pedindo que ele gere e execute o código</p></div>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p class="sobrelinha">Os dois primeiros</p>
+            <p>A queda acompanha o tamanho da planilha e é consistente entre dez configurações de três fornecedores. É limite de arquitetura, não fraqueza de um modelo.</p>
+          </div>
+          <div>
+            <p class="sobrelinha">Os dois últimos</p>
+            <p>A mesma pergunta, ao mesmo modelo, dobra de acerto quando muda de pedir o número para pedir o código. Sem os erros de escala, chega a 80%.</p>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Dobrar o acerto não exigiu trocar de modelo. Exigiu trocar o que se pede a ele.</p>
+        </div>
+        <p class="fonte-nota">Fontes: FinSheet-Bench, arXiv 2026 (24 arquivos, 10 configurações de modelo); Pándy, Lakatos e Hajdu, IEEE INES 2025.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">6</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
           <h2>As fases 1 e 2 do CRISP-DM consomem 6 das 26 semanas do projeto</h2>
         </div>
-        <img class="figura" src="../assets/img/aula01-crisp-dm.gif" alt="Ciclo CRISP-DM com as seis fases e o encontro do módulo que cobre cada uma">
+        <img class="figura figura-animada" src="../assets/img/aula01-crisp-dm.gif" alt="Ciclo CRISP-DM com as seis fases e o encontro do módulo que cobre cada uma">
+        <img class="figura figura-print" src="../assets/img/aula01-crisp-dm.png" alt="Ciclo CRISP-DM com as seis fases e o encontro do módulo que cobre cada uma">
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Implicação</span>
@@ -143,7 +205,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">5</p>
+          <p class="footer-page">7</p>
         </div>
       </section>
 
@@ -168,7 +230,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">6</p>
+          <p class="footer-page">8</p>
         </div>
       </section>
 
@@ -179,7 +241,8 @@
           <div class="accent-bar"></div>
           <h2>Quatro dos seis passos da EDA assistida permanecem com o analista</h2>
         </div>
-        <img class="figura" src="../assets/img/aula01-ciclo-eda-ia.gif" alt="Ciclo de seis passos da análise exploratória assistida por IA, indicando quem executa cada passo">
+        <img class="figura figura-animada" src="../assets/img/aula01-ciclo-eda-ia.gif" alt="Ciclo de seis passos da análise exploratória assistida por IA, indicando quem executa cada passo">
+        <img class="figura figura-print" src="../assets/img/aula01-ciclo-eda-ia.png" alt="Ciclo de seis passos da análise exploratória assistida por IA, indicando quem executa cada passo">
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Implicação</span>
@@ -188,7 +251,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">7</p>
+          <p class="footer-page">9</p>
         </div>
       </section>
 
@@ -251,7 +314,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">8</p>
+          <p class="footer-page">10</p>
         </div>
       </section>
 
@@ -310,7 +373,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">9</p>
+          <p class="footer-page">11</p>
         </div>
       </section>
 
@@ -343,7 +406,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">10</p>
+          <p class="footer-page">12</p>
         </div>
       </section>
 
@@ -390,7 +453,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">11</p>
+          <p class="footer-page">13</p>
         </div>
       </section>
 
@@ -410,7 +473,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">12</p>
+          <p class="footer-page">14</p>
         </div>
       </section>
 
@@ -435,7 +498,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">13</p>
+          <p class="footer-page">15</p>
         </div>
       </section>
 
@@ -498,7 +561,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">14</p>
+          <p class="footer-page">16</p>
         </div>
       </section>
 
@@ -529,7 +592,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">15</p>
+          <p class="footer-page">17</p>
         </div>
       </section>
 
@@ -550,7 +613,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">16</p>
+          <p class="footer-page">18</p>
         </div>
       </section>
 
@@ -574,7 +637,35 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">17</p>
+          <p class="footer-page">19</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A ausência tem mecanismo, e o mecanismo decide se dá para corrigir</h2>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Mecanismo</th><th>Onde aparece no painel</th><th>O que fazer</th></tr></thead>
+          <tbody>
+            <tr><td>Completamente ao acaso</td><td>receita não registrada por atraso no fechamento contábil, cerca de 1% dos trimestres</td><td class="vence">excluir a linha não enviesa, só perde potência</td></tr>
+            <tr><td>Ao acaso, dado o observado</td><td>engajamento comercial ausente, e a cobertura é pior nas contas menores</td><td>corrigível condicionando ao segmento, que está na base</td></tr>
+            <tr class="decisiva"><td>Não ao acaso</td><td>contas que compram por portal de procurement registram menos atividade comercial</td><td>não corrigível com o que existe na base</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Taxonomia de Rubin. Tratar os três casos da mesma forma foi a decisão que separou a contagem das mesas.</p>
+        </div>
+        <p class="fonte-nota">Fonte: advertências de qualidade do Exhibit 3. Taxonomia conforme Rubin, Inference and missing data, Biometrika, 1976.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">20</p>
         </div>
       </section>
 
@@ -636,7 +727,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">18</p>
+          <p class="footer-page">21</p>
         </div>
       </section>
 
@@ -683,7 +774,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">19</p>
+          <p class="footer-page">22</p>
         </div>
       </section>
 
@@ -726,7 +817,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">20</p>
+          <p class="footer-page">23</p>
         </div>
       </section>
 
@@ -757,7 +848,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">21</p>
+          <p class="footer-page">24</p>
         </div>
       </section>
 
@@ -768,7 +859,8 @@ falta. Não estime.</span></code></pre>
           <div class="accent-bar"></div>
           <h2>A magnitude da queda não distingue a conta que retorna da que não retorna</h2>
         </div>
-        <img class="figura" src="../assets/img/aula01-talvera-andira.gif" alt="Receita indexada de duas contas do segmento estratégico ao longo do episódio de contração">
+        <img class="figura figura-animada" src="../assets/img/aula01-talvera-andira.gif" alt="Receita indexada de duas contas do segmento estratégico ao longo do episódio de contração">
+        <img class="figura figura-print" src="../assets/img/aula01-talvera-andira.png" alt="Receita indexada de duas contas do segmento estratégico ao longo do episódio de contração">
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Em aberto</span>
@@ -778,7 +870,29 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">22</p>
+          <p class="footer-page">25</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Com 24 eventos, a validação não distingue um modelo bom de um ruim</h2>
+        </div>
+        <img class="figura figura-animada" src="../assets/img/aula01-incerteza-auc.gif" alt="Curva da metade do intervalo de confiança de 95% do AUC contra o número de eventos positivos">
+        <img class="figura figura-print" src="../assets/img/aula01-incerteza-auc.png" alt="Curva da metade do intervalo de confiança de 95% do AUC contra o número de eventos positivos">
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Implicação</span>
+          <p>Ao fim de 26 semanas e R$ 1,842 milhão, a Kovan não saberia se o modelo funciona.</p>
+        </div>
+        <p class="fonte-nota">Fontes: Hanley e McNeil, Radiology, 1982. Minus et al., Journal of Clinical Epidemiology, 2025: o viés do AUC é dirigido pelo número de eventos, não pela taxa.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">26</p>
         </div>
       </section>
 
@@ -841,7 +955,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">23</p>
+          <p class="footer-page">27</p>
         </div>
       </section>
 
@@ -888,7 +1002,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">24</p>
+          <p class="footer-page">28</p>
         </div>
       </section>
 
@@ -913,7 +1027,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">25</p>
+          <p class="footer-page">29</p>
         </div>
       </section>
 
@@ -937,7 +1051,7 @@ falta. Não estime.</span></code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
-          <p class="footer-page">26</p>
+          <p class="footer-page">30</p>
         </div>
       </section>
 

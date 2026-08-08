@@ -1091,3 +1091,18 @@
    ainda melhora a leitura de uma tabela projetada. */
 .content-slide > .tabela-criterios td,
 .content-slide > .tabela-criterios th { padding: 18px 16px; vertical-align: middle; }
+
+/* ---------------------------------------------------------------------------
+   Fallback de impressao para figura animada
+
+   O PDF exportado congela um GIF no PRIMEIRO quadro, e o handout da aula sai
+   desse PDF: sem isto o aluno recebe o grafico pela metade, ou em branco. Cada
+   slide com GIF carrega tambem o ultimo quadro em PNG, escondido na tela e
+   revelado na impressao.
+   --------------------------------------------------------------------------- */
+.figura-print { display: none; }
+
+@media print {
+  .figura-animada { display: none; }
+  .figura-print { display: block; }
+}

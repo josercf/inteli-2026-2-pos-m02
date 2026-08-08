@@ -85,7 +85,10 @@ def test_as_figuras_do_deck_sao_as_que_o_gerador_produz(html):
         if "aula01-" in src
     }
     assert citadas, "o deck nao usa nenhuma figura da aula"
-    assert citadas <= set(FIGURAS), citadas - set(FIGURAS)
+    # O deck tambem cita o PNG do ultimo quadro de cada GIF, que e o fallback
+    # de impressao gerado junto com ele.
+    validas = set(FIGURAS) | {n[:-4] + ".png" for n in FIGURAS if n.endswith(".gif")}
+    assert citadas <= validas, citadas - validas
 
 
 def test_o_deck_apresenta_os_frameworks_da_aula(html):

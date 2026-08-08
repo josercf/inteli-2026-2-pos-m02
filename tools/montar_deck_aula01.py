@@ -109,7 +109,18 @@ def conteudo(titulo, corpo, sobrelinha=None, contexto=None, conclusao=None,
 
 def figura(titulo, arquivo, alt, sobrelinha=None, contexto=None, conclusao=None,
            rotulo_conclusao="Implicação", fonte=None) -> str:
-    corpo = f'        <img class="figura" src="../assets/img/{arquivo}" alt="{alt}">\n'
+    """Slide de figura.
+
+    Quando a figura e animada, o slide carrega tambem o ultimo quadro em PNG:
+    o PDF exportado congela um GIF no primeiro quadro, e o handout da aula sai
+    desse PDF.
+    """
+    animada = arquivo.endswith(".gif")
+    classe = "figura figura-animada" if animada else "figura"
+    corpo = f'        <img class="{classe}" src="../assets/img/{arquivo}" alt="{alt}">\n'
+    if animada:
+        estatica = arquivo[:-4] + ".png"
+        corpo += f'        <img class="figura figura-print" src="../assets/img/{estatica}" alt="{alt}">\n'
     return conteudo(titulo, corpo, sobrelinha, contexto, conclusao,
                     rotulo_conclusao, conclusao_clara=True, fonte=fonte)
 
@@ -298,6 +309,49 @@ SLIDES.append(conteudo(
     "          </tbody>\n"
     "        </table>\n",
     conclusao="As duas respondem em segundos. Só uma pode ser contestada por quem recebe o número.",
+))
+
+# 5b. Por que a IA erra em tabela: mecanismo, e nao opiniao
+SLIDES.append(conteudo(
+    "O erro em tabela vem da arquitetura, não da falta de capacidade do modelo",
+    '        <div class="concept-cards">\n'
+    '          <div class="concept-card"><h3>Tokenização linear</h3>'
+    "<p>A tabela entra como sequência de texto. A relação entre linha e coluna não sobrevive à serialização.</p>"
+    '<p class="fonte-nota">O erro cresce com o número de colunas</p></div>\n'
+    '          <div class="concept-card"><h3>Janela de contexto</h3>'
+    "<p>16.618 linhas não cabem no contexto. O modelo lê uma amostra e responde sobre o arquivo inteiro.</p>"
+    '<p class="fonte-nota">A resposta não distingue o que ele leu do que completou</p></div>\n'
+    '          <div class="concept-card"><h3>Cálculo implícito</h3>'
+    "<p>Somar dezesseis mil valores por previsão do próximo token não é uma operação aritmética.</p>"
+    '<p class="fonte-nota">A saída tem a forma de um cálculo e não passou por um</p></div>\n'
+    "        </div>\n",
+    conclusao="Nenhum dos três se resolve com um modelo maior. A saída é separar leitura de computação.",
+    fonte="Fontes: The Structural Challenge, 2026; TaCube, EMNLP 2022.",
+))
+
+# 5c. Os numeros do benchmark
+SLIDES.append(conteudo(
+    "Nenhum modelo isolado atinge erro baixo o bastante para uso não supervisionado",
+    '        <div class="stat-tiles">\n'
+    '          <div class="stat-tile"><p class="stat-numero">82,4%</p><p class="stat-rotulo">melhor modelo em planilhas financeiras, cerca de 1 erro a cada 6 perguntas</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">48,6%</p><p class="stat-rotulo">média de todos os modelos na maior planilha do benchmark</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">29%</p><p class="stat-rotulo">acerto exato pedindo a resposta direto ao modelo</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">58%</p><p class="stat-rotulo">acerto exato pedindo que ele gere e execute o código</p></div>\n'
+    "        </div>\n"
+    '        <div class="side-by-side">\n'
+    "          <div>\n"
+    '            <p class="sobrelinha">Os dois primeiros</p>\n'
+    "            <p>A queda acompanha o tamanho da planilha e é consistente entre dez configurações "
+    "de três fornecedores. É limite de arquitetura, não fraqueza de um modelo.</p>\n"
+    "          </div>\n"
+    "          <div>\n"
+    '            <p class="sobrelinha">Os dois últimos</p>\n'
+    "            <p>A mesma pergunta, ao mesmo modelo, dobra de acerto quando muda de pedir o número "
+    "para pedir o código. Sem os erros de escala, chega a 80%.</p>\n"
+    "          </div>\n"
+    "        </div>\n",
+    conclusao="Dobrar o acerto não exigiu trocar de modelo. Exigiu trocar o que se pede a ele.",
+    fonte="Fontes: FinSheet-Bench, arXiv 2026 (24 arquivos, 10 configurações de modelo); Pándy, Lakatos e Hajdu, IEEE INES 2025.",
 ))
 
 # 6. CRISP-DM
@@ -525,6 +579,27 @@ SLIDES.append(conteudo(
     conclusao="Insuficiente é um veredito legítimo e vai aparecer no caderno. Dizer que o dado não responde é resultado; inventar que responde é o que a Kovan já fez uma vez, com o Radar de Contas.",
 ))
 
+# 21b. Mecanismos de ausencia
+SLIDES.append(conteudo(
+    "A ausência tem mecanismo, e o mecanismo decide se dá para corrigir",
+    '        <table class="tabela-criterios">\n'
+    "          <thead><tr><th>Mecanismo</th><th>Onde aparece no painel</th><th>O que fazer</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Completamente ao acaso</td>"
+    "<td>receita não registrada por atraso no fechamento contábil, cerca de 1% dos trimestres</td>"
+    '<td class="vence">excluir a linha não enviesa, só perde potência</td></tr>\n'
+    "            <tr><td>Ao acaso, dado o observado</td>"
+    "<td>engajamento comercial ausente, e a cobertura é pior nas contas menores</td>"
+    "<td>corrigível condicionando ao segmento, que está na base</td></tr>\n"
+    '            <tr class="decisiva"><td>Não ao acaso</td>'
+    "<td>contas que compram por portal de procurement registram menos atividade comercial</td>"
+    "<td>não corrigível com o que existe na base</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    conclusao="Taxonomia de Rubin. Tratar os três casos da mesma forma foi a decisão que separou a contagem das mesas.",
+    fonte="Fonte: advertências de qualidade do Exhibit 3. Taxonomia conforme Rubin, Inference and missing data, Biometrika, 1976.",
+))
+
 # 22. Pratica 3
 SLIDES.append(pratica(
     3, "Caderno de hipóteses do grupo", 30,
@@ -628,6 +703,15 @@ SLIDES.append(figura(
     conclusao="As duas caíram e a que caiu mais foi a que voltou. Se a magnitude não separa, o que separa? É o conteúdo da Aula 03.",
     rotulo_conclusao="Em aberto",
     fonte="Fonte: painel analítico de contas, séries indexadas ao trimestre anterior ao episódio.",
+))
+
+# 27b. Quantos eventos decidem
+SLIDES.append(figura(
+    "Com 24 eventos, a validação não distingue um modelo bom de um ruim",
+    "aula01-incerteza-auc.gif",
+    "Curva da metade do intervalo de confiança de 95% do AUC contra o número de eventos positivos",
+    conclusao="Ao fim de 26 semanas e R$ 1,842 milhão, a Kovan não saberia se o modelo funciona.",
+    fonte="Fontes: Hanley e McNeil, Radiology, 1982. Minus et al., Journal of Clinical Epidemiology, 2025: o viés do AUC é dirigido pelo número de eventos, não pela taxa.",
 ))
 
 # 28. Pratica 4

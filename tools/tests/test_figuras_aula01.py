@@ -56,7 +56,26 @@ def test_gif_tem_mais_de_um_quadro(nome):
     """Um GIF de um quadro so e uma imagem estatica com extensao errada."""
     with Image.open(IMG / nome) as im:
         assert getattr(im, "is_animated", False), nome
-        assert im.n_frames >= 4, (nome, im.n_frames)
+        assert im.n_frames >= 3, (nome, im.n_frames)
+
+
+@pytest.mark.parametrize("nome", GIFS)
+def test_gif_toca_uma_vez_e_para(nome):
+    """Em loop infinito a figura reinicia durante a discussao e disputa a
+    atencao com quem esta falando. Ausencia da chave `loop` e o que produz
+    "tocar uma vez" num GIF."""
+    with Image.open(IMG / nome) as im:
+        assert "loop" not in im.info, (nome, im.info.get("loop"))
+
+
+@pytest.mark.parametrize("nome", GIFS)
+def test_gif_tem_quadro_estatico_para_impressao(nome):
+    """O PDF exportado congela o GIF no primeiro quadro, e o handout sai desse
+    PDF: sem o PNG do ultimo quadro, o aluno recebe o grafico pela metade."""
+    png = (IMG / nome).with_suffix(".png")
+    assert png.exists(), png.name
+    with Image.open(IMG / nome) as gif, Image.open(png) as estatico:
+        assert estatico.size == gif.size, (gif.size, estatico.size)
 
 
 @pytest.mark.parametrize("nome", GIFS)

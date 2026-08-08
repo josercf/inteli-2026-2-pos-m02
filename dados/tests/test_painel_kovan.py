@@ -479,3 +479,28 @@ def test_geracao_e_deterministica():
     a = gerar()
     b = gerar()
     pd.testing.assert_frame_equal(a, b)
+
+
+# ---------------------------------------------------------------------------
+# Mecanismos de ausencia: o exercicio da Aula 01 depende do contraste
+# ---------------------------------------------------------------------------
+
+
+def test_ausencia_de_receita_e_uniforme_entre_segmentos(painel):
+    """Compativel com "completamente ao acaso": e a ausencia por atraso no
+    fechamento contabil, que nao tem relacao com a conta.
+
+    Se este contraste sumir, o exercicio de mecanismo de ausencia da Aula 01
+    deixa de ter as duas pontas que ele compara.
+    """
+    taxa = painel.groupby("segmento")["receita_brl"].apply(lambda s: s.isna().mean())
+    assert taxa.max() / taxa.min() < 1.8, taxa.round(4).to_dict()
+
+
+def test_ausencia_de_engajamento_depende_do_segmento(painel):
+    """NAO e completamente ao acaso: a cobertura e pior nas contas menores, como
+    a advertencia 4 do Exhibit 3 afirma. E a outra ponta do contraste."""
+    janela = painel[painel["trimestre"] >= "2023Q2"]
+    taxa = janela.groupby("segmento")["interacoes_crm"].apply(lambda s: s.isna().mean())
+    assert taxa.max() / taxa.min() > 2.5, taxa.round(4).to_dict()
+    assert taxa["Cauda"] > taxa["Estrategico"], taxa.round(4).to_dict()

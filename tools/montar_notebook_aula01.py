@@ -304,6 +304,51 @@ registrar(
         """
 ---
 
+## 4b. Por que as mesas divergem: o mecanismo da ausência
+
+Antes de contar rupturas, uma pergunta que decide a contagem: **por que este
+valor está faltando?**
+
+Rubin (1976) separou três mecanismos, e a diferença entre eles não é técnica, é
+o que você pode ou não corrigir:
+
+| Mecanismo | O que significa | O que dá para fazer |
+|---|---|---|
+| Completamente ao acaso | a falta não depende de nada | excluir a linha não enviesa, só perde potência |
+| Ao acaso, dado o observado | a falta depende de algo que está na base | corrigir condicionando a esse algo |
+| Não ao acaso | a falta depende justamente do que ela esconde | não dá, com o que existe na base |
+
+As células abaixo medem em qual dos três cada ausência do painel se encaixa.
+"""
+    ),
+    code(
+        """
+# A receita ausente depende do segmento? E do trimestre?
+# Se a taxa de ausência for parecida entre grupos, o mecanismo é compatível
+# com "completamente ao acaso". Se variar muito, não é.
+painel["receita_ausente"] = painel["receita_brl"].isna()
+
+print(painel.groupby("segmento")["receita_ausente"].mean().round(4))
+print()
+print(painel.groupby("trimestre")["receita_ausente"].mean().round(4).head())
+"""
+    ),
+    code(
+        """
+# Agora a mesma pergunta para o engajamento comercial.
+# Compare o padrão com o da receita: eles contam histórias diferentes.
+
+
+"""
+    ),
+    md(
+        """
+> A conclusão desta célula muda o que você pode afirmar no caderno. Uma ausência
+> que depende do segmento ainda é corrigível, porque o segmento está na base.
+> Uma que depende do jeito como o cliente compra, não.
+
+---
+
 ## 5. Prática 4: o rótulo que não existe
 
 O painel não tem coluna de risco, de propensão nem de churn. Isso não é
@@ -347,6 +392,35 @@ Três perguntas para o fechamento:
 3. A área comercial consegue conduzir 138 planos de intervenção por trimestre.
    Um modelo que acende esse tanto de vezes por trimestre usa quanto dessa
    capacidade?
+"""
+    ),
+    md(
+        """
+### Extensão, para quem terminar antes
+
+O case afirma que, com 24 eventos efetivos, a validação não distingue um AUC de
+0,71 de um de 0,84. Isso é verificável: a fórmula de Hanley e McNeil (1982) dá o
+erro padrão do AUC a partir do número de positivos e de negativos.
+
+Calcule o intervalo de confiança de 95% para 24 eventos e para 176, sobre as
+1.652 observações do segmento estratégico, e responda: qual dos dois intervalos
+consegue separar 0,71 de 0,84?
+"""
+    ),
+    code(
+        """
+import math
+
+def erro_padrao_auc(auc, n_pos, n_neg):
+    \"\"\"Erro padrão do AUC, Hanley e McNeil (1982).\"\"\"
+    q1 = auc / (2 - auc)
+    q2 = 2 * auc**2 / (1 + auc)
+    num = auc*(1-auc) + (n_pos-1)*(q1 - auc**2) + (n_neg-1)*(q2 - auc**2)
+    return math.sqrt(num / (n_pos * n_neg))
+
+# Complete: para cada número de eventos, imprima o intervalo de 95%.
+
+
 """
     ),
     code(

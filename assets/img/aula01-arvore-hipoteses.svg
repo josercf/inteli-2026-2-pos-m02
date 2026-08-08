@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 500" width="1060" height="500"
+     font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" role="img"
+     aria-label="Árvore de hipóteses decompondo a queda do NRR em três componentes mutuamente exclusivos e quatro hipóteses testáveis">
+  <rect width="1060" height="500" fill="#ffffff"/>
+  <rect x="320" y="26" width="420" height="116" rx="8" fill="#2e2640"/>
+  <text x="348" y="62" font-size="20" font-weight="700" fill="#ffffff">Por que o NRR caiu de</text>
+  <text x="348" y="90" font-size="20" font-weight="700" fill="#ffffff">109% para 93%?</text>
+  <text x="348" y="120" font-size="14" fill="#e6eaeb">a pergunta que o Comitê faz em 3 de março</text>
+  
+  <path d="M 530 142 L 530 172 L 188 172 L 188 200" fill="none"
+        stroke="#b2b6bf" stroke-width="2"/>
+  <rect x="55" y="200" width="266" height="80" rx="8" fill="#ffffff"
+        stroke="#caced6" stroke-width="1.6"/>
+  <text x="75" y="230" font-size="19" font-weight="600" fill="#2e2640">Menos expansão</text>
+  <text x="75" y="252" font-size="14" fill="#2e2640">contas que cresciam</text>
+  <text x="75" y="270" font-size="14" fill="#2e2640">cresceram menos</text>
+  <path d="M 530 142 L 530 172 L 513 172 L 513 200" fill="none"
+        stroke="#b2b6bf" stroke-width="2"/>
+  <rect x="380" y="200" width="266" height="80" rx="8" fill="#ffffff"
+        stroke="#066d73" stroke-width="3"/>
+  <text x="400" y="230" font-size="19" font-weight="600" fill="#2e2640">Mais contração</text>
+  <text x="400" y="252" font-size="14" fill="#2e2640">contas que ficaram</text>
+  <text x="400" y="270" font-size="14" fill="#2e2640">compraram menos</text>
+  <path d="M 530 142 L 530 172 L 838 172 L 838 200" fill="none"
+        stroke="#b2b6bf" stroke-width="2"/>
+  <rect x="705" y="200" width="266" height="80" rx="8" fill="#ffffff"
+        stroke="#caced6" stroke-width="1.6"/>
+  <text x="725" y="230" font-size="19" font-weight="600" fill="#2e2640">Mais perda bruta</text>
+  <text x="725" y="252" font-size="14" fill="#2e2640">contas que</text>
+  <text x="725" y="270" font-size="14" fill="#2e2640">encerraram contrato</text>
+  <path d="M 513 280 L 513 320 L 156 320 L 156 348" fill="none"
+        stroke="#066d73" stroke-width="2"/>
+  <rect x="48" y="348" width="216" height="104" rx="8" fill="#e6eaeb"
+        stroke="#caced6"/>
+  <text x="64" y="376" font-size="15" font-weight="600" fill="#2e2640">A contração se concentra</text>
+  <text x="64" y="396" font-size="15" font-weight="600" fill="#2e2640">em poucas contas</text>
+  <text x="64" y="428" font-size="12.5" fill="#066d73">receita_brl, segmento</text>
+  <path d="M 513 280 L 513 320 L 402 320 L 402 348" fill="none"
+        stroke="#066d73" stroke-width="2"/>
+  <rect x="294" y="348" width="216" height="104" rx="8" fill="#e6eaeb"
+        stroke="#caced6"/>
+  <text x="310" y="376" font-size="15" font-weight="600" fill="#2e2640">A cadência de pedidos cai</text>
+  <text x="310" y="396" font-size="15" font-weight="600" fill="#2e2640">antes da receita</text>
+  <text x="310" y="428" font-size="12.5" fill="#066d73">pedidos, recencia_dias</text>
+  <path d="M 513 280 L 513 320 L 648 320 L 648 348" fill="none"
+        stroke="#066d73" stroke-width="2"/>
+  <rect x="540" y="348" width="216" height="104" rx="8" fill="#e6eaeb"
+        stroke="#caced6"/>
+  <text x="556" y="376" font-size="15" font-weight="600" fill="#2e2640">A amplitude de mix se</text>
+  <text x="556" y="396" font-size="15" font-weight="600" fill="#2e2640">estreita durante a queda</text>
+  <text x="556" y="428" font-size="12.5" fill="#066d73">linhas_produto_ativas</text>
+  <path d="M 513 280 L 513 320 L 894 320 L 894 348" fill="none"
+        stroke="#066d73" stroke-width="2"/>
+  <rect x="786" y="348" width="216" height="104" rx="8" fill="#e6eaeb"
+        stroke="#caced6"/>
+  <text x="802" y="376" font-size="15" font-weight="600" fill="#2e2640">A atividade no CRM cai</text>
+  <text x="802" y="396" font-size="15" font-weight="600" fill="#2e2640">porque o território trocou</text>
+  <text x="802" y="428" font-size="12.5" fill="#066d73">interacoes_crm, troca_de_am</text>
+  <text x="48" y="480" font-size="13" fill="#2e2640">Os três ramos são mutuamente exclusivos e cobrem o indicador inteiro. As folhas são o que a tarde consegue testar, e cada uma nomeia a coluna que a testa.</text>
+</svg>

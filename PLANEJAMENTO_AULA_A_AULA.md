@@ -32,14 +32,14 @@ entrar no caderno vem de código que a IA escreveu e que nós rodamos.
 | Horário | Bloco | Conteúdo |
 |---|---|---|
 | `14h00 - 14h15` | Resgate e contrato | Cada grupo lê uma hipótese do próprio backlog. As três vão para o quadro. Pergunta disparada: o painel tem 16.618 linhas e nenhuma coluna de risco, como isso vira evidência até as 17h30? |
-| `14h15 - 14h30` | Bloco 1 | EDA quando a IA executa. O ciclo pergunta, recorte, medida, refutação. A IA colapsou o custo de executar, não o de decidir o que medir. Enquete: quem já pediu análise de planilha para uma IA e conferiu o número? |
+| `14h15 - 14h30` | Bloco 1 | EDA quando a IA executa. **CRISP-DM** como mapa do módulo e o **ciclo de EDA assistida**: quatro dos seis passos continuam com você. Enquete: quem já pediu análise de planilha para uma IA e conferiu o número? |
 | `14h30 - 14h50` | Prática 1 | Prompt nível 0 sobre o painel, depois o prompt armadilha da margem média, que não existe no dado. Colheita e regra de ouro |
-| `14h50 - 15h05` | Bloco 2 | A escada de prompt sobre a mesma pergunta: a queda de receita é uniforme? Níveis 0 a 3. A restrição que vale para dado e não vale para texto |
+| `14h50 - 15h05` | Bloco 2 | A escada de prompt sobre a mesma pergunta: a queda de receita é uniforme? Níveis 0 a 3, com o prompt real lado a lado. **Estrutura na entrada, estrutura na saída**: os cinco elementos e o modo de falha de cada ausência |
 | `15h05 - 15h25` | Prática 2 | Reescrever no nível 2, pedir o código, rodar no Colab. Subir para o nível 3. Debrief: prompts diferentes deram recortes diferentes sobre a mesma base |
 | `15h25 - 15h45` | Intervalo | |
-| `15h45 - 16h00` | Bloco 3 | Anatomia do teste falseável: variável, operação, janela, critério de refutação. O que este painel não permite testar |
+| `15h45 - 16h00` | Bloco 3 | Anatomia do teste falseável: variável, operação, janela, critério de refutação. **Árvore de hipóteses MECE**, da pergunta do Comitê até a coluna que testa cada folha. O que este painel não permite testar |
 | `16h00 - 16h30` | Prática 3 | O caderno de hipóteses. Três hipóteses do backlog próprio, com nível 3 obrigatório em pelo menos uma |
-| `16h30 - 16h45` | Bloco 4 | O rótulo que não existe. Peça à IA que crie a coluna de churn e leia o critério que ela escolheu sem avisar |
+| `16h30 - 16h45` | Bloco 4 | O rótulo que não existe. **Cinco critérios para escolher o alvo**, aplicados a A e B. Talvera e Andirá: a magnitude da queda não antecipa o desfecho. Peça à IA que crie a coluna de churn e leia o critério que ela escolheu sem avisar |
 | `16h45 - 17h15` | Prática 4 | Construir o rótulo do Caminho A e contar as rupturas do segmento estratégico. Comparar com a mesa ao lado |
 | `17h15 - 17h30` | Amarração | O que fica pronto, o que a Aula 02 pega, o que alimenta o Artefato 1 |
 
@@ -56,9 +56,18 @@ entrar no caderno vem de código que a IA escreveu e que nós rodamos.
 Caderno de hipóteses do grupo, com três registros completos e veredito
 (Confirmada, Contraditada ou Insuficiente), exportado do notebook.
 
+### Frameworks apresentados
+
+CRISP-DM (Wirth e Hipp, 2000); o ciclo de EDA assistida por IA (construção do
+módulo); estrutura na entrada e na saída, complementando o CREATE que a manhã
+apresenta; árvore de hipóteses MECE (Conn e Sarrazin, McKinsey); e os cinco
+critérios de escolha de alvo (construção do módulo, a partir das restrições do
+case). O que é citável e o que é nosso está separado no slide de referências.
+
 ### Artefatos
 
-- Deck: `aulas/aula01.html`
+- Deck: `aulas/aula01.html`, 32 slides, com três GIFs e dois diagramas
+- Figuras: `tools/gerar_figuras_aula01.py`
 - Notebook: `notebooks/aula01_hipoteses.ipynb`
 - Material do aluno: `materiais/caderno-de-hipoteses.md`
 - Condução: `docs/notas-do-professor/aula01.md` (não distribuído)

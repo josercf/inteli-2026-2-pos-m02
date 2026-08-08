@@ -29,7 +29,10 @@ PALETA = {
 # p.68: pertencem a Escolas e a Graduacao, nao a Exec/Pos
 OUTRO_SEGMENTO = {"#90a5e5", "#89cea5"}
 
-EXTENSOES = (".html", ".css", ".js")
+# .svg entra junto: figura e material didatico como qualquer outro, e cor fora
+# da paleta num diagrama projetado e tao violacao quanto num slide. Ate aqui o
+# validador nao olhava figura nenhuma, e o acervo passou a ter varias.
+EXTENSOES = (".html", ".css", ".js", ".svg")
 # "vendor" fica de fora: e codigo de terceiros (Reveal.js vendorizado para a
 # aula nao depender de rede), nao acervo nosso. O tema sobrescreve as cores
 # dele via tokens; validar o arquivo upstream so geraria ruido.

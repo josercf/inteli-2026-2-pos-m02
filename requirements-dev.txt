@@ -6,3 +6,6 @@ numpy>=2.0
 pytest>=8.0
 # Usado por tools/check_slides.py para medir o layout dos slides num Chromium.
 playwright>=1.60
+# Usados por tools/gerar_figuras_aula01.py para gerar os GIFs e conferi-los.
+matplotlib>=3.10
+pillow>=11.0

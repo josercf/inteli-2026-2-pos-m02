@@ -46,7 +46,7 @@ jobs:
         run: python tools/check_slides.py
 
       - name: Testes que travam os numeros do case
-        run: python -m pytest dados/tests -q
+        run: python -m pytest dados/tests tools/tests -q
 
   publicar:
     needs: validar
@@ -64,10 +64,11 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Regerar o painel antes de publicar
+      - name: Regerar o painel e as figuras antes de publicar
         run: |
           pip install -r requirements-dev.txt
           python dados/gerar_painel_kovan.py
+          python tools/gerar_figuras_aula01.py
 
       - name: Montar o site (allowlist + conferencia de referencias)
         run: python tools/build_site.py _site

@@ -710,3 +710,27 @@
   font-size: 14px;
   color: var(--seg-primaria);
 }
+
+/* Figura didatica (diagrama ou GIF) ocupando a area util do slide. Diferente
+   de .print-shot, que e captura de ferramenta e por isso leva borda: um
+   diagrama com borda le como recorte de outro documento. */
+.figura {
+  display: block;
+  margin: 4px auto 0;
+  max-width: 100%;
+  max-height: 408px;
+}
+
+/* Legenda da figura. Corpo menor, nunca cor mais clara: sobre fundo branco o
+   cinza da paleta mede 2,03:1 e nao le em projecao. */
+.figura-legenda {
+  font-size: var(--escala-complementar);
+  text-align: center;
+  margin: 8px auto 0;
+  max-width: 92%;
+}
+
+/* Comparacao de dois prompts lado a lado, cada um com o que volta dele. */
+.par-prompt { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.par-prompt h3 { margin: 0 0 6px; }
+.par-prompt .code-compact { max-height: 230px; }

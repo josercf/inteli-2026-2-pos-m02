@@ -65,6 +65,12 @@
 
 .concept-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 
+/* Modificador para slides de quatro blocos. Sem ele, a grade de tres colunas
+   joga o quarto bloco sozinho na segunda linha, com metade do slide vazia ao
+   lado: o layout passa no validador (nada estoura) e mesmo assim le como
+   erro de montagem. Passar o validador nao e o mesmo que o slide estar bom. */
+.concept-cards.quatro { grid-template-columns: repeat(4, 1fr); }
+
 .concept-card {
   background: var(--seg-superficie);
   border-top: 4px solid var(--seg-secundaria);

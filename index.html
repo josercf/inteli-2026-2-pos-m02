@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2 · Inteligência de Mercado e Modelagem Preditiva · MBA Inteli x Lenovo</title>
+  <link rel="stylesheet" href="assets/css/inteli-brand.css">
+  <style>
+    body {
+      margin: 0;
+      background: var(--seg-base);
+      color: var(--seg-texto);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    header {
+      background: var(--seg-primaria);
+      color: var(--inteli-branco);
+      padding: 56px 24px 48px;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    header .wrap { padding: 0 24px; }
+    header p.eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      margin: 0 0 12px;
+      color: var(--inteli-cinza-medio);
+    }
+    header h1 { font-size: 40px; margin: 0 0 8px; }
+    header h2 { font-weight: 500; font-size: 19px; margin: 0; color: var(--inteli-cinza-claro); }
+    main { padding: 40px 0 72px; }
+    h3 {
+      font-size: 25px;
+      margin: 40px 0 6px;
+      border-top: 4px solid var(--seg-secundaria);
+      padding-top: 16px;
+    }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-top: 20px; }
+    .card {
+      background: var(--seg-superficie);
+      border-radius: 10px;
+      padding: 20px;
+      border-top: 4px solid var(--seg-secundaria);
+    }
+    .card h4 { font-size: 19px; margin: 0 0 6px; }
+    .card p { margin: 0 0 14px; font-size: 15px; }
+    .card a { display: inline-block; margin-right: 14px; color: var(--seg-secundaria); font-weight: 600; text-decoration: none; }
+    .card a:hover { text-decoration: underline; }
+    table { border-collapse: collapse; width: 100%; margin-top: 18px; font-size: 15px; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--seg-borda); }
+    th { font-weight: 600; }
+    tr.marco td { background: var(--seg-superficie); font-weight: 600; }
+    footer { border-top: 1px solid var(--seg-borda); padding: 24px 0 48px; font-size: 14px; }
+    /* Sem rolagem horizontal em tela estreita: a tabela rola dentro do proprio
+       container, o corpo da pagina nunca. */
+    .rolavel { overflow-x: auto; }
+  </style>
+</head>
+<body class="portal">
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo &middot; 2026.2A</p>
+      <h1>Módulo 2 &middot; Inteligência de Mercado e Modelagem Preditiva</h1>
+      <h2>Trilha de Tecnologia &middot; Prof. José Romualdo da Costa Filho</h2>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h3>Aulas</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>Aula 01 &middot; 08/08</h4>
+        <p>Da hipótese à evidência. O framework de EDA quando a IA executa, a escada de prompt sobre dado e o rótulo que não existe no painel.</p>
+        <a href="aulas/aula01.html">Deck</a>
+        <a href="notebooks/aula01_hipoteses.ipynb">Notebook</a>
+        <a href="materiais/caderno-de-hipoteses.md">Caderno</a>
+      </div>
+    </div>
+
+    <h3>O case</h3>
+    <p>
+      Kovan Technologies LATAM. O NRR do segmento estratégico caiu de 109% para
+      93% em quatro trimestres, e a deterioração não veio de contratos
+      encerrados: veio de contas que continuam na base e compram menos. O Comitê
+      de Receita já decidiu construir um modelo de propensão. O que está em
+      aberto é o que exatamente ele deve prever.
+    </p>
+
+    <h3>O painel de dados</h3>
+    <p>
+      <a href="dados/kovan_painel_contas.csv">kovan_painel_contas.csv</a>:
+      1.187 contas por 14 trimestres, de 2022Q3 a 2025Q4, 16.618 registros e 20
+      colunas, conforme o Exhibit 3 do Caderno de Exhibits. O painel não traz
+      coluna de risco, de propensão nem de rótulo: essa é a decisão em aberto do
+      case.
+    </p>
+
+    <h3>Calendário</h3>
+    <div class="rolavel">
+      <table>
+        <tr><th>Encontro</th><th>Data</th><th>Tarde</th></tr>
+        <tr><td>S1</td><td>08/08</td><td>Da hipótese à evidência</td></tr>
+        <tr><td>S2</td><td>15/08</td><td>Preparação e limpeza de dados</td></tr>
+        <tr><td>S3</td><td>22/08</td><td>Análise univariada e bivariada</td></tr>
+        <tr><td>S4</td><td>29/08</td><td>Visualização para decidir</td></tr>
+        <tr class="marco"><td>S5</td><td>05/09</td><td>Entrega 1 e veredito de alvo</td></tr>
+        <tr><td>S6</td><td>12/09</td><td>Feature engineering (manhã) e avaliação de modelos (tarde)</td></tr>
+        <tr><td>S7</td><td>19/09</td><td>Prototipagem da aplicação</td></tr>
+        <tr><td>S8</td><td>26/09</td><td>Pipeline integrado: modelo, API generativa e interface</td></tr>
+        <tr class="marco"><td>S9</td><td>03/10</td><td>Entrega 2 e banca</td></tr>
+      </table>
+    </div>
+  </main>
+
+  <footer class="wrap">
+    <p>Inteli &middot; Instituto de Tecnologia e Liderança. Material didático do Módulo 2.</p>
+  </footer>
+</body>
+</html>

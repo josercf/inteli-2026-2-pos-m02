@@ -26,3 +26,4 @@ docs/notas-do-professor/
 *.pptx
 *.docx
 !materiais/*.md
+caderno_de_hipoteses.csv

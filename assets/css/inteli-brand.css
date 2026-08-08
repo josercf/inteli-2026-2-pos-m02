@@ -116,3 +116,19 @@ code, pre, kbd, samp, .mono {
 .embed-tabela th:first-child {
   font-family: var(--fonte-mono);
 }
+
+/* Tipografia das paginas fora do deck (portal). Declarada aqui pelo mesmo
+   motivo do bloco acima: font-family so pode existir neste arquivo. O portal
+   consome estas regras em vez de declarar a fonte por conta propria. */
+body.portal { font-family: var(--fonte-texto); }
+
+body.portal h1,
+body.portal h3,
+body.portal h4,
+body.portal th {
+  font-family: var(--fonte-titulo);
+}
+
+body.portal .eyebrow {
+  font-family: var(--fonte-mono);
+}

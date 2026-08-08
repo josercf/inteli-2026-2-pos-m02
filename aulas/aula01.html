@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 01 · Da hipótese à evidência · MBA Inteli x Lenovo</title>
+
+  <link rel="stylesheet" href="../assets/vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-theme.css">
+  <link rel="stylesheet" href="../assets/css/inteli-print.css" media="print">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. Capa -->
+      <section class="cover-slide">
+        <div class="cover-panel">
+          <div class="cover-content">
+            <p class="cover-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo</p>
+            <h1>Da hipótese à evidência</h1>
+            <h3>Módulo 2 &middot; Aula 01 &middot; Trilha de Tecnologia &middot; 08/08/2026</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Agenda -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A tarde</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card">
+            <h3>14h00</h3>
+            <p>Resgate da manhã e a regra da casa</p>
+          </div>
+          <div class="concept-card">
+            <h3>14h15</h3>
+            <p>EDA quando a IA executa, e a primeira prática</p>
+          </div>
+          <div class="concept-card">
+            <h3>14h50</h3>
+            <p>A escada de prompt sobre dado</p>
+          </div>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card">
+            <h3>15h45</h3>
+            <p>Anatomia do teste falseável e o caderno de hipóteses</p>
+          </div>
+          <div class="concept-card">
+            <h3>16h30</h3>
+            <p>O rótulo que não existe no sistema</p>
+          </div>
+          <div class="concept-card">
+            <h3>17h15</h3>
+            <p>Amarração com a Aula 02 e com a entrega</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">2</p>
+        </div>
+      </section>
+
+      <!-- 3. Resgate -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O que a manhã deixou pronto</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p>Cada grupo saiu com um <strong>backlog de hipóteses</strong> sobre o que explica a deterioração das contas da Kovan, e uma posição preliminar sobre Caminho A ou Caminho B.</p>
+            <p>Uma hipótese, pelo critério da manhã, é clara, mensurável e falsificável.</p>
+          </div>
+          <div>
+            <p><strong>A pergunta desta tarde</strong></p>
+            <p>O painel tem 16.618 linhas e nenhuma coluna de risco.</p>
+            <p>Como cada uma dessas hipóteses vira evidência até as 17h30?</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">3</p>
+        </div>
+      </section>
+
+      <!-- 4. Regra da casa -->
+      <section class="section-slide">
+        <div class="accent-bar"></div>
+        <h2>A regra da casa</h2>
+        <h3>Todo número que entrar no caderno vem de código que a IA escreveu e que nós rodamos</h3>
+      </section>
+
+      <!-- 5. Bloco 1 -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Duas máquinas diferentes</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p><strong>A IA que descreve o dado</strong></p>
+            <p>Lê uma amostra do arquivo e completa o resto por plausibilidade. Devolve um número com a mesma confiança, exista ele ou não.</p>
+            <p>Rápida, conversacional, não auditável.</p>
+          </div>
+          <div>
+            <p><strong>A IA que escreve o código que mede o dado</strong></p>
+            <p>Produz uma instrução que roda sobre as 16.618 linhas. O número sai da execução, não do modelo.</p>
+            <p>Auditável: dá para ler o código e discordar dele.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">4</p>
+        </div>
+      </section>
+
+      <!-- 6. O ciclo de EDA -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O que a IA muda no ciclo de análise</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card">
+            <h3>Pergunta</h3>
+            <p>Decidir o que medir. Continua com você.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Recorte e medida</h3>
+            <p>Escrever e rodar o código. Aqui o custo caiu para perto de zero.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Refutação</h3>
+            <p>Decidir se o número derruba a hipótese. Continua com você.</p>
+          </div>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p>A IA colapsou o custo de executar, não o de decidir o que medir.</p>
+          </div>
+          <div>
+            <p>Consequência prática: pergunta ruim agora é respondida rápido e errado.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">5</p>
+        </div>
+      </section>
+
+      <!-- 7. Prática 1 -->
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Prática 1 &middot; 20 minutos</h2>
+        </div>
+        <ol class="exercise-steps">
+          <li>Abra o notebook da aula no Colab e rode a célula que carrega o painel.</li>
+          <li>Peça à IA, sem nenhuma estrutura: <em>analise este arquivo e diga o que há de interessante</em>.</li>
+          <li>Agora peça: <em>qual a margem média por conta no segmento estratégico?</em></li>
+          <li>Se você recebeu um número, encontre a coluna de onde ele saiu.</li>
+        </ol>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">6</p>
+        </div>
+      </section>
+
+      <!-- 8. Regra de ouro -->
+      <section class="section-slide">
+        <div class="accent-bar"></div>
+        <h2>Número citado sem célula de origem</h2>
+        <h3>é número não verificado</h3>
+      </section>
+
+      <!-- 9. Quiz 1 -->
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Verificação</h2>
+        </div>
+        <div class="quiz-container">
+          <p class="quiz-question">Você pediu a margem média por conta e recebeu R$ 412 mil. O painel não tem coluna de margem. O que aconteceu?</p>
+          <ul class="quiz-options">
+            <li data-correct="true"
+                data-correct-msg="O modelo completou por plausibilidade. Ele não distingue lembrar de calcular: o número tem a forma certa e origem nenhuma."
+                data-incorrect-msg="Reveja: o painel não traz custo nem margem em nenhuma coluna.">O modelo produziu um número plausível sem nenhuma origem no dado</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="Não existe: nenhuma combinação das 20 colunas produz margem sem dado de custo.">Ele derivou a margem de receita e desconto</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="O painel foi carregado por inteiro na célula anterior.">Ele leu um arquivo diferente do que carregamos</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="Um erro de cálculo pressupõe que houve cálculo. Não houve.">Foi um erro de cálculo que se corrige pedindo de novo</li>
+          </ul>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">7</p>
+        </div>
+      </section>
+
+      <!-- 10. Escada -->
+      <section class="section-slide">
+        <div class="accent-bar"></div>
+        <h2>A escada de prompt</h2>
+        <h3>A mesma pergunta de negócio, em quatro níveis</h3>
+      </section>
+
+      <!-- 11. Os quatro niveis -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A queda de receita é uniforme na carteira?</h2>
+        </div>
+        <div class="concept-cards quatro">
+          <div class="concept-card">
+            <h3>Nível 0</h3>
+            <p>Analise e diga o que achar. Saída descritiva, genérica, sem recorte.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Nível 1 &middot; CREATE</h3>
+            <p>Papel, pedido, exemplos, ajustes, formato, extras. O mesmo da manhã.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Nível 2</h3>
+            <p>Estrutura na entrada e na saída: as colunas, o recorte, o formato da tabela.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Nível 3</h3>
+            <p>Postura adversarial: o que refutaria este achado.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">8</p>
+        </div>
+      </section>
+
+      <!-- 12. A restricao que so vale para dado -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A restrição que só vale para dado</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p>Em texto, preencher a lacuna é o serviço que você contratou.</p>
+            <p>Em análise, preencher a lacuna é o defeito. Por isso a restrição entra explícita, em todo prompt, a partir de agora.</p>
+          </div>
+          <pre class="code-compact"><code>Use apenas colunas que existem
+no DataFrame `painel`.
+
+Se faltar alguma informação para
+responder, diga que falta,
+em vez de estimar.
+
+Devolva o código, não o resultado.</code></pre>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">9</p>
+        </div>
+      </section>
+
+      <!-- 13. Pratica 2 -->
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Prática 2 &middot; 20 minutos</h2>
+        </div>
+        <ol class="exercise-steps">
+          <li>Escreva o prompt de nível 2 para a pergunta: a queda de receita do segmento estratégico está concentrada ou é uniforme?</li>
+          <li>Peça o código. Rode no notebook. O número sai de lá.</li>
+          <li>Suba para o nível 3: peça três explicações alternativas para o padrão que você achou, e qual coluna testaria cada uma.</li>
+          <li>Compare o seu recorte com o da mesa ao lado antes do intervalo.</li>
+        </ol>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">10</p>
+        </div>
+      </section>
+
+      <!-- 14. Intervalo -->
+      <section class="section-slide">
+        <div class="accent-bar"></div>
+        <h2>Intervalo</h2>
+        <h3>15h25 às 15h45</h3>
+      </section>
+
+      <!-- 15. Anatomia -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Anatomia de um teste falseável</h2>
+        </div>
+        <div class="concept-cards quatro">
+          <div class="concept-card">
+            <h3>Variável</h3>
+            <p>Qual coluna do painel carrega o sinal.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Operação</h3>
+            <p>O que se calcula sobre ela, e sobre quais grupos.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Janela</h3>
+            <p>Quais trimestres entram, e por quê os outros ficam de fora.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Critério de refutação</h3>
+            <p>Qual resultado derruba a hipótese, escrito antes de rodar. Sem esta linha, o que você tem é uma opinião com número em cima, e a análise vira busca por confirmação.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">11</p>
+        </div>
+      </section>
+
+      <!-- 16. O que o painel nao permite -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O que este painel não permite testar</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card">
+            <h3>Rentabilidade</h3>
+            <p>Não há custo nem margem. Nenhuma hipótese sobre lucro por conta é testável aqui.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Engajamento completo</h3>
+            <p>Visitas e interações existem para parte da base, e a cobertura não é uniforme entre segmentos.</p>
+          </div>
+          <div class="concept-card">
+            <h3>Causa da intervenção</h3>
+            <p>Não há registro de quem recebeu plano de intervenção. Efeito de ação comercial não se mede nesta base.</p>
+          </div>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p><strong>Insuficiente</strong> é um veredito legítimo, e vai aparecer no caderno de vocês.</p>
+          </div>
+          <div>
+            <p>Dizer que o dado não responde é resultado. Inventar que responde é o que a Kovan já fez uma vez.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">12</p>
+        </div>
+      </section>
+
+      <!-- 17. Pratica 3 -->
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Prática 3 &middot; 30 minutos &middot; entregável</h2>
+        </div>
+        <ol class="exercise-steps">
+          <li>Pegue três hipóteses do backlog que o seu grupo escreveu de manhã.</li>
+          <li>Preencha as seis linhas do registro para cada uma, no notebook.</li>
+          <li>Em pelo menos uma, use o nível 3: peça à IA que derrube o seu próprio achado antes de você fechar o veredito.</li>
+          <li>Exporte o caderno. Ele é a entrega de hoje e a matéria-prima do Artefato 1.</li>
+        </ol>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">13</p>
+        </div>
+      </section>
+
+      <!-- 18. Quiz 2 -->
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Verificação</h2>
+        </div>
+        <div class="quiz-container">
+          <p class="quiz-question">Qual destas está pronta para virar código?</p>
+          <ul class="quiz-options">
+            <li data-correct="true"
+                data-correct-msg="Tem variável, grupos, janela e um corte que decide. Dá para rodar e dá para perder."
+                data-incorrect-msg="Volte: procure a que traz variável, janela e um número que decide.">Contas que estreitam o mix antes de reduzir receita rompem mais que as que só reduzem receita, na janela de 2023 a 2025</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="Não tem variável nem janela, e nenhum resultado a derrubaria.">Os clientes estão insatisfeitos com o atendimento da Kovan</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="O painel não registra concorrência. Sem coluna, não há teste.">A concorrência está mais agressiva nas contas que saíram</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="Confirma-se sempre: qualquer resultado cabe nela. Uma hipótese que não pode perder não informa nada.">Existe algum padrão nos dados que explica o churn</li>
+          </ul>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">14</p>
+        </div>
+      </section>
+
+      <!-- 19. Secao rotulo -->
+      <section class="section-slide">
+        <div class="accent-bar"></div>
+        <h2>O rótulo que não existe</h2>
+        <h3>O painel tem 20 colunas e nenhuma delas diz quem está em risco</h3>
+      </section>
+
+      <!-- 20. Otavio -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Dois alvos, duas rotulagens</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p><strong>Caminho A &middot; Sinal de Ruptura</strong></p>
+            <p>O rótulo existe no sistema: zero pedidos faturados em dois trimestres consecutivos.</p>
+            <p>Binário, verificável, derivável hoje à tarde.</p>
+          </div>
+          <div>
+            <p><strong>Caminho B &middot; Erosão Silenciosa</strong></p>
+            <p>O rótulo não existe. Alguém precisa decidir o que conta como contração relevante.</p>
+            <p>E essa decisão define o resultado antes do primeiro treinamento.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">15</p>
+        </div>
+      </section>
+
+      <!-- 21. Pratica 4 -->
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Prática 4 &middot; 30 minutos</h2>
+        </div>
+        <ol class="exercise-steps">
+          <li>Peça à IA: <em>crie uma coluna de churn neste dataset</em>. Leia o código. Qual critério ela escolheu, e ela avisou que estava escolhendo?</li>
+          <li>Agora construa o rótulo do Caminho A e conte as rupturas do segmento estratégico nos 14 trimestres.</li>
+          <li>Compare o seu número com o do grupo ao lado.</li>
+          <li>Se derem diferente, o problema não é de código. É de decisão. Ache qual.</li>
+        </ol>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">16</p>
+        </div>
+      </section>
+
+      <!-- 22. Quiz 3 -->
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Verificação</h2>
+        </div>
+        <div class="quiz-container">
+          <p class="quiz-question">Duas mesas contaram rupturas com o mesmo critério e chegaram a números diferentes. Qual a explicação mais provável?</p>
+          <ul class="quiz-options">
+            <li data-correct="true"
+                data-correct-msg="Trimestre sem receita registrada não é trimestre sem compra. Excluir a linha e imputar o valor produzem séries diferentes, e a contagem muda junto."
+                data-incorrect-msg="Pense no que cada mesa fez com as linhas em que a receita não está registrada."
+                >Cada mesa tratou de um jeito os trimestres sem receita registrada</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="O painel é o mesmo arquivo, carregado da mesma URL.">Uma das mesas carregou um arquivo diferente</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="O modelo escreveu o código, mas quem rodou foi você, sobre a base inteira.">A IA alucinou o resultado em uma das mesas</li>
+            <li data-correct="false"
+                data-correct-msg="Correto."
+                data-incorrect-msg="Contagem de eventos raros não depende de arredondamento.">É arredondamento e não importa</li>
+          </ul>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">17</p>
+        </div>
+      </section>
+
+      <!-- 23. Amarracao -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Onde isso desemboca</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card">
+            <h3>Hoje fica pronto</h3>
+            <p>O caderno de hipóteses com veredito, e o painel carregado e conferido.</p>
+          </div>
+          <div class="concept-card">
+            <h3>A Aula 02 pega</h3>
+            <p>As advertências de qualidade do painel: foi uma delas que separou a contagem das mesas.</p>
+          </div>
+          <div class="concept-card">
+            <h3>A semana 5 recebe</h3>
+            <p>O Artefato 1: Análise de Segmentação Estratégica e Personas Data-Driven.</p>
+          </div>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p>A manhã de 15/08 continua a discussão de alvo com o Rafael.</p>
+          </div>
+          <div>
+            <p>A tarde de 15/08 trata o dado que hoje produziu números divergentes.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">18</p>
+        </div>
+      </section>
+
+      <!-- 24. Referencias -->
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Referências</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <p>1. Kovan Technologies LATAM: A Definição do Alvo. Business Case do Módulo 2, referência PL-02-2026, versão v2.</p>
+            <p>2. Caderno de Exhibits, Exhibits 1 a 5. Exhibit 3 traz o dicionário de variáveis e as advertências de qualidade do painel.</p>
+          </div>
+          <div>
+            <p>3. Popper, K. A lógica da pesquisa científica, 1934. Falseabilidade como critério.</p>
+            <p>4. Courtney, Kirkland e Viguerie. Strategy Under Uncertainty. Harvard Business Review, 1997.</p>
+            <p>5. Donaire, R. Inteligência de Mercado e Modelagem Preditiva. Aula 01, manhã, 08/08/2026.</p>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 01</p>
+          <p class="footer-page">19</p>
+        </div>
+      </section>
+
+      <!-- 25. Encerramento -->
+      <section class="end-slide">
+        <h1>Até 15/08</h1>
+        <h3>Prof. José Romualdo da Costa Filho &middot; MBA em IA e Dados para Negócios</h3>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../assets/vendor/reveal/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, center: false, margin: 0,
+      hash: true, slideNumber: false, transition: 'fade'
+    });
+  </script>
+  <script src="../assets/js/inteli-quiz.js"></script>
+  <script src="../assets/js/inteli-zoom.js"></script>
+  <script src="../assets/js/inteli-print.js"></script>
+</body>
+</html>

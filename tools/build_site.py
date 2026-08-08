@@ -31,10 +31,10 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Arquivos avulsos: (origem, destino dentro do site).
 ARQUIVOS = [
     ("index.html", "index.html"),
-    ("aulas/modulo2.html", "aulas/modulo2.html"),
-    ("materiais/caderno-de-prompts-modulo2.docx", "materiais/caderno-de-prompts-modulo2.docx"),
-    ("notebooks/modulo2_tarde.ipynb", "notebooks/modulo2_tarde.ipynb"),
-    ("dados/Coroa_Premium_PDV_Performance.csv", "dados/Coroa_Premium_PDV_Performance.csv"),
+    ("aulas/aula01.html", "aulas/aula01.html"),
+    ("materiais/caderno-de-hipoteses.md", "materiais/caderno-de-hipoteses.md"),
+    ("notebooks/aula01_hipoteses.ipynb", "notebooks/aula01_hipoteses.ipynb"),
+    ("dados/kovan_painel_contas.csv", "dados/kovan_painel_contas.csv"),
 ]
 
 # Diretorios copiados por inteiro.

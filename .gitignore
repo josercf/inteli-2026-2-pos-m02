@@ -1,0 +1,28 @@
+# Ambiente e caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Saida do build do site (gerada por tools/build_site.py)
+_site/
+
+# Material recebido de terceiros. Nada aqui pode ir para um repositorio
+# publico: o business case e o caderno de exhibits sao material do programa,
+# o deck do Prof. Rafael Donaire e dele, as ementas sao documento interno de
+# contratacao docente, e o deck da Stone e de outro cliente.
+recebidos/
+
+# Material de conducao. O repositorio e publico e o aluno chega nele: gabarito
+# das hipoteses, perguntas socraticas com resposta esperada e o desenho dos
+# padroes plantados no dataset ficam de fora, senao a atividade da tarde vem
+# respondida de casa.
+docs/notas-do-professor/
+
+# Formatos de escritorio, por precaucao: o material do programa chega nesses
+# formatos e o repositorio inteiro fica publico.
+*.pptx
+*.docx
+!materiais/*.md

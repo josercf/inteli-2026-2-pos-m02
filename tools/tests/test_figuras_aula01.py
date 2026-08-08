@@ -166,3 +166,73 @@ def test_a_serie_do_talvera_para_antes_da_do_andira():
     """Ele encerra o contrato em janeiro de 2026, fora da janela do painel."""
     talvera, andira = series_indexadas()
     assert len(talvera) < len(andira)
+
+
+# ---------------------------------------------------------------------------
+# O SVG cabe dentro do proprio viewBox
+# ---------------------------------------------------------------------------
+
+
+def _bbox_do_svg(caminho: Path) -> tuple[float, float]:
+    """(altura do viewBox, y final do conteudo), medidos num navegador real.
+
+    getBBox so existe com o SVG renderizado: nao da para conferir isso lendo o
+    arquivo, e foi por isso que o defeito passou. A arvore de hipoteses ficou
+    publicada com viewBox de 350 e conteudo terminando em 376, cortando os
+    quatro rotulos de coluna, que sao a carga util da figura. A caixa do <img>
+    estava correta, entao nem o check_slides nem o olho no DOM pegavam.
+    """
+    import http.server
+    import socketserver
+    import threading
+
+    from playwright.sync_api import sync_playwright
+
+    handler = lambda *a, **k: http.server.SimpleHTTPRequestHandler(*a, directory=str(RAIZ), **k)
+    servidor = socketserver.TCPServer(("127.0.0.1", 0), handler)
+    porta = servidor.server_address[1]
+    threading.Thread(target=servidor.serve_forever, daemon=True).start()
+    try:
+        with sync_playwright() as p:
+            navegador = p.chromium.launch()
+            pagina = navegador.new_page(viewport={"width": 1280, "height": 720})
+            pagina.goto(f"http://127.0.0.1:{porta}/assets/img/{caminho.name}")
+            pagina.wait_for_timeout(400)
+            medida = pagina.evaluate(
+                """() => {const s = document.querySelector('svg');
+                   const vb = s.getAttribute('viewBox').split(' ').map(Number);
+                   const bb = s.getBBox();
+                   return [vb[3], bb.y + bb.height, vb[2], bb.x + bb.width];}"""
+            )
+            navegador.close()
+    finally:
+        servidor.shutdown()
+    return medida
+
+
+@pytest.mark.parametrize("nome", SVGS)
+def test_svg_nao_corta_o_proprio_conteudo(nome):
+    altura_vb, fim_y, largura_vb, fim_x = _bbox_do_svg(IMG / nome)
+    assert fim_y <= altura_vb + 0.5, (nome, fim_y, altura_vb)
+    assert fim_x <= largura_vb + 0.5, (nome, fim_x, largura_vb)
+
+
+@pytest.mark.parametrize("nome", SVGS)
+def test_conector_do_svg_alcanca_o_minimo_de_contraste(nome):
+    """Elemento grafico que carrega significado sozinho precisa de 3:1 (WCAG).
+
+    A regra vale para o conector, que e um traco sem preenchimento: e ele que
+    diz de onde para onde a decomposicao vai, e cinza escuro sobre branco mede
+    2,03:1. Nao vale para a borda de uma caixa que ja tem preenchimento
+    proprio: ali a borda e acabamento, e quem separa a caixa do fundo e o
+    preenchimento. Um teste que nao faz essa distincao reprova design correto.
+    """
+    texto = (IMG / nome).read_text(encoding="utf-8")
+    conectores = re.findall(r'<path[^>]*fill="none"[^>]*>', texto)
+    assert conectores, f"{nome}: nenhum conector encontrado"
+    fracos = []
+    for tag in conectores:
+        traco = re.search(r'stroke="(#[0-9a-fA-F]{6})"', tag)
+        if traco and traco.group(1).lower() in {CINZA_ESCURO.lower(), CINZA_MEDIO.lower()}:
+            fracos.append(traco.group(1))
+    assert not fracos, (nome, sorted(set(fracos)))

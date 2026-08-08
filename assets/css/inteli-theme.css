@@ -499,7 +499,7 @@
 }
 
 .tabela-criterios thead th {
-  font-size: 15px;
+  font-size: 17px;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   border-bottom: 2px solid var(--seg-secundaria);
@@ -510,10 +510,20 @@
 
 /* A celula que vence o criterio recebe fundo e marcador. Sem isso a tabela
    lista dados e deixa o placar por conta de quem le, em tempo de projecao. */
+/* A celula vencedora precisa se ler do fundo da sala. A 13% de mistura ela
+   media 1,21:1 contra a celula normal: um projetor com luz acesa perde
+   diferenca de luminancia abaixo de cerca de 1,5:1, entao o placar que esta
+   tabela existe para mostrar simplesmente nao chegava. O filete lateral e o
+   que carrega o sinal com folga; o fundo so reforca. */
 .tabela-criterios td.vence {
-  background: color-mix(in srgb, var(--seg-secundaria) 13%, var(--seg-base));
+  background: color-mix(in srgb, var(--seg-secundaria) 22%, var(--seg-base));
+  box-shadow: inset 4px 0 0 var(--seg-secundaria);
   font-weight: 600;
 }
+
+/* Borda de linha a 1,58:1 tambem nao le projetada. */
+.tabela-criterios th,
+.tabela-criterios td { border-bottom-color: var(--seg-cinza-linha); }
 
 .tabela-criterios tr.decisiva td:first-child {
   border-left: 4px solid var(--seg-destaque);
@@ -694,8 +704,11 @@
 .print-shot { border: 1px solid var(--seg-borda); }
 
 /* Linha de fonte sob evidencias (padrao de report de consultoria) */
-.fonte-nota {
-  font-size: 14px;
+/* Prefixado com .reveal: `.reveal p` e (0,1,1) e vence `.fonte-nota` sozinha
+   (0,1,0). Medido, a linha de fonte renderizava 20px, o mesmo corpo do texto
+   que ela deveria subordinar, e o cartao ficava sem hierarquia interna. */
+.reveal .fonte-nota {
+  font-size: 16px;
   color: var(--seg-texto);
   margin: 8px 0 0;
 }
@@ -706,7 +719,7 @@
    margens para preencher o slide (menos area morta no rodape) */
 .stat-tiles { margin: 0 0 14px; gap: 20px; }
 .stat-tile .stat-numero { font-size: 40px; }
-.stat-tile .stat-rotulo { font-size: 15px; }
+.stat-tile .stat-rotulo { font-size: 17px; line-height: 1.35; }
 .processo-fases { margin: 30px 0 18px; gap: 14px; }
 .processo-fase { padding-top: 14px; }
 .processo-fase h4 { font-size: 18px; }
@@ -840,7 +853,7 @@
 /* Rotulo curto a esquerda da faixa, em mono, para o olho achar a faixa antes
    de ler a frase. */
 .faixa-conclusao .rotulo {
-  font-size: var(--escala-complementar);
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--seg-borda);
@@ -879,7 +892,7 @@
    ser afirmativo (num quiz, titulo afirmativo entrega o gabarito).
    --------------------------------------------------------------------------- */
 .sobrelinha {
-  font-size: var(--escala-complementar);
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.09em;
   color: var(--seg-secundaria);
@@ -1014,7 +1027,16 @@
 /* ---------------------------------------------------------------------------
    Divisor de secao
    --------------------------------------------------------------------------- */
-.section-slide { align-items: flex-start; text-align: left; justify-content: center; }
+/* Prefixo obrigatorio: a regra base do divisor esta declarada em
+   `.reveal .slides section.section-slide` (0,3,1) com centralizacao, e a
+   classe sozinha (0,1,0) perdia a cascata em silencio. Medido, os cinco blocos
+   do divisor caiam em cinco coordenadas x diferentes, com o filete coral
+   alinhado a 56 e o titulo a 164. */
+.reveal .slides section.section-slide {
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+}
 .section-slide h2 { font-size: 58px; line-height: 1.08; margin: 0 0 18px; max-width: 1000px; }
 .section-slide h3 {
   /* Serifa contra sem serifa resolve a hierarquia melhor que 44 contra 26 na
@@ -1025,23 +1047,26 @@
   margin: 0;
 }
 .section-slide .accent-bar { margin-left: 0; margin-bottom: 26px; width: 96px; }
-.secao-numero {
-  font-size: var(--escala-complementar);
+/* Mesma perda de cascata da .fonte-nota, e ainda com contraste reprovado:
+   --seg-borda sobre o verde escuro mede 3,87:1, abaixo do minimo de 4,5:1.
+   O cinza claro sobe para 5,03:1. */
+.reveal .secao-numero {
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: var(--seg-borda);
+  color: var(--inteli-cinza-claro);
   margin: 0 0 auto;
 }
 .secao-condicoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: auto; }
 .secao-condicoes div { border-top: 2px solid var(--inteli-branco); padding-top: 12px; font-size: 19px; }
-.secao-condicoes .num { font-size: var(--escala-complementar); display: block; margin-bottom: 4px; }
+.secao-condicoes .num { font-size: 16px; display: block; margin-bottom: 4px; }
 
 /* Linha do tempo horizontal de fechamento */
 .linha-tempo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .linha-tempo .etapa { border-top: 3px solid var(--seg-primaria); padding-top: 14px; }
 .linha-tempo .etapa.avaliada { border-top-color: var(--seg-destaque); }
 .linha-tempo .quando {
-  font-size: var(--escala-complementar);
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--seg-secundaria);
@@ -1090,7 +1115,7 @@
    passar 186px do limite. A folga vem da altura de linha, que e previsivel e
    ainda melhora a leitura de uma tabela projetada. */
 .content-slide > .tabela-criterios td,
-.content-slide > .tabela-criterios th { padding: 18px 16px; vertical-align: middle; }
+.content-slide > .tabela-criterios th { padding: 14px 16px; vertical-align: middle; }
 
 /* ---------------------------------------------------------------------------
    Fallback de impressao para figura animada
@@ -1106,3 +1131,92 @@
   .figura-animada { display: none; }
   .figura-print { display: block; }
 }
+
+
+/* Ritmo interno do cartao. Com as margens padrao do navegador, o cartao
+   esticado abria 46px entre o proprio titulo e o proprio texto, e a sala via
+   um retangulo cinza dois quintos vazio. O texto encosta no titulo e a linha
+   de apoio ancora na base. */
+.concept-card h3 { margin: 0 0 10px; }
+.concept-card p { margin: 0 0 8px; }
+.concept-card p:last-child { margin-bottom: 0; }
+.linha-tempo .etapa h3 { margin: 0 0 8px; line-height: 1.2; }
+
+
+/* ---------------------------------------------------------------------------
+   Entrelinha em texto que quebra
+
+   Seis componentes rodavam com line-height igual ao corpo (razao 1,00) e
+   quebrando em ate quatro linhas: as linhas se tocavam, e em pt-BR as
+   ascendentes de "ê" e "ã" encostam nas descendentes da linha acima. O proprio
+   tema ja usa 1,5 no corpo; a inconsistencia era interna.
+   --------------------------------------------------------------------------- */
+.reveal .tabela-criterios td,
+.reveal .tabela-criterios th,
+.reveal .quiz-cenario dd,
+.reveal .concept-card h3,
+.reveal .linha-tempo .etapa h3,
+.reveal .section-slide h3 { line-height: 1.35; }
+
+/* O prompt literal tem quebras de linha intencionais: sao as alternativas que
+   o aluno compara. Com white-space normal elas viravam paragrafo corrido e a
+   lista de tres limiares deixava de ser lida como lista. */
+.prompt-literal { white-space: pre-wrap; line-height: 1.45; }
+
+/* A sobrelinha era declarada com a largura inteira e passava por baixo do
+   logo: 1.512px de intersecao de caixa. Hoje nao corta glifo porque os textos
+   sao curtos, e o check_slides protege o h2, nao ela. */
+.sobrelinha { max-width: 1030px; }
+
+
+/* ---------------------------------------------------------------------------
+   Correcoes da auditoria instrumentada
+   --------------------------------------------------------------------------- */
+
+/* O corpo do codigo chegava ao projetor com 15px, nao com os 18px declarados:
+   `code, pre { font-size: var(--escala-complementar) }` do arquivo de tokens
+   se aplica ao <code> filho depois da regra do bloco. E o texto que o aluno
+   copia, e era o menor corpo do deck. */
+.reveal .code-compact,
+.reveal .code-compact code,
+.reveal .code-compact span { font-size: 18px; }
+
+/* Os quatro realces de funcao mediam entre 1,19:1 e 1,36:1 contra o branco, e
+   1,01:1 entre si: em projecao os quatro fundos sao branco. Quem carrega o
+   sinal passa a ser o filete lateral, com largura maior e cor que alcanca 3:1.
+   O de formato usava --seg-texto-suave (2,03:1) e a legenda dele usava outra
+   cor ainda (--seg-borda, 1,58:1): duas cores diferentes para a mesma
+   categoria, ambas invisiveis. */
+.hl-persona,
+.hl-dados,
+.hl-formato,
+.hl-restricao { border-left-width: 5px; padding-left: 8px; }
+
+.hl-formato { border-left-color: var(--seg-texto); }
+.hl-legenda .lg-formato::before { background: var(--seg-texto); }
+
+/* O filete de erro do quiz media 2,80:1 sobre o fundo do cartao, abaixo dos
+   3:1 de componente nao textual, e nem fundo nem cor de texto mudavam: a
+   alternativa errada ficava igual a uma nunca clicada. */
+.quiz-options li.errada {
+  border-left-width: 5px;
+  background: color-mix(in srgb, var(--seg-destaque) 14%, var(--seg-base));
+}
+
+/* A reserva do feedback era de 84px contra 143px da mensagem mais longa: o
+   slide pulava 44px ao vivo, e so nao se via porque havia vazio na base. */
+.quiz-container .quiz-feedback { min-height: 148px; }
+
+/* O divisor de secao caia em duas alturas conforme tivesse ou nao a faixa de
+   condicoes: o mesmo h2 em y=268 num slide e y=517 no outro, 249px de
+   diferenca entre dois divisores que a turma ve com 20 minutos de intervalo.
+   Fixar a distribuicao resolve os dois casos. */
+.reveal .slides section.section-slide {
+  justify-content: flex-start;
+  padding-top: 88px;
+}
+
+.section-slide .accent-bar { margin-right: auto; }
+.reveal .slides section.section-slide h2 { margin-top: 8px; }
+.secao-condicoes { margin-top: auto; padding-top: 24px; }
+.reveal .secao-numero { margin: 0 0 auto; }

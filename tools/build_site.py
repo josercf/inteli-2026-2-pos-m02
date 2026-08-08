@@ -38,7 +38,7 @@ ARQUIVOS = [
 ]
 
 # Diretorios copiados por inteiro.
-DIRETORIOS = [("assets", "assets")]
+DIRETORIOS = [("assets", "assets")]  # inclui vendor/reveal e vendor/fontes
 
 # Lixo de sistema e cache que nao tem por que subir junto com os diretorios.
 IGNORAR = shutil.ignore_patterns(".DS_Store", "__pycache__", "*.pyc", ".ipynb_checkpoints")

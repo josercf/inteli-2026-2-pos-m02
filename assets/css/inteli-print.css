@@ -48,3 +48,21 @@
     display: none !important;
   }
 }
+
+
+/* O reveal.css zera o padding da section com !important no modo de impressao,
+   e !important vence por importancia, nao por especificidade: medido, o titulo
+   comecava em x=0 no PDF (x=56 na tela) e a faixa escura sangrava de borda a
+   borda. O handout que o aluno le tinha margens diferentes das que foram
+   projetadas. */
+@media print {
+  html.print-pdf .reveal .slides section,
+  html.reveal-print .reveal .slides section {
+    padding: 44px 56px 72px !important;
+  }
+
+  /* A mesma regra do reveal.css revela toda <img> da secao com borda cinza,
+     o que reexibia o GIF ao lado do PNG de impressao e crescia a pagina. */
+  .reveal .slides section img.figura-animada { display: none !important; border: 0 !important; }
+  .reveal .slides section img.figura-print { display: block !important; border: 0 !important; }
+}

@@ -1,10 +1,14 @@
 /* Tokens do Brandbook Inteli 2025.
    Este e o unico arquivo do acervo autorizado a declarar cor e tipografia.
    Qualquer outro arquivo consome var(--inteli-*) ou var(--seg-*).
-   Verificado por tools/check_brand.py. */
+   Verificado por tools/check_brand.py.
 
-@import url("https://fonts.googleapis.com/css2?family=Platypi:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap");
+   As familias vem de assets/vendor/fontes/, servidas do proprio acervo:
+   antes eram dois @import para fonts.googleapis.com, e numa sala sem rede o
+   deck caia para as fontes do sistema. */
+
+@import url("../vendor/fontes/fontes.css");
+
 
 :root {
   /* Paleta cromática, p.66 */
@@ -151,3 +155,8 @@ body.portal .eyebrow {
 /* O divisor usa a sem serifa na linha de apoio: 58px serifado contra 25px
    serifado na mesma familia nao separava titulo de enunciado. */
 .section-slide h3 { font-family: var(--fonte-texto); }
+
+
+/* Token de linha de tabela. O cinza de borda mede 1,58:1 sobre branco e some
+   projetado; este e o mesmo roxo da marca a baixa opacidade, que sobrevive. */
+:root { --seg-cinza-linha: color-mix(in srgb, var(--inteli-roxo) 28%, var(--inteli-branco)); }

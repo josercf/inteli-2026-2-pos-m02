@@ -168,7 +168,7 @@ def gif_crisp_dm(destino: Path) -> None:
 
     def desenhar(k):
         fig, ax = _figura_ciclo()
-        _desenha_ciclo(ax, CRISP, pos, CINZA_ESCURO)
+        _desenha_ciclo(ax, CRISP, pos, ROXO)
         for i, (nome, encontro) in enumerate(CRISP):
             x, y = pos[i]
             ativo = i == k
@@ -224,7 +224,7 @@ def gif_ciclo_eda(destino: Path) -> None:
 
     def desenhar(k):
         fig, ax = _figura_ciclo()
-        _desenha_ciclo(ax, CICLO, pos, CINZA_MEDIO)
+        _desenha_ciclo(ax, CICLO, pos, ROXO)
         for i, (nome, ator) in enumerate(CICLO):
             x, y = pos[i]
             ativo = i == k
@@ -482,10 +482,10 @@ def svg_structure_in_out(destino: Path) -> None:
     for i, (rotulo, detalhe, falha) in enumerate(ENTRADAS):
         y = 2 + i * 66
         linhas.append(f"""
-  <rect x="0" y="{y}" width="470" height="58" rx="8" fill="{CINZA_CLARO}" stroke="{CINZA_MEDIO}"/>
+  <rect x="0" y="{y}" width="470" height="58" rx="8" fill="{CINZA_CLARO}" stroke="{ROXO}" stroke-opacity="0.25"/>
   <text x="22" y="{y + 30}" font-size="25" font-weight="600" fill="{ROXO}">{rotulo}</text>
   <text x="22" y="{y + 57}" font-size="19" fill="{ROXO}">{detalhe}</text>
-  <path d="M 486 {y + 36} L 566 {y + 36}" stroke="{CINZA_ESCURO}" stroke-width="2.5"
+  <path d="M 486 {y + 36} L 566 {y + 36}" fill="none" stroke="{ROXO}" stroke-width="2.5"
         marker-end="url(#seta)"/>
   <rect x="590" y="{y + 16}" width="4" height="40" fill="{CORAL}"/>
   <text x="608" y="{y + 33}" font-size="16" fill="{ROXO}" letter-spacing="0.06em">SEM ISSO</text>
@@ -497,7 +497,7 @@ def svg_structure_in_out(destino: Path) -> None:
   <defs>
     <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
             orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="{CINZA_ESCURO}"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="{ROXO}"/>
     </marker>
   </defs>
   <rect width="1168" height="334" fill="{BRANCO}"/>
@@ -523,44 +523,52 @@ FOLHAS = [
 def svg_arvore_hipoteses(destino: Path) -> None:
     """Decomposicao MECE da pergunta de negocio ate hipoteses testaveis.
 
-    Os ramos que a tarde nao persegue ficam rebaixados (borda cinza), e nao
-    apagados: a decomposicao so e MECE se os tres aparecerem. A legenda de
-    rodape saiu do SVG e virou a faixa de conclusao do slide.
+    Os ramos que a tarde nao persegue ficam rebaixados, e nao apagados: a
+    decomposicao so e MECE se os tres aparecerem.
+
+    Geometria conferida contra a altura do viewBox. Uma versao anterior tinha
+    viewBox de 350 e conteudo terminando em 376: o SVG cortava 26px de si
+    mesmo, e o que sumia eram justamente os quatro rotulos de coluna, que sao a
+    carga util da figura. Nada no acervo enxergava isso, porque a caixa do
+    <img> estava correta. Ha teste agora.
+
+    Traços em roxo, nao em cinza: cinza escuro sobre branco mede 2,03:1 e cinza
+    medio 1,58:1, contra o minimo de 3:1 para elemento grafico. Numa sala clara
+    a arvore perdia os ramos e virava uma lista de retangulos.
     """
     partes = []
     for i, (titulo, l1, l2, foco) in enumerate(RAMOS):
         x = 20 + i * 386
-        cor = VERDE_ESCURO if foco else CINZA_MEDIO
+        cor = VERDE_ESCURO if foco else ROXO
+        largura = 3.5 if foco else 1.6
         partes.append(f"""
-  <path d="M 584 110 L 584 134 L {x + 173} 134 L {x + 173} 156" fill="none"
-        stroke="{CINZA_ESCURO}" stroke-width="2"/>
-  <rect x="{x}" y="156" width="346" height="74" rx="8" fill="{BRANCO}"
-        stroke="{cor}" stroke-width="{3.5 if foco else 1.8}"/>
-  <text x="{x + 22}" y="184" font-size="21" font-weight="600" fill="{ROXO}">{titulo}</text>
-  <text x="{x + 22}" y="208" font-size="16" fill="{ROXO}">{l1}</text>
-  <text x="{x + 22}" y="226" font-size="16" fill="{ROXO}">{l2}</text>""")
+  <path d="M 584 92 L 584 116 L {x + 173} 116 L {x + 173} 136" fill="none"
+        stroke="{ROXO}" stroke-width="2"/>
+  <rect x="{x}" y="136" width="346" height="70" rx="8" fill="{BRANCO}"
+        stroke="{cor}" stroke-width="{largura}"/>
+  <text x="{x + 22}" y="164" font-size="21" font-weight="600" fill="{ROXO}">{titulo}</text>
+  <text x="{x + 22}" y="188" font-size="16" fill="{ROXO}">{l1}, {l2}</text>""")
 
     for i, (l1, l2, colunas) in enumerate(FOLHAS):
         x = 14 + i * 290
         partes.append(f"""
-  <path d="M 579 230 L 579 256 L {x + 133} 256 L {x + 133} 278" fill="none"
+  <path d="M 579 206 L 579 230 L {x + 133} 230 L {x + 133} 252" fill="none"
         stroke="{VERDE_ESCURO}" stroke-width="2"/>
-  <rect x="{x}" y="278" width="266" height="98" rx="8" fill="{CINZA_CLARO}"
-        stroke="{CINZA_MEDIO}"/>
-  <text x="{x + 18}" y="304" font-size="17" font-weight="600" fill="{ROXO}">{l1}</text>
-  <text x="{x + 18}" y="326" font-size="17" font-weight="600" fill="{ROXO}">{l2}</text>
-  <rect x="{x + 18}" y="340" width="4" height="22" fill="{VERDE_ESCURO}"/>
-  <text x="{x + 32}" y="357" font-size="15" fill="{VERDE_ESCURO}">{colunas}</text>"""
+  <rect x="{x}" y="252" width="266" height="88" rx="8" fill="{CINZA_CLARO}"
+        stroke="{ROXO}" stroke-width="1.4"/>
+  <text x="{x + 18}" y="278" font-size="17" font-weight="600" fill="{ROXO}">{l1}</text>
+  <text x="{x + 18}" y="299" font-size="17" font-weight="600" fill="{ROXO}">{l2}</text>
+  <rect x="{x + 18}" y="311" width="4" height="20" fill="{VERDE_ESCURO}"/>
+  <text x="{x + 32}" y="327" font-size="16" fill="{VERDE_ESCURO}">{colunas}</text>"""
         )
 
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 350" width="1168" height="350"
      font-family="{FONTES_SVG}" role="img"
      aria-label="Árvore de hipóteses decompondo a queda do NRR em três componentes mutuamente exclusivos e quatro hipóteses testáveis">
   <rect width="1168" height="350" fill="{BRANCO}"/>
-  <rect x="380" y="8" width="408" height="98" rx="8" fill="{ROXO}"/>
-  <text x="406" y="42" font-size="21" font-weight="700" fill="{BRANCO}">Por que o NRR caiu de</text>
-  <text x="406" y="70" font-size="21" font-weight="700" fill="{BRANCO}">109% para 93%?</text>
-  <text x="406" y="93" font-size="15" fill="{CINZA_CLARO}">a pergunta do Comitê de 3 de março</text>
+  <rect x="380" y="6" width="408" height="86" rx="8" fill="{ROXO}"/>
+  <text x="406" y="38" font-size="21" font-weight="700" fill="{BRANCO}">Por que o NRR caiu de 109% para 93%?</text>
+  <text x="406" y="66" font-size="16" fill="{CINZA_CLARO}">a pergunta do Comitê de 3 de março</text>
   {''.join(partes)}
 </svg>
 """

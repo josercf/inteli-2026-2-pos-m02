@@ -85,19 +85,104 @@ case). O que é citável e o que é nosso está separado no slide de referência
 **Espiral:** a Aula 01 deixou pronto o rótulo do Caminho A e mesas com contagens
 de ruptura diferentes entre si. A causa dessa divergência é o conteúdo de hoje.
 
-**Conteúdo:** as quatro advertências de qualidade do Exhibit 3 como matéria, não
-como nota de rodapé. Cerca de 1% dos trimestres de conta ativa sem receita
-registrada (excluir e imputar produzem séries diferentes); devoluções em coluna
-independente e valor negativo; a mudança de taxonomia de 2023, que deixa a
-contagem de linhas estruturalmente menor antes de 2023Q1 e fabrica um sinal
-falso de erosão em quem não tratar; e o engajamento comercial incompleto, pior
-justamente nas contas menores.
+**Conteúdo:** as quatro advertências de qualidade do Exhibit 3 tratadas como
+matéria da aula. As 160 linhas de trimestre de conta ativa sem receita
+registrada; as 8.280 linhas de engajamento comercial ausente, concentradas nas
+contas menores; a mudança de taxonomia de 2023Q1, que faz a média de linhas de
+produto saltar de 1,85 para 3,67 e esconde a queda de 30,4% que vem depois; e
+`devolucoes_brl` em coluna independente, com sinal negativo.
 
-**Atividade PBL:** confronto. Metade dos grupos exclui as linhas de receita
-ausente, metade imputa. Comparam as duas séries e medem o custo da decisão em
-número de rupturas.
+**Objetivos de aprendizagem:**
+1. Perfilar uma base desconhecida com IA, sem aceitar lacuna preenchida.
+2. Distinguir ausência aleatória de ausência enviesada, e nomear o mecanismo.
+3. Medir o custo de uma decisão de tratamento em vez de argumentar sobre ela.
+4. Registrar o tratamento num artefato reexecutável e portátil entre agentes.
 
-**Entregável:** base tratada e o custo numérico de cada decisão de tratamento.
+**Contrato do dia, anunciado às 14h00 e cobrado até o fim:** toda decisão de
+tratamento entra escrita, com o custo medido.
+
+**Ambiente:** as quatro práticas rodam em Gemini, o Antigravity aparece em
+demonstração projetada da máquina do professor, e o Colab da Aula 01 fica como
+plano B declarado no começo da aula (ADR-003).
+
+### Agenda em minutos
+
+| Horário | Bloco | Conteúdo |
+|---|---|---|
+| `14h00 - 14h15` | Resgate e contrato | As contagens de ruptura da Aula 01 vão para o quadro. O número certo é 34. Pergunta disparada: o que cada mesa fez com as linhas em que a receita não está registrada? Contrato do dia: toda decisão de tratamento entra escrita, com o custo medido |
+| `14h15 - 14h30` | Bloco 1 | Onde a limpeza mora dentro da EDA. As **seis dimensões de qualidade de dado** (completude, validade, consistência, unicidade, acurácia, temporalidade) como checklist nomeável. Enquete: quem já recebeu base de outra área e usou sem perfilar? |
+| `14h30 - 14h50` | Prática 1, Gemini | Perfilamento cego. Subir o painel e pedir o perfil de qualidade coluna a coluna, com a restrição de não preencher lacuna. Colheita: quantas das quatro advertências a IA achou sozinha, e qual ela perdeu |
+| `14h50 - 15h05` | Bloco 2 | As quatro advertências do Exhibit 3 com os números na tela |
+| `15h05 - 15h25` | Prática 2, Gemini | Mecanismo de ausência. A ausência do engajamento é aleatória? Medem por segmento e encontram 29,4% contra 53,2%. **MCAR, MAR e MNAR** entram como vocabulário na sequência da medição, nomeando o que a turma acabou de observar |
+| `15h25 - 15h45` | Intervalo | |
+| `15h45 - 16h00` | Bloco 3 | Excluir, imputar ou sinalizar. Cada uma das três decisões assume uma coisa diferente sobre o mundo. Como se mede o custo de uma decisão de tratamento |
+| `16h00 - 16h30` | Prática 3, confronto | Metade dos grupos trata `visitas_registradas` ausente como zero, metade exclui. Cada metade calcula visitas médias por segmento e defende a leitura. Os dois quadros vão lado a lado e a ordem dos segmentos inverte |
+| `16h30 - 16h45` | Bloco 4 | A **skill de agente** como formato: arquivo Markdown com o fluxo sistemático. Anatomia e por que ela resolve o problema de abertura. Demonstração projetada no Antigravity, com o mesmo arquivo lido por um agente que trabalha sobre pasta |
+| `16h45 - 17h15` | Prática 4 | Preenchem a `skill-limpeza-kovan.md` a partir do esqueleto, colam no Gemini e rodam contra a base crua. Critério de aceite: o número tem que bater com o da Prática 3 |
+| `17h15 - 17h30` | Amarração | O que fica pronto, o que a Aula 03 pega, o que alimenta o Artefato 1 |
+
+### Verificações do encontro
+
+1. Duas mesas mediram visitas por segmento na mesma base e chegaram a ordens
+   opostas. Qual explicação é a mais provável?
+2. A média de linhas de produto passou de 1,85 para 3,67 entre 2022Q4 e 2023Q1.
+   O que aconteceu com a carteira?
+3. Qual destas decisões de tratamento pode ser reproduzida por outra pessoa na
+   semana que vem?
+
+### Entregável
+
+Base tratada, o custo numérico de cada decisão de tratamento, e a
+`skill-limpeza-kovan.md` preenchida, que produz os dois quando executada.
+
+"Base tratada" exige uma decisão declarada para cada uma das quatro
+advertências: o que foi feito com as 160 linhas de receita ausente, com as 8.280
+de engajamento ausente, com a quebra de taxonomia de 2023Q1 e com o sinal de
+`devolucoes_brl`. A Prática 3 aprofunda uma dessas quatro e o entregável
+responde pelas quatro. Omissão conta como decisão de manter o dado como veio, e
+o esqueleto da skill tem uma linha obrigatória para cada advertência.
+
+### Frameworks apresentados
+
+Seis dimensões de qualidade de dado (organizadas neste módulo a partir da
+literatura de data quality, sem seguir padrão publicado); a taxonomia de
+mecanismos de ausência MCAR, MAR e MNAR (Rubin, Biometrika, 1976; Little e
+Rubin, Wiley, 2019); as três decisões de tratamento (excluir, imputar,
+sinalizar) com o custo medido em cada caso; e a skill de agente em Markdown como
+formato de registro do fluxo. O que é citável e o que é nosso está separado no
+slide de referências.
+
+### Artefatos
+
+- Deck: `aulas/aula02.html`, com três figuras. Gerado por
+  `tools/montar_deck_aula02.py`, não editado à mão
+- Figuras: `tools/gerar_figuras_aula02.py`, desenhadas em 1168px e renderizadas
+  1:1 (inversão dos segmentos, quebra de taxonomia, mapa de ausência)
+- Notebook: `notebooks/aula02_limpeza.ipynb`, plano B do upload no Gemini e
+  lugar de exportar o entregável
+- Material de apoio: `materiais/aula02-material-de-apoio.html`, com MCAR, MAR e
+  MNAR aplicados coluna a coluna, o efeito da taxonomia trimestre a trimestre,
+  os prompts completos e o código de cada tratamento
+- Material do aluno: `materiais/skill-limpeza-kovan.md`, esqueleto preenchido na
+  Prática 4
+- Condução: `docs/notas-do-professor/aula02.md` (não distribuído)
+
+### Divergência registrada
+
+O planejamento original prescrevia, para a S2, que metade dos grupos excluísse
+as linhas de receita ausente e metade as imputasse, comparando as duas séries e
+medindo o custo da decisão em número de rupturas.
+
+Essa atividade foi medida contra o CSV entregue e ficou fraca. São 14 linhas de
+receita ausente no segmento estratégico. O custo em contagem de rupturas fica em
+168 contra 169, e em episódios de erosão o intervalo inteiro vai de 74 a 76 no
+corte de 25%. Duas metades da sala apresentariam números praticamente iguais.
+
+A forma do PBL foi mantida: metade exclui, metade imputa, ambas medem o custo e
+entregam a base tratada. A coluna do confronto passou de `receita_brl` para
+`visitas_registradas`, onde a ordem dos segmentos inverte entre os dois
+tratamentos. A receita ausente permanece na aula como Prática 2, o mecanismo de
+ausência, que é onde a espiral da Aula 01 aterrissa.
 
 ---
 

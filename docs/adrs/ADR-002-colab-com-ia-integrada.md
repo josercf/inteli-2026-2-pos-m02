@@ -54,3 +54,6 @@ aula.
 ## ADRs relacionadas
 
 - ADR-001 (painel sintético com os números do case travados)
+- ADR-003 (Gemini como ambiente das práticas e Antigravity como demonstração),
+  que emenda esta a partir da Aula 02: as práticas passam a rodar em Gemini e o
+  Colab fica como plano B declarado

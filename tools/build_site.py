@@ -35,6 +35,21 @@ ARQUIVOS = [
     ("materiais/caderno-de-hipoteses.md", "materiais/caderno-de-hipoteses.md"),
     ("materiais/aula01-material-de-apoio.html", "materiais/aula01-material-de-apoio.html"),
     ("notebooks/aula01_hipoteses.ipynb", "notebooks/aula01_hipoteses.ipynb"),
+    ("aulas/aula02.html", "aulas/aula02.html"),
+    ("materiais/aula02-material-de-apoio.html", "materiais/aula02-material-de-apoio.html"),
+    ("materiais/skill-limpeza-kovan.md", "materiais/skill-limpeza-kovan.md"),
+    ("notebooks/aula02_limpeza.ipynb", "notebooks/aula02_limpeza.ipynb"),
+    ("assets/img/aula02-inversao-segmentos.png", "assets/img/aula02-inversao-segmentos.png"),
+    ("assets/img/aula02-quebra-taxonomia.png", "assets/img/aula02-quebra-taxonomia.png"),
+    ("assets/img/aula02-mapa-ausencia.png", "assets/img/aula02-mapa-ausencia.png"),
+    (
+        "assets/img/aula02-gemini-pratica2-prompt.jpg",
+        "assets/img/aula02-gemini-pratica2-prompt.jpg",
+    ),
+    (
+        "assets/img/aula02-gemini-pratica2-taxa-por-segmento.jpg",
+        "assets/img/aula02-gemini-pratica2-taxa-por-segmento.jpg",
+    ),
     ("dados/kovan_painel_contas.csv", "dados/kovan_painel_contas.csv"),
 ]
 
@@ -72,7 +87,12 @@ def montar(destino):
         if not os.path.isdir(caminho):
             faltando.append(origem + "/")
             continue
-        shutil.copytree(caminho, os.path.join(destino, alvo), ignore=IGNORAR)
+        # dirs_exist_ok porque a allowlist de arquivos avulsos pode ter criado
+        # o diretorio antes (ex.: assets/img/aula02-*.png entra nominalmente na
+        # lista e tambem sobe junto com assets/).
+        shutil.copytree(
+            caminho, os.path.join(destino, alvo), ignore=IGNORAR, dirs_exist_ok=True
+        )
 
     return faltando
 

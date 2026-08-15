@@ -38,6 +38,7 @@ ARQUIVOS = [
     ("aulas/aula02.html", "aulas/aula02.html"),
     ("materiais/aula02-material-de-apoio.html", "materiais/aula02-material-de-apoio.html"),
     ("materiais/skill-limpeza-kovan.md", "materiais/skill-limpeza-kovan.md"),
+    ("materiais/skill-limpeza-referencia.md", "materiais/skill-limpeza-referencia.md"),
     ("notebooks/aula02_limpeza.ipynb", "notebooks/aula02_limpeza.ipynb"),
     ("assets/img/aula02-inversao-segmentos.png", "assets/img/aula02-inversao-segmentos.png"),
     ("assets/img/aula02-quebra-taxonomia.png", "assets/img/aula02-quebra-taxonomia.png"),

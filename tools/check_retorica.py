@@ -199,6 +199,7 @@ ALVOS_PADRAO = [
     "materiais/aula01-material-de-apoio.html",
     "materiais/aula02-material-de-apoio.html",
     "materiais/skill-limpeza-kovan.md",
+    "materiais/skill-limpeza-referencia.md",
     "materiais/caderno-de-hipoteses.md",
 ]
 

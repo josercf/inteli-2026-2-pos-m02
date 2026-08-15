@@ -27,3 +27,4 @@ docs/notas-do-professor/
 *.docx
 !materiais/*.md
 caderno_de_hipoteses.csv
+.superpowers/

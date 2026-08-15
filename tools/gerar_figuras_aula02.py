@@ -48,7 +48,10 @@ from tools.gerar_figuras_aula01 import (  # noqa: E402
 SAIDA = RAIZ / "assets" / "img"
 CSV = RAIZ / "dados" / "kovan_painel_contas.csv"
 
-SEGMENTOS = ("Cauda", "Estrategico", "Medio")
+# O CSV grava os segmentos sem acento. Rotulo projetado leva acentuacao
+# completa: toda figura que rotula segmento passa o valor cru por aqui antes
+# de escrever na tela.
+ROTULO_SEGMENTO = {"Estrategico": "Estratégico", "Medio": "Médio", "Cauda": "Cauda"}
 
 
 def _fmt(valor: float, casas: int = 2) -> str:
@@ -125,7 +128,7 @@ def fig_inversao_segmentos(destino: Path) -> None:
         posicoes = np.arange(len(serie))
         ax.barh(posicoes, serie.values, color=cores, height=0.56, zorder=3)
         ax.set_yticks(posicoes)
-        ax.set_yticklabels(serie.index, fontsize=17)
+        ax.set_yticklabels([ROTULO_SEGMENTO[s] for s in serie.index], fontsize=17)
         ax.set_xlim(0, limite)
         ax.set_title(titulo, fontsize=18, color=ROXO, loc="left", pad=12)
         ax.set_xlabel("visitas médias por conta-trimestre", fontsize=15)
@@ -230,6 +233,13 @@ ROTULOS_COLUNA = {
 def fig_mapa_ausencia(destino: Path) -> None:
     df = pd.read_csv(CSV)
 
+    # Colunas por porte decrescente, nao alfabetica: e essa ordem que revela
+    # que a ausencia de engajamento acompanha o porte da conta (achado da
+    # Pratica 2). Em ordem alfabetica (Cauda, Estrategico, Medio) as mesmas
+    # taxas leem como ruido: 53,2% / 29,4% / 49,9%. Nesta ordem, 29,4% / 49,9%
+    # / 53,2% e uma progressao monotona.
+    segmentos_por_porte = ("Estrategico", "Medio", "Cauda")
+
     linhas = COLUNAS_COM_LACUNA + [COLUNA_REFERENCIA]
     matriz = pd.DataFrame(
         {
@@ -237,7 +247,7 @@ def fig_mapa_ausencia(destino: Path) -> None:
                 df.loc[df["segmento"] == segmento, coluna].isna().mean()
                 for coluna in linhas
             ]
-            for segmento in SEGMENTOS
+            for segmento in segmentos_por_porte
         },
         index=linhas,
     )
@@ -252,8 +262,9 @@ def fig_mapa_ausencia(destino: Path) -> None:
     dados = matriz.values
     ax.imshow(dados, cmap=cmap, vmin=0, vmax=dados.max(), aspect="auto")
 
-    ax.set_xticks(range(len(SEGMENTOS)))
-    ax.set_xticklabels(SEGMENTOS, fontsize=16, color=ROXO)
+    ax.set_xticks(range(len(segmentos_por_porte)))
+    ax.set_xticklabels([ROTULO_SEGMENTO[s] for s in segmentos_por_porte],
+                        fontsize=16, color=ROXO)
     ax.xaxis.set_ticks_position("top")
     ax.xaxis.set_label_position("top")
 
@@ -266,7 +277,7 @@ def fig_mapa_ausencia(destino: Path) -> None:
     ax.axhline(len(COLUNAS_COM_LACUNA) - 0.5, color=ROXO, linewidth=1.6)
 
     for i, linha in enumerate(linhas):
-        for j, segmento in enumerate(SEGMENTOS):
+        for j, segmento in enumerate(segmentos_por_porte):
             valor = matriz.loc[linha, segmento]
             cor_texto = BRANCO if valor > dados.max() * 0.55 else ROXO
             ax.text(j, i, f"{_fmt(valor * 100, 1)}%", ha="center", va="center",

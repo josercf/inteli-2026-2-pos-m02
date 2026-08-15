@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Material de apoio &middot; Aula 02 &middot; O dado sujo é o case</title>
-  <meta name="description" content="Material de apoio da Aula 02 do Módulo 2 do MBA Inteli x Lenovo: o mecanismo de ausência classificado coluna a coluna, a aritmética do preenchimento com zero, as 14 médias da quebra de taxonomia, o erro de sinal das devoluções, os prompts das quatro práticas e a skill de limpeza em outros agentes.">
+  <meta name="description" content="Material de apoio da Aula 02 do Módulo 2 do MBA Inteli x Lenovo: o mecanismo de ausência classificado coluna a coluna, a aritmética do preenchimento com zero, as 14 médias da quebra de taxonomia, o erro de sinal das devoluções, os prompts das quatro práticas, a execução real desses prompts no Gemini e a skill de limpeza em outros agentes.">
 
   <!-- Este material NAO e o roteiro do deck em prosa. Onde o slide aponta, a
        pagina deriva, calcula e explica. Todo numero citado vem de
@@ -14,6 +14,30 @@
 
   <link rel="stylesheet" href="../assets/css/inteli-brand.css">
   <link rel="stylesheet" href="../assets/css/inteli-material.css">
+
+  <!-- Figura de captura de tela. A convencao do acervo e a mesma do deck: a
+       LARGURA governa. Com max-height a imagem encolheria para caber numa
+       altura arbitraria e sobraria faixa branca nos flancos. Aqui ela ocupa
+       ate a largura da coluna de texto e nunca ultrapassa o tamanho nativo. -->
+  <style>
+    .doc-figura {
+      margin: 0 0 14px;
+    }
+
+    .doc-figura img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--seg-borda);
+      border-radius: 10px;
+    }
+
+    .doc-figura figcaption {
+      font-size: var(--escala-complementar);
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
   <div class="doc">
@@ -34,6 +58,7 @@
         <li><a href="#taxonomia">A quebra de taxonomia, trimestre a trimestre</a></li>
         <li><a href="#devolucoes">Devoluções e o erro de sinal</a></li>
         <li><a href="#prompts">Os prompts das quatro práticas</a></li>
+        <li><a href="#execucao">A execução real no Gemini</a></li>
         <li><a href="#agentes">A skill de limpeza em outros agentes</a></li>
         <li><a href="#leitura">Leitura complementar do professor</a></li>
       </ol>
@@ -576,8 +601,173 @@ própria.
         reescrito.</p>
       </section>
 
+      <section class="doc-secao" id="execucao">
+        <h2>6. A execução real no Gemini</h2>
+
+        <p>Os prompts das Práticas 1 e 2 foram executados em 15/08/2026, na conta corporativa
+        Inteli do professor, algumas horas antes da aula. O modelo rodou em modo Raciocínio, com
+        execução de código Python no sandbox do Gemini. O arquivo enviado foi o painel real,
+        <code>dados/kovan_painel_contas.csv</code>, com 1,8 MB, por upload direto na conversa. O
+        upload foi aceito pela conta corporativa, o que retira da aula a contingência prevista para
+        bloqueio de anexo. Os números desta seção são medida de uma execução, e a comparação com os
+        valores travados por teste vem em cada quadro.</p>
+
+        <h3>Prática 1: o prompt enviado</h3>
+
+        <pre class="doc-codigo"><code>Você é analista de dados. Anexei o painel de contas da Kovan
+Technologies LATAM. Faça o perfil de qualidade deste arquivo,
+coluna a coluna: tipo, contagem de valores ausentes, mínimo,
+máximo e número de valores distintos.
+
+Restrição: não estime, não interpole e não complete nenhum
+valor que não esteja na base. Quando a informação não existir,
+responda que ela não existe.
+
+Mostre o código que produziu cada número antes de apresentar o
+número. Não trate nada ainda.</code></pre>
+
+        <p>A resposta trouxe o perfil das 20 colunas, cada uma acompanhada do código que produziu o
+        número, e abriu declarando 16.618 registros no total, sem tratamento, imputação ou alteração
+        prévia. O bloco que o modelo repetiu coluna a coluna:</p>
+
+        <pre class="doc-codigo"><code>col = 'visitas_registradas'
+print("Tipo:", df[col].dtype)
+print("Ausentes:", df[col].isna().sum())
+print("Mínimo:", df[col].dropna().min())
+print("Máximo:", df[col].dropna().max())
+print("Distintos:", df[col].nunique())</code></pre>
+
+        <h3>Conferência da Prática 1 contra os valores travados</h3>
+
+        <p>Os dez valores conferidos batem com <code>dados/tests/test_aula02_numeros.py</code>.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Item conferido</th><th>Devolvido pelo Gemini</th><th>Travado por teste</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Registros do painel</td><td>16.618</td><td>16.618</td></tr>
+              <tr><td><code>conta_id</code> distintos</td><td>1.187</td><td>1.187</td></tr>
+              <tr><td><code>trimestre</code> distintos</td><td>14</td><td>14</td></tr>
+              <tr><td><code>receita_brl</code> ausentes</td><td>160</td><td>160</td></tr>
+              <tr><td><code>valor_medio_pedido_brl</code> ausentes</td><td>160</td><td>160</td></tr>
+              <tr><td><code>visitas_registradas</code> ausentes</td><td>8.280</td><td>8.280</td></tr>
+              <tr><td><code>interacoes_crm</code> ausentes</td><td>8.280</td><td>8.280</td></tr>
+              <tr><td><code>devolucoes_brl</code> mínimo</td><td>-536.001,81</td><td>-536.001,81</td></tr>
+              <tr><td><code>devolucoes_brl</code> máximo</td><td><code>-0.0</code></td><td>nenhum valor positivo</td></tr>
+              <tr><td><code>taxonomia_mix</code> distintos</td><td>2</td><td>2 (<code>pre_2023</code>, <code>pos_2023</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>As quatro advertências do Exhibit 3 na resposta</h3>
+
+        <p>O perfil ficou correto e completo no nível da coluna. Das quatro advertências que o
+        Exhibit 3 registra <a href="#r4">[4]</a>, uma chegou como alerta, duas ficaram como dado cru
+        sem leitura e uma ficou fora da tela.</p>
+
+        <ol>
+          <li><strong>Receita ausente: entregue como problema.</strong> As 160 linhas aparecem no
+          perfil, e o contraste com as demais colunas, todas com zero ausentes, fica visível na
+          mesma tabela.</li>
+          <li><strong>Devoluções com sinal negativo: dado cru sem leitura.</strong> O número que
+          denuncia a armadilha está na tela, <code>Máximo: -0.0</code>, sem nenhuma frase sobre o
+          efeito disso no cálculo da receita líquida.</li>
+          <li><strong>Quebra de taxonomia em 2023Q1: dado cru sem leitura.</strong> A coluna
+          <code>taxonomia_mix</code> foi reportada como 2 valores distintos, e a perda de
+          comparabilidade da contagem de linhas de produto através do corte ficou fora da
+          resposta.</li>
+          <li><strong>Viés na ausência do engajamento: invisível.</strong> As 8.280 linhas aparecem
+          como número plano, sem nenhum cruzamento com o segmento.</li>
+        </ol>
+
+        <p>A quarta advertência fica fora do alcance de um perfil coluna a coluna por construção. A
+        taxa de ausência varia com o segmento, e uma propriedade da relação entre duas colunas
+        escapa de qualquer procedimento que examine uma coluna por vez.</p>
+
+        <div class="doc-nota">
+          <p><strong>Pergunta de colheita, revisada depois desta execução.</strong> O que a IA
+          acertou e mesmo assim deixou de ver?</p>
+        </div>
+
+        <h3>Prática 2: o prompt enviado</h3>
+
+        <pre class="doc-codigo"><code>A coluna visitas_registradas tem valores ausentes. Essa
+ausência é aleatória?
+
+Calcule a taxa de ausência de visitas_registradas
+separadamente para cada segmento e diga se ela é uniforme
+entre os segmentos.
+
+Mostre o código antes do resultado. Não preencha nem trate
+nada.</code></pre>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula02-gemini-pratica2-prompt.jpg" width="1210" height="618"
+               alt="Tela do Gemini com o prompt da Prática 2 enviado na conversa, o painel da Kovan anexado e o bloco de código Python do modelo começando a rodar logo abaixo.">
+          <figcaption>O prompt da Prática 2 no momento do envio, com o painel anexado e o código
+          Python do sandbox iniciando a execução.</figcaption>
+        </figure>
+
+        <h3>O que a Prática 2 devolveu</h3>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Segmento</th><th>Total de registros</th><th>Valores ausentes</th><th>Taxa de ausência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Cauda</td><td>9.982</td><td>5.307</td><td>53,17%</td></tr>
+              <tr><td>Estratégico</td><td>1.652</td><td>486</td><td>29,42%</td></tr>
+              <tr><td>Médio</td><td>4.984</td><td>2.487</td><td>49,90%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula02-gemini-pratica2-taxa-por-segmento.jpg" width="1210" height="618"
+               alt="Tela do Gemini com a tabela de taxa de ausência de visitas_registradas por segmento, com Cauda em 53,17%, Estratégico em 29,42% e Médio em 49,90%, seguida do parágrafo em que o modelo descarta MCAR.">
+          <figcaption>A tabela de taxa de ausência por segmento devolvida pelo Gemini e o parágrafo
+          em que o modelo descarta MCAR e aponta a dependência do segmento.</figcaption>
+        </figure>
+
+        <p>A leitura que acompanhou a tabela, na palavra do próprio modelo:</p>
+
+        <blockquote>
+          <p>A ausência de dados <strong>não é uniforme</strong> entre os segmentos e <strong>não é
+          completamente aleatória</strong> (MCAR, Missing Completely at Random). Existe uma
+          dependência clara com a variável <code>segmento</code>: o segmento Estratégico apresenta
+          uma taxa de omissão substancialmente menor (29,42%) do que os segmentos Cauda (53,17%) e
+          Médio (49,90%).</p>
+          <p><cite>Gemini, resposta à Prática 2, 15/08/2026. Citação literal.</cite></p>
+        </blockquote>
+
+        <p>As três taxas conferem com os valores travados: 0,2942 no estratégico, 0,4990 no médio e
+        0,5317 na cauda. O total de 1.652 observações no segmento estratégico também confere. O
+        modelo descartou MCAR por conta própria, com o argumento correto. A classificação que o
+        painel sustenta ficou sem nome na resposta: MAR, o caso em que a probabilidade de a linha
+        faltar depende de uma variável observada, o segmento. Nomear o mecanismo continua sendo
+        trabalho da mesa.</p>
+
+        <h3>A conclusão que as duas execuções sustentam</h3>
+
+        <p>O painel, o modelo e a conta são os mesmos nas duas práticas. O recorte pedido pelo
+        prompt muda entre elas, e o recorte decide se o viés aparece na tela. Na Prática 1 o pedido
+        foi coluna a coluna, a resposta ficou correta nas 20 colunas e a variação por segmento nunca
+        entrou no quadro. Na Prática 2 o pedido cruzou duas colunas, a mesma ferramenta mediu a
+        variação de 29,42% a 53,17% e concluiu sozinha que a ausência depende do segmento.</p>
+
+        <div class="doc-nota">
+          <p><strong>O que isso instala na skill de limpeza.</strong> A qualidade do diagnóstico
+          seguiu o recorte pedido, com o mesmo modelo e o mesmo arquivo nos dois casos. Por isso a
+          skill do grupo precisa carregar o cruzamento como passo escrito, com a coluna condicionante
+          nomeada, em vez de depender de o agente propor o cruzamento por conta própria.</p>
+        </div>
+      </section>
+
       <section class="doc-secao" id="agentes">
-        <h2>6. A skill de limpeza em outros agentes</h2>
+        <h2>7. A skill de limpeza em outros agentes</h2>
 
         <p>O arquivo que os grupos preenchem é Markdown puro, sem sintaxe proprietária. Essa escolha
         tem uma razão prática: cada agente carrega instruções de um caminho próprio, e o conteúdo
@@ -678,7 +868,7 @@ própria.
       </section>
 
       <section class="doc-secao" id="leitura">
-        <h2>7. Leitura complementar do professor</h2>
+        <h2>8. Leitura complementar do professor</h2>
 
         <p>Esta seção será preenchida com a curadoria de leituras do professor para a Aula 02.</p>
 

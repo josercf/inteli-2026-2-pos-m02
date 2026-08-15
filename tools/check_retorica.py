@@ -1,0 +1,244 @@
+# -*- coding: utf-8 -*-
+"""Trava as três construções retóricas proibidas pela diretiva editorial de
+15/08/2026.
+
+A referência de escrita do acervo é a linguagem das apresentações da McKinsey:
+o título de um slide de conteúdo é a conclusão completa, com o número dentro, e
+o corpo sustenta essa conclusão.
+
+Duas construções reprovam a build, porque são mecânicas e reconhecíveis sem
+ambiguidade. A terceira (antítese simétrica) é reportada como candidata: fazer
+regex decidir sobre ela produz falso positivo em frase legítima, e um validador
+que reprova texto correto acaba desligado.
+
+Uso: python3 tools/check_retorica.py [arquivo ...]
+Sem argumento, examina os decks, os materiais e o esqueleto da skill.
+"""
+
+from __future__ import annotations
+
+import re
+import sys
+from pathlib import Path
+from typing import NamedTuple
+
+RAIZ = Path(__file__).resolve().parents[1]
+
+
+class Achado(NamedTuple):
+    construcao: str
+    trecho: str
+    bloqueia: bool
+
+
+# `não é X, é Y` e `é X, não Y`, com X e Y curtos o bastante para serem o
+# mesmo sintagma contrastado, que é o que caracteriza a construção. As duas
+# regexes capturam a primeira palavra depois do marcador de contraste
+# (não/mas/e sim) em vez de tentar decidir tudo dentro do regex: a decisão
+# entre reprovar e aprovar depende de `_eh_verbo` sobre essa palavra, ver o
+# comentário lá. `mas` isolado, sem o `sim`, entra como marcador porque é a
+# variante mais frequente ("não é o modelo, mas o pipeline").
+_NEGATIVO = [
+    re.compile(
+        r"n[ãa]o\s+(?:é|s[ãa]o|era|foi)\s+[^,.;:!?]{2,45},\s*"
+        r"(?:e\s+sim|mas\s+sim|mas|é|s[ãa]o)\s+(\w+)",
+        re.I,
+    ),
+    re.compile(
+        r"\b(?:é|s[ãa]o)\s+[^,.;:!?]{2,45},\s*"
+        r"n[ãa]o\s+(\w+)[^,.;:!?]{0,45}[.;!?]",
+        re.I,
+    ),
+]
+
+# Verbos irregulares frequentes (dados pela revisão) com flexões usuais de
+# número e tempo. Entrar aqui nunca reprova um caso proibido, só evita
+# reprovar prosa legítima: a lista pode crescer com folga.
+_VERBOS_IRREGULARES = {
+    "é", "são", "era", "eram", "foi", "foram",
+    "tem", "têm", "tinha", "tinham",
+    "há", "havia",
+    "faz", "fazem", "fez", "fizeram",
+    "pode", "podem", "pôde", "puderam",
+    "deve", "devem", "devia", "deviam",
+    "vai", "vão", "ia", "iam",
+    "está", "estão", "estava", "estavam",
+    "sabe", "sabem", "soube", "souberam",
+    "consegue", "conseguem",
+}
+
+# Verbos regulares frequentes na prosa analítica do acervo, na 3a pessoa do
+# presente do indicativo. Fica de fora, de propósito, qualquer forma que
+# colide com substantivo comum neste domínio ("falta", "escolha", "conta",
+# "meta"), mesmo sendo também verbo: ver a ressalva em `_eh_verbo`.
+_VERBOS_REGULARES_FREQUENTES = {
+    "apresenta", "apresentam",
+    "cabe", "cabem",
+    "permite", "permitem",
+    "exige", "exigem",
+    "aumenta", "aumentam",
+    "reduz", "reduzem",
+    "eleva", "elevam",
+    "preserva", "preservam",
+    "garante", "garantem",
+    "assegura", "asseguram",
+    "revela", "revelam",
+    "indica", "indicam",
+    "sugere", "sugerem",
+    "implica", "implicam",
+    "resulta", "resultam",
+    "representa", "representam",
+    "reflete", "refletem",
+    "requer", "requerem",
+    "explica", "explicam",
+    "define", "definem",
+    "distingue", "distinguem",
+    "confirma", "confirmam",
+}
+
+
+def _eh_verbo(palavra: str) -> bool:
+    """Heurística honesta, não analisador morfológico: decide se a primeira
+    palavra depois do marcador de contraste (não/mas/e sim) é forma verbal
+    finita ou gerúndio. Forma verbal ali sinaliza oração nova com predicado
+    próprio ("não cabe em uma página"), não o sintagma nominal em paralelo
+    que a diretiva proíbe ("não substituto do analista").
+
+    Cobre gerúndio (sufixo "-ndo"), pretérito perfeito da 3a pessoa nas três
+    conjugações (sufixo "-ou"/"-eu"/"-iu") e duas listas de verbos frequentes,
+    um irregular e um regular no presente do indicativo.
+
+    Deliberadamente NÃO reconhece presente do indicativo por sufixo genérico
+    ("-a"/"-e"): essa terminação colide com substantivo e adjetivo comuns em
+    português ("escolha", "falta", "propriedade", "reflexo" nenhum deles é
+    verbo aqui). Tratar toda palavra terminada em "-a"/"-e" como verbo teria
+    produzido falso negativo em vários dos casos que a diretiva existe para
+    barrar. Por isso o presente do indicativo entra por lista fechada, não
+    por sufixo: cobre o vocabulário típico da prosa analítica do acervo e os
+    casos de calibração testados, não cobre verbo regular fora da lista. Se
+    um slide legítimo for reprovado por causa disso, a correção é acrescentar
+    o verbo à lista, nunca afrouxar para sufixo genérico.
+
+    Infinitivo ("-ar"/"-er"/"-ir") fica de fora de propósito: em português o
+    infinitivo funciona como substantivo ("a meta é reduzir custo, não
+    aumentar velocidade"), e é exatamente o tipo de constituinte nominal em
+    paralelo que a diretiva proíbe, então continua reprovando.
+    """
+    p = palavra.lower()
+    if p in _VERBOS_IRREGULARES or p in _VERBOS_REGULARES_FREQUENTES:
+        return True
+    return p.endswith(("ndo", "ou", "eu", "iu"))
+
+_ESCALADA = re.compile(r"n[ãa]o\s+(?:apenas|s[óo]|somente)\s+[^:.;!?]{2,80}:", re.I)
+
+# Duas orações espelhadas: sujeitos diferentes, verbos no mesmo tempo,
+# separadas por vírgula ou ponto e vírgula, sem conjunção subordinativa.
+_ANTITESE = re.compile(
+    r"\b([OA]s?\s+\w+)\s+(\w+[aeiou])\s*[,;]\s*([oa]s?\s+\w+)\s+(\w+[aeiou])\s*[.;]",
+    re.I,
+)
+
+_TAG = re.compile(r"<[^>]+>")
+_SECTION = re.compile(r"<section\b", re.I)
+
+_FIM_DE_FRASE = re.compile(r"[.!?]")
+
+
+def _frase_ao_redor(texto: str, inicio: int, fim: int) -> str:
+    """Expande o trecho casado ate os limites da frase inteira que o contem.
+
+    A regex costuma casar so o meio da frase (comeca no "nao" ou no "e", nao
+    no sujeito). Quem le o relatorio para corrigir o slide precisa da frase
+    completa, nao do fragmento que a regex enxergou.
+    """
+    inicio_frase = 0
+    for m in _FIM_DE_FRASE.finditer(texto, 0, inicio):
+        inicio_frase = m.end()
+    if fim > 0 and texto[fim - 1] in ".!?":
+        # O proprio casamento ja consumiu a pontuacao final: nao ha o que
+        # buscar adiante, senao a frase seguinte entra junto.
+        fim_frase = fim
+    else:
+        m_fim = _FIM_DE_FRASE.search(texto, fim)
+        fim_frase = m_fim.end() if m_fim else len(texto)
+    return texto[inicio_frase:fim_frase].strip()
+
+
+def analisar(texto: str) -> list[Achado]:
+    achados: list[Achado] = []
+    for rx in _NEGATIVO:
+        for m in rx.finditer(texto):
+            if _eh_verbo(m.group(1)):
+                continue
+            trecho = _frase_ao_redor(texto, m.start(), m.end())
+            achados.append(Achado("paralelismo negativo", trecho, True))
+    for m in _ESCALADA.finditer(texto):
+        trecho = _frase_ao_redor(texto, m.start(), m.end())
+        achados.append(Achado("escalada com dois-pontos", trecho, True))
+    for m in _ANTITESE.finditer(texto):
+        trecho = _frase_ao_redor(texto, m.start(), m.end())
+        achados.append(Achado("antítese simétrica (candidata)", trecho, False))
+    return achados
+
+
+def texto_visivel(html: str) -> list[tuple[int, str]]:
+    """Devolve (numero_do_slide, texto sem marcacao) para cada <section>."""
+    partes = _SECTION.split(html)[1:]
+    saida = []
+    for i, parte in enumerate(partes, 1):
+        limpo = _TAG.sub(" ", "<section" + parte)
+        limpo = re.sub(r"&middot;", " ", limpo)
+        limpo = re.sub(r"\s+", " ", limpo).strip()
+        saida.append((i, limpo))
+    return saida
+
+
+ALVOS_PADRAO = [
+    "aulas/aula01.html",
+    "aulas/aula02.html",
+    "materiais/aula01-material-de-apoio.html",
+    "materiais/aula02-material-de-apoio.html",
+    "materiais/skill-limpeza-kovan.md",
+    "materiais/caderno-de-hipoteses.md",
+]
+
+
+def main(argv: list[str] | None = None) -> int:
+    argv = argv if argv is not None else sys.argv[1:]
+    caminhos = [Path(a) for a in argv] if argv else [RAIZ / a for a in ALVOS_PADRAO]
+
+    examinados = 0
+    bloqueios = 0
+    avisos = 0
+
+    for caminho in caminhos:
+        if not caminho.exists():
+            continue
+        conteudo = caminho.read_text(encoding="utf-8")
+        if caminho.suffix == ".html":
+            trechos = texto_visivel(conteudo)
+        else:
+            trechos = [(i, l) for i, l in enumerate(conteudo.splitlines(), 1) if l.strip()]
+        for numero, texto in trechos:
+            examinados += 1
+            for achado in analisar(texto):
+                marca = "REPROVA" if achado.bloqueia else "revisar"
+                alvo = "slide" if caminho.suffix == ".html" else "linha"
+                print(f"{marca}  {caminho.name} {alvo} {numero}: {achado.construcao}")
+                print(f"         {achado.trecho}")
+                if achado.bloqueia:
+                    bloqueios += 1
+                else:
+                    avisos += 1
+
+    # Licao 8.1: nada medido nunca pode ler como sucesso.
+    if examinados == 0:
+        print("Nenhum trecho examinado. Verifique os caminhos.")
+        return 2
+
+    print(f"\n{examinados} trechos examinados, {bloqueios} reprovações, {avisos} a revisar.")
+    return 1 if bloqueios else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

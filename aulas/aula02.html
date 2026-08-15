@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 02 &middot; O dado sujo é o case &middot; MBA Inteli x Lenovo</title>
+
+  <!-- Gerado por tools/montar_deck_aula02.py. Nao editar a mao: a numeracao de
+       rodape e o fechamento de secao sao garantidos la, e ja se perderam aqui. -->
+
+  <link rel="stylesheet" href="../assets/vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-theme.css">
+  <link rel="stylesheet" href="../assets/css/inteli-print.css" media="print">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="cover-slide">
+        <div class="cover-panel">
+          <div class="cover-content">
+            <p class="cover-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo</p>
+            <h1>O dado sujo é o case</h1>
+            <h3>Preparação e limpeza de dados, e o custo numérico de cada decisão de tratamento</h3>
+            <p class="cover-meta">Módulo 2 &middot; Aula 02 &middot; Trilha de Tecnologia</p>
+            <p class="cover-meta">15 de agosto de 2026 &middot; 14h00 às 17h30</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Três mesas aplicaram o mesmo critério de ruptura e chegaram a contagens diferentes de 34</h2>
+        </div>
+        <div class="stat-tiles">
+          <div class="stat-tile"><p class="stat-numero">34</p><p class="stat-rotulo">rupturas no segmento estratégico, contagem de referência</p></div>
+          <div class="stat-tile"><p class="stat-numero">1.652</p><p class="stat-rotulo">observações conta-trimestre no segmento</p></div>
+          <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas do painel sem receita registrada</p></div>
+          <div class="stat-tile"><p class="stat-numero">0</p><p class="stat-rotulo">decisões de tratamento escritas por alguma mesa</p></div>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>O critério aplicado</h3><p>Zero pedidos faturados em dois trimestres consecutivos, dentro do segmento estratégico.</p></div>
+          <div class="concept-card"><h3>A pergunta de abertura</h3><p>O que cada mesa fez com as linhas em que a receita não está registrada?</p></div>
+          <div class="concept-card"><h3>O que sobrou da Aula 01</h3><p>Três contagens, nenhuma delas acompanhada do tratamento que a produziu.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A divergência de contagem entra hoje como insumo, e a tarde inteira serve para medir quanto cada decisão de tratamento vale em número.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel Kovan, 16.618 registros conta-trimestre e 1.187 contas. Contagem de ruptura construída na Aula 01.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">2</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O entregável do dia exige uma decisão declarada para cada uma das quatro advertências do Exhibit 3</h2>
+          <p class="linha-contexto">Até 17h30: a base tratada, o custo numérico de cada decisão e a skill em Markdown que reproduz os dois quando executada.</p>
+        </div>
+        <div class="concept-cards quatro">
+          <div class="concept-card"><h3>Receita ausente</h3><p>160 linhas sem <code>receita_brl</code>, 14 delas no segmento estratégico.</p></div>
+          <div class="concept-card"><h3>Engajamento ausente</h3><p>8.280 linhas sem <code>visitas_registradas</code> nem <code>interacoes_crm</code>.</p></div>
+          <div class="concept-card"><h3>Quebra de taxonomia</h3><p><code>linhas_produto_ativas</code> muda de régua em 2023Q1, com salto de 98,5%.</p></div>
+          <div class="concept-card"><h3>Sinal das devoluções</h3><p><code>devolucoes_brl</code> tem 15.999 valores negativos e nenhum positivo.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Entrega</span>
+          <p>Advertência sem decisão registrada conta como decisão de manter o dado como veio, e entra no registro com esse nome.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Exhibit 3 do Caderno Kovan PL-02-2026 v2, medido sobre as 16.618 linhas entregues.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">3</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">Bloco 1 de 4</p>
+        <div class="accent-bar"></div>
+        <h2>Qualidade de dado</h2>
+        <h3>Onde a limpeza mora dentro da análise exploratória, e o vocabulário que nomeia cada defeito.</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>A base foi perfilada?</div>
+          <div><span class="num">02</span>O defeito tem nome?</div>
+          <div><span class="num">03</span>A decisão está escrita?</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>As decisões de preparação determinam os números que a análise exploratória produz</h2>
+          <p class="linha-contexto">O ciclo de seis passos da EDA assistida ficou na Aula 01. O recorte de hoje é o que acontece antes da primeira estatística.</p>
+        </div>
+        <div class="linha-tempo">
+          <div class="etapa"><p class="quando">Passo 1</p><h3>Perfilar</h3><p>Quais colunas existem, quantos valores faltam e onde a lacuna se concentra.</p></div>
+          <div class="etapa"><p class="quando">Passo 2</p><h3>Decidir</h3><p>O que fazer com cada defeito, escrito antes de recalcular qualquer indicador.</p></div>
+          <div class="etapa"><p class="quando">Passo 3</p><h3>Medir</h3><p>O indicador recalculado sob cada alternativa de tratamento, no mesmo código.</p></div>
+          <div class="etapa avaliada"><p class="quando">Passo 4</p><h3>Registrar</h3><p>O arquivo que outra pessoa executa e obtém o mesmo número.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A análise exploratória da Aula 03 recebe o resultado destes quatro passos, junto com todo defeito que eles deixarem passar.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">4</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Seis dimensões descrevem a qualidade de uma base: completude, validade, consistência, unicidade, acurácia e temporalidade</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>Completude</h3><p>160 linhas sem receita e 8.280 sem engajamento.</p></div>
+          <div class="concept-card"><h3>Validade</h3><p>devolucoes_brl chega com sinal negativo.</p></div>
+          <div class="concept-card"><h3>Consistência</h3><p>taxonomia_mix muda de régua em 2023Q1.</p></div>
+          <div class="concept-card"><h3>Unicidade</h3><p>16.618 linhas, 1.187 contas, sem duplicata.</p></div>
+          <div class="concept-card"><h3>Acurácia</h3><p>Visita ausente do CRM contra visita que não ocorreu.</p></div>
+          <div class="concept-card"><h3>Temporalidade</h3><p>Janela de 2022Q3 a 2025Q4, em duas réguas de mix.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Quatro das seis dimensões têm defeito documentado neste painel.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">5</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 1 &middot; 20 minutos &middot; Gemini</p>
+          <div class="accent-bar"></div>
+          <h2>Perfil de qualidade do painel</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">20</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, uma tela por grupo</dd>
+              <dt>Entrega</dt><dd>A lista de defeitos que a IA apontou sozinha, e o que ela deixou passar</dd>
+              <dt>Checkpoint</dt><dd>Aos 14 minutos, colheita das quatro advertências em voz alta</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Suba o painel no Gemini e peça o perfil coluna a coluna.</p>
+            <code class="prompt-literal">Perfile este CSV coluna a coluna: tipo, valores ausentes, valores distintos, mínimo e máximo. Devolva o código que produziu cada número.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Acrescente a restrição contra preenchimento.</p>
+            <code class="prompt-literal">Não preencha nenhuma lacuna e não estime nenhum valor. Se faltar informação para responder, diga que falta.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">Marque quais defeitos ela apontou por conta própria.</p>
+            <p class="detalhe">São quatro no Exhibit 3. Anote quantos apareceram sem você citar.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">04</span>
+            <div>
+              <p class="acao">Confira um número do perfil rodando a contagem você mesmo.</p>
+            <p class="detalhe">Comece pela contagem de linhas sem receita registrada.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>O grupo tem a lista de defeitos apontados pela IA e sabe dizer qual das quatro advertências ficou de fora.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">6</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">Bloco 2 de 4</p>
+        <div class="accent-bar"></div>
+        <h2>As quatro advertências do Exhibit 3</h2>
+        <h3>Os quatro defeitos medidos sobre as 16.618 linhas que a turma recebeu.</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Quantas linhas atinge</div>
+          <div><span class="num">02</span>Onde se concentra</div>
+          <div><span class="num">03</span>Qual indicador move</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Advertência 1 de 4</p>
+          <div class="accent-bar"></div>
+          <h2>160 linhas do painel não têm receita registrada, e todas pertencem a contas ativas</h2>
+        </div>
+        <div class="stat-tiles">
+          <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas sem receita_brl, de 16.618</p></div>
+          <div class="stat-tile"><p class="stat-numero">Ativa</p><p class="stat-rotulo">status de conta das 160, sem exceção</p></div>
+          <div class="stat-tile"><p class="stat-numero">14</p><p class="stat-rotulo">dessas linhas no segmento estratégico</p></div>
+          <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas sem valor_medio_pedido_brl, exatamente as mesmas</p></div>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>Onde a lacuna cai</h3><p>Nos 14 trimestres, sempre em conta ativa.</p></div>
+          <div class="concept-card"><h3>O que ela arrasta</h3><p>O valor médio do pedido some nas mesmas 160 linhas.</p></div>
+          <div class="concept-card"><h3>O que ela exige</h3><p>Nomear o mecanismo antes de escolher o tratamento.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Descartar a linha remove trimestre de conta que seguia comprando.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel Kovan, colunas receita_brl e valor_medio_pedido_brl.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">7</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A ausência se concentra em quatro colunas e varia com o segmento</h2>
+        </div>
+        <img class="figura" src="../assets/img/aula02-mapa-ausencia.png" alt="Matriz da taxa de ausência por coluna e por segmento no painel de contas da Kovan">
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Implicação</span>
+          <p>Taxa de ausência que muda com uma coluna observada indica ausência condicionada.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel Kovan, taxa por coluna dentro de cada segmento.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">8</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Advertência 2 de 4</p>
+          <div class="accent-bar"></div>
+          <h2>A ausência de registro de engajamento varia de 29,4% a 53,2% entre segmentos</h2>
+          <p class="linha-contexto">As colunas visitas_registradas e interacoes_crm faltam sempre nas mesmas linhas, de modo que a lacuna cobre o registro de atividade comercial inteiro.</p>
+        </div>
+        <div class="concept-cards quatro">
+          <div class="concept-card"><h3>Estratégico</h3><p>29,4% das linhas sem visita nem interação registrada.</p></div>
+          <div class="concept-card"><h3>Médio</h3><p>49,9%.</p></div>
+          <div class="concept-card"><h3>Cauda</h3><p>53,2%.</p></div>
+          <div class="concept-card"><h3>Total</h3><p>8.280 das 16.618 linhas do painel.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A taxa de ausência acompanha o segmento, de modo que preencher a lacuna com zero desloca mais as contas de cauda do que as estratégicas.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel Kovan, 16.618 registros conta-trimestre. Exhibit 3, advertência 2 de 4.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">9</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A média de linhas de produto sobe 98,5% em 2023Q1 sem nenhuma conta comprar item adicional</h2>
+        </div>
+        <img class="figura" style="margin-top: -14px" src="../assets/img/aula02-quebra-taxonomia.png" alt="Série trimestral da média de linhas de produto ativas, com o corte de taxonomia de 2023Q1 marcado">
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Implicação</span>
+          <p>A erosão real de mix é a queda de 30,4%, e a janela inteira registra alta de 38%.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">10</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Advertência 4 de 4</p>
+          <div class="accent-bar"></div>
+          <h2>As devoluções chegam com sinal negativo, e inverter esse sinal desloca R$ 217,4 milhões da receita líquida</h2>
+          <p class="linha-contexto">A coluna devolucoes_brl traz 15.999 valores negativos, 619 zeros e nenhum valor positivo.</p>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Operação</th><th>Código</th><th>Receita líquida do painel</th></tr></thead>
+          <tbody>
+            <tr class="fragment"><td>Somar a coluna</td><td><code>receita_brl + devolucoes_brl</code></td><td class="vence">R$ 8,298 bi</td></tr>
+            <tr class="fragment"><td>Subtrair a coluna</td><td><code>receita_brl - devolucoes_brl</code></td><td>R$ 8,515 bi</td></tr>
+            <tr class="decisiva fragment"><td>Diferença entre as duas leituras</td><td>duas vezes a soma das devoluções</td><td>R$ 217,4 milhões</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Um sinal trocado em uma linha de código move 2,59% da receita do painel.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel Kovan, receita bruta de R$ 8,406 bi. Exhibit 3, advertência 4 de 4.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">11</p>
+        </div>
+      </section>
+
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Verificação &middot; questão 1</p>
+          <div class="accent-bar"></div>
+          <h2>A média de linhas de produto</h2>
+        </div>
+        <div class="quiz-container">
+          <div class="quiz-grade">
+            <div>
+              <p class="quiz-question">A média de linhas de produto passou de 1,85 para 3,67 entre 2022Q4 e 2023Q1. O que aconteceu com a carteira?</p>
+              <ul class="quiz-options">
+              <li data-letra="A"
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="Nenhuma transação acompanha o salto. O volume de pedidos segue a mesma série nos dois trimestres.">As contas passaram a contratar mais linhas de produto</li>
+              <li data-letra="B"
+                  data-correct="true"
+                  data-correct-msg="A coluna taxonomia_mix vale pre_2023 em 2022Q3 e 2022Q4, e pos_2023 nos doze trimestres seguintes. O salto é da régua."
+                  data-incorrect-msg="Procure a coluna que muda de valor exatamente entre 2022Q4 e 2023Q1.">A régua de contagem mudou e o mix ficou igual</li>
+              <li data-letra="C"
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="O painel tem as mesmas 1.187 contas ao longo dos 14 trimestres.">O painel perdeu as contas de menor mix no trimestre</li>
+              <li data-letra="D"
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="A mudança está documentada no Exhibit 3, e vale para todos os trimestres seguintes.">Houve erro de carga no fechamento de 2023Q1</li>
+              </ul>
+            </div>
+            <div>
+              <dl class="quiz-cenario">
+              <dt>A série</dt><dd>média de linhas_produto_ativas por trimestre</dd>
+              <dt>O salto</dt><dd><span class="numerao">+98,5%</span></dd>
+              <dt>A coluna taxonomia_mix</dt><dd>vale pre_2023 em 2022Q3 e 2022Q4</dd>
+              </dl>
+              <p class="quiz-feedback"></p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">12</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 2 &middot; 20 minutos &middot; Gemini</p>
+          <div class="accent-bar"></div>
+          <h2>O mecanismo da ausência</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">20</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, uma tela por grupo</dd>
+              <dt>Entrega</dt><dd>A taxa de ausência de engajamento por segmento, com o código que a produziu</dd>
+              <dt>Checkpoint</dt><dd>Aos 14 minutos, comparação das taxas entre as mesas</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Peça a taxa de ausência de visitas por segmento.</p>
+            <code class="prompt-literal">Calcule a proporção de linhas com visitas_registradas ausente, por segmento. Devolva o código pandas e a tabela.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Compare as três taxas entre si.</p>
+            <p class="detalhe">Taxas iguais entre segmentos indicariam ausência aleatória.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">Teste se a ausência depende de outra coluna observada.</p>
+            <code class="prompt-literal">A ausência de visitas_registradas depende de status_conta ou de trimestre? Mostre a tabela e o código.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">04</span>
+            <div>
+              <p class="acao">Escreva uma frase dizendo de que coluna a ausência depende.</p>
+            <p class="detalhe">A frase vai para a skill de limpeza do grupo, na Prática 4.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>O grupo tem as três taxas medidas e uma frase declarando de qual coluna observada a ausência depende.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">13</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Taxonomia de Rubin, 1976</p>
+          <div class="accent-bar"></div>
+          <h2>O engajamento ausente segue o mecanismo MAR: o segmento observado explica a probabilidade de a linha faltar</h2>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Mecanismo</th><th>De que a ausência depende</th><th>Consequência para o tratamento</th></tr></thead>
+          <tbody>
+            <tr class="fragment"><td>MCAR, completamente ao acaso</td><td>De nada que a base registre</td><td>Excluir preserva a média e reduz a amostra</td></tr>
+            <tr class="decisiva fragment"><td>MAR, ao acaso dado o observado</td><td>De coluna observada, como o segmento</td><td class="vence">A exclusão enviesa a média, e o condicionamento ao segmento corrige</td></tr>
+            <tr class="fragment"><td>MNAR, não ao acaso</td><td>De informação que a base nunca registrou</td><td>Nenhuma correção com as colunas disponíveis</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>A escolha do tratamento depende do mecanismo, e o segmento é coluna presente no painel.</p>
+        </div>
+        <p class="fonte-nota">Fonte: taxas de ausência por segmento, painel Kovan. Rubin, Biometrika, 1976.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">14</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">Bloco 3 de 4</p>
+        <div class="accent-bar"></div>
+        <h2>A decisão de tratamento</h2>
+        <h3>Três alternativas, o que cada uma assume sobre a lacuna e como se mede o que ela custa.</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>O que a lacuna representa</div>
+          <div><span class="num">02</span>Qual indicador ela move</div>
+          <div><span class="num">03</span>Quanto ela move</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Excluir, imputar e sinalizar assumem coisas diferentes sobre o que a lacuna representa</h2>
+          <p class="linha-contexto">As três alternativas são defensáveis, e nenhuma delas devolve a informação que o sistema não registrou.</p>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card fragment"><h3>Excluir</h3><p>Assume que a linha ausente não carrega informação sobre o fenômeno medido.</p><p class="fonte-nota">Custo: a amostra encolhe, e o viés entra quando a ausência depende do segmento</p></div>
+          <div class="concept-card fragment"><h3>Imputar</h3><p>Assume um valor para a lacuna e passa a tratar esse valor como observado.</p><p class="fonte-nota">Custo: zero, mediana da conta e média do segmento produzem três séries distintas</p></div>
+          <div class="concept-card fragment"><h3>Sinalizar</h3><p>Mantém a linha e acrescenta uma coluna que marca o registro como ausente.</p><p class="fonte-nota">Custo: a coluna nova precisa entrar em toda análise seguinte</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>A escolha entre as três precisa estar escrita ao lado do número que ela produziu, com o custo medido junto.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">15</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O custo de uma decisão de tratamento se mede recalculando o indicador sob cada alternativa</h2>
+          <p class="linha-contexto">A diferença medida é o custo. Argumento sobre qual tratamento é melhor, sem o recálculo, fica fora do registro.</p>
+        </div>
+        <div class="concept-cards quatro">
+          <div class="concept-card"><h3>01 Escolher o indicador</h3><p>O número que vai para a recomendação, com o recorte declarado.</p></div>
+          <div class="concept-card"><h3>02 Recalcular</h3><p>O mesmo código, trocando apenas a linha que aplica o tratamento.</p></div>
+          <div class="concept-card"><h3>03 Registrar a diferença</h3><p>Em ponto percentual, em contagem de eventos ou em posição no ranking.</p></div>
+          <div class="concept-card"><h3>04 Declarar a escolha</h3><p>Qual alternativa entra no entregável, e o que ela assume sobre a lacuna.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A Prática 3 aplica os quatro passos às visitas médias por segmento, com metade da sala em cada alternativa.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">16</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; 30 minutos &middot; Gemini</p>
+          <div class="accent-bar"></div>
+          <h2>O custo da decisão de tratamento</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">30</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Trios, metade da sala em cada tratamento</dd>
+              <dt>Entrega</dt><dd>Visitas médias por segmento, nos três segmentos</dd>
+              <dt>Checkpoint</dt><dd>Os dois quadros no projetor, lado a lado</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Mesas 1 e 2: preencher a ausência de visitas com zero</p>
+            <code class="prompt-literal">Trate visitas_registradas ausente como 0 e calcule a média por segmento. Mostre o código.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Mesas 3 e 4: excluir as linhas sem registro de visita</p>
+            <code class="prompt-literal">Descarte as linhas em que visitas_registradas está ausente e calcule a média por segmento. Mostre o código.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">Escrever os três números no quadro da sua metade</p>
+            <p class="detalhe">Cauda, Médio e Estratégico, com duas casas decimais.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">04</span>
+            <div>
+              <p class="acao">Defender a leitura para a outra metade</p>
+            <p class="detalhe">Qual recomendação sobre cobertura comercial o seu número sustenta?</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>Cada metade consegue dizer qual decisão de tratamento produziu o seu número.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">17</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O segmento estratégico passa da maior para a menor média de visitas conforme o tratamento da lacuna</h2>
+        </div>
+        <img class="figura" src="../assets/img/aula02-inversao-segmentos.png" alt="Dois painéis com as visitas médias por segmento sob cada tratamento da lacuna, e a ordem dos segmentos destacada">
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Implicação</span>
+          <p>O que decide entre as duas leituras é o mecanismo de ausência medido na Prática 2.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel Kovan, visitas_registradas ausente em 8.280 linhas.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">18</p>
+        </div>
+      </section>
+
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Verificação &middot; questão 2</p>
+          <div class="accent-bar"></div>
+          <h2>As duas ordens</h2>
+        </div>
+        <div class="quiz-container">
+          <div class="quiz-grade">
+            <div>
+              <p class="quiz-question">As duas mesas mediram visitas por segmento na mesma base. Por que as ordens divergiram?</p>
+              <ul class="quiz-options">
+              <li data-letra="A"
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="O modelo escreveu o código, e quem rodou foi cada mesa, sobre o mesmo arquivo.">O Gemini devolveu médias diferentes no mesmo pedido</li>
+              <li data-letra="B"
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="As duas rodaram sobre os 14 trimestres, sem filtro de janela.">Uma das mesas rodou o cálculo num recorte menor</li>
+              <li data-letra="C"
+                  data-correct="true"
+                  data-correct-msg="Com a ausência valendo zero, o estratégico tem a maior média dos três. Excluindo as linhas ausentes, tem a menor."
+                  data-incorrect-msg="Pense no que cada mesa fez com as 8.280 linhas em que a visita não está registrada.">Cada mesa tratou de um jeito a linha sem visita</li>
+              <li data-letra="D"
+                  data-correct="false"
+                  data-correct-msg="Correto."
+                  data-incorrect-msg="O arquivo é o mesmo, carregado da mesma URL no começo da tarde.">A base mudou entre a execução de uma mesa e a outra</li>
+              </ul>
+            </div>
+            <div>
+              <dl class="quiz-cenario">
+              <dt>O arquivo</dt><dd>o mesmo nas duas mesas</dd>
+              <dt>O que divergiu</dt><dd><span class="numerao">a ordem</span></dd>
+              <dt>A coluna</dt><dd>visitas_registradas</dd>
+              </dl>
+              <p class="quiz-feedback"></p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">19</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">Bloco 4 de 4</p>
+        <div class="accent-bar"></div>
+        <h2>Registrar a decisão</h2>
+        <h3>O arquivo que outra pessoa executa na semana que vem e obtém o mesmo número.</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>O que foi feito</div>
+          <div><span class="num">02</span>Por que foi feito</div>
+          <div><span class="num">03</span>Que número saiu</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Cinco critérios separam os dois ambientes de trabalho com IA, e a reexecução por terceiro é a exigência do entregável</h2>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Critério</th><th>Gemini</th><th>Antigravity</th></tr></thead>
+          <tbody>
+            <tr class="fragment"><td>Unidade de trabalho</td><td>Mensagem numa conversa</td><td>Arquivo numa pasta</td></tr>
+            <tr class="fragment"><td>Instalação</td><td class="vence">Nenhuma</td><td>Aplicativo desktop com login</td></tr>
+            <tr class="fragment"><td>Ciclo de resposta</td><td class="vence">Segundos</td><td>Minutos, com plano e execução</td></tr>
+            <tr class="fragment"><td>O que sobra ao fechar</td><td>Histórico de conversa</td><td class="vence">Script, base tratada e log</td></tr>
+            <tr class="decisiva fragment"><td>Reexecutável por terceiro</td><td>Ausente</td><td class="vence">Disponível</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>O critério é a persistência do trabalho, e a skill em Markdown carrega a última linha entre os dois.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">20</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A skill de limpeza registra, para cada advertência, a decisão tomada e o custo medido</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <h3>Esqueleto</h3>
+            <pre class="code-compact"><code># Skill: limpeza do painel Kovan
+## Entrada
+kovan_painel_contas.csv, 16.618 linhas
+## Decisões, uma por advertência
+- receita_brl ausente, 160 linhas
+    tratamento:
+    custo medido:
+- visitas_registradas, 8.280 linhas
+- taxonomia_mix, quebra em 2023Q1
+- devolucoes_brl, sinal negativo
+## Saída
+base tratada e tabela de custos</code></pre>
+          </div>
+          <div>
+            <p class="sobrelinha">Três seções obrigatórias</p>
+            <p><strong>Entrada</strong> nomeia o arquivo e a contagem de linhas que o agente deve encontrar.</p>
+            <p><strong>Decisões</strong> traz uma linha por advertência, com o tratamento e o número que ele produziu.</p>
+            <p><strong>Saída</strong> declara o que a execução precisa deixar em disco.</p>
+            <p class="fonte-nota">Markdown puro, sem sintaxe proprietária: o mesmo arquivo entra no Gemini e no Antigravity.</p>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A omissão de uma advertência equivale a manter o dado como veio.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">21</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 4 &middot; 30 minutos &middot; Gemini</p>
+          <div class="accent-bar"></div>
+          <h2>A skill de limpeza do grupo</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">30</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, um arquivo por grupo</dd>
+              <dt>Entrega</dt><dd>A skill preenchida, com as quatro decisões e o custo medido de cada uma</dd>
+              <dt>Checkpoint</dt><dd>Aos 20 minutos, conferir o número contra o da Prática 3</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Abra o esqueleto e preencha uma linha por advertência.</p>
+            <p class="detalhe">Receita ausente, engajamento ausente, quebra de taxonomia e sinal das devoluções.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Escreva o custo medido ao lado de cada decisão.</p>
+            <p class="detalhe">Número, unidade e o recorte sobre o qual foi medido.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">Cole o arquivo inteiro na conversa e rode contra a base crua.</p>
+            <code class="prompt-literal">Siga este arquivo passo a passo sobre o CSV anexado. Devolva o código e a tabela de custos.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">04</span>
+            <div>
+              <p class="acao">Confira as visitas médias por segmento contra as da Prática 3.</p>
+            <p class="detalhe">Divergência indica que a skill descreve um tratamento diferente do que o grupo aplicou.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A skill executada por quem não a escreveu devolve os mesmos números que o grupo apresentou na Prática 3.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">22</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A base tratada de hoje sustenta a análise bivariada da Aula 03 e o Artefato 1</h2>
+        </div>
+        <div class="linha-tempo">
+          <div class="etapa fragment"><p class="quando">15/08 &middot; hoje</p><h3>Fica pronto</h3><p>Base tratada, o custo das quatro decisões e a skill em Markdown que reproduz os dois.</p></div>
+          <div class="etapa fragment"><p class="quando">22/08 &middot; Aula 03</p><h3>Análise univariada e bivariada</h3><p>Distribuições, relações entre colunas e o rótulo de erosão em três cortes de limiar, sobre a base tratada hoje.</p></div>
+          <div class="etapa fragment"><p class="quando">Aula 04</p><h3>Visualização para decidir</h3><p>Os quadros que vão ao Comitê saem dos números que a skill do grupo reproduz.</p></div>
+          <div class="etapa avaliada fragment"><p class="quando">Semana 5 &middot; 05/09</p><h3>Artefato 1</h3><p>Análise Exploratória de Dados, com o registro de tratamento anexado.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>A Aula 03 recebe a base com as decisões escritas, de modo que uma divergência de número entre grupos passa a ter onde ser localizada.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">23</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Referências e nota metodológica</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>Caso e dados</h3><p>1. Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão v2. As quatro advertências de qualidade estão no Exhibit 3.</p></div>
+          <div class="concept-card"><h3>Método</h3><p>2. Rubin. Inference and missing data, Biometrika, 1976. &nbsp; 3. Little e Rubin. Statistical Analysis with Missing Data, Wiley, 2019.</p><p>4. Wirth e Hipp. CRISP-DM, 2000. &nbsp; 5. Tukey. Exploratory Data Analysis, 1977.</p></div>
+          <div class="concept-card"><h3>Decisões do módulo</h3><p>6. ADR-003: Gemini como ambiente das práticas, Antigravity como demonstração.</p><p>7. ADR-004: a skill de agente em Markdown como artefato do aluno.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Nota metodológica</span>
+          <p>As seis dimensões de qualidade foram organizadas neste módulo a partir da literatura de data quality, sem seguir um padrão publicado. Cada número citado hoje é reproduzível por dados/tests/test_aula02_numeros.py.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
+          <p class="footer-page">24</p>
+        </div>
+      </section>
+
+      <section class="end-slide">
+        <div class="accent-bar"></div>
+        <p class="secao-numero">Módulo 2 &middot; Aula 02 &middot; encerramento</p>
+        <h1>Próximo encontro: 22/08</h1>
+        <h3>Prof. José Romualdo da Costa Filho &middot; MBA em IA e Dados para Negócios</h3>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../assets/vendor/reveal/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, center: false, margin: 0,
+      hash: true, slideNumber: false, transition: 'fade'
+    });
+  </script>
+  <script src="../assets/js/inteli-quiz.js"></script>
+  <script src="../assets/js/inteli-zoom.js"></script>
+  <script src="../assets/js/inteli-print.js"></script>
+</body>
+</html>

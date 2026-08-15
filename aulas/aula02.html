@@ -37,20 +37,20 @@
           <h2>Três mesas aplicaram o mesmo critério de ruptura e chegaram a contagens diferentes de 34</h2>
         </div>
         <div class="stat-tiles">
-          <div class="stat-tile"><p class="stat-numero">34</p><p class="stat-rotulo">rupturas no segmento estratégico, contagem de referência</p></div>
+          <div class="stat-tile"><p class="stat-numero">34</p><p class="stat-rotulo">rupturas no segmento estratégico, referência</p></div>
           <div class="stat-tile"><p class="stat-numero">1.652</p><p class="stat-rotulo">observações conta-trimestre no segmento</p></div>
           <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas do painel sem receita registrada</p></div>
           <div class="stat-tile"><p class="stat-numero">0</p><p class="stat-rotulo">decisões de tratamento escritas por alguma mesa</p></div>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>O critério aplicado</h3><p>Zero pedidos faturados em dois trimestres consecutivos, dentro do segmento estratégico.</p></div>
-          <div class="concept-card"><h3>A pergunta de abertura</h3><p>O que cada mesa fez com as linhas em que a receita não está registrada?</p></div>
-          <div class="concept-card"><h3>O que sobrou da Aula 01</h3><p>Três contagens, nenhuma delas acompanhada do tratamento que a produziu.</p></div>
+          <div class="concept-card"><h3>O critério aplicado</h3><p>Zero pedidos faturados em dois trimestres consecutivos.</p></div>
+          <div class="concept-card"><h3>A pergunta de abertura</h3><p>O que cada mesa fez com as linhas sem receita registrada?</p></div>
+          <div class="concept-card"><h3>O que sobrou da Aula 01</h3><p>Três contagens, nenhuma com o tratamento que a produziu.</p></div>
         </div>
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>A divergência de contagem entra hoje como insumo, e a tarde inteira serve para medir quanto cada decisão de tratamento vale em número.</p>
+          <p>A divergência entra hoje como insumo, e a tarde mede quanto cada decisão de tratamento vale em número.</p>
         </div>
         <p class="fonte-nota">Fonte: painel Kovan, 16.618 registros conta-trimestre e 1.187 contas. Contagem de ruptura construída na Aula 01.</p>
         </div>
@@ -169,7 +169,7 @@
             <dl>
               <dt>Formato</dt><dd>Em grupo, uma tela por grupo</dd>
               <dt>Entrega</dt><dd>A lista de defeitos que a IA apontou sozinha, e o que ela deixou passar</dd>
-              <dt>Checkpoint</dt><dd>Aos 14 minutos, colheita das quatro advertências em voz alta</dd>
+              <dt>Checkpoint</dt><dd>Aos 14 minutos, as quatro advertências em voz alta</dd>
             </dl>
           </div>
           <div class="pratica-passos">
@@ -206,7 +206,7 @@
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Critério de conclusão</span>
-          <p>O grupo tem a lista de defeitos apontados pela IA e sabe dizer qual das quatro advertências ficou de fora.</p>
+          <p>O grupo sabe qual advertência a IA deixou passar.</p>
         </div>
         </div>
         <div class="slide-footer">
@@ -239,7 +239,7 @@
           <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas sem receita_brl, de 16.618</p></div>
           <div class="stat-tile"><p class="stat-numero">Ativa</p><p class="stat-rotulo">status de conta das 160, sem exceção</p></div>
           <div class="stat-tile"><p class="stat-numero">14</p><p class="stat-rotulo">dessas linhas no segmento estratégico</p></div>
-          <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas sem valor_medio_pedido_brl, exatamente as mesmas</p></div>
+          <div class="stat-tile"><p class="stat-numero">160</p><p class="stat-rotulo">linhas sem valor_medio_pedido_brl</p></div>
         </div>
         <div class="concept-cards">
           <div class="concept-card"><h3>Onde a lacuna cai</h3><p>Nos 14 trimestres, sempre em conta ativa.</p></div>
@@ -272,7 +272,6 @@
           <span class="rotulo">Implicação</span>
           <p>Taxa de ausência que muda com uma coluna observada indica ausência condicionada.</p>
         </div>
-        <p class="fonte-nota">Fonte: painel Kovan, taxa por coluna dentro de cada segmento.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
@@ -313,9 +312,11 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>A média de linhas de produto sobe 98,5% em 2023Q1 sem nenhuma conta comprar item adicional</h2>
+          <h2>A média de linhas de produto sobe 98,5% em 2023Q1 sem nenhuma transação nova</h2>
         </div>
-        <img class="figura" style="margin-top: -14px" src="../assets/img/aula02-quebra-taxonomia.png" alt="Série trimestral da média de linhas de produto ativas, com o corte de taxonomia de 2023Q1 marcado">
+        <div class="figura-moldura" style="height: 390px; overflow: hidden">
+          <img class="figura" style="margin-top: -14px" src="../assets/img/aula02-quebra-taxonomia.png" alt="Série trimestral da média de linhas de produto ativas, com o corte de taxonomia de 2023Q1 marcado">
+        </div>
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Implicação</span>
@@ -391,9 +392,9 @@
             </div>
             <div>
               <dl class="quiz-cenario">
-              <dt>A série</dt><dd>média de linhas_produto_ativas por trimestre</dd>
+              <dt>A média por trimestre</dt><dd>linhas_produto_ativas</dd>
               <dt>O salto</dt><dd><span class="numerao">+98,5%</span></dd>
-              <dt>A coluna taxonomia_mix</dt><dd>vale pre_2023 em 2022Q3 e 2022Q4</dd>
+              <dt>A coluna taxonomia_mix</dt><dd>pre_2023 em 2022Q3 e 2022Q4</dd>
               </dl>
               <p class="quiz-feedback"></p>
             </div>
@@ -421,7 +422,7 @@
             </div>
             <dl>
               <dt>Formato</dt><dd>Em grupo, uma tela por grupo</dd>
-              <dt>Entrega</dt><dd>A taxa de ausência de engajamento por segmento, com o código que a produziu</dd>
+              <dt>Entrega</dt><dd>A taxa de ausência de engajamento por segmento, com o código</dd>
               <dt>Checkpoint</dt><dd>Aos 14 minutos, comparação das taxas entre as mesas</dd>
             </dl>
           </div>
@@ -459,7 +460,7 @@
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Critério de conclusão</span>
-          <p>O grupo tem as três taxas medidas e uma frase declarando de qual coluna observada a ausência depende.</p>
+          <p>O grupo sabe de que coluna a ausência depende.</p>
         </div>
         </div>
         <div class="slide-footer">
@@ -474,14 +475,14 @@
         <div class="slide-title-area">
           <p class="sobrelinha">Taxonomia de Rubin, 1976</p>
           <div class="accent-bar"></div>
-          <h2>O engajamento ausente segue o mecanismo MAR: o segmento observado explica a probabilidade de a linha faltar</h2>
+          <h2>O engajamento ausente segue o mecanismo MAR: a ausência depende do segmento</h2>
         </div>
         <table class="tabela-criterios">
-          <thead><tr><th>Mecanismo</th><th>De que a ausência depende</th><th>Consequência para o tratamento</th></tr></thead>
+          <thead><tr><th>Mecanismo</th><th>Do que a ausência depende</th><th>Consequência</th></tr></thead>
           <tbody>
-            <tr class="fragment"><td>MCAR, completamente ao acaso</td><td>De nada que a base registre</td><td>Excluir preserva a média e reduz a amostra</td></tr>
-            <tr class="decisiva fragment"><td>MAR, ao acaso dado o observado</td><td>De coluna observada, como o segmento</td><td class="vence">A exclusão enviesa a média, e o condicionamento ao segmento corrige</td></tr>
-            <tr class="fragment"><td>MNAR, não ao acaso</td><td>De informação que a base nunca registrou</td><td>Nenhuma correção com as colunas disponíveis</td></tr>
+            <tr class="fragment"><td>MCAR, completamente ao acaso</td><td>De nada registrado na base</td><td>Excluir preserva a média e reduz a amostra</td></tr>
+            <tr class="decisiva fragment"><td>MAR, ao acaso dado o observado</td><td>De coluna observada, o segmento</td><td class="vence">Excluir enviesa a média; condicionar ao segmento corrige</td></tr>
+            <tr class="fragment"><td>MNAR, não ao acaso</td><td>De informação fora da base</td><td>Nenhuma correção com as colunas disponíveis</td></tr>
           </tbody>
         </table>
         <div class="fecho">
@@ -489,7 +490,7 @@
           <span class="rotulo">Implicação</span>
           <p>A escolha do tratamento depende do mecanismo, e o segmento é coluna presente no painel.</p>
         </div>
-        <p class="fonte-nota">Fonte: taxas de ausência por segmento, painel Kovan. Rubin, Biometrika, 1976.</p>
+        <p class="fonte-nota">Fonte: painel Kovan. Rubin, Biometrika, 1976.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
@@ -628,7 +629,7 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>O segmento estratégico passa da maior para a menor média de visitas conforme o tratamento da lacuna</h2>
+          <h2>O tratamento da lacuna leva o segmento estratégico da maior à menor média de visitas</h2>
         </div>
         <img class="figura" src="../assets/img/aula02-inversao-segmentos.png" alt="Dois painéis com as visitas médias por segmento sob cada tratamento da lacuna, e a ordem dos segmentos destacada">
         <div class="fecho">
@@ -636,7 +637,6 @@
           <span class="rotulo">Implicação</span>
           <p>O que decide entre as duas leituras é o mecanismo de ausência medido na Prática 2.</p>
         </div>
-        <p class="fonte-nota">Fonte: painel Kovan, visitas_registradas ausente em 8.280 linhas.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 02</p>
@@ -708,7 +708,7 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>Cinco critérios separam os dois ambientes de trabalho com IA, e a reexecução por terceiro é a exigência do entregável</h2>
+          <h2>Cinco critérios separam os dois ambientes, e o entregável exige reexecução por terceiro</h2>
         </div>
         <table class="tabela-criterios">
           <thead><tr><th>Critério</th><th>Gemini</th><th>Antigravity</th></tr></thead>
@@ -741,7 +741,6 @@
         </div>
         <div class="side-by-side">
           <div>
-            <h3>Esqueleto</h3>
             <pre class="code-compact"><code># Skill: limpeza do painel Kovan
 ## Entrada
 kovan_painel_contas.csv, 16.618 linhas
@@ -760,7 +759,7 @@ base tratada e tabela de custos</code></pre>
             <p><strong>Entrada</strong> nomeia o arquivo e a contagem de linhas que o agente deve encontrar.</p>
             <p><strong>Decisões</strong> traz uma linha por advertência, com o tratamento e o número que ele produziu.</p>
             <p><strong>Saída</strong> declara o que a execução precisa deixar em disco.</p>
-            <p class="fonte-nota">Markdown puro, sem sintaxe proprietária: o mesmo arquivo entra no Gemini e no Antigravity.</p>
+            <p class="fonte-nota">Markdown puro: entra nos dois ambientes.</p>
           </div>
         </div>
         <div class="fecho">

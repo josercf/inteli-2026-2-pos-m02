@@ -56,7 +56,7 @@ SLIDES.append(conteudo(
     "Três mesas aplicaram o mesmo critério de ruptura e chegaram a contagens diferentes de 34",
     '        <div class="stat-tiles">\n'
     '          <div class="stat-tile"><p class="stat-numero">34</p>'
-    '<p class="stat-rotulo">rupturas no segmento estratégico, contagem de referência</p></div>\n'
+    '<p class="stat-rotulo">rupturas no segmento estratégico, referência</p></div>\n'
     '          <div class="stat-tile"><p class="stat-numero">1.652</p>'
     '<p class="stat-rotulo">observações conta-trimestre no segmento</p></div>\n'
     '          <div class="stat-tile"><p class="stat-numero">160</p>'
@@ -66,13 +66,13 @@ SLIDES.append(conteudo(
     "        </div>\n"
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>O critério aplicado</h3>'
-    "<p>Zero pedidos faturados em dois trimestres consecutivos, dentro do segmento estratégico.</p></div>\n"
+    "<p>Zero pedidos faturados em dois trimestres consecutivos.</p></div>\n"
     '          <div class="concept-card"><h3>A pergunta de abertura</h3>'
-    "<p>O que cada mesa fez com as linhas em que a receita não está registrada?</p></div>\n"
+    "<p>O que cada mesa fez com as linhas sem receita registrada?</p></div>\n"
     '          <div class="concept-card"><h3>O que sobrou da Aula 01</h3>'
-    "<p>Três contagens, nenhuma delas acompanhada do tratamento que a produziu.</p></div>\n"
+    "<p>Três contagens, nenhuma com o tratamento que a produziu.</p></div>\n"
     "        </div>\n",
-    conclusao="A divergência de contagem entra hoje como insumo, e a tarde inteira serve para medir quanto cada decisão de tratamento vale em número.",
+    conclusao="A divergência entra hoje como insumo, e a tarde mede quanto cada decisão de tratamento vale em número.",
     fonte="Fonte: painel Kovan, 16.618 registros conta-trimestre e 1.187 contas. Contagem de ruptura construída na Aula 01.",
 ))
 
@@ -145,7 +145,7 @@ SLIDES.append(pratica(
     1, "Perfil de qualidade do painel", 20,
     "Em grupo, uma tela por grupo",
     "A lista de defeitos que a IA apontou sozinha, e o que ela deixou passar",
-    "Aos 14 minutos, colheita das quatro advertências em voz alta",
+    "Aos 14 minutos, as quatro advertências em voz alta",
     [
         {"acao": "Suba o painel no Gemini e peça o perfil coluna a coluna.",
          "prompt": "Perfile este CSV coluna a coluna: tipo, valores ausentes, valores distintos, mínimo e máximo. Devolva o código que produziu cada número."},
@@ -156,7 +156,7 @@ SLIDES.append(pratica(
         {"acao": "Confira um número do perfil rodando a contagem você mesmo.",
          "detalhe": "Comece pela contagem de linhas sem receita registrada."},
     ],
-    "O grupo tem a lista de defeitos apontados pela IA e sabe dizer qual das quatro advertências ficou de fora.",
+    "O grupo sabe qual advertência a IA deixou passar.",
     ambiente="Gemini",
 ))
 
@@ -179,7 +179,7 @@ SLIDES.append(conteudo(
     '          <div class="stat-tile"><p class="stat-numero">14</p>'
     '<p class="stat-rotulo">dessas linhas no segmento estratégico</p></div>\n'
     '          <div class="stat-tile"><p class="stat-numero">160</p>'
-    '<p class="stat-rotulo">linhas sem valor_medio_pedido_brl, exatamente as mesmas</p></div>\n'
+    '<p class="stat-rotulo">linhas sem valor_medio_pedido_brl</p></div>\n'
     "        </div>\n"
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>Onde a lacuna cai</h3>'
@@ -200,7 +200,6 @@ SLIDES.append(figura(
     "aula02-mapa-ausencia.png",
     "Matriz da taxa de ausência por coluna e por segmento no painel de contas da Kovan",
     conclusao="Taxa de ausência que muda com uma coluna observada indica ausência condicionada.",
-    fonte="Fonte: painel Kovan, taxa por coluna dentro de cada segmento.",
 ))
 
 # 11. Advertencia 2: engajamento ausente
@@ -222,10 +221,23 @@ SLIDES.append(conteudo(
 
 # 12. Figura: quebra de taxonomia
 SLIDES.append(conteudo(
-    "A média de linhas de produto sobe 98,5% em 2023Q1 sem nenhuma conta comprar item adicional",
-    '        <img class="figura" style="margin-top: -14px"'
+    "A média de linhas de produto sobe 98,5% em 2023Q1 sem nenhuma transação nova",
+    # O PNG mede 1168x420 e traz 16px de branco puro no topo e 19px na base,
+    # medidos pixel a pixel. Esta e a unica figura do deck cuja altura nao cabe
+    # com folga: sem cortar essa borda, o slide fecha a 12px do limite de 720px
+    # e o CI, que renderiza com outra fonte, reprova por alguns pixels.
+    #
+    # O corte vem de uma moldura com overflow, e nao de margem negativa na
+    # propria figura: margem negativa move a caixa da imagem por cima da faixa
+    # de conclusao, e o check_slides.py reprova como sobreposicao, com razao.
+    # A moldura tambem preserva a regra da figura: 1168px de largura, 1:1, o
+    # corpo declarado na figura e o corpo projetado.
+    # Altura = 420 natural - 14 cortados no topo - 16 cortados na base.
+    '        <div class="figura-moldura" style="height: 390px; overflow: hidden">\n'
+    '          <img class="figura" style="margin-top: -14px"'
     ' src="../assets/img/aula02-quebra-taxonomia.png"'
-    ' alt="Série trimestral da média de linhas de produto ativas, com o corte de taxonomia de 2023Q1 marcado">\n',
+    ' alt="Série trimestral da média de linhas de produto ativas, com o corte de taxonomia de 2023Q1 marcado">\n'
+    "        </div>\n",
     conclusao="A erosão real de mix é a queda de 30,4%, e a janela inteira registra alta de 38%.",
     conclusao_clara=True,
 ))
@@ -274,9 +286,9 @@ SLIDES.append(quiz(
          "errado": "A mudança está documentada no Exhibit 3, e vale para todos os trimestres seguintes."},
     ],
     {"fichas": [
-        ("A série", "média de linhas_produto_ativas por trimestre"),
+        ("A média por trimestre", "linhas_produto_ativas"),
         ("O salto", '<span class="numerao">+98,5%</span>'),
-        ("A coluna taxonomia_mix", "vale pre_2023 em 2022Q3 e 2022Q4"),
+        ("A coluna taxonomia_mix", "pre_2023 em 2022Q3 e 2022Q4"),
     ]},
 ))
 
@@ -284,7 +296,7 @@ SLIDES.append(quiz(
 SLIDES.append(pratica(
     2, "O mecanismo da ausência", 20,
     "Em grupo, uma tela por grupo",
-    "A taxa de ausência de engajamento por segmento, com o código que a produziu",
+    "A taxa de ausência de engajamento por segmento, com o código",
     "Aos 14 minutos, comparação das taxas entre as mesas",
     [
         {"acao": "Peça a taxa de ausência de visitas por segmento.",
@@ -296,32 +308,32 @@ SLIDES.append(pratica(
         {"acao": "Escreva uma frase dizendo de que coluna a ausência depende.",
          "detalhe": "A frase vai para a skill de limpeza do grupo, na Prática 4."},
     ],
-    "O grupo tem as três taxas medidas e uma frase declarando de qual coluna observada a ausência depende.",
+    "O grupo sabe de que coluna a ausência depende.",
     ambiente="Gemini",
 ))
 
 # 16. MCAR, MAR e MNAR
 SLIDES.append(conteudo(
-    "O engajamento ausente segue o mecanismo MAR: o segmento observado explica a probabilidade de a linha faltar",
+    "O engajamento ausente segue o mecanismo MAR: a ausência depende do segmento",
     '        <table class="tabela-criterios">\n'
-    "          <thead><tr><th>Mecanismo</th><th>De que a ausência depende</th>"
-    "<th>Consequência para o tratamento</th></tr></thead>\n"
+    "          <thead><tr><th>Mecanismo</th><th>Do que a ausência depende</th>"
+    "<th>Consequência</th></tr></thead>\n"
     "          <tbody>\n"
     '            <tr class="fragment"><td>MCAR, completamente ao acaso</td>'
-    "<td>De nada que a base registre</td>"
+    "<td>De nada registrado na base</td>"
     "<td>Excluir preserva a média e reduz a amostra</td></tr>\n"
     '            <tr class="decisiva fragment"><td>MAR, ao acaso dado o observado</td>'
-    "<td>De coluna observada, como o segmento</td>"
-    '<td class="vence">A exclusão enviesa a média, e o condicionamento ao segmento corrige</td></tr>\n'
+    "<td>De coluna observada, o segmento</td>"
+    '<td class="vence">Excluir enviesa a média; condicionar ao segmento corrige</td></tr>\n'
     '            <tr class="fragment"><td>MNAR, não ao acaso</td>'
-    "<td>De informação que a base nunca registrou</td>"
+    "<td>De informação fora da base</td>"
     "<td>Nenhuma correção com as colunas disponíveis</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
     sobrelinha="Taxonomia de Rubin, 1976",
     conclusao="A escolha do tratamento depende do mecanismo, e o segmento é coluna presente no painel.",
     por_passos=True,
-    fonte="Fonte: taxas de ausência por segmento, painel Kovan. Rubin, Biometrika, 1976.",
+    fonte="Fonte: painel Kovan. Rubin, Biometrika, 1976.",
 ))
 
 # 17. Divisor: a decisao de tratamento
@@ -390,11 +402,10 @@ SLIDES.append(pratica(
 
 # 21. Figura: a inversao dos segmentos
 SLIDES.append(figura(
-    "O segmento estratégico passa da maior para a menor média de visitas conforme o tratamento da lacuna",
+    "O tratamento da lacuna leva o segmento estratégico da maior à menor média de visitas",
     "aula02-inversao-segmentos.png",
     "Dois painéis com as visitas médias por segmento sob cada tratamento da lacuna, e a ordem dos segmentos destacada",
     conclusao="O que decide entre as duas leituras é o mecanismo de ausência medido na Prática 2.",
-    fonte="Fonte: painel Kovan, visitas_registradas ausente em 8.280 linhas.",
 ))
 
 # 22. Quiz 2
@@ -433,7 +444,7 @@ SLIDES.append(secao(
 
 # 24. O criterio que separa os dois ambientes
 SLIDES.append(conteudo(
-    "Cinco critérios separam os dois ambientes de trabalho com IA, e a reexecução por terceiro é a exigência do entregável",
+    "Cinco critérios separam os dois ambientes, e o entregável exige reexecução por terceiro",
     '        <table class="tabela-criterios">\n'
     "          <thead><tr><th>Critério</th><th>Gemini</th><th>Antigravity</th></tr></thead>\n"
     "          <tbody>\n"
@@ -458,7 +469,6 @@ SLIDES.append(conteudo(
     "A skill de limpeza registra, para cada advertência, a decisão tomada e o custo medido",
     '        <div class="side-by-side">\n'
     "          <div>\n"
-    "            <h3>Esqueleto</h3>\n"
     '            <pre class="code-compact"><code># Skill: limpeza do painel Kovan\n'
     "## Entrada\n"
     "kovan_painel_contas.csv, 16.618 linhas\n"
@@ -477,7 +487,7 @@ SLIDES.append(conteudo(
     "            <p><strong>Entrada</strong> nomeia o arquivo e a contagem de linhas que o agente deve encontrar.</p>\n"
     "            <p><strong>Decisões</strong> traz uma linha por advertência, com o tratamento e o número que ele produziu.</p>\n"
     "            <p><strong>Saída</strong> declara o que a execução precisa deixar em disco.</p>\n"
-    '            <p class="fonte-nota">Markdown puro, sem sintaxe proprietária: o mesmo arquivo entra no Gemini e no Antigravity.</p>\n'
+    '            <p class="fonte-nota">Markdown puro: entra nos dois ambientes.</p>\n'
     "          </div>\n"
     "        </div>\n",
     conclusao="A omissão de uma advertência equivale a manter o dado como veio.",

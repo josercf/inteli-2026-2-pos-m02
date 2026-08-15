@@ -32,6 +32,12 @@ REPROVADOS = [
     ("O modelo é ferramenta de apoio, não substituto do analista.", "paralelismo negativo"),
     ("O problema não é o modelo, mas o pipeline.", "paralelismo negativo"),
     ("A queda não é sazonal, mas estrutural.", "paralelismo negativo"),
+    # Rodada de re-revisão: a re-revisão achou dois falsos positivos residuais
+    # da mesma familia (verbo conjugado, nao so gerundio, tambem faz Y virar
+    # oracao nova) e uma frase concessiva legitima que "mas" isolado passou a
+    # pegar sem essa distincao. "falta de X" entra aqui para travar que a
+    # heuristica de verbo nao engula esse substantivo homografo de verbo.
+    ("O atraso não é falta de esforço, mas falta de prioridade.", "paralelismo negativo"),
 ]
 
 APROVADOS = [
@@ -45,6 +51,13 @@ APROVADOS = [
     "O relatório é extenso, não cabendo em uma única página.",
     "A métrica considera apenas contas ativas há mais de dois trimestres.",
     "O erro-padrão da estimativa é de 3,2 pontos percentuais.",
+    # Rodada de re-revisão: verbo conjugado (não só gerúndio) também faz Y
+    # virar oração nova, e "mas" isolado sem verificação pegava concessiva
+    # legítima.
+    "O relatório é extenso, não cabe em uma única página.",
+    "O prazo é curto, não permite revisão completa.",
+    "A base é grande, não exige amostragem adicional.",
+    "O crescimento não é constante, mas apresenta padrão sazonal identificável.",
 ]
 
 

@@ -106,18 +106,22 @@ SLIDES.append(secao(
 # 5. Onde a limpeza mora dentro da EDA
 SLIDES.append(conteudo(
     "As decisões de preparação determinam os números que a análise exploratória produz",
+    # Revelado passo a passo: os quatro cards entram um por clique, e a faixa de
+    # implicacao entra por ultimo (`por_passos`). Sem isso a sala le os quatro
+    # passos de uma vez e a conclusao chega antes de o quarto ser discutido.
     '        <div class="linha-tempo">\n'
-    '          <div class="etapa"><p class="quando">Passo 1</p><h3>Perfilar</h3>'
+    '          <div class="etapa fragment"><p class="quando">Passo 1</p><h3>Perfilar</h3>'
     "<p>Quais colunas existem, quantos valores faltam e onde a lacuna se concentra.</p></div>\n"
-    '          <div class="etapa"><p class="quando">Passo 2</p><h3>Decidir</h3>'
+    '          <div class="etapa fragment"><p class="quando">Passo 2</p><h3>Decidir</h3>'
     "<p>O que fazer com cada defeito, escrito antes de recalcular qualquer indicador.</p></div>\n"
-    '          <div class="etapa"><p class="quando">Passo 3</p><h3>Medir</h3>'
+    '          <div class="etapa fragment"><p class="quando">Passo 3</p><h3>Medir</h3>'
     "<p>O indicador recalculado sob cada alternativa de tratamento, no mesmo código.</p></div>\n"
-    '          <div class="etapa avaliada"><p class="quando">Passo 4</p><h3>Registrar</h3>'
+    '          <div class="etapa avaliada fragment"><p class="quando">Passo 4</p><h3>Registrar</h3>'
     "<p>O arquivo que outra pessoa executa e obtém o mesmo número.</p></div>\n"
     "        </div>\n",
     contexto="O ciclo de seis passos da EDA assistida ficou na Aula 01. O recorte de hoje é o que acontece antes da primeira estatística.",
     conclusao="A análise exploratória da Aula 03 recebe o resultado destes quatro passos, junto com todo defeito que eles deixarem passar.",
+    por_passos=True,
 ))
 
 # 6. As seis dimensoes de qualidade

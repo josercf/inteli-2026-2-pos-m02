@@ -60,6 +60,7 @@
         <li><a href="#prompts">Os prompts das quatro práticas</a></li>
         <li><a href="#execucao">A execução real no Gemini</a></li>
         <li><a href="#agentes">A skill de limpeza em outros agentes</a></li>
+        <li><a href="#markdown">Guia rápido de Markdown</a></li>
         <li><a href="#leitura">Leitura complementar do professor</a></li>
       </ol>
     </nav>
@@ -867,8 +868,69 @@ nada.</code></pre>
         o que permite a outra pessoa executar a skill e verificar se chegou ao mesmo lugar.</p>
       </section>
 
+      <section class="doc-secao" id="markdown">
+        <h2>8. Guia rápido de Markdown</h2>
+
+        <p>A skill de limpeza da Prática 4 é um arquivo Markdown. A tabela abaixo cobre o mínimo
+        necessário para escrever esse arquivo: o que se digita numa coluna, o que aparece
+        formatado na outra. O alcance é deliberadamente mínimo: serve como referência de
+        emergência para a hora da prática, não como tutorial de Markdown.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Elemento</th><th>O que se escreve</th><th>O que aparece</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Título principal</td>
+                <td><code># Skill de limpeza Kovan</code></td>
+                <td><strong style="font-size: 1.15em;">Skill de limpeza Kovan</strong></td>
+              </tr>
+              <tr>
+                <td>Subtítulo de seção</td>
+                <td><code>## Passo 1: receita ausente</code></td>
+                <td><strong>Passo 1: receita ausente</strong></td>
+              </tr>
+              <tr>
+                <td>Lista</td>
+                <td><code>- excluir a linha<br>- registrar o total removido</code></td>
+                <td>excluir a linha<br>registrar o total removido<br>(cada linha vira um item com marcador)</td>
+              </tr>
+              <tr>
+                <td>Lista numerada</td>
+                <td><code>1. medir o total antes<br>2. aplicar o tratamento</code></td>
+                <td>medir o total antes<br>aplicar o tratamento<br>(cada linha vira um item numerado, na ordem)</td>
+              </tr>
+              <tr>
+                <td>Negrito</td>
+                <td><code>**160 linhas removidas**</code></td>
+                <td><strong>160 linhas removidas</strong></td>
+              </tr>
+              <tr>
+                <td>Código embutido</td>
+                <td><code>a coluna `receita_brl`</code></td>
+                <td>a coluna <code>receita_brl</code></td>
+              </tr>
+              <tr>
+                <td>Bloco de código</td>
+                <td><code>```<br>painel = painel.dropna(subset=["receita_brl"])<br>```</code></td>
+                <td>o trecho entre as duas linhas de três crases aparece em caixa própria, com espaçamento e
+                quebra de linha preservados, como nos blocos de código desta página</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="doc-nota">
+          <p><strong>Regra que resolve a maior parte da dúvida.</strong> Cada elemento começa numa
+          linha própria, sem espaço antes do marcador. Uma linha em branco separa um parágrafo do
+          próximo. Fora isso, texto comum se escreve como texto comum.</p>
+        </div>
+      </section>
+
       <section class="doc-secao" id="leitura">
-        <h2>8. Leitura complementar do professor</h2>
+        <h2>9. Leitura complementar do professor</h2>
 
         <p>Esta seção será preenchida com a curadoria de leituras do professor para a Aula 02.</p>
 

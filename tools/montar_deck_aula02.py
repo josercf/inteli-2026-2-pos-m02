@@ -66,12 +66,13 @@ SLIDES.append(conteudo(
     "        </div>\n"
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>O critério aplicado</h3>'
-    "<p>Zero pedidos faturados em dois trimestres consecutivos.</p></div>\n"
+    "<p>Dois trimestres sem pedido.</p></div>\n"
     '          <div class="concept-card"><h3>A pergunta de abertura</h3>'
-    "<p>O que cada mesa fez com as linhas sem receita registrada?</p></div>\n"
+    "<p>O que fizeram com as lacunas?</p></div>\n"
     '          <div class="concept-card"><h3>O que sobrou da Aula 01</h3>'
-    "<p>Três contagens, nenhuma com o tratamento que a produziu.</p></div>\n"
+    "<p>Contagem sem tratamento.</p></div>\n"
     "        </div>\n",
+    contexto="A Kovan é uma operação LATAM de computing corporativo, e o NRR do segmento estratégico caiu de 109% para 93% em quatro trimestres. A Aula 01 mediu rupturas de compra nesse segmento.",
     conclusao="A divergência entra hoje como insumo, e a tarde mede quanto cada decisão de tratamento vale em número.",
     fonte="Fonte: painel Kovan, 16.618 registros conta-trimestre e 1.187 contas. Contagem de ruptura construída na Aula 01.",
 ))
@@ -85,11 +86,11 @@ SLIDES.append(conteudo(
     '          <div class="concept-card"><h3>Engajamento ausente</h3>'
     "<p>8.280 linhas sem <code>visitas_registradas</code> nem <code>interacoes_crm</code>.</p></div>\n"
     '          <div class="concept-card"><h3>Quebra de taxonomia</h3>'
-    "<p><code>linhas_produto_ativas</code> muda de régua em 2023Q1, com salto de 98,5%.</p></div>\n"
+    "<p><code>linhas_produto_ativas</code> muda de régua em 2023Q1.</p></div>\n"
     '          <div class="concept-card"><h3>Sinal das devoluções</h3>'
     "<p><code>devolucoes_brl</code> tem 15.999 valores negativos e nenhum positivo.</p></div>\n"
     "        </div>\n",
-    contexto="Até 17h30: a base tratada, o custo numérico de cada decisão e a skill em Markdown que reproduz os dois quando executada.",
+    contexto="As três contagens da Aula 01 divergiram no tratamento destes quatro defeitos. Até 17h30: a base tratada, o custo de cada decisão e a skill em Markdown que a reproduz.",
     conclusao="Advertência sem decisão registrada conta como decisão de manter o dado como veio, e entra no registro com esse nome.",
     rotulo_conclusao="Entrega",
     fonte="Fonte: Exhibit 3 do Caderno Kovan PL-02-2026 v2, medido sobre as 16.618 linhas entregues.",
@@ -448,7 +449,7 @@ SLIDES.append(secao(
 
 # 24. O criterio que separa os dois ambientes
 SLIDES.append(conteudo(
-    "Cinco critérios separam os dois ambientes, e o entregável exige reexecução por terceiro",
+    "Cinco critérios separam os dois ambientes",
     '        <table class="tabela-criterios">\n'
     "          <thead><tr><th>Critério</th><th>Gemini</th><th>Antigravity</th></tr></thead>\n"
     "          <tbody>\n"
@@ -464,7 +465,8 @@ SLIDES.append(conteudo(
     '<td>Ausente</td><td class="vence">Disponível</td></tr>\n'
     "          </tbody>\n"
     "        </table>\n",
-    conclusao="O critério é a persistência do trabalho, e a skill em Markdown carrega a última linha entre os dois.",
+    contexto="O Antigravity é um ambiente de desenvolvimento com agente do Google, em que o agente trabalha sobre os arquivos de uma pasta.",
+    conclusao="O entregável exige reexecução por terceiro, e a skill em Markdown carrega essa linha entre os dois ambientes.",
     por_passos=True,
 ))
 

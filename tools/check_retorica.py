@@ -32,10 +32,23 @@ class Achado(NamedTuple):
 
 
 # `não é X, é Y` e `é X, não Y`, com X e Y curtos o bastante para serem o
-# mesmo sintagma contrastado, que é o que caracteriza a construção.
+# mesmo sintagma contrastado, que é o que caracteriza a construção. A primeira
+# regex aceita `mas` isolado, sem o `sim`, porque essa é a variante mais
+# frequente ("não é o modelo, mas o pipeline"). A segunda regex exclui o caso
+# em que Y começa por gerúndio (`não cabendo`, `não sendo`, `não havendo`):
+# esse Y não é um sintagma nominal em paralelo com X, é oração subordinada, e
+# a diretiva não proíbe oração subordinada iniciada por "não".
 _NEGATIVO = [
-    re.compile(r"n[ãa]o\s+(?:é|s[ãa]o|era|foi)\s+[^,.;:!?]{2,45},\s*(?:e\s+sim|mas\s+sim|é|s[ãa]o)\b", re.I),
-    re.compile(r"\b(?:é|s[ãa]o)\s+[^,.;:!?]{2,45},\s*n[ãa]o\s+[^,.;:!?]{2,45}[.;!?]", re.I),
+    re.compile(
+        r"n[ãa]o\s+(?:é|s[ãa]o|era|foi)\s+[^,.;:!?]{2,45},\s*"
+        r"(?:e\s+sim|mas\s+sim|mas|é|s[ãa]o)\b",
+        re.I,
+    ),
+    re.compile(
+        r"\b(?:é|s[ãa]o)\s+[^,.;:!?]{2,45},\s*"
+        r"n[ãa]o\s+(?!\w*ndo\b)[^,.;:!?]{2,45}[.;!?]",
+        re.I,
+    ),
 ]
 
 _ESCALADA = re.compile(r"n[ãa]o\s+(?:apenas|s[óo]|somente)\s+[^:.;!?]{2,80}:", re.I)
@@ -50,16 +63,41 @@ _ANTITESE = re.compile(
 _TAG = re.compile(r"<[^>]+>")
 _SECTION = re.compile(r"<section\b", re.I)
 
+_FIM_DE_FRASE = re.compile(r"[.!?]")
+
+
+def _frase_ao_redor(texto: str, inicio: int, fim: int) -> str:
+    """Expande o trecho casado ate os limites da frase inteira que o contem.
+
+    A regex costuma casar so o meio da frase (comeca no "nao" ou no "e", nao
+    no sujeito). Quem le o relatorio para corrigir o slide precisa da frase
+    completa, nao do fragmento que a regex enxergou.
+    """
+    inicio_frase = 0
+    for m in _FIM_DE_FRASE.finditer(texto, 0, inicio):
+        inicio_frase = m.end()
+    if fim > 0 and texto[fim - 1] in ".!?":
+        # O proprio casamento ja consumiu a pontuacao final: nao ha o que
+        # buscar adiante, senao a frase seguinte entra junto.
+        fim_frase = fim
+    else:
+        m_fim = _FIM_DE_FRASE.search(texto, fim)
+        fim_frase = m_fim.end() if m_fim else len(texto)
+    return texto[inicio_frase:fim_frase].strip()
+
 
 def analisar(texto: str) -> list[Achado]:
     achados: list[Achado] = []
     for rx in _NEGATIVO:
         for m in rx.finditer(texto):
-            achados.append(Achado("paralelismo negativo", m.group(0).strip(), True))
+            trecho = _frase_ao_redor(texto, m.start(), m.end())
+            achados.append(Achado("paralelismo negativo", trecho, True))
     for m in _ESCALADA.finditer(texto):
-        achados.append(Achado("escalada com dois-pontos", m.group(0).strip(), True))
+        trecho = _frase_ao_redor(texto, m.start(), m.end())
+        achados.append(Achado("escalada com dois-pontos", trecho, True))
     for m in _ANTITESE.finditer(texto):
-        achados.append(Achado("antítese simétrica (candidata)", m.group(0).strip(), False))
+        trecho = _frase_ao_redor(texto, m.start(), m.end())
+        achados.append(Achado("antítese simétrica (candidata)", trecho, False))
     return achados
 
 

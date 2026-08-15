@@ -21,6 +21,17 @@ REPROVADOS = [
     ("O prompt é parte da análise, não um acessório.", "paralelismo negativo"),
     ("A quebra não apenas fabrica sinal falso: ela inverte o sinal.", "escalada"),
     ("O painel não só tem lacunas: as lacunas são enviesadas.", "escalada"),
+    # Rodada de calibração seguinte: a amostra acima e curta e homogenea, e o
+    # revisor achou um falso negativo (variante sem "sim") e um falso
+    # positivo (oracao subordinada em gerundio) nela. Estas doze frases
+    # entram como dado permanente de calibracao.
+    ("O atraso não é falha do time, é reflexo do escopo mal definido.", "paralelismo negativo"),
+    ("A meta é reduzir custo, não aumentar velocidade de entrega.", "paralelismo negativo"),
+    ("O aumento não só eleva o risco: ele reduz a margem operacional.", "escalada"),
+    ("A lacuna não é ausência de dado, é ausência de registro.", "paralelismo negativo"),
+    ("O modelo é ferramenta de apoio, não substituto do analista.", "paralelismo negativo"),
+    ("O problema não é o modelo, mas o pipeline.", "paralelismo negativo"),
+    ("A queda não é sazonal, mas estrutural.", "paralelismo negativo"),
 ]
 
 APROVADOS = [
@@ -29,6 +40,11 @@ APROVADOS = [
     "O tratamento preserva a direção da relação e altera a magnitude em até 49%.",
     "Nenhuma conta comprou linha de produto adicional entre 2022Q4 e 2023Q1.",
     "O erro de sinal em devolucoes_brl custa R$ 217,4 milhões.",
+    "A base contém 1.187 contas distribuídas em 14 trimestres.",
+    "O episódio de ruptura ocorre em 76 das 1.187 contas observadas.",
+    "O relatório é extenso, não cabendo em uma única página.",
+    "A métrica considera apenas contas ativas há mais de dois trimestres.",
+    "O erro-padrão da estimativa é de 3,2 pontos percentuais.",
 ]
 
 

@@ -33,8 +33,15 @@ def test_o_esqueleto_tem_uma_lacuna_por_advertencia(texto):
 
 
 def test_o_esqueleto_exige_o_custo_medido(texto):
-    assert "custo" in texto.lower()
-    assert "número antes" in texto.lower() or "numero antes" in texto.lower()
+    """O custo mede o indicador que a decisão afeta, recalculado sob as duas
+    alternativas, não a contagem de linhas: imputar não move linha nenhuma e
+    zeraria o custo para metade das decisões possíveis."""
+    minusculo = texto.lower()
+    assert "custo medido" in minusculo
+    assert "indicador afetado" in minusculo
+    assert "valor do indicador com a decisão" in minusculo or "valor do indicador com a decisao" in minusculo
+    assert "valor do indicador com a alternativa descartada" in minusculo
+    assert "linhas afetadas" in minusculo
 
 
 def test_o_esqueleto_e_markdown_puro(texto):

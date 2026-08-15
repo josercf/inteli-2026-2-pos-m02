@@ -19,6 +19,7 @@ python3 -m http.server 8931                  # preview local (Reveal exige http,
 .venv/bin/python -m pytest dados/tests -q    # trava os numeros do case
 .venv/bin/python tools/check_brand.py        # paleta, tipografia, segmento, emoji
 .venv/bin/python tools/check_slides.py       # estouro de 1280x720 e sobreposicao
+.venv/bin/python tools/check_retorica.py     # paralelismo, antitese e frase de efeito
 .venv/bin/python tools/build_site.py         # monta _site/ e confere referencias locais
 .venv/bin/python dados/gerar_painel_kovan.py # regera o painel
 .venv/bin/python tools/montar_notebook_aula01.py
@@ -107,6 +108,13 @@ que cita dado inexistente.
 - Travessão em dash (U+2014) é proibido. Usar dois-pontos, vírgula, parênteses
   ou hífen.
 - Emoji é proibido. A iconografia da marca é o Material Symbols.
+- **Paralelismo é proibido**, em três formas: paralelismo negativo ("não é X,
+  é Y"), antítese simétrica ("o Gemini descobre, o Antigravity registra") e
+  escalada com dois-pontos ("não apenas X: Y"). A referência de escrita é a
+  linguagem das apresentações da McKinsey: o título é a conclusão completa com
+  o número dentro (action title) e o corpo a sustenta. Para comparar dois
+  objetos, declarar o critério que os separa e medir cada um, em vez de
+  espelhar orações. Travado por `tools/check_retorica.py`.
 - Não expor pesos de avaliação nem fórmulas de nota nos slides.
 - Nenhum número do case aparece em material didático sem estar travado por teste.
 - Data, título, escopo ou peso que não estiver nos documentos de planejamento

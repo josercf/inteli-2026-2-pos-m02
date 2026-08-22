@@ -101,6 +101,55 @@ SLIDES.append(conteudo(
 ))
 
 # ---------------------------------------------------------------------------
+# 4. Os dois artefatos da trilha
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "A Trilha de Tecnologia entrega dois artefatos avaliados",
+    '        <div class="side-by-side">\n'
+    "          <div>\n"
+    "            <h3>Artefato 1 &middot; Análise Exploratória de Dados</h3>\n"
+    "            <p>O código que carrega, limpa e visualiza a base, identificando os padrões "
+    "associados ao churn. Entregue como pasta reexecutável.</p>\n"
+    "            <p><strong>05/09/2026.</strong> Critério binário, com o foco no feedback. "
+    "Alimenta o Customer Segmentation Report da manhã.</p>\n"
+    "          </div>\n"
+    "          <div>\n"
+    "            <h3>Artefato 2 &middot; Aplicativo Web Preditivo-Generativo</h3>\n"
+    "            <p>Executa o modelo de churn treinado em Python e consome uma API generativa "
+    "para produzir o texto de retenção personalizado.</p>\n"
+    "            <p><strong>03/10/2026.</strong> Critério por rubrica, defendido em banca. "
+    "Alimenta o Plano de Inteligência de Retenção da manhã.</p>\n"
+    "          </div>\n"
+    "        </div>\n",
+    sobrelinha="O destino da trilha",
+    conclusao="A oficina de hoje começa a pasta do Artefato 1, e o critério de aceite é a reexecução.",
+))
+
+# ---------------------------------------------------------------------------
+# 5. O checklist do Artefato 1
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "O Artefato 1 tem sete seções, e a oficina de hoje fecha quatro",
+    '        <div class="embed-tabela">\n'
+    "          <table>\n"
+    "            <thead><tr><th>Seção</th><th>O que precisa ter</th><th>Quando</th></tr></thead>\n"
+    "            <tbody>\n"
+    "              <tr><td>01. Carga</td><td>contagem por aba conferida, grão declarado, contas em comum</td><td>hoje</td></tr>\n"
+    "              <tr><td>02. Qualidade</td><td>o registro de tratamento, com o custo de cada decisão em linhas</td><td>hoje</td></tr>\n"
+    "              <tr><td>03. Univariada</td><td>centro, dispersão e forma, com a leitura escrita de cada figura</td><td>hoje</td></tr>\n"
+    "              <tr><td>04. Bivariada</td><td>contingência com o tamanho da base e a explicação alternativa</td><td>hoje</td></tr>\n"
+    "              <tr><td>05. Rótulo</td><td>o critério recuperado do dado e três cortes alternativos</td><td>autoestudo</td></tr>\n"
+    "              <tr><td>06. Visuais</td><td>as figuras que sustentam a segmentação e as personas da manhã</td><td>autoestudo</td></tr>\n"
+    "              <tr><td>07. Limitações</td><td>o que esta base não permite responder</td><td>autoestudo</td></tr>\n"
+    "            </tbody>\n"
+    "          </table>\n"
+    "        </div>\n",
+    sobrelinha="Análise Exploratória de Dados &middot; entrega 05/09/2026",
+    conclusao="A seção 06 é o item que o checklist da manhã cobra de vocês, então ela tem destinatário e prazo próprios.",
+    fonte="O checklist completo está em CHECKLIST-ARTEFATO-1.md, na raiz da pasta clonada.",
+))
+
+# ---------------------------------------------------------------------------
 # 4. Divisor: a base nova
 # ---------------------------------------------------------------------------
 SLIDES.append(secao(
@@ -643,28 +692,6 @@ SLIDES.append(secao(
         "Cada decisão de tratamento entra no registro, com o custo em linhas",
         "A pasta precisa reexecutar na máquina de outra pessoa",
     ],
-))
-
-# ---------------------------------------------------------------------------
-# 25. O checklist
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "O Artefato 1 tem sete seções, e quatro delas fecham nesta oficina",
-    '        <div class="concept-cards quatro">\n'
-    '          <div class="concept-card"><h3>01. Carga</h3>'
-    "<p>As cinco abas carregadas, com a contagem de linhas conferida contra a fonte "
-    "e o grão de cada uma declarado.</p></div>\n"
-    '          <div class="concept-card"><h3>02. Qualidade</h3>'
-    "<p>O registro de tratamento: cada advertência, a decisão e o custo dela em linhas.</p></div>\n"
-    '          <div class="concept-card"><h3>03. Univariada</h3>'
-    "<p>Tendência central, dispersão e forma na mesma tabela, com a leitura escrita "
-    "de cada figura.</p></div>\n"
-    '          <div class="concept-card"><h3>04. Bivariada</h3>'
-    "<p>Cruzamentos contra o rótulo, com tamanho de base em cada célula e a "
-    "explicação alternativa que a medida não descarta.</p></div>\n"
-    "        </div>\n",
-    contexto="Vão para o autoestudo da semana: 05. Rótulo, 06. Visuais e 07. Limitações. O checklist completo está em CHECKLIST-ARTEFATO-1.md, na raiz da pasta clonada.",
-    conclusao="A seção 06 alimenta o relatório de segmentação da manhã, que pede as visualizações da EDA da tarde.",
 ))
 
 # ---------------------------------------------------------------------------

@@ -325,26 +325,60 @@ SLIDES.append(pratica(
 # 11. O racional, construido com a turma
 # ---------------------------------------------------------------------------
 # Sem nenhum numero da base: a turma monta as tres perguntas antes de ver
-# qualquer valor, senao a resposta chega antes do criterio.
+# qualquer valor, senao a resposta chega antes do criterio. Cada uma ganha o
+# proprio slide com figura, nos tres seguintes.
 SLIDES.append(conteudo(
     "Descrever uma variável exige três perguntas, e a terceira quase nunca é feita",
     '        <div class="exercise-steps">\n'
     '          <div class="pratica-passo fragment"><span class="num">01</span><div>'
     '<p class="acao">Onde está o centro?</p>'
-    '<p class="detalhe">Média e mediana. Quando as duas divergem por uma ordem de grandeza, '
-    "a média deixa de descrever qualquer caso individual.</p></div></div>\n"
+    '<p class="detalhe">Média e mediana respondem a mesma pergunta e discordam quando a '
+    "distribuição tem cauda.</p></div></div>\n"
     '          <div class="pratica-passo fragment"><span class="num">02</span><div>'
     '<p class="acao">Quanto os casos se afastam do centro?</p>'
-    '<p class="detalhe">Desvio padrão e quartis. Um único extremo faz o desvio explodir e '
+    '<p class="detalhe">Quartis e desvio padrão. Um único extremo faz o desvio explodir e '
     "deixar de comparar grupos.</p></div></div>\n"
     '          <div class="pratica-passo fragment"><span class="num">03</span><div>'
     '<p class="acao">Qual o formato da distribuição?</p>'
     '<p class="detalhe">Assimetria e curtose. É a pergunta que diz se as respostas das duas '
-    "primeiras valem alguma coisa, e é a que quase nunca aparece no relatório.</p></div></div>\n"
+    "primeiras valem alguma coisa.</p></div></div>\n"
     "        </div>\n",
-    contexto="Antes de comparar dois grupos, cada variável precisa ser descrita sozinha. A ordem importa: quem pula para a comparação atribui ao grupo um efeito que era da forma da distribuição.",
-    conclusao="A terceira pergunta é a que decide se a média pode ser citada, então ela vem antes e não depois.",
+    contexto="Antes de comparar dois grupos, cada variável precisa ser descrita sozinha. Quem pula para a comparação atribui ao grupo um efeito que era da forma da distribuição.",
+    conclusao="A terceira pergunta decide se a média pode ser citada, então ela vem antes e não depois.",
     por_passos=True,
+))
+
+# ---------------------------------------------------------------------------
+# 11a. Pergunta 1: o centro
+# ---------------------------------------------------------------------------
+SLIDES.append(figura(
+    "A média e a mediana coincidem na simétrica e se afastam 54% quando há cauda",
+    "aula03-tendencia-central.png",
+    "Dois histogramas: na distribuição simétrica média e mediana coincidem; na distribuição com cauda à direita a média fica bem acima da mediana",
+    sobrelinha="Pergunta 1 &middot; onde está o centro",
+    conclusao="A média é o ponto de equilíbrio e obedece a cada valor extremo; a mediana conta casos e ignora o tamanho deles.",
+))
+
+# ---------------------------------------------------------------------------
+# 11b. Pergunta 2: a dispersao
+# ---------------------------------------------------------------------------
+SLIDES.append(figura(
+    "A caixa do boxplot contém a metade do meio da carteira",
+    "aula03-dispersao.png",
+    "Boxplot horizontal anotado, com primeiro quartil, mediana, terceiro quartil e os pontos fora do intervalo esperado",
+    sobrelinha="Pergunta 2 &middot; quanto os casos se afastam",
+    conclusao="Quartis descrevem a dispersão sem depender de nenhum valor extremo, e é isso que os torna comparáveis entre grupos.",
+))
+
+# ---------------------------------------------------------------------------
+# 11c. Pergunta 3: a forma
+# ---------------------------------------------------------------------------
+SLIDES.append(figura(
+    "Assimetria mede para que lado a cauda aponta, e curtose mede o peso dela",
+    "aula03-forma.png",
+    "Três histogramas com assimetria e curtose calculadas: simétrica, cauda à direita e extremos dominantes",
+    sobrelinha="Pergunta 3 &middot; qual o formato",
+    conclusao="Curtose de 35,7 com assimetria de 0,2 descreve uma distribuição equilibrada nos lados e dominada pelos extremos.",
 ))
 
 # ---------------------------------------------------------------------------

@@ -49,6 +49,9 @@ ARQUIVOS = [
     ("assets/img/aula03-distribuicao-receita.png", "assets/img/aula03-distribuicao-receita.png"),
     ("assets/img/aula03-contingencia-rotulo.png", "assets/img/aula03-contingencia-rotulo.png"),
     ("assets/img/aula03-prevalencia-segmento.png", "assets/img/aula03-prevalencia-segmento.png"),
+    ("assets/img/aula03-tendencia-central.png", "assets/img/aula03-tendencia-central.png"),
+    ("assets/img/aula03-dispersao.png", "assets/img/aula03-dispersao.png"),
+    ("assets/img/aula03-forma.png", "assets/img/aula03-forma.png"),
     (
         "assets/img/aula02-gemini-pratica2-prompt.jpg",
         "assets/img/aula02-gemini-pratica2-prompt.jpg",

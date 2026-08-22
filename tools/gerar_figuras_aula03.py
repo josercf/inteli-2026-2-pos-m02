@@ -203,13 +203,135 @@ def prevalencia_por_segmento() -> Path:
     return salvar(fig, "aula03-prevalencia-segmento.png")
 
 
+# ---------------------------------------------------------------------------
+# Figuras didaticas da univariada
+# ---------------------------------------------------------------------------
+# Nao saem do dataset: sao distribuicoes sinteticas construidas com semente
+# fixa, para ensinar o conceito antes de a turma ver o numero da Kovan. Semente
+# fixa porque figura de aula precisa ser a mesma toda vez que o gerador roda.
+
+def _amostras():
+    rng = np.random.default_rng(20260822)
+    simetrica = rng.normal(50, 12, 4000)
+    assimetrica = rng.lognormal(3.2, 0.9, 4000)
+    return simetrica, assimetrica
+
+
+def tendencia_central() -> Path:
+    """Media e mediana sobre a mesma pergunta, em duas formas de distribuicao."""
+    simetrica, assimetrica = _amostras()
+    fig = _figura(330)
+    for k, (dados, titulo) in enumerate((
+        (simetrica, "Distribuição simétrica"),
+        (assimetrica, "Distribuição com cauda à direita"),
+    )):
+        ax = fig.add_axes([0.055 + k * 0.495, 0.20, 0.40, 0.58])
+        _estilo_eixo(ax)
+        ax.hist(dados, bins=44, color=CINZA_MEDIO, edgecolor=BRANCO, linewidth=0.5)
+        topo = ax.get_ylim()[1]
+        for valor, cor, nome, dx, grossura in (
+            (np.median(dados), VERDE_ESCURO, "mediana", -1, 6.5),
+            (dados.mean(), CORAL, "média", 1, 2.4),
+        ):
+            ax.axvline(valor, color=cor, linewidth=grossura)
+            ax.text(valor + dx * (dados.max() - dados.min()) * 0.045, topo * 0.94,
+                    nome, fontsize=15, color=cor, weight="bold",
+                    ha="right" if dx < 0 else "left", va="top")
+        ax.set_yticks([])
+        ax.set_xticks([])
+        ax.set_title(titulo, fontsize=17, color=CINZA_ESCURO, loc="left", pad=10)
+        distancia = abs(dados.mean() - np.median(dados)) / np.median(dados)
+        ax.set_xlabel(f"as duas medidas se afastam {distancia:.0%}", fontsize=15)
+    return salvar(fig, "aula03-tendencia-central.png")
+
+
+def dispersao() -> Path:
+    """Anatomia do boxplot, com o vocabulario em linguagem de negocio.
+
+    A cauda e cortada no eixo de proposito: com a lognormal inteira a caixa
+    ocupava 6% da largura e as tres anotacoes se sobrepunham. O corte esta
+    declarado no rotulo do eixo, e os outliers cortados aparecem como seta.
+    """
+    rng = np.random.default_rng(20260822)
+    dados = rng.lognormal(3.1, 0.62, 3000)
+    limite = np.percentile(dados, 98)
+
+    fig = _figura(330)
+    ax = fig.add_axes([0.055, 0.32, 0.90, 0.40])
+    _estilo_eixo(ax)
+    ax.spines["left"].set_visible(False)
+
+    caixa = ax.boxplot(dados, orientation="horizontal", widths=0.42,
+                       patch_artist=True,
+                       flierprops=dict(marker="D", markersize=6,
+                                       markerfacecolor=CORAL, markeredgecolor=CORAL,
+                                       alpha=0.55))
+    caixa["boxes"][0].set(facecolor=CINZA_CLARO, edgecolor=ROXO, linewidth=1.8)
+    for parte in ("whiskers", "caps"):
+        for linha in caixa[parte]:
+            linha.set(color=ROXO, linewidth=1.8)
+    caixa["medians"][0].set(color=VERDE_ESCURO, linewidth=3.2)
+
+    q1, mediana, q3 = np.percentile(dados, [25, 50, 75])
+    for x, texto, dx, altura, cor, ha in (
+        (q1, "primeiro quartil:\n25% faturam menos", -0.01, 1.50, ROXO, "right"),
+        (mediana, "mediana:\no cliente do meio", 0.0, 2.06, VERDE_ESCURO, "center"),
+        (q3, "terceiro quartil:\n25% faturam mais", 0.05, 1.50, ROXO, "left"),
+    ):
+        ax.annotate(texto, xy=(x, 1.22), xytext=(x + dx * limite, altura),
+                    fontsize=14, color=cor, ha=ha, va="bottom", linespacing=1.35,
+                    arrowprops=dict(arrowstyle="->", color=CINZA_ESCURO, linewidth=1.2))
+
+    ax.plot([q1, q3], [0.70, 0.70], color=ROXO, linewidth=1.4)
+    ax.text((q1 + q3) / 2, 0.58, "a caixa é a metade do meio da carteira",
+            fontsize=14, color=ROXO, ha="center", va="top")
+    ax.text(limite * 0.80, 0.58, "cada losango é um cliente fora do esperado",
+            fontsize=14, color=CORAL, ha="center", va="top")
+
+    ax.set_xlim(0, limite)
+    ax.set_ylim(0.20, 2.60)
+    ax.set_yticks([])
+    ax.set_xlabel("receita da conta, com o 2% do topo fora do eixo", fontsize=15)
+    return salvar(fig, "aula03-dispersao.png")
+
+
+def forma() -> Path:
+    """Assimetria e curtose lado a lado, com o numero embaixo de cada forma."""
+    rng = np.random.default_rng(20260822)
+    casos = (
+        (rng.normal(0, 1, 6000), "Simétrica"),
+        (rng.lognormal(0, 0.75, 6000), "Cauda à direita"),
+        (rng.standard_t(2.5, 6000), "Extremos dominantes"),
+    )
+    fig = _figura(330)
+    for k, (dados, titulo) in enumerate(casos):
+        ax = fig.add_axes([0.05 + k * 0.325, 0.28, 0.27, 0.48])
+        _estilo_eixo(ax)
+        corte = np.percentile(dados, [0.5, 99.5])
+        ax.hist(dados, bins=60, range=tuple(corte), color=CINZA_MEDIO,
+                edgecolor=BRANCO, linewidth=0.4)
+        ax.set_yticks([])
+        ax.set_xticks([])
+        ax.set_title(titulo, fontsize=17, color=CINZA_ESCURO, loc="left", pad=10)
+        z = (dados - dados.mean()) / dados.std()
+        assimetria = (z ** 3).mean()
+        ax.text(0.5, -0.20, f"assimetria {_fmt(assimetria + 0.0)}".replace("-0,0", "0,0"),
+                transform=ax.transAxes, fontsize=15, color=CORAL, ha="center",
+                weight="bold")
+        ax.text(0.5, -0.38, f"curtose {_fmt((z ** 4).mean())}",
+                transform=ax.transAxes, fontsize=15, color=VERDE_ESCURO, ha="center",
+                weight="bold")
+    return salvar(fig, "aula03-forma.png")
+
+
 def main() -> None:
     if not an.XLSX.exists():
         raise SystemExit(
             f"{an.XLSX} não encontrado. O dataset oficial não é versionado (ADR-005): "
             "coloque o arquivo em dados/ antes de gerar as figuras."
         )
-    for fn in (distribuicao_receita, contingencia_rotulo, prevalencia_por_segmento):
+    for fn in (distribuicao_receita, contingencia_rotulo, prevalencia_por_segmento,
+               tendencia_central, dispersao, forma):
         destino = fn()
         print(f"  {destino.relative_to(RAIZ)}")
 

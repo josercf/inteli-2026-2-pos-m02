@@ -13,6 +13,11 @@ FIGURAS = (
     "aula03-distribuicao-receita.png",
     "aula03-contingencia-rotulo.png",
     "aula03-prevalencia-segmento.png",
+    # Didaticas: distribuicoes sinteticas com semente fixa, para ensinar o
+    # conceito antes de a turma ver o numero da Kovan.
+    "aula03-tendencia-central.png",
+    "aula03-dispersao.png",
+    "aula03-forma.png",
 )
 
 

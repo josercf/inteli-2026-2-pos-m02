@@ -95,6 +95,12 @@ def formato_das_abas() -> dict[str, tuple[int, int]]:
     return {nome: df.shape for nome, df in carregar().items()}
 
 
+def total_de_linhas() -> int:
+    """Soma das cinco abas. Sai daqui porque somar cinco números à mão errou
+    por 20 linhas na primeira montagem do deck."""
+    return sum(linhas for linhas, _ in formato_das_abas().values())
+
+
 def qualidade() -> dict[str, int | float]:
     d = carregar()
     painel, mix, engaj, cad = d["painel"], d["mix"], d["engajamento"], d["cadastro"]

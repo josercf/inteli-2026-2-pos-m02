@@ -120,9 +120,24 @@ seis pessoas por 26 semanas: dá para construir um modelo, não dois.
 
 ### O dataset
 
-`dados/kovan_painel_contas.csv`, gerado por `dados/gerar_painel_kovan.py`:
-1.187 contas por 14 trimestres, 16.618 registros, 20 colunas, conforme o
-Exhibit 3 do Caderno de Exhibits.
+**A partir da Aula 03, a base é `dados/datasets_case_modulo2.xlsx`**, o dataset
+oficial da Lenovo recebido em 21/08/2026: cinco abas, 8.282 contas, 24 meses de
+2024-04 a 2026-03, e 207.826 linhas de pedido. Ele **não é versionado**, porque
+é dado real de carteira LATAM e este repositório é público. A justificativa da
+troca está em `docs/adrs/ADR-005`, e a distribuição à turma acontece pelo
+repositório de clone `github.com/josercf/inteli-pos-2026-2a-eda`, que traz a
+estrutura e as skills sem o dado.
+
+A base oficial **tem** uma coluna `churn_label`, o que muda a pergunta do
+módulo. Ela é constante por conta e determinada pelo último mês de compra, com
+corte em 08/02/2025. O Caminho A deixa de ser construção de rótulo e passa a ser
+auditoria de um rótulo existente; o Caminho B segue em aberto.
+
+As Aulas 01 e 02 rodaram sobre `dados/kovan_painel_contas.csv`, gerado por
+`dados/gerar_painel_kovan.py`: 1.187 contas por 14 trimestres, 16.618 registros,
+20 colunas, conforme o Exhibit 3 do Caderno de Exhibits. O painel sintético
+permanece no repositório como registro dessas duas aulas, sem ser reapresentado
+(`docs/adrs/ADR-001`).
 
 O painel é sintético, com os números do case travados por teste, e traz de
 propósito as quatro advertências de qualidade do exhibit. A justificativa
@@ -140,7 +155,7 @@ conteúdo, não lacuna: a decisão de alvo é o case.
 |---|---|---|---|
 | S1 | EDA: da coleta à pergunta de negócio | O painel não tem rótulo | Caderno de hipóteses com veredito |
 | S2 | Preparação e limpeza (nulos, outliers) | As quatro advertências do Exhibit 3 | Base tratada e o custo de cada decisão |
-| S3 | Análise univariada e bivariada | O limiar do rótulo é escolha, não fato | Tabela de contingência das hipóteses |
+| S3 | Análise univariada e bivariada | O critério do `churn_label` não está documentado | Quatro seções do Artefato 1 |
 | S4 | Visualização de dados | Talvera e Andirá caíram igual e terminaram diferente | Figuras do Artefato 1 |
 | S5 | Consolidação | O Comitê de 3 de março | Recomendação de alvo |
 | S6m | Feature engineering | A suspeita não testada de Otávio Rangel | Matriz de features com corte temporal |
@@ -153,9 +168,12 @@ conteúdo, não lacuna: a decisão de alvo é o case.
 
 ## 7. Ferramentas
 
-- **Google Colab com IA integrada**, para todas as práticas. A turma não escreve
-  Python do zero: escreve prompts, lê o código gerado e roda. A decisão está em
-  `docs/adrs/ADR-002`.
+- **Antigravity**, para todas as práticas a partir da Aula 03, sobre a pasta
+  clonada do repositório da turma. A turma não escreve Python do zero: escreve
+  prompts, lê o código gerado e roda. O entregável é a pasta que sobra. A
+  decisão está em `docs/adrs/ADR-006`, que emenda a ADR-003 e a ADR-002.
+- **Google Colab com IA integrada** permanece como ambiente de execução de
+  código descrito na `docs/adrs/ADR-002`, usado nas Aulas 01 e 02.
 - **Streamlit** para o protótipo da UC2, com o Colab como ambiente de treino.
 - O ambiente institucional da turma é Microsoft, e cada tarde reserva uma faixa
   curta para mostrar como o mesmo passo se faria em Copilot no trabalho deles.

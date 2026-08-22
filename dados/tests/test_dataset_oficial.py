@@ -47,6 +47,10 @@ def test_formato_das_abas(analise):
     }
 
 
+def test_total_de_linhas_das_cinco_abas(analise):
+    assert analise.total_de_linhas() == 341075
+
+
 def test_grao_do_painel(analise):
     q = analise.qualidade()
     assert q["contas"] == 8282

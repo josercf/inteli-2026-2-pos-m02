@@ -117,7 +117,7 @@ SLIDES.append(secao(
 # 5. As cinco abas
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "As cinco abas somam 341.055 linhas em quatro grãos diferentes",
+    "As cinco abas somam 341.075 linhas em quatro grãos diferentes",
     '        <div class="embed-tabela">\n'
     "          <table>\n"
     "            <thead><tr><th>Aba</th><th>Linhas</th><th>Colunas</th><th>Grão</th><th>Contas</th></tr></thead>\n"
@@ -271,7 +271,7 @@ SLIDES.append(figura(
     "O 1% de contas do topo concentra 65,1% da receita da carteira",
     "aula03-distribuicao-receita.png",
     "Histograma da receita acumulada por conta em escala logarítmica, com mediana em 18.552 dólares e média em 437.588 dólares",
-    conclusao="Os 5% do topo somam 84,4% da receita, e os 10% somam 90,6%.",
+    conclusao="Os 5% do topo somam 84,4% da receita e os 10% somam 90,6%, com a média 24 vezes acima da mediana.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -373,7 +373,7 @@ SLIDES.append(figura(
     "Small market concentra 26,7% da receita com a segunda menor prevalência de churn",
     "aula03-prevalencia-segmento.png",
     "Barras horizontais comparando prevalência de churn e participação na receita por segmento",
-    conclusao="Ordenar a fila por prevalência coloca mid market na frente; ordenar por receita em risco coloca small market.",
+    conclusao="Prevalência e receita em risco produzem topos diferentes para a mesma fila.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -448,7 +448,7 @@ SLIDES.append(conteudo(
     "        </div>\n",
     sobrelinha="Vazamento de informação",
     contexto="Separação perfeita entre os dois grupos é sinal de vazamento antes de ser sinal de achado. Um modelo treinado com uma variável assim funciona no teste e falha em produção.",
-    conclusao="A fronteira de 17 meses descreve como o rótulo foi construído, e não o comportamento das contas.",
+    conclusao="A fronteira de 17 meses é uma consequência da regra de rotulagem, medida sobre a janela do painel.",
     fonte="Fonte: Dataset 1 e Dataset 4. Travado em dados/tests/test_dataset_oficial.py.",
 ))
 

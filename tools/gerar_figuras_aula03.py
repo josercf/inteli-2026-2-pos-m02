@@ -90,7 +90,7 @@ def distribuicao_receita() -> Path:
     medidas = an.receita_univariada()
 
     fig = _figura(400)
-    ax = fig.add_axes([0.075, 0.28, 0.895, 0.52])
+    ax = fig.add_axes([0.075, 0.28, 0.895, 0.60])
     _estilo_eixo(ax)
 
     ax.hist(np.log10(r), bins=60, color=CINZA_MEDIO, edgecolor=BRANCO, linewidth=0.6)
@@ -110,8 +110,6 @@ def distribuicao_receita() -> Path:
     ax.set_xlabel("receita acumulada da conta nos 24 meses, em dólares, escala logarítmica",
                   fontsize=15)
     ax.set_ylabel("contas", fontsize=15)
-    ax.set_title("A média da receita fica 24 vezes acima da mediana",
-                 fontsize=19, color=ROXO, loc="left", pad=14)
     ax.text(0.0, -0.34,
             f"8.282 contas. Assimetria {_fmt(medidas['assimetria'])}, "
             f"curtose {_fmt(medidas['curtose'], 0)}. O 1% do topo concentra "
@@ -155,8 +153,8 @@ def contingencia_rotulo() -> Path:
     ax.set_ylabel("contas", fontsize=15)
     ax.set_xlabel("último mês com receita registrada", fontsize=15, labelpad=8)
     ax.legend(fontsize=15, frameon=False, loc="upper left")
-    ax.set_title("O rótulo separa as contas pelo último mês de compra",
-                 fontsize=19, color=ROXO, loc="left", pad=14)
+    ax.set_title("Contas por último mês com receita",
+                 fontsize=17, color=CINZA_ESCURO, loc="left", pad=12)
     return salvar(fig, "aula03-contingencia-rotulo.png")
 
 
@@ -197,8 +195,8 @@ def prevalencia_por_segmento() -> Path:
     ax.set_xlabel("por cento", fontsize=15)
     ax.legend(fontsize=15, frameon=False, loc="lower left",
               bbox_to_anchor=(0, 1.02), ncol=2, columnspacing=2.4)
-    ax.set_title("O setor público reúne 31,2% de churn e 21,9% da receita",
-                 fontsize=19, color=ROXO, loc="left", pad=46)
+    ax.set_title("Prevalência de churn e participação na receita, por segmento",
+                 fontsize=17, color=CINZA_ESCURO, loc="left", pad=44)
     ax.text(0.0, -0.32,
             "8.282 contas, das quais 1.593 rotuladas como perdidas. Prevalência medida no grão da conta.",
             transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO)

@@ -186,24 +186,128 @@ ausência, que é onde a espiral da Aula 01 aterrissa.
 
 ---
 
-## S3, 22/08/2026: O limiar é escolha, não fato
+## S3, 22/08/2026: O corte que define o rótulo
 
 **Ementa:** UC1, Aula 3. Fundamentos de análise univariada e bivariada.
 
-**Espiral:** a Aula 02 deixou pronta a base tratada e a contagem de rupturas
-estável entre as mesas.
+**Horário:** 13h00 às 16h00, combinado com a turma, com folga até 16h30. O
+intervalo de 20 minutos é preservado.
 
-**Conteúdo:** distribuição de receita e cauda da carteira; prevalência de
-ruptura; construção do rótulo de erosão em três cortes de limiar e o efeito de
-cada corte no tamanho da fila e na captura de rupturas. Bivariada como a
-ferramenta que mostra que o limiar constrói modelos diferentes.
+**Espiral:** a Aula 02 deixou pronta a `skill-limpeza-kovan.md` de cada grupo,
+escrita para o painel sintético. O dataset oficial da Lenovo chegou em 21/08 e
+substitui esse painel (ADR-005). O primeiro ato da aula é executar a skill do
+grupo contra uma base que ela nunca viu.
 
-**Atividade PBL:** cada grupo constrói o rótulo nos cortes de 10%, 15% e 25%,
-mede quantas rupturas cada corte captura, e depois cruza a ordem em que receita,
-mix e cadência se deterioram contra o desfecho do episódio.
+**Conteúdo:** distribuição de receita e a cauda da carteira; prevalência de
+churn por segmento e por setor; tabela de contingência como forma bivariada para
+alvo binário; a engenharia reversa do critério que define o `churn_label`; e o
+teste de vazamento aplicado a variável que separa bem demais.
 
-**Entregável:** tabela de contingência que sustenta ou derruba as hipóteses do
-dia 1. É aqui que o achado central do módulo pode aparecer.
+**O achado do dia:** o `churn_label` é constante por conta e inteiramente
+determinado pelo último mês de compra. Contas que pararam até 2025-01 estão
+todas marcadas como perdidas, contas que compraram de 2025-03 em diante não
+estão, e fevereiro de 2025 é o único mês com contas dos dois lados. No grão do
+pedido a separação é perfeita: até 08/02/2025 marca, a partir de 10/02/2025 não
+marca. O rótulo é uma regra de recência de treze meses que a fonte não declarou.
+
+**Objetivos de aprendizagem:**
+1. Descrever uma variável pelo que sua distribuição responde, separando
+   tendência central, dispersão e forma.
+2. Ler uma tabela de contingência e dizer o que ela sustenta e o que não.
+3. Reconstruir, a partir do dado, o critério que define um rótulo entregue
+   pronto.
+4. Medir o efeito de um limiar alternativo sobre o tamanho da fila de
+   intervenção.
+
+**Contrato do dia, anunciado às 13h00 e cobrado até o fim:** toda seção do
+artefato entra com o número e a figura que a sustentam, produzidos por código
+que roda na pasta do grupo.
+
+**Ambiente:** Antigravity a tarde inteira, sobre a pasta clonada de
+`github.com/josercf/inteli-pos-2026-2a-eda` (ADR-006). O dataset chega pelo canal
+da turma e não é versionado. Sem plano B de ambiente declarado: a mitigação é o
+`analise_referencia.py` dentro da pasta.
+
+### Agenda em minutos
+
+| Horário | Bloco | Conteúdo |
+|---|---|---|
+| `13h00 - 13h15` | Resgate e contrato | A base oficial: cinco abas, 8.282 contas, 24 meses, e um `churn_label` que a anterior não tinha. Clone do repositório, dataset na pasta, Antigravity aberto. Contrato do dia |
+| `13h15 - 13h35` | Bloco 1 e Prática 1 | Onde a troca de base nos coloca no CRISP-DM. O checklist de cinco perguntas antes de perguntar. Prática: o agente lê a skill da Aula 02 e a executa contra a base nova. Colheita: quantos passos dela sobreviveram |
+| `13h35 - 13h55` | Bloco 2 e Prática 2 | Univariada: tendência central, dispersão, forma e cauda sobre `receita_usd`, com média de USD 437.588 contra mediana de USD 18.552 e assimetria de 44,5. Prática: a distribuição das variáveis do painel e a leitura de negócio do boxplot |
+| `13h55 - 14h20` | Bloco 3 e Prática 3 | Bivariada: prevalência por segmento contra participação na receita, com setor público em 31,2% e 21,9%. A contingência do último mês por rótulo. Prática: a engenharia reversa do corte, descendo ao grão do pedido |
+| `14h20 - 14h40` | Intervalo | |
+| `14h40 - 15h45` | Oficina do Artefato 1 | Quatro estações, uma por seção do checklist. Elástica até 16h15 se os grupos estiverem entregando |
+| `15h45 - 16h00` | Amarração | O que fica pronto, o que a Aula 04 pega, o que a manhã do Prof. Donaire recebe |
+
+### Verificações do encontro
+
+1. A receita média por conta é USD 437.588 e a mediana é USD 18.552. Qual das
+   duas vai para o Comitê, e por quê?
+2. Nenhuma das 4.494 contas com menos de 17 meses de casa aparece como perdida.
+   Qual a explicação mais provável?
+3. Duas mesas mediram prevalência de churn no mesmo segmento e chegaram a
+   números diferentes. O que checar primeiro?
+
+### Entregável
+
+Quatro das sete seções do Artefato 1 de Tecnologia, entregues como pasta
+reexecutável: carga, qualidade, univariada e bivariada. As três restantes
+(rótulo, visuais e limitações) vão para o autoestudo da semana, e o checklist
+marca essa divisão de forma explícita.
+
+O critério de aceite é a reexecução: outra pessoa clona a pasta do grupo, coloca
+o dataset em `dados/` e obtém os mesmos números do relatório.
+
+### Frameworks apresentados
+
+CRISP-DM (Chapman et al., 1999) como recap, situando a univariada e a bivariada
+dentro da fase de entendimento dos dados e mostrando que base nova devolve o
+trabalho à fase 2; estatística descritiva univariada com tendência central,
+dispersão e forma (assimetria e curtose); tabela de contingência e prevalência
+condicional como forma bivariada para alvo binário; vazamento de informação
+(Kaufman et al., ACM TKDD, 2012) como teste obrigatório de variável que separa
+bem demais; e o limite da correlação como evidência de causa. O checklist de
+cinco perguntas de perfilamento, o checklist de sete seções do Artefato 1 e as
+três skills de agente foram organizados para este módulo, sem seguir padrão
+publicado.
+
+### Artefatos
+
+- Repositório de clone: `github.com/josercf/inteli-pos-2026-2a-eda`, com
+  `AGENTS.md`, `skills/`, o checklist e o `analise_referencia.py`
+- Deck: `aulas/aula03.html`, com três figuras. Gerado por
+  `tools/montar_deck_aula03.py`, não editado à mão
+- Figuras: `tools/gerar_figuras_aula03.py`, desenhadas em 1168px e renderizadas
+  1:1 (distribuição de receita, contingência do rótulo, prevalência por segmento)
+- Números: `dados/analise_aula03.py`, travado por
+  `dados/tests/test_dataset_oficial.py`
+- Material de apoio: `materiais/aula03-material-de-apoio.html`
+- Material do aluno: `materiais/checklist-artefato-1-tecnologia.md`
+- Condução: `docs/notas-do-professor/aula03.md` (não distribuído)
+
+### Divergência registrada
+
+O planejamento original prescrevia, para a S3, construir o rótulo de erosão em
+cortes de 10%, 15% e 25% de queda de receita, medir quantas rupturas cada corte
+captura, e cruzar a ordem em que receita, mix e cadência se deterioram contra o
+desfecho do episódio. O entregável previsto era a tabela de contingência que
+sustenta ou derruba as hipóteses do dia 1.
+
+Duas mudanças o inviabilizaram. O painel sintético, onde os episódios de erosão
+foram construídos, foi substituído pela base oficial (ADR-005), que não tem
+coluna de mix comparável nem cadência trimestral alinhada ao painel de receita.
+E a base oficial entrega um `churn_label` pronto, o que muda a pergunta de "qual
+rótulo construir" para "que critério esse rótulo usa".
+
+O que foi mantido: a tabela de contingência como entregável, o exercício de
+limiar (agora sobre cortes de inatividade de 6, 9, 12 e 13 meses, com fila de
+5.128, 3.719, 2.716 e 1.975 contas) e a amarração com as hipóteses do dia 1.
+
+O que foi acrescentado: 65 minutos de oficina de construção do Artefato 1,
+combinados com o Prof. Rafael Donaire para as Aulas 03 e 04, e o título mudou de
+"O limiar é escolha, não fato", que é paralelismo negativo reprovado por
+`tools/check_retorica.py`.
 
 ---
 

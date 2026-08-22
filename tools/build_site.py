@@ -43,6 +43,12 @@ ARQUIVOS = [
     ("assets/img/aula02-inversao-segmentos.png", "assets/img/aula02-inversao-segmentos.png"),
     ("assets/img/aula02-quebra-taxonomia.png", "assets/img/aula02-quebra-taxonomia.png"),
     ("assets/img/aula02-mapa-ausencia.png", "assets/img/aula02-mapa-ausencia.png"),
+    ("aulas/aula03.html", "aulas/aula03.html"),
+    ("materiais/aula03-material-de-apoio.html", "materiais/aula03-material-de-apoio.html"),
+    ("materiais/checklist-artefato-1-tecnologia.md", "materiais/checklist-artefato-1-tecnologia.md"),
+    ("assets/img/aula03-distribuicao-receita.png", "assets/img/aula03-distribuicao-receita.png"),
+    ("assets/img/aula03-contingencia-rotulo.png", "assets/img/aula03-contingencia-rotulo.png"),
+    ("assets/img/aula03-prevalencia-segmento.png", "assets/img/aula03-prevalencia-segmento.png"),
     (
         "assets/img/aula02-gemini-pratica2-prompt.jpg",
         "assets/img/aula02-gemini-pratica2-prompt.jpg",

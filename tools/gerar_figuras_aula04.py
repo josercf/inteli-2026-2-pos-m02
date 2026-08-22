@@ -134,13 +134,14 @@ def prevalencia_elegiveis() -> Path:
     _barras_com_ic(ax, nomes, t.prevalencia.to_numpy(), t.ic_inferior.to_numpy(),
                    t.ic_superior.to_numpy(), CORAL, xlim=0.8)
     p = an.populacoes()["elegiveis"]
+    n_estrategicas = int(t.loc["STRATEGIC ACCOUNT", "contas"])
     ax.axvline(p["prevalencia"], color=ROXO, linestyle="--", linewidth=1.6)
     ax.text(p["prevalencia"] + 0.01, -0.75, f"carteira elegível {_pct(p['prevalencia'])}",
-            fontsize=13, color=ROXO)
-    ax.set_title("Prevalência de churn por segmento, nas 3.748 contas elegíveis",
+            fontsize=14, color=ROXO)
+    ax.set_title(f"Prevalência de churn por segmento, nas {_fmt(p['contas'], 0)} contas elegíveis",
                  fontsize=17, color=CINZA_ESCURO, loc="left", pad=30)
     ax.text(0.0, -0.26, f"IC de 95% (Wilson). Qui-quadrado {_fmt(qui2)}, {gl} graus de liberdade. "
-            "Estratégicas: 71 contas.",
+            f"Estratégicas: {_fmt(n_estrategicas, 0)} contas.",
             transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO)
     return salvar(fig, "aula04-prevalencia-elegiveis.png")
 
@@ -181,11 +182,16 @@ def marcas_por_dias() -> Path:
 # Real 3: o par da PBL, série mensal lado a lado
 # ---------------------------------------------------------------------------
 
+def _plural(n: int, singular: str, plural: str) -> str:
+    return singular if n == 1 else plural
+
+
 def par_pbl() -> Path:
     p = an.par_da_pbl()
     s = p["series"] / 1000
     meses = list(s.index)
     rotulos = [f"{MESES_CURTOS[m[5:]]}/{m[2:4]}" for m in meses]
+    rotulos_mostrados = [r if i % 2 == 0 else "" for i, r in enumerate(rotulos)]
     fig = _figura(440)
     ax = fig.add_axes([0.09, 0.2, 0.88, 0.52])
     _estilo_eixo(ax)
@@ -194,14 +200,18 @@ def par_pbl() -> Path:
     ax.bar(x + 0.2, s.conta_b, width=0.4, color=CORAL, label="Conta B, marcada como perdida")
     corte = meses.index("2025-02")
     ax.axvline(corte + 0.5, color=ROXO, linestyle="--", linewidth=1.6)
-    ax.text(corte + 0.7, ax.get_ylim()[1] * 0.9, "corte do rótulo", fontsize=13, color=ROXO)
-    ax.set_xticks(x); ax.set_xticklabels(rotulos, fontsize=12, rotation=45, ha="right")
+    ax.text(corte + 0.7, ax.get_ylim()[1] * 0.9, "corte do rótulo", fontsize=14, color=ROXO)
+    ax.set_xticks(x); ax.set_xticklabels(rotulos_mostrados, fontsize=14, rotation=45, ha="right")
     ax.set_ylabel("receita mensal, USD mil", fontsize=14)
     ax.legend(fontsize=15, frameon=False, loc="lower left", bbox_to_anchor=(0, 1.03), ncol=2)
     ax.set_title("Duas contas caíram mais de 90%, mas só a conta B foi marcada como perdida",
                  fontsize=17, color=CINZA_ESCURO, loc="left", pad=34)
-    ax.text(0.0, -0.34, "GLOBAL ACCOUNT, Brasil. Conta A: 3 marcas, 22 dias de compra. "
-            "Conta B: 1 marca, 28 dias.",
+    a, b = p["conta_a"], p["conta_b"]
+    marcas_a, dias_a = int(a["marcas"]), int(a["dias_de_compra"])
+    marcas_b, dias_b = int(b["marcas"]), int(b["dias_de_compra"])
+    ax.text(0.0, -0.34, f"GLOBAL ACCOUNT, Brasil. Conta A: {marcas_a} "
+            f"{_plural(marcas_a, 'marca', 'marcas')}, {dias_a} dias de compra. "
+            f"Conta B: {marcas_b} {_plural(marcas_b, 'marca', 'marcas')}, {dias_b} dias.",
             transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO)
     return salvar(fig, "aula04-par-pbl.png")
 
@@ -221,13 +231,17 @@ def fila_por_segmento() -> Path:
     ax.barh(y, f.to_numpy(), height=0.55, color=cores)
     for yi, v in enumerate(f):
         ax.text(v + 8, yi, _fmt(v, 0), fontsize=15, color=ROXO, va="center", weight="bold")
+    n_acima = int((f > an.CAPACIDADE_OPERACIONAL).sum())
+    n_total = len(f)
     ax.axvline(an.CAPACIDADE_OPERACIONAL, color=ROXO, linestyle="--", linewidth=1.8)
-    ax.text(an.CAPACIDADE_OPERACIONAL + 8, len(nomes) - 0.4, "capacidade: 138 planos por trimestre",
-            fontsize=13, color=ROXO)
+    ax.text(an.CAPACIDADE_OPERACIONAL + 8, len(nomes) - 0.4,
+            f"capacidade: {an.CAPACIDADE_OPERACIONAL} planos por trimestre",
+            fontsize=14, color=ROXO)
     ax.set_yticks(y); ax.set_yticklabels(nomes, fontsize=16); ax.invert_yaxis()
     ax.set_xlim(0, 800)
     ax.set_xlabel("contas marcadas como perdidas, entre as elegíveis", fontsize=14)
-    ax.set_title("Cinco dos seis segmentos ultrapassam sozinhos a capacidade de 138 planos",
+    ax.set_title(f"{n_acima} dos {n_total} segmentos ultrapassam sozinhos a capacidade de "
+                 f"{an.CAPACIDADE_OPERACIONAL} planos",
                  fontsize=17, color=CINZA_ESCURO, loc="left", pad=14)
     return salvar(fig, "aula04-fila-por-segmento.png")
 

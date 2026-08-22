@@ -540,6 +540,19 @@
 .tabela-criterios.compacta td:nth-child(2),
 .tabela-criterios.compacta th:nth-child(2) { width: auto; }
 
+/* Tabela com varias colunas numericas. As larguras de 210px e 340px pinam as
+   duas primeiras colunas e espremem as demais: numa tabela de cinco colunas a
+   coluna "Contas" ganhava 340px e o cabecalho da ultima quebrava em duas
+   linhas. Aqui so o rotulo fica pinado e o resto divide o espaco em partes
+   iguais. */
+.tabela-criterios.numerica td,
+.tabela-criterios.numerica th { width: auto; }
+
+/* Coluna numerica alinhada a direita le mais rapido: a unidade fica na mesma
+   vertical e a comparacao entre linhas vira comprimento. */
+.tabela-criterios.numerica td:not(:first-child),
+.tabela-criterios.numerica th:not(:first-child) { text-align: right; }
+
 /* Comparacao de dois objetos lado a lado. As larguras fixas acima foram
    medidas para a tabela de duas colunas da Aula 01; com tres colunas elas
    davam 210, 340 e o resto, e as duas colunas comparadas saiam com tamanhos

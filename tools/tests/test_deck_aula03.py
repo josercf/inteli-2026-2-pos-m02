@@ -110,11 +110,26 @@ def test_titulo_de_quiz_nao_entrega_o_gabarito(html):
         assert not texto.endswith("."), texto
 
 
-def test_todo_slide_de_conteudo_fecha_com_implicacao(html):
+def test_todo_slide_que_mede_fecha_com_implicacao(html):
+    """Slide analítico declara o "e daí"; slide de referência, não.
+
+    Um slide cujo corpo é só uma tabela de especificação (entregáveis,
+    checklist) não tem achado a declarar, e a faixa vira frase de efeito. A
+    exceção é fechada: o corpo precisa ser uma tabela e nada mais.
+    """
     blocos = re.findall(r'<section class="content-slide".*?</section>', html, re.S)
     assert blocos
+    sem_faixa = []
     for bloco in blocos:
-        assert 'class="fecho"' in bloco, bloco[:200]
+        if 'class="fecho"' in bloco:
+            continue
+        corpo = re.search(r"</h2>(.*?)<div class=\"slide-footer", bloco, re.S)
+        assert corpo, bloco[:200]
+        texto = corpo.group(1)
+        assert "<table" in texto, bloco[:200]
+        assert "<p" not in texto.replace('<p class="linha-contexto"', ""), bloco[:200]
+        sem_faixa.append(bloco)
+    assert len(sem_faixa) <= 2, len(sem_faixa)
 
 
 # ---------------------------------------------------------------------------

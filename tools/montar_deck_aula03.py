@@ -83,7 +83,7 @@ SLIDES.append(conteudo(
 # 3. Contrato do dia
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A oficina de hoje fecha quatro das sete seções do Artefato 1",
+    "Contrato e escopo da tarde",
     '        <div class="concept-cards quatro">\n'
     '          <div class="concept-card"><h3>Contrato do dia</h3>'
     "<p>Toda seção do artefato entra com o número e a figura que a sustentam, "
@@ -107,7 +107,7 @@ SLIDES.append(conteudo(
 # as mesmas quatro dimensoes, e a tabela obriga a declarar o criterio de
 # comparacao em vez de justapor dois blocos de texto que nem alinham entre si.
 SLIDES.append(conteudo(
-    "A Trilha de Tecnologia entrega dois artefatos avaliados",
+    "Artefatos avaliados da Trilha de Tecnologia",
     '        <table class="tabela-criterios pares">\n'
     "            <thead><tr><th></th>"
     "<th>Artefato 1 &middot; Análise Exploratória de Dados</th>"
@@ -126,19 +126,18 @@ SLIDES.append(conteudo(
     "<td>binário, entregou ou não entregou, com o foco no feedback</td>"
     "<td>rubrica, defendido em banca no papel do Comitê de Receita</td></tr>\n"
     "              <tr><td>Alimenta</td>"
-    "<td>o Customer Segmentation Report da manhã</td>"
-    "<td>o Plano de Inteligência de Retenção da manhã</td></tr>\n"
+    "<td>o Customer Segmentation Analysis Report, da Trilha de Negócios</td>"
+    "<td>o Plano de Inteligência de Retenção, da Trilha de Negócios</td></tr>\n"
     "            </tbody>\n"
     "        </table>\n",
     sobrelinha="O destino da trilha",
-    conclusao="A oficina de hoje começa a pasta do Artefato 1, e o critério de aceite é a reexecução.",
 ))
 
 # ---------------------------------------------------------------------------
 # 5. O checklist do Artefato 1
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "O Artefato 1 tem sete seções, e hoje fecham quatro",
+    "Checklist do Artefato 1",
     '        <table class="tabela-criterios compacta">\n'
     "            <thead><tr><th>Seção</th><th>O que precisa ter</th></tr></thead>\n"
     "            <tbody>\n"
@@ -147,12 +146,12 @@ SLIDES.append(conteudo(
     "              <tr><td>03. Univariada</td><td>centro, dispersão e forma, com a leitura de cada figura</td></tr>\n"
     "              <tr><td>04. Bivariada</td><td>contingência com o tamanho da base em cada célula</td></tr>\n"
     "              <tr><td>05. Rótulo</td><td>o critério recuperado e três cortes alternativos</td></tr>\n"
-    "              <tr><td>06. Visuais</td><td>as figuras que a segmentação da manhã pede</td></tr>\n"
+    "              <tr><td>06. Visuais</td><td>as figuras que o Customer Segmentation Analysis Report pede</td></tr>\n"
     "              <tr><td>07. Limitações</td><td>o que esta base não permite responder</td></tr>\n"
     "            </tbody>\n"
     "        </table>\n",
     sobrelinha="Análise Exploratória de Dados &middot; entrega 05/09/2026",
-    conclusao="As quatro primeiras fecham nesta tarde, e a 06 alimenta o checklist da manhã.",
+    conclusao="As quatro primeiras fecham nesta tarde, e a 06 alimenta o relatório da Trilha de Negócios.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -173,18 +172,17 @@ SLIDES.append(secao(
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
     "As cinco abas somam 341.075 linhas em quatro grãos diferentes",
-    '        <div class="embed-tabela">\n'
-    "          <table>\n"
-    "            <thead><tr><th>Aba</th><th>Linhas</th><th>Colunas</th><th>Grão</th><th>Contas</th></tr></thead>\n"
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "            <thead><tr><th>Aba</th><th>Uma linha representa</th><th>Linhas</th>"
+    "<th>Colunas</th><th>Contas distintas</th></tr></thead>\n"
     "            <tbody>\n"
-    "              <tr><td>Dataset 1</td><td>24.071</td><td>7</td><td>conta e mês</td><td>8.282</td></tr>\n"
-    "              <tr><td>Dataset 2</td><td>19.948</td><td>4</td><td>conta e marca</td><td>8.282</td></tr>\n"
-    "              <tr><td>Dataset 3</td><td>80.848</td><td>6</td><td>conta e trimestre</td><td>47.185</td></tr>\n"
-    "              <tr><td>Dataset 4</td><td>8.382</td><td>6</td><td>conta</td><td>8.282</td></tr>\n"
-    "              <tr><td>raw data</td><td>207.826</td><td>18</td><td>linha de pedido</td><td>8.282</td></tr>\n"
+    "              <tr><td>Dataset 1</td><td>uma conta em um mês</td><td>24.071</td><td>7</td><td>8.282</td></tr>\n"
+    "              <tr><td>Dataset 2</td><td>uma conta em uma marca</td><td>19.948</td><td>4</td><td>8.282</td></tr>\n"
+    "              <tr><td>Dataset 3</td><td>uma conta em um trimestre</td><td>80.848</td><td>6</td><td>47.185</td></tr>\n"
+    "              <tr><td>Dataset 4</td><td>uma conta no cadastro</td><td>8.382</td><td>6</td><td>8.282</td></tr>\n"
+    "              <tr><td>raw data</td><td>uma linha de pedido</td><td>207.826</td><td>18</td><td>8.282</td></tr>\n"
     "            </tbody>\n"
-    "          </table>\n"
-    "        </div>\n",
+    "        </table>\n",
     contexto="O painel de receita é mensal. O engajamento comercial é trimestral e cobre 47.185 contas, quase seis vezes o número de contas do painel.",
     conclusao="Duas abas com número de contas diferente não cruzam sozinhas, e a decisão de como cruzá-las é do grupo.",
     fonte="Fonte: datasets_case_modulo2.xlsx.",
@@ -193,25 +191,32 @@ SLIDES.append(conteudo(
 # ---------------------------------------------------------------------------
 # 6. As advertencias desta base
 # ---------------------------------------------------------------------------
+# Nomeadas pela dimensao de qualidade que cada uma viola, e nao como quatro
+# blocos de prosa: a dimensao e o vocabulario que a turma leva para o trabalho,
+# e ela e o que torna a advertencia auditavel por outra pessoa.
 SLIDES.append(conteudo(
-    "Quatro advertências de qualidade substituem as do painel sintético",
-    '        <div class="concept-cards quatro">\n'
-    '          <div class="concept-card"><h3>A chave quase não cruza</h3>'
-    "<p>Das 47.185 contas com engajamento comercial, 44.140 não existem no painel. "
-    "Só 3.045 das 8.282 contas do painel têm engajamento, ou 36,8%.</p></div>\n"
-    '          <div class="concept-card"><h3>O grão temporal difere</h3>'
-    "<p>O painel tem 24 períodos mensais no formato 2024-04. O engajamento tem 14 "
-    "períodos trimestrais no formato 2023-2, e começa antes do painel.</p></div>\n"
-    '          <div class="concept-card"><h3>O cadastro repete conta</h3>'
-    "<p>100 identificadores aparecem mais de uma vez, com setor e país divergentes "
-    "na mesma conta.</p></div>\n"
-    '          <div class="concept-card"><h3>Valores fora do domínio</h3>'
-    "<p>25 linhas de receita negativa, 143 zeradas, e 53 participações de marca "
-    "ausentes, algumas negativas e algumas somando acima de 1.</p></div>\n"
-    "        </div>\n",
-    conclusao="Nenhuma dessas quatro estava na base da Aula 02, e cada uma exige uma decisão de tratamento escrita.",
+    "Quatro dimensões de qualidade de dado estão violadas na base oficial",
+    '        <table class="tabela-criterios compacta">\n'
+    "            <thead><tr><th>Dimensão</th><th>O que foi observado</th>"
+    "<th>Medida</th></tr></thead>\n"
+    "            <tbody>\n"
+    "              <tr><td>Integridade referencial</td>"
+    "<td>contas de engajamento comercial que não existem no painel</td>"
+    "<td>44.140 de 47.185</td></tr>\n"
+    "              <tr><td>Consistência temporal</td>"
+    "<td>painel mensal contra engajamento trimestral, com janelas diferentes</td>"
+    "<td>24 contra 14 períodos</td></tr>\n"
+    "              <tr><td>Unicidade</td>"
+    "<td>identificadores repetidos no cadastro, com setor e país divergentes</td>"
+    "<td>100 contas</td></tr>\n"
+    "              <tr><td>Validade</td>"
+    "<td>receita negativa e zerada, participação de marca ausente e acima de 1</td>"
+    "<td>25, 143 e 53 linhas</td></tr>\n"
+    "            </tbody>\n"
+    "        </table>\n",
+    contexto="Só 3.045 das 8.282 contas do painel têm engajamento, ou 36,8%, então uma junção sem tratamento descarta 63,2% da carteira sem aviso.",
+    conclusao="Cada dimensão violada exige uma decisão de tratamento registrada, com o custo medido no indicador que ela altera.",
     fonte="Fonte: datasets_case_modulo2.xlsx. Contagens travadas em dados/tests/test_dataset_oficial.py.",
-    por_passos=True,
 ))
 
 # ---------------------------------------------------------------------------
@@ -260,7 +265,7 @@ SLIDES.append(conteudo(
 ))
 
 # ---------------------------------------------------------------------------
-# 9. Pratica 1
+# 9. Pratica 1, enquadramento
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
     1,
@@ -268,33 +273,52 @@ SLIDES.append(pratica(
     20,
     "Em grupo, na pasta clonada",
     "O arquivo perfil.md, com as advertências ordenadas",
-    "Cada mesa diz quantas das quatro advertências o agente achou sozinho",
+    "Cada mesa diz quantas das quatro dimensões o agente achou sozinho",
     [
-        {"acao": "Clone o repositório da turma.",
-         "prompt": "git clone https://github.com/josercf/inteli-pos-2026-2a-eda.git"},
-        {"acao": "Baixe o dataset e salve como .xlsx dentro de dados/, na pasta clonada.",
-         "detalhe": "Arquivo > Fazer download > Microsoft Excel, e salve como dados/datasets_case_modulo2.xlsx.",
-         "prompt": "docs.google.com/spreadsheets/d/1wX8BgKz4Wq0A3cWBZLC3PxYcqmCzBOSe"},
-        {"acao": "Abra a pasta no Antigravity e peça ao agente que resuma as regras da sessão.",
-         "detalhe": "Se ele não citar a proibição de preencher lacuna, não leu o AGENTS.md."},
-        {"acao": "Peça o perfilamento pelo caminho do arquivo, e confira qual advertência passou.",
-         "prompt": "Execute skills/perfilamento.md sobre as cinco abas de dados/datasets_case_modulo2.xlsx."},
+        {"acao": "Objetivo: descrever o que chegou, sem tratar nada ainda.",
+         "detalhe": "Perfilamento não limpa a base. Ele produz o diagnóstico que decide o que limpar depois."},
+        {"acao": "Resultado esperado: o perfil.md em disco, com as advertências ordenadas.",
+         "detalhe": "Arquivo, e não resposta no chat: o que sobra ao fechar a sessão é o que entra no artefato."},
+        {"acao": "São quatro passos, nos dois slides seguintes, e cada um é um pedido separado.",
+         "detalhe": "Os dois primeiros preparam a pasta; os dois últimos são o trabalho com o agente."},
     ],
     "A mesa tem o perfil.md em disco, com as advertências ordenadas",
     ambiente=AMBIENTE,
 ))
 
 # ---------------------------------------------------------------------------
-# 10. Divisor: univariada
+# 10. Pratica 1, passos 1 e 2: a pasta
 # ---------------------------------------------------------------------------
-SLIDES.append(secao(
-    "02", "Análise univariada",
-    "Uma variável por vez, antes de comparar grupo nenhum",
-    condicoes=[
-        "Declarar o grão em que a variável está sendo medida",
-        "Separar tendência central, dispersão e forma",
-        "Escrever, abaixo de cada figura, o que ela não permite concluir",
+SLIDES.append(pratica(
+    1, "Passos 1 e 2, preparar a pasta", 20, "", "", "",
+    [
+        {"acao": "Clone o repositório da turma.",
+         "prompt": "git clone https://github.com/josercf/inteli-pos-2026-2a-eda.git"},
+        {"acao": "Baixe a planilha e salve como .xlsx dentro de dados/, na pasta clonada.",
+         "detalhe": "Arquivo > Fazer download > Microsoft Excel, e salve como dados/datasets_case_modulo2.xlsx.",
+         "prompt": "docs.google.com/spreadsheets/d/1wX8BgKz4Wq0A3cWBZLC3PxYcqmCzBOSe"},
     ],
+    "A pasta tem o xlsx em dados/ e o AGENTS.md na raiz",
+    ambiente=AMBIENTE, trilho=False,
+    sobrelinha="Prática 1 &middot; um pedido por vez, com conferência entre eles",
+))
+
+# ---------------------------------------------------------------------------
+# 10b. Pratica 1, passos 3 e 4: o agente
+# ---------------------------------------------------------------------------
+SLIDES.append(pratica(
+    1, "Passos 3 e 4, o agente e o perfilamento", 20, "", "", "",
+    [
+        {"acao": "Abra a pasta no Antigravity e peça que ele resuma as regras da sessão.",
+         "prompt": "Resuma as regras que você carregou do AGENTS.md desta pasta.",
+         "detalhe": "Confira: se ele não citar a proibição de preencher lacuna, não leu o arquivo."},
+        {"acao": "Peça o perfilamento pelo caminho da skill, sem colar instrução na conversa.",
+         "prompt": "Execute skills/perfilamento.md sobre as cinco abas de dados/datasets_case_modulo2.xlsx.",
+         "detalhe": "Confira: quantas das quatro dimensões ele achou sozinho, e qual passou?"},
+    ],
+    "O perfil.md existe em disco e nomeia a dimensão violada em cada advertência",
+    ambiente=AMBIENTE, trilho=False,
+    sobrelinha="Prática 1 &middot; um pedido por vez, com conferência entre eles",
 ))
 
 # ---------------------------------------------------------------------------
@@ -526,24 +550,23 @@ SLIDES.append(conteudo(
 # 16. Tabela de contingencia
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A prevalência de churn na carteira é 19,2%, e ela varia de 13,0% a 31,2% entre segmentos",
-    '        <div class="embed-tabela">\n'
-    "          <table>\n"
+    "A prevalência varia de 13,0% a 31,2% entre os seis segmentos",
+    '        <table class="tabela-criterios compacta numerica">\n'
     "            <thead><tr><th>Segmento</th><th>Contas</th><th>Perdidas</th>"
-    "<th>Prevalência</th><th>Participação na receita</th></tr></thead>\n"
+    "<th>Prevalência</th><th>Receita</th></tr></thead>\n"
     "            <tbody>\n"
-    "              <tr><td>Setor público</td><td>837</td><td>261</td><td>31,2%</td><td>21,9%</td></tr>\n"
+    '              <tr class="decisiva"><td>Setor público</td><td>837</td><td>261</td>'
+    '<td class="vence">31,2%</td><td>21,9%</td></tr>\n'
     "              <tr><td>Mid market</td><td>3.134</td><td>716</td><td>22,8%</td><td>10,3%</td></tr>\n"
     "              <tr><td>Estratégicas</td><td>117</td><td>18</td><td>15,4%</td><td>6,3%</td></tr>\n"
     "              <tr><td>Grandes contas</td><td>1.711</td><td>263</td><td>15,4%</td><td>21,9%</td></tr>\n"
-    "              <tr><td>Small market</td><td>1.234</td><td>173</td><td>14,0%</td><td>26,7%</td></tr>\n"
+    '              <tr><td>Small market</td><td>1.234</td><td>173</td><td>14,0%</td>'
+    '<td class="vence">26,7%</td></tr>\n'
     "              <tr><td>Contas globais</td><td>1.249</td><td>162</td><td>13,0%</td><td>12,9%</td></tr>\n"
     "            </tbody>\n"
-    "          </table>\n"
-    "        </div>\n",
-    contexto="Prevalência é a proporção de contas rotuladas como perdidas dentro da categoria. Sem o tamanho da base ao lado, ela engana: 100% de churn em três contas não é achado.",
-    conclusao="O setor público reúne a maior prevalência e a segunda maior participação na receita, então ele é o único segmento em que as duas leituras apontam para a mesma prioridade.",
-    fonte="Fonte: Dataset 1 e Dataset 4, 8.282 contas. Travado em dados/tests/test_dataset_oficial.py.",
+    "        </table>\n",
+    contexto="Prevalência sem o tamanho da base engana: 100% em três contas não é achado.",
+    conclusao="O setor público é o único segmento em que risco e valor apontam para a mesma prioridade.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -593,21 +616,20 @@ SLIDES.append(conteudo(
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
     "Afrouxar o corte de 13 para 6 meses multiplica a fila de intervenção por 2,6",
-    '        <div class="embed-tabela">\n'
-    "          <table>\n"
+    '        <table class="tabela-criterios">\n'
     "            <thead><tr><th>Corte de inatividade</th><th>Contas na fila</th>"
-    "<th>Captura do rótulo oficial</th><th>Leitura operacional</th></tr></thead>\n"
+    "<th>Captura do rótulo</th><th>Leitura operacional</th></tr></thead>\n"
     "            <tbody>\n"
-    "              <tr><td>6 meses</td><td>5.128</td><td>100%</td><td>Antecipa muito e satura a operação</td></tr>\n"
-    "              <tr><td>9 meses</td><td>3.719</td><td>100%</td><td>Fila ainda acima da capacidade</td></tr>\n"
-    "              <tr><td>12 meses</td><td>2.716</td><td>100%</td><td>Chega perto do rótulo oficial</td></tr>\n"
-    "              <tr><td>13 meses</td><td>1.975</td><td>100%</td><td>É o corte que a base usa</td></tr>\n"
+    "              <tr><td>6 meses</td><td>5.128</td><td>100%</td><td>antecipa muito e satura a operação</td></tr>\n"
+    "              <tr><td>9 meses</td><td>3.719</td><td>100%</td><td>fila ainda acima da capacidade</td></tr>\n"
+    "              <tr><td>12 meses</td><td>2.716</td><td>100%</td><td>chega perto do rótulo oficial</td></tr>\n"
+    '              <tr class="decisiva"><td>13 meses</td><td>1.975</td><td>100%</td>'
+    "<td>é o corte que a base usa</td></tr>\n"
     "            </tbody>\n"
-    "          </table>\n"
-    "        </div>\n",
-    contexto="Todos os cortes capturam 100% das contas que o rótulo oficial marca, porque o rótulo oficial é o mais restritivo dos quatro.",
-    conclusao="O corte de 13 meses marca a conta treze meses depois da última compra, quando não sobra intervenção comercial a fazer.",
-    fonte="Fonte: Dataset 1, recência contada a partir de 2026-03. Travado em dados/tests/test_dataset_oficial.py.",
+    "        </table>\n",
+    contexto="Todos capturam 100% do rótulo oficial, porque ele é o mais restritivo dos quatro.",
+    conclusao="O corte de 13 meses marca a conta quando não sobra intervenção comercial a fazer.",
+    fonte="Fonte: Dataset 1, recência contada a partir de 2026-03.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -793,14 +815,14 @@ SLIDES.append(pratica(
 # 27. Amarracao
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A base tratada de hoje sustenta as figuras da Aula 04 e a segmentação da manhã",
+    "A base tratada de hoje sustenta as figuras da Aula 04 e a segmentação da Trilha de Negócios",
     '        <div class="linha-tempo">\n'
     '          <div class="etapa fragment"><p class="quando">22/08 &middot; hoje</p><h3>Fica pronto</h3>'
     "<p>Quatro seções do Artefato 1 e o critério do rótulo recuperado do dado.</p></div>\n"
     '          <div class="etapa fragment"><p class="quando">29/08 &middot; Aula 04</p><h3>Visualização para decidir</h3>'
     "<p>As figuras que vão ao Comitê saem dos números que a pasta do grupo reproduz.</p></div>\n"
-    '          <div class="etapa fragment"><p class="quando">Manhã de negócios</p><h3>Segmentação e personas</h3>'
-    "<p>O relatório da manhã pede as visualizações da EDA, e a seção 06 as entrega.</p></div>\n"
+    '          <div class="etapa fragment"><p class="quando">Trilha de Negócios</p><h3>Segmentação e personas</h3>'
+    "<p>O Customer Segmentation Analysis Report pede as visualizações da EDA, e a seção 06 as entrega.</p></div>\n"
     '          <div class="etapa avaliada fragment"><p class="quando">05/09 &middot; Semana 5</p><h3>Artefato 1</h3>'
     "<p>Análise Exploratória de Dados, entregue como pasta reexecutável.</p></div>\n"
     "        </div>\n",

@@ -193,10 +193,12 @@ ausência, que é onde a espiral da Aula 01 aterrissa.
 **Horário:** 13h00 às 16h00, combinado com a turma, com folga até 16h30. O
 intervalo de 20 minutos é preservado.
 
-**Espiral:** a Aula 02 deixou pronta a `skill-limpeza-kovan.md` de cada grupo,
-escrita para o painel sintético. O dataset oficial da Lenovo chegou em 21/08 e
-substitui esse painel (ADR-005). O primeiro ato da aula é executar a skill do
-grupo contra uma base que ela nunca viu.
+**Espiral:** a Aula 02 terminou na discussão dos dados em Gemini e **não chegou
+a construir a skill de limpeza com a turma**, que era a Prática 4 dela. O dataset
+oficial da Lenovo chegou em 21/08 e substitui o painel sintético (ADR-005). A
+Aula 03 fecha as duas pendências: perfila a base nova e usa a skill de limpeza
+já pronta no repositório, com o tempo de aula gasto em explicar e demonstrar em
+vez de preencher esqueleto.
 
 **Conteúdo:** distribuição de receita e a cauda da carteira; prevalência de
 churn por segmento e por setor; tabela de contingência como forma bivariada para
@@ -224,8 +226,9 @@ artefato entra com o número e a figura que a sustentam, produzidos por código
 que roda na pasta do grupo.
 
 **Ambiente:** Antigravity a tarde inteira, sobre a pasta clonada de
-`github.com/josercf/inteli-pos-2026-2a-eda` (ADR-006). O dataset chega pelo canal
-da turma e não é versionado. Sem plano B de ambiente declarado: a mitigação é o
+`github.com/josercf/inteli-pos-2026-2a-eda` (ADR-006). O dataset não é
+versionado e chega por uma planilha no Drive, com o caminho no slide da Prática
+1 e no README do repositório. Sem plano B de ambiente declarado: a mitigação é o
 `analise_referencia.py` dentro da pasta.
 
 ### Agenda em minutos
@@ -233,11 +236,11 @@ da turma e não é versionado. Sem plano B de ambiente declarado: a mitigação 
 | Horário | Bloco | Conteúdo |
 |---|---|---|
 | `13h00 - 13h15` | Resgate e contrato | A base oficial: cinco abas, 8.282 contas, 24 meses, e um `churn_label` que a anterior não tinha. Clone do repositório, dataset na pasta, Antigravity aberto. Contrato do dia |
-| `13h15 - 13h35` | Bloco 1 e Prática 1 | Onde a troca de base nos coloca no CRISP-DM. O checklist de cinco perguntas antes de perguntar. Prática: o agente lê a skill da Aula 02 e a executa contra a base nova. Colheita: quantos passos dela sobreviveram |
-| `13h35 - 13h55` | Bloco 2 e Prática 2 | Univariada: tendência central, dispersão, forma e cauda sobre `receita_usd`, com média de USD 437.588 contra mediana de USD 18.552 e assimetria de 44,5. Prática: a distribuição das variáveis do painel e a leitura de negócio do boxplot |
-| `13h55 - 14h20` | Bloco 3 e Prática 3 | Bivariada: prevalência por segmento contra participação na receita, com setor público em 31,2% e 21,9%. A contingência do último mês por rótulo. Prática: a engenharia reversa do corte, descendo ao grão do pedido |
+| `13h15 - 13h35` | Bloco 1 e Prática 1 | Onde a troca de base nos coloca no CRISP-DM. O checklist de cinco perguntas antes de perguntar. As quatro dimensões de qualidade violadas na base. Prática: clonar, colocar o dataset e perfilar com `skills/perfilamento.md` |
+| `13h35 - 13h55` | Bloco 2 e Prática 2 | Univariada construída antes do número: as três perguntas em lista, e uma figura por pergunta (centro, dispersão, forma). Depois o pedido a executar e a fórmula da assimetria. Só então a distribuição da Kovan |
+| `13h55 - 14h20` | Bloco 3 e Prática 3 | O limite da univariada. Hipóteses formuladas antes da tabela. Bivariada: prevalência por segmento contra participação na receita. A contingência do último mês por rótulo, e a engenharia reversa do corte no grão do pedido |
 | `14h20 - 14h40` | Intervalo | |
-| `14h40 - 15h45` | Oficina do Artefato 1 | Quatro estações, uma por seção do checklist. Elástica até 16h15 se os grupos estiverem entregando |
+| `14h40 - 15h45` | Oficina do Artefato 1 | Dez minutos de demonstração da skill de limpeza, depois quatro estações de 55 minutos. A estação 2 fecha com a troca de pastas entre mesas |
 | `15h45 - 16h00` | Amarração | O que fica pronto, o que a Aula 04 pega, o que a manhã do Prof. Donaire recebe |
 
 ### Verificações do encontro
@@ -282,9 +285,33 @@ publicado.
   1:1 (distribuição de receita, contingência do rótulo, prevalência por segmento)
 - Números: `dados/analise_aula03.py`, travado por
   `dados/tests/test_dataset_oficial.py`
+- Figuras didáticas: três distribuições sintéticas com semente fixa
+  (tendência central, dispersão, forma), para o conceito chegar antes do número
 - Material de apoio: `materiais/aula03-material-de-apoio.html`
 - Material do aluno: `materiais/checklist-artefato-1-tecnologia.md`
 - Condução: `docs/notas-do-professor/aula03.md` (não distribuído)
+
+### Pendências abertas ao fim da S3
+
+Registradas em 22/08/2026, depois da aula, para não virarem suposição na S4.
+
+1. **Como a tarde correu de fato não está registrado.** Falta saber quantos
+   grupos chegaram ao corte de 08/02/2025 e quantos pararam no resíduo de 382
+   contas. A resposta muda o que a Aula 04 pode assumir como sabido, e é o
+   insumo da espiral de abertura dela.
+2. **As notas de condução e o material de apoio descrevem a estrutura anterior.**
+   `docs/notas-do-professor/aula03.md` fala em estação 2 de vinte minutos e
+   checkpoint às 15h30, quando a oficina virou 55 minutos com a troca de pastas.
+   `materiais/aula03-material-de-apoio.html` descreve as práticas como slide
+   único e não menciona as figuras de conceito da univariada.
+3. **O compartilhamento da planilha no Drive não foi verificado.** O link está
+   num slide publicado no GitHub Pages e no README de um repositório público. Se
+   estiver como "qualquer pessoa com o link", a base real de carteira LATAM ficou
+   acessível a partir de página aberta, o que contraria a ADR-005. Restringir ao
+   domínio do Inteli não afeta quem já clonou.
+4. **Dois slides abaixo da folga de 40px:** o checklist com 15px e o das cinco
+   abas com 4px. Passam no limite real, e são os primeiros a estourar se algum
+   texto crescer (ver a armadilha de folga no `CLAUDE.md`).
 
 ### Divergência registrada
 

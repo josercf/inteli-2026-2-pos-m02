@@ -154,12 +154,34 @@ def test_a_correta_nao_fica_sempre_na_mesma_posicao(html):
 # ---------------------------------------------------------------------------
 
 def test_as_praticas_rodam_em_antigravity(html):
-    """ADR-006: ambiente único na tarde inteira."""
-    praticas = re.findall(r'<section class="exercise-slide".*?</section>', html, re.S)
-    assert len(praticas) == 4
-    for bloco in praticas:
-        assert "Antigravity" in bloco
+    """ADR-006: ambiente único na tarde inteira.
+
+    Conta práticas distintas, e não slides: as Práticas 2 e 3 ocupam três
+    slides cada, porque uma prática de quatro passos com prompt foi lida em
+    15/08 como se fosse um pedido único.
+    """
+    blocos = re.findall(r'<section class="exercise-slide".*?</section>', html, re.S)
+    assert blocos
+    numeros = set()
+    for bloco in blocos:
         assert "Gemini" not in bloco
+        m = re.search(r"Prática (\d+)", bloco)
+        if m:
+            numeros.add(int(m.group(1)))
+    assert numeros == {1, 2, 3, 4}, numeros
+    assert sum("Antigravity" in b for b in blocos) >= 4
+
+
+def test_pratica_longa_vem_dividida(html):
+    """O slide de enquadramento traz o trilho; os de passo a passo, não."""
+    for numero in (2, 3):
+        # Casa contra a sobrelinha, e não contra qualquer menção: a oficina
+        # cita "Prática 2" e "Prática 3" no corpo dos passos.
+        blocos = [b for b in re.findall(r'<section class="exercise-slide".*?</section>', html, re.S)
+                  if re.search(rf'class="sobrelinha">Prática {numero} ', b)]
+        assert len(blocos) == 3, (numero, len(blocos))
+        com_trilho = [b for b in blocos if "pratica-trilho" in b]
+        assert len(com_trilho) == 1, numero
 
 
 def test_o_deck_cita_os_numeros_travados(html):

@@ -68,14 +68,14 @@ SLIDES.append(conteudo(
     "        </div>\n"
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>O que a Aula 02 deixou</h3>'
-    "<p>Uma skill escrita para uma base que deixou de existir.</p></div>\n"
+    "<p>A discussão dos dados, sem o registro do tratamento em arquivo.</p></div>\n"
     '          <div class="concept-card"><h3>O que mudou na pergunta</h3>'
     "<p>O rótulo não precisa mais ser construído. Ele veio pronto.</p></div>\n"
     '          <div class="concept-card"><h3>O que a tarde apura</h3>'
     "<p>Qual critério ele usa e o que deixa de fora.</p></div>\n"
     "        </div>\n",
     contexto="O painel das Aulas 01 e 02 tinha 1.187 contas e nenhuma coluna de rótulo.",
-    conclusao="A skill que cada grupo escreveu na semana passada é o primeiro item a ser testado contra a base nova.",
+    conclusao="O registro de tratamento que ficou pendente fecha hoje, na oficina, sobre a base oficial.",
     fonte="Fonte: datasets_case_modulo2.xlsx.",
 ))
 
@@ -83,7 +83,7 @@ SLIDES.append(conteudo(
 # 3. Contrato do dia
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "O entregável de hoje são quatro das sete seções do Artefato 1",
+    "A oficina de hoje fecha quatro das sete seções do Artefato 1",
     '        <div class="concept-cards quatro">\n'
     '          <div class="concept-card"><h3>Contrato do dia</h3>'
     "<p>Toda seção do artefato entra com o número e a figura que a sustentam, "
@@ -108,7 +108,7 @@ SLIDES.append(secao(
     "Cinco abas, cinco grãos, e nenhuma garantia de que elas cruzam",
     condicoes=[
         "Conferir o que chegou antes de perguntar qualquer coisa",
-        "Rodar a skill da Aula 02 contra uma base que ela nunca viu",
+        "Perfilar com a skill que o agente carrega da pasta",
         "Nomear as advertências desta base, que são outras",
     ],
 ))
@@ -154,7 +154,7 @@ SLIDES.append(conteudo(
     "<p>25 linhas de receita negativa, 143 zeradas, e 53 participações de marca "
     "ausentes, algumas negativas e algumas somando acima de 1.</p></div>\n"
     "        </div>\n",
-    conclusao="Nenhuma dessas quatro estava na base da Aula 02, então a skill de cada grupo vai encontrar o que ela não previu.",
+    conclusao="Nenhuma dessas quatro estava na base da Aula 02, e cada uma exige uma decisão de tratamento escrita.",
     fonte="Fonte: datasets_case_modulo2.xlsx. Contagens travadas em dados/tests/test_dataset_oficial.py.",
     por_passos=True,
 ))
@@ -209,21 +209,21 @@ SLIDES.append(conteudo(
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
     1,
-    "A skill da Aula 02 contra uma base que ela nunca viu",
+    "O perfilamento das cinco abas, com a skill que o agente carrega sozinho",
     20,
     "Em grupo, na pasta clonada",
-    "O arquivo perfil.md e a lista do que a skill não previu",
-    "Cada mesa diz quantas das quatro advertências a skill encontrou sozinha",
+    "O arquivo perfil.md, com as advertências ordenadas por linhas afetadas",
+    "Cada mesa diz quantas das quatro advertências o agente achou sozinho",
     [
         {"acao": "Clone o repositório e coloque o xlsx em dados/.",
          "prompt": "git clone https://github.com/josercf/inteli-pos-2026-2a-eda.git"},
         {"acao": "Abra a pasta no Antigravity e peça ao agente que resuma as regras da sessão.",
          "detalhe": "Se ele não citar a proibição de preencher lacuna, ele não leu o AGENTS.md."},
-        {"acao": "Coloque a skill-limpeza-kovan.md do seu grupo dentro de skills/."},
-        {"acao": "Peça as duas skills na ordem: perfilamento, depois a limpeza do grupo.",
-         "prompt": "Execute skills/perfilamento.md sobre as cinco abas. Depois execute a skill de limpeza do grupo sobre a mesma base. Ao final, liste os passos dela que não puderam ser executados e por quê."},
+        {"acao": "Peça o perfilamento pelo caminho do arquivo, sem colar instrução na conversa.",
+         "prompt": "Execute skills/perfilamento.md sobre as cinco abas de dados/datasets_case_modulo2.xlsx."},
+        {"acao": "Confira quais das quatro advertências ele achou sozinho, e qual passou."},
     ],
-    "A mesa diz, com número, quantos passos da própria skill sobreviveram à troca de base",
+    "A mesa tem o perfil.md em disco e sabe qual advertência o agente deixou passar",
     ambiente=AMBIENTE,
 ))
 
@@ -241,24 +241,59 @@ SLIDES.append(secao(
 ))
 
 # ---------------------------------------------------------------------------
-# 11. As tres perguntas
+# 11. O racional, construido com a turma
+# ---------------------------------------------------------------------------
+# Sem nenhum numero da base: a turma monta as tres perguntas antes de ver
+# qualquer valor, senao a resposta chega antes do criterio.
+SLIDES.append(conteudo(
+    "Descrever uma variável exige três perguntas, e a terceira quase nunca é feita",
+    '        <div class="exercise-steps">\n'
+    '          <div class="pratica-passo fragment"><span class="num">01</span><div>'
+    '<p class="acao">Onde está o centro?</p>'
+    '<p class="detalhe">Média e mediana. Quando as duas divergem por uma ordem de grandeza, '
+    "a média deixa de descrever qualquer caso individual.</p></div></div>\n"
+    '          <div class="pratica-passo fragment"><span class="num">02</span><div>'
+    '<p class="acao">Quanto os casos se afastam do centro?</p>'
+    '<p class="detalhe">Desvio padrão e quartis. Um único extremo faz o desvio explodir e '
+    "deixar de comparar grupos.</p></div></div>\n"
+    '          <div class="pratica-passo fragment"><span class="num">03</span><div>'
+    '<p class="acao">Qual o formato da distribuição?</p>'
+    '<p class="detalhe">Assimetria e curtose. É a pergunta que diz se as respostas das duas '
+    "primeiras valem alguma coisa, e é a que quase nunca aparece no relatório.</p></div></div>\n"
+    "        </div>\n",
+    contexto="Antes de comparar dois grupos, cada variável precisa ser descrita sozinha. A ordem importa: quem pula para a comparação atribui ao grupo um efeito que era da forma da distribuição.",
+    conclusao="A terceira pergunta é a que decide se a média pode ser citada, então ela vem antes e não depois.",
+    por_passos=True,
+))
+
+# ---------------------------------------------------------------------------
+# 12. O pedido, e como a assimetria sai
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Uma distribuição responde a três perguntas, e a média responde a um terço de uma",
-    '        <div class="concept-cards">\n'
-    '          <div class="concept-card"><h3>Tendência central</h3>'
-    "<p>Média e mediana. Quando as duas divergem por uma ordem de grandeza, a média "
-    "deixa de descrever qualquer caso individual, e o relatório precisa dizer isso.</p></div>\n"
-    '          <div class="concept-card"><h3>Dispersão</h3>'
-    "<p>Desvio padrão, mínimo, máximo e quartis. Responde o quanto os casos se "
-    "afastam do centro.</p></div>\n"
-    '          <div class="concept-card"><h3>Forma</h3>'
-    "<p>Assimetria e curtose. Assimetria acima de 1 indica cauda longa. Curtose alta "
-    "indica que os extremos dominam a variância.</p></div>\n"
+    "A assimetria sai da média dos cubos dos desvios padronizados",
+    '        <div class="side-by-side">\n'
+    "          <div>\n"
+    "            <h3>O pedido</h3>\n"
+    '            <pre class="code-compact"><code>'
+    '<span class="hl-dados">Some receita_usd por account_id.</span>\n'
+    '<span class="hl-formato">1. média, mediana, desvio, mín, máx\n'
+    "2. assimetria e curtose\n"
+    "3. histograma, com a escala\n"
+    "   declarada na legenda</span>\n"
+    '<span class="hl-restricao">Código antes de cada número.</span></code></pre>\n'
+    "          </div>\n"
+    "          <div>\n"
+    "            <h3>De onde vem o número</h3>\n"
+    '            <pre class="code-compact"><code>z = (conta - média) / desvio\n'
+    "assimetria = média(z³) = 44,5\n"
+    "curtose    = média(z⁴) = 2.597</code></pre>\n"
+    "            <p>O cubo preserva o sinal e amplifica quem está longe: uma conta a 10 desvios "
+    "pesa mil vezes mais que uma a 1 desvio. A maior conta desta carteira está a "
+    "<strong>67 desvios</strong> da média.</p>\n"
+    "          </div>\n"
     "        </div>\n",
-    contexto="Receita acumulada por conta nos 24 meses: média de USD 437.588, mediana de USD 18.552, assimetria de 44,5 e curtose de 2.597. O grão é a conta, e a mesma coluna medida por linha devolve outro número.",
-    conclusao="Com assimetria de 44,5, a receita média por conta não descreve conta nenhuma da carteira.",
-    fonte="Fonte: Dataset 1, 8.282 contas. Travado em dados/tests/test_dataset_oficial.py.",
+    sobrelinha="Antes de rodar",
+    conclusao="Assimetria alta indica média construída por poucos casos, e isso se confere no máximo da coluna.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -304,8 +339,10 @@ SLIDES.append(quiz(
 ))
 
 # ---------------------------------------------------------------------------
-# 14. Pratica 2
+# 14. Pratica 2, enquadramento
 # ---------------------------------------------------------------------------
+# A pratica vem em dois slides: este enquadra, o proximo tem os passos. Em
+# 15/08 a turma leu uma pratica de cinco passos como se fosse um prompt unico.
 SLIDES.append(pratica(
     2,
     "A distribuição das variáveis do painel, com a leitura escrita",
@@ -314,15 +351,49 @@ SLIDES.append(pratica(
     "As figuras em figuras/ e o arquivo univariada.md",
     "Cada mesa lê em voz alta a frase do que a figura não permite concluir",
     [
-        {"acao": "Rode a skill de univariada sobre receita, pedidos e tempo de casa.",
-         "prompt": "Execute skills/univariada.md sobre receita_usd, qtd_pedidos e tempo_como_cliente. Declare o grão antes de cada medida."},
-        {"acao": "Confira a escala: assimetria acima de 3 pede log, declarado na legenda."},
-        {"acao": "Peça a leitura de negócio de uma das figuras.",
-         "prompt": "Explique este boxplot para quem nunca estudou estatística e não vai perguntar o que é quartil. Depois diga, em três frases, o que olhar nele para entender a perda de contas."},
-        {"acao": "Escreva, abaixo de cada figura, o que ela não permite concluir."},
+        {"acao": "São quatro passos, e cada um é um pedido separado ao agente.",
+         "detalhe": "Não cole os quatro de uma vez: o agente responde os quatro e você perde o ponto de conferência entre eles."},
+        {"acao": "Depois de cada passo, confira antes de seguir.",
+         "detalhe": "A lista do que conferir está no slide seguinte, ao lado de cada passo."},
+        {"acao": "A entrega é a leitura escrita embaixo de cada figura.",
+         "detalhe": "Figura sem as duas frases embaixo não entra na seção de univariada do artefato."},
     ],
     "Cada figura tem duas frases embaixo, e a segunda diz o que ela não sustenta",
     ambiente=AMBIENTE,
+))
+
+# ---------------------------------------------------------------------------
+# 15. Pratica 2, passos 1 e 2
+# ---------------------------------------------------------------------------
+SLIDES.append(pratica(
+    2, "Passos 1 e 2, as medidas e a figura", 20, "", "", "",
+    [
+        {"acao": "Peça as medidas das três variáveis.",
+         "prompt": "Execute skills/univariada.md sobre receita_usd, qtd_pedidos e tempo_como_cliente.",
+         "detalhe": "Confira: ele somou por conta ou contou linhas? Os dois grãos dão números diferentes."},
+        {"acao": "Peça o histograma da receita.",
+         "prompt": "Plote o histograma da receita por conta e declare a escala na legenda.",
+         "detalhe": "Confira: o máximo do eixo bate com o máximo da tabela do passo 1?"},
+    ],
+    "As duas saídas estão em arquivo, e o grão está declarado em cada uma",
+    ambiente=AMBIENTE, trilho=False,
+    sobrelinha="Prática 2 &middot; um pedido por vez, com conferência entre eles",
+))
+
+# ---------------------------------------------------------------------------
+# 16. Pratica 2, passos 3 e 4
+# ---------------------------------------------------------------------------
+SLIDES.append(pratica(
+    2, "Passos 3 e 4, a leitura e o limite", 20, "", "", "",
+    [
+        {"acao": "Peça a leitura de negócio. Confira se sobrou termo técnico sem explicação.",
+         "prompt": "Explique este gráfico sem termo técnico não explicado, e diga em três frases o que olhar nele."},
+        {"acao": "Peça o limite da figura. Se ele afirmar causa, refaça o pedido.",
+         "prompt": "Escreva o que este gráfico não permite concluir sobre a perda de contas."},
+    ],
+    "Cada figura tem duas frases embaixo, e a segunda diz o que ela não sustenta",
+    ambiente=AMBIENTE, trilho=False,
+    sobrelinha="Prática 2 &middot; um pedido por vez, com conferência entre eles",
 ))
 
 # ---------------------------------------------------------------------------
@@ -330,12 +401,38 @@ SLIDES.append(pratica(
 # ---------------------------------------------------------------------------
 SLIDES.append(secao(
     "03", "Análise bivariada",
-    "O cruzamento contra o rótulo, e o critério que o rótulo esconde",
+    "Do cruzamento contra o rótulo até o critério que o define",
     condicoes=[
         "Um corte por vez, com o tamanho da base em cada célula",
         "Reconstruir o critério de um rótulo antes de usá-lo",
         "Perguntar, de toda variável que separa bem demais, se ela vazou",
     ],
+))
+
+# ---------------------------------------------------------------------------
+# 16. As hipoteses, antes do numero
+# ---------------------------------------------------------------------------
+# A turma formula antes de ver a tabela. Sem isso, a primeira explicacao
+# plausivel que aparecer na tela vira a conclusao do grupo.
+SLIDES.append(conteudo(
+    "Uma prevalência diferente entre segmentos admite pelo menos três explicações",
+    '        <div class="exercise-steps">\n'
+    '          <div class="pratica-passo fragment"><span class="num">01</span><div>'
+    '<p class="acao">Que hipótese explicaria um segmento perder mais contas que outro?</p>'
+    '<p class="detalhe">Cada mesa escreve uma. Vale ciclo de compra, vale cobertura comercial, '
+    "vale porte da conta.</p></div></div>\n"
+    '          <div class="pratica-passo fragment"><span class="num">02</span><div>'
+    '<p class="acao">Que evidência nesta base sustentaria a sua hipótese?</p>'
+    '<p class="detalhe">Precisa ser uma coluna que existe, não uma que você gostaria que '
+    "existisse.</p></div></div>\n"
+    '          <div class="pratica-passo fragment"><span class="num">03</span><div>'
+    '<p class="acao">Que evidência a derrubaria?</p>'
+    '<p class="detalhe">Hipótese que nenhum dado desta base pode derrubar não vai ser testada '
+    "hoje, e isso entra na seção de limitações.</p></div></div>\n"
+    "        </div>\n",
+    contexto="A manhã fechou a segmentação. A tarde mede o churn dentro dela, e a ordem importa: quem vê a tabela antes de formular fica com a primeira explicação plausível que a tabela sugerir.",
+    conclusao="As três hipóteses ficam em pé até o fim da aula, e o critério que decide entre elas é a medida.",
+    por_passos=True,
 ))
 
 # ---------------------------------------------------------------------------
@@ -478,7 +575,7 @@ SLIDES.append(quiz(
 ))
 
 # ---------------------------------------------------------------------------
-# 23. Pratica 3
+# 23. Pratica 3, enquadramento
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
     3,
@@ -488,16 +585,51 @@ SLIDES.append(pratica(
     "A tabela de contingência e o critério recuperado, em bivariada.md",
     "Cada mesa apresenta o critério que recuperou e a evidência que o sustenta",
     [
-        {"acao": "Cruze o rótulo com o último mês de receita de cada conta.",
-         "prompt": "Calcule o último período com receita de cada conta e cruze com churn_label. Ache o único mês com contas dos dois lados."},
-        {"acao": "Desça ao grão do pedido para resolver o resíduo.",
-         "prompt": "Na raw data, para as contas desse mês, cruze a data do último pedido com churn_label. Existe data que separe sem exceção?"},
-        {"acao": "Meça o que cortes alternativos fariam com a fila.",
-         "prompt": "Construa rótulos com cortes de 6, 9 e 12 meses de inatividade a partir de 2026-03. Traga o tamanho da fila e a receita marcada em cada um."},
-        {"acao": "Escreva o critério em uma frase. Sem recuperar, registre como desconhecido."},
+        {"acao": "São quatro pedidos separados, e o terceiro só faz sentido depois do segundo.",
+         "detalhe": "O passo 2 produz um resíduo que o passo 3 resolve. Colar os quatro de uma vez pula o resíduo."},
+        {"acao": "Se o grupo não recuperar o critério, isso também é resultado.",
+         "detalhe": "O registro nesse caso é critério desconhecido, com o que foi tentado."},
+        {"acao": "As hipóteses do bloco anterior continuam em pé.",
+         "detalhe": "Ao final, diga qual delas o que você mediu sustenta e qual ele derruba."},
     ],
     "A mesa enuncia o critério do rótulo e mostra a tabela que o sustenta",
     ambiente=AMBIENTE,
+))
+
+# ---------------------------------------------------------------------------
+# 24. Pratica 3, passos 1 e 2
+# ---------------------------------------------------------------------------
+SLIDES.append(pratica(
+    3, "Passos 1 e 2, a prevalência e a contingência", 25, "", "", "",
+    [
+        {"acao": "Peça a prevalência por segmento, com o tamanho da base.",
+         "prompt": "No grão da conta, traga contas, contas perdidas, prevalência e participação na receita por segmento_lenovo.",
+         "detalhe": "Confira: a soma das contas bate com 8.282? Categoria com menos de 30 contas entra marcada."},
+        {"acao": "Peça a contingência do último mês contra o rótulo.",
+         "prompt": "Calcule o último período com receita de cada conta e cruze com churn_label. Ache o único mês com contas dos dois lados.",
+         "detalhe": "Confira: a soma das células bate com 8.282? Se não bater, ele perdeu contas na agregação."},
+    ],
+    "As duas tabelas trazem o tamanho da base em cada célula",
+    ambiente=AMBIENTE, trilho=False,
+    sobrelinha="Prática 3 &middot; um pedido por vez, com conferência entre eles",
+))
+
+# ---------------------------------------------------------------------------
+# 25. Pratica 3, passos 3 e 4
+# ---------------------------------------------------------------------------
+SLIDES.append(pratica(
+    3, "Passos 3 e 4, o grão do pedido e os cortes", 25, "", "", "",
+    [
+        {"acao": "Desça ao grão do pedido para resolver o resíduo do passo 2.",
+         "prompt": "Na raw data, para as contas desse mês, cruze a data do último pedido com churn_label. Existe data que separe sem exceção?",
+         "detalhe": "Confira: ele leu as 207.826 linhas? Se resumiu por amostragem, o corte não aparece."},
+        {"acao": "Meça o que cortes alternativos fariam com a fila.",
+         "prompt": "Construa rótulos com cortes de 6, 9 e 12 meses de inatividade a partir de 2026-03. Traga o tamanho da fila e a receita marcada em cada um.",
+         "detalhe": "Confira: a fila cresce quando o corte afrouxa? Se não crescer, a data de referência está errada."},
+    ],
+    "A mesa escreve o critério do rótulo em uma frase, com a evidência ao lado",
+    ambiente=AMBIENTE, trilho=False,
+    sobrelinha="Prática 3 &middot; um pedido por vez, com conferência entre eles",
 ))
 
 # ---------------------------------------------------------------------------
@@ -508,7 +640,7 @@ SLIDES.append(secao(
     "Quatro estações, uma por seção do checklist",
     condicoes=[
         "Cada seção entra com o número e a figura que a sustentam",
-        "Cada decisão de tratamento entra escrita, com o custo em linhas",
+        "Cada decisão de tratamento entra no registro, com o custo em linhas",
         "A pasta precisa reexecutar na máquina de outra pessoa",
     ],
 ))
@@ -523,7 +655,7 @@ SLIDES.append(conteudo(
     "<p>As cinco abas carregadas, com a contagem de linhas conferida contra a fonte "
     "e o grão de cada uma declarado.</p></div>\n"
     '          <div class="concept-card"><h3>02. Qualidade</h3>'
-    "<p>Cada advertência encontrada, a decisão tomada e o custo dela em linhas.</p></div>\n"
+    "<p>O registro de tratamento: cada advertência, a decisão e o custo dela em linhas.</p></div>\n"
     '          <div class="concept-card"><h3>03. Univariada</h3>'
     "<p>Tendência central, dispersão e forma na mesma tabela, com a leitura escrita "
     "de cada figura.</p></div>\n"
@@ -536,24 +668,59 @@ SLIDES.append(conteudo(
 ))
 
 # ---------------------------------------------------------------------------
+# 26. A skill de limpeza
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "A skill calcula o custo das três decisões e para antes de escolher",
+    '        <div class="side-by-side">\n'
+    "          <div>\n"
+    '            <pre class="code-compact"><code># Skill: limpeza de dados\n'
+    '<span class="hl-restricao">Não preencha lacuna.\n'
+    "Não decida no lugar de quem\n"
+    "responde pelo número.</span>\n"
+    "## Por advertência\n"
+    '<span class="hl-dados">1. Meça o tamanho\n'
+    "2. A ausência é condicionada?\n"
+    "3. Escolha o indicador\n"
+    "4. Calcule sob as três decisões\n"
+    '5. Pare e pergunte</span>\n'
+    '<span class="hl-formato">## registro-de-tratamento.md</span></code></pre>\n'
+    "          </div>\n"
+    "          <div>\n"
+    '            <div class="concept-cards">\n'
+    '              <div class="concept-card"><h3>Excluir</h3>'
+    "<p>Assume que o que falta é aleatório.</p></div>\n"
+    '              <div class="concept-card"><h3>Imputar</h3>'
+    "<p>Inventa variação que não foi observada.</p></div>\n"
+    '              <div class="concept-card"><h3>Sinalizar</h3>'
+    "<p>Adia a decisão para a análise seguinte.</p></div>\n"
+    "            </div>\n"
+    "          </div>\n"
+    "        </div>\n",
+    sobrelinha="skills/limpeza-de-dados.md",
+    conclusao="Nada nela é específico da Kovan, e o artefato que ela produz é o registro de tratamento.",
+))
+
+# ---------------------------------------------------------------------------
 # 26. Oficina
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
     4,
-    "As quatro seções que fecham hoje",
-    65,
+    "A oficina fecha quatro das sete seções do artefato",
+    55,
     "Em grupo, na pasta clonada",
-    "A pasta do grupo, com código, figuras e o relatório das quatro seções",
-    "Às 15h30 cada mesa mostra a seção que está mais atrasada",
+    "A pasta do grupo, com código, figuras e o registro de tratamento",
+    "Às 15h20 as mesas trocam de pasta e executam a skill uma da outra",
     [
-        {"acao": "Estação 1, 15 min. Carga: contagem por aba, grão e contas em comum."},
-        {"acao": "Estação 2, 20 min. Qualidade: uma decisão por advertência, com custo em linhas."},
-        {"acao": "Estação 3, 15 min. Univariada: aproveite as figuras da Prática 2."},
-        {"acao": "Estação 4, 15 min. Bivariada: some um corte por setor à tabela da Prática 3."},
-        {"acao": "Confira a reexecução antes de sair.",
-         "prompt": "Liste os arquivos desta sessão e diga, para cada número do relatório, qual script o produz. Aponte os que não têm código."},
+        {"acao": "Estação 1, 10 min. Carga: contagem por aba, grão e contas em comum."},
+        {"acao": "Estação 2, 25 min. Qualidade: rode a skill e decida cada advertência.",
+         "prompt": "Execute skills/limpeza-de-dados.md sobre dados/datasets_case_modulo2.xlsx, uma advertência por vez."},
+        {"acao": "Troca de pastas: execute a skill e o registro da mesa ao lado.",
+         "detalhe": "Número que não bate indica passo do registro que só fazia sentido para quem escreveu."},
+        {"acao": "Estação 3, 10 min. Univariada: aproveite as figuras da Prática 2."},
+        {"acao": "Estação 4, 10 min. Bivariada: some um corte por setor à tabela da Prática 3."},
     ],
-    "Outra pessoa clona a pasta, coloca o dataset e obtém os mesmos números",
+    "A mesa ao lado executa o registro de vocês e chega aos mesmos números",
     ambiente=AMBIENTE,
 ))
 

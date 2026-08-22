@@ -44,14 +44,14 @@
           <div class="stat-tile destaque"><p class="stat-numero">1.593</p><p class="stat-rotulo">contas que a base já marca como perdidas</p></div>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>O que a Aula 02 deixou</h3><p>Uma skill escrita para uma base que deixou de existir.</p></div>
+          <div class="concept-card"><h3>O que a Aula 02 deixou</h3><p>A discussão dos dados, sem o registro do tratamento em arquivo.</p></div>
           <div class="concept-card"><h3>O que mudou na pergunta</h3><p>O rótulo não precisa mais ser construído. Ele veio pronto.</p></div>
           <div class="concept-card"><h3>O que a tarde apura</h3><p>Qual critério ele usa e o que deixa de fora.</p></div>
         </div>
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>A skill que cada grupo escreveu na semana passada é o primeiro item a ser testado contra a base nova.</p>
+          <p>O registro de tratamento que ficou pendente fecha hoje, na oficina, sobre a base oficial.</p>
         </div>
         <p class="fonte-nota">Fonte: datasets_case_modulo2.xlsx.</p>
         </div>
@@ -66,7 +66,7 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>O entregável de hoje são quatro das sete seções do Artefato 1</h2>
+          <h2>A oficina de hoje fecha quatro das sete seções do Artefato 1</h2>
           <p class="linha-contexto">Método das 13h00 às 14h20, intervalo às 14h20, oficina das 14h40 às 15h45.</p>
         </div>
         <div class="concept-cards quatro">
@@ -94,7 +94,7 @@
         <h3>Cinco abas, cinco grãos, e nenhuma garantia de que elas cruzam</h3>
         <div class="secao-condicoes">
           <div><span class="num">01</span>Conferir o que chegou antes de perguntar qualquer coisa</div>
-          <div><span class="num">02</span>Rodar a skill da Aula 02 contra uma base que ela nunca viu</div>
+          <div><span class="num">02</span>Perfilar com a skill que o agente carrega da pasta</div>
           <div><span class="num">03</span>Nomear as advertências desta base, que são outras</div>
         </div>
       </section>
@@ -148,7 +148,7 @@
         <div class="fecho">
         <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
-          <p>Nenhuma dessas quatro estava na base da Aula 02, então a skill de cada grupo vai encontrar o que ela não previu.</p>
+          <p>Nenhuma dessas quatro estava na base da Aula 02, e cada uma exige uma decisão de tratamento escrita.</p>
         </div>
         <p class="fonte-nota">Fonte: datasets_case_modulo2.xlsx. Contagens travadas em dados/tests/test_dataset_oficial.py.</p>
         </div>
@@ -220,7 +220,7 @@
         <div class="slide-title-area">
           <p class="sobrelinha">Prática 1 &middot; 20 minutos &middot; Antigravity</p>
           <div class="accent-bar"></div>
-          <h2>A skill da Aula 02 contra uma base que ela nunca viu</h2>
+          <h2>O perfilamento das cinco abas, com a skill que o agente carrega sozinho</h2>
         </div>
         <div class="pratica">
           <div class="pratica-trilho">
@@ -230,8 +230,8 @@
             </div>
             <dl>
               <dt>Formato</dt><dd>Em grupo, na pasta clonada</dd>
-              <dt>Entrega</dt><dd>O arquivo perfil.md e a lista do que a skill não previu</dd>
-              <dt>Checkpoint</dt><dd>Cada mesa diz quantas das quatro advertências a skill encontrou sozinha</dd>
+              <dt>Entrega</dt><dd>O arquivo perfil.md, com as advertências ordenadas por linhas afetadas</dd>
+              <dt>Checkpoint</dt><dd>Cada mesa diz quantas das quatro advertências o agente achou sozinho</dd>
             </dl>
           </div>
           <div class="pratica-passos">
@@ -252,14 +252,14 @@
           <div class="pratica-passo">
             <span class="num">03</span>
             <div>
-              <p class="acao">Coloque a skill-limpeza-kovan.md do seu grupo dentro de skills/.</p>
+              <p class="acao">Peça o perfilamento pelo caminho do arquivo, sem colar instrução na conversa.</p>
+            <code class="prompt-literal">Execute skills/perfilamento.md sobre as cinco abas de dados/datasets_case_modulo2.xlsx.</code>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">04</span>
             <div>
-              <p class="acao">Peça as duas skills na ordem: perfilamento, depois a limpeza do grupo.</p>
-            <code class="prompt-literal">Execute skills/perfilamento.md sobre as cinco abas. Depois execute a skill de limpeza do grupo sobre a mesma base. Ao final, liste os passos dela que não puderam ser executados e por quê.</code>
+              <p class="acao">Confira quais das quatro advertências ele achou sozinho, e qual passou.</p>
             </div>
           </div>
           </div>
@@ -267,7 +267,7 @@
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Critério de conclusão</span>
-          <p>A mesa diz, com número, quantos passos da própria skill sobreviveram à troca de base</p>
+          <p>A mesa tem o perfil.md em disco e sabe qual advertência o agente deixou passar</p>
         </div>
         </div>
         <div class="slide-footer">
@@ -293,24 +293,61 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>Uma distribuição responde a três perguntas, e a média responde a um terço de uma</h2>
-          <p class="linha-contexto">Receita acumulada por conta nos 24 meses: média de USD 437.588, mediana de USD 18.552, assimetria de 44,5 e curtose de 2.597. O grão é a conta, e a mesma coluna medida por linha devolve outro número.</p>
+          <h2>Descrever uma variável exige três perguntas, e a terceira quase nunca é feita</h2>
+          <p class="linha-contexto">Antes de comparar dois grupos, cada variável precisa ser descrita sozinha. A ordem importa: quem pula para a comparação atribui ao grupo um efeito que era da forma da distribuição.</p>
         </div>
-        <div class="concept-cards">
-          <div class="concept-card"><h3>Tendência central</h3><p>Média e mediana. Quando as duas divergem por uma ordem de grandeza, a média deixa de descrever qualquer caso individual, e o relatório precisa dizer isso.</p></div>
-          <div class="concept-card"><h3>Dispersão</h3><p>Desvio padrão, mínimo, máximo e quartis. Responde o quanto os casos se afastam do centro.</p></div>
-          <div class="concept-card"><h3>Forma</h3><p>Assimetria e curtose. Assimetria acima de 1 indica cauda longa. Curtose alta indica que os extremos dominam a variância.</p></div>
+        <div class="exercise-steps">
+          <div class="pratica-passo fragment"><span class="num">01</span><div><p class="acao">Onde está o centro?</p><p class="detalhe">Média e mediana. Quando as duas divergem por uma ordem de grandeza, a média deixa de descrever qualquer caso individual.</p></div></div>
+          <div class="pratica-passo fragment"><span class="num">02</span><div><p class="acao">Quanto os casos se afastam do centro?</p><p class="detalhe">Desvio padrão e quartis. Um único extremo faz o desvio explodir e deixar de comparar grupos.</p></div></div>
+          <div class="pratica-passo fragment"><span class="num">03</span><div><p class="acao">Qual o formato da distribuição?</p><p class="detalhe">Assimetria e curtose. É a pergunta que diz se as respostas das duas primeiras valem alguma coisa, e é a que quase nunca aparece no relatório.</p></div></div>
         </div>
         <div class="fecho">
-        <div class="faixa-conclusao">
+        <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
-          <p>Com assimetria de 44,5, a receita média por conta não descreve conta nenhuma da carteira.</p>
+          <p>A terceira pergunta é a que decide se a média pode ser citada, então ela vem antes e não depois.</p>
         </div>
-        <p class="fonte-nota">Fonte: Dataset 1, 8.282 contas. Travado em dados/tests/test_dataset_oficial.py.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
           <p class="footer-page">9</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Antes de rodar</p>
+          <div class="accent-bar"></div>
+          <h2>A assimetria sai da média dos cubos dos desvios padronizados</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <h3>O pedido</h3>
+            <pre class="code-compact"><code><span class="hl-dados">Some receita_usd por account_id.</span>
+<span class="hl-formato">1. média, mediana, desvio, mín, máx
+2. assimetria e curtose
+3. histograma, com a escala
+   declarada na legenda</span>
+<span class="hl-restricao">Código antes de cada número.</span></code></pre>
+          </div>
+          <div>
+            <h3>De onde vem o número</h3>
+            <pre class="code-compact"><code>z = (conta - média) / desvio
+assimetria = média(z³) = 44,5
+curtose    = média(z⁴) = 2.597</code></pre>
+            <p>O cubo preserva o sinal e amplifica quem está longe: uma conta a 10 desvios pesa mil vezes mais que uma a 1 desvio. A maior conta desta carteira está a <strong>67 desvios</strong> da média.</p>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Assimetria alta indica média construída por poucos casos, e isso se confere no máximo da coluna.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">10</p>
         </div>
       </section>
 
@@ -330,7 +367,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">10</p>
+          <p class="footer-page">11</p>
         </div>
       </section>
 
@@ -377,7 +414,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">11</p>
+          <p class="footer-page">12</p>
         </div>
       </section>
 
@@ -405,27 +442,22 @@
           <div class="pratica-passo">
             <span class="num">01</span>
             <div>
-              <p class="acao">Rode a skill de univariada sobre receita, pedidos e tempo de casa.</p>
-            <code class="prompt-literal">Execute skills/univariada.md sobre receita_usd, qtd_pedidos e tempo_como_cliente. Declare o grão antes de cada medida.</code>
+              <p class="acao">São quatro passos, e cada um é um pedido separado ao agente.</p>
+            <p class="detalhe">Não cole os quatro de uma vez: o agente responde os quatro e você perde o ponto de conferência entre eles.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">02</span>
             <div>
-              <p class="acao">Confira a escala: assimetria acima de 3 pede log, declarado na legenda.</p>
+              <p class="acao">Depois de cada passo, confira antes de seguir.</p>
+            <p class="detalhe">A lista do que conferir está no slide seguinte, ao lado de cada passo.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">03</span>
             <div>
-              <p class="acao">Peça a leitura de negócio de uma das figuras.</p>
-            <code class="prompt-literal">Explique este boxplot para quem nunca estudou estatística e não vai perguntar o que é quartil. Depois diga, em três frases, o que olhar nele para entender a perda de contas.</code>
-            </div>
-          </div>
-          <div class="pratica-passo">
-            <span class="num">04</span>
-            <div>
-              <p class="acao">Escreva, abaixo de cada figura, o que ela não permite concluir.</p>
+              <p class="acao">A entrega é a leitura escrita embaixo de cada figura.</p>
+            <p class="detalhe">Figura sem as duas frases embaixo não entra na seção de univariada do artefato.</p>
             </div>
           </div>
           </div>
@@ -438,7 +470,81 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">12</p>
+          <p class="footer-page">13</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 2 &middot; um pedido por vez, com conferência entre eles</p>
+          <div class="accent-bar"></div>
+          <h2>Passos 1 e 2, as medidas e a figura</h2>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Peça as medidas das três variáveis.</p>
+            <p class="detalhe">Confira: ele somou por conta ou contou linhas? Os dois grãos dão números diferentes.</p>
+            <code class="prompt-literal">Execute skills/univariada.md sobre receita_usd, qtd_pedidos e tempo_como_cliente.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Peça o histograma da receita.</p>
+            <p class="detalhe">Confira: o máximo do eixo bate com o máximo da tabela do passo 1?</p>
+            <code class="prompt-literal">Plote o histograma da receita por conta e declare a escala na legenda.</code>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>As duas saídas estão em arquivo, e o grão está declarado em cada uma</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">14</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 2 &middot; um pedido por vez, com conferência entre eles</p>
+          <div class="accent-bar"></div>
+          <h2>Passos 3 e 4, a leitura e o limite</h2>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Peça a leitura de negócio. Confira se sobrou termo técnico sem explicação.</p>
+            <code class="prompt-literal">Explique este gráfico sem termo técnico não explicado, e diga em três frases o que olhar nele.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Peça o limite da figura. Se ele afirmar causa, refaça o pedido.</p>
+            <code class="prompt-literal">Escreva o que este gráfico não permite concluir sobre a perda de contas.</code>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>Cada figura tem duas frases embaixo, e a segunda diz o que ela não sustenta</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">15</p>
         </div>
       </section>
 
@@ -446,11 +552,36 @@
         <p class="secao-numero">03</p>
         <div class="accent-bar"></div>
         <h2>Análise bivariada</h2>
-        <h3>O cruzamento contra o rótulo, e o critério que o rótulo esconde</h3>
+        <h3>Do cruzamento contra o rótulo até o critério que o define</h3>
         <div class="secao-condicoes">
           <div><span class="num">01</span>Um corte por vez, com o tamanho da base em cada célula</div>
           <div><span class="num">02</span>Reconstruir o critério de um rótulo antes de usá-lo</div>
           <div><span class="num">03</span>Perguntar, de toda variável que separa bem demais, se ela vazou</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Uma prevalência diferente entre segmentos admite pelo menos três explicações</h2>
+          <p class="linha-contexto">A manhã fechou a segmentação. A tarde mede o churn dentro dela, e a ordem importa: quem vê a tabela antes de formular fica com a primeira explicação plausível que a tabela sugerir.</p>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo fragment"><span class="num">01</span><div><p class="acao">Que hipótese explicaria um segmento perder mais contas que outro?</p><p class="detalhe">Cada mesa escreve uma. Vale ciclo de compra, vale cobertura comercial, vale porte da conta.</p></div></div>
+          <div class="pratica-passo fragment"><span class="num">02</span><div><p class="acao">Que evidência nesta base sustentaria a sua hipótese?</p><p class="detalhe">Precisa ser uma coluna que existe, não uma que você gostaria que existisse.</p></div></div>
+          <div class="pratica-passo fragment"><span class="num">03</span><div><p class="acao">Que evidência a derrubaria?</p><p class="detalhe">Hipótese que nenhum dado desta base pode derrubar não vai ser testada hoje, e isso entra na seção de limitações.</p></div></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>As três hipóteses ficam em pé até o fim da aula, e o critério que decide entre elas é a medida.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">16</p>
         </div>
       </section>
 
@@ -484,7 +615,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">13</p>
+          <p class="footer-page">17</p>
         </div>
       </section>
 
@@ -504,7 +635,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">14</p>
+          <p class="footer-page">18</p>
         </div>
       </section>
 
@@ -524,7 +655,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">15</p>
+          <p class="footer-page">19</p>
         </div>
       </section>
 
@@ -550,7 +681,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">16</p>
+          <p class="footer-page">20</p>
         </div>
       </section>
 
@@ -582,7 +713,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">17</p>
+          <p class="footer-page">21</p>
         </div>
       </section>
 
@@ -609,7 +740,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">18</p>
+          <p class="footer-page">22</p>
         </div>
       </section>
 
@@ -656,7 +787,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">19</p>
+          <p class="footer-page">23</p>
         </div>
       </section>
 
@@ -684,28 +815,22 @@
           <div class="pratica-passo">
             <span class="num">01</span>
             <div>
-              <p class="acao">Cruze o rótulo com o último mês de receita de cada conta.</p>
-            <code class="prompt-literal">Calcule o último período com receita de cada conta e cruze com churn_label. Ache o único mês com contas dos dois lados.</code>
+              <p class="acao">São quatro pedidos separados, e o terceiro só faz sentido depois do segundo.</p>
+            <p class="detalhe">O passo 2 produz um resíduo que o passo 3 resolve. Colar os quatro de uma vez pula o resíduo.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">02</span>
             <div>
-              <p class="acao">Desça ao grão do pedido para resolver o resíduo.</p>
-            <code class="prompt-literal">Na raw data, para as contas desse mês, cruze a data do último pedido com churn_label. Existe data que separe sem exceção?</code>
+              <p class="acao">Se o grupo não recuperar o critério, isso também é resultado.</p>
+            <p class="detalhe">O registro nesse caso é critério desconhecido, com o que foi tentado.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">03</span>
             <div>
-              <p class="acao">Meça o que cortes alternativos fariam com a fila.</p>
-            <code class="prompt-literal">Construa rótulos com cortes de 6, 9 e 12 meses de inatividade a partir de 2026-03. Traga o tamanho da fila e a receita marcada em cada um.</code>
-            </div>
-          </div>
-          <div class="pratica-passo">
-            <span class="num">04</span>
-            <div>
-              <p class="acao">Escreva o critério em uma frase. Sem recuperar, registre como desconhecido.</p>
+              <p class="acao">As hipóteses do bloco anterior continuam em pé.</p>
+            <p class="detalhe">Ao final, diga qual delas o que você mediu sustenta e qual ele derruba.</p>
             </div>
           </div>
           </div>
@@ -718,7 +843,83 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">20</p>
+          <p class="footer-page">24</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; um pedido por vez, com conferência entre eles</p>
+          <div class="accent-bar"></div>
+          <h2>Passos 1 e 2, a prevalência e a contingência</h2>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Peça a prevalência por segmento, com o tamanho da base.</p>
+            <p class="detalhe">Confira: a soma das contas bate com 8.282? Categoria com menos de 30 contas entra marcada.</p>
+            <code class="prompt-literal">No grão da conta, traga contas, contas perdidas, prevalência e participação na receita por segmento_lenovo.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Peça a contingência do último mês contra o rótulo.</p>
+            <p class="detalhe">Confira: a soma das células bate com 8.282? Se não bater, ele perdeu contas na agregação.</p>
+            <code class="prompt-literal">Calcule o último período com receita de cada conta e cruze com churn_label. Ache o único mês com contas dos dois lados.</code>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>As duas tabelas trazem o tamanho da base em cada célula</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">25</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; um pedido por vez, com conferência entre eles</p>
+          <div class="accent-bar"></div>
+          <h2>Passos 3 e 4, o grão do pedido e os cortes</h2>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Desça ao grão do pedido para resolver o resíduo do passo 2.</p>
+            <p class="detalhe">Confira: ele leu as 207.826 linhas? Se resumiu por amostragem, o corte não aparece.</p>
+            <code class="prompt-literal">Na raw data, para as contas desse mês, cruze a data do último pedido com churn_label. Existe data que separe sem exceção?</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Meça o que cortes alternativos fariam com a fila.</p>
+            <p class="detalhe">Confira: a fila cresce quando o corte afrouxa? Se não crescer, a data de referência está errada.</p>
+            <code class="prompt-literal">Construa rótulos com cortes de 6, 9 e 12 meses de inatividade a partir de 2026-03. Traga o tamanho da fila e a receita marcada em cada um.</code>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A mesa escreve o critério do rótulo em uma frase, com a evidência ao lado</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">26</p>
         </div>
       </section>
 
@@ -729,7 +930,7 @@
         <h3>Quatro estações, uma por seção do checklist</h3>
         <div class="secao-condicoes">
           <div><span class="num">01</span>Cada seção entra com o número e a figura que a sustentam</div>
-          <div><span class="num">02</span>Cada decisão de tratamento entra escrita, com o custo em linhas</div>
+          <div><span class="num">02</span>Cada decisão de tratamento entra no registro, com o custo em linhas</div>
           <div><span class="num">03</span>A pasta precisa reexecutar na máquina de outra pessoa</div>
         </div>
       </section>
@@ -744,7 +945,7 @@
         </div>
         <div class="concept-cards quatro">
           <div class="concept-card"><h3>01. Carga</h3><p>As cinco abas carregadas, com a contagem de linhas conferida contra a fonte e o grão de cada uma declarado.</p></div>
-          <div class="concept-card"><h3>02. Qualidade</h3><p>Cada advertência encontrada, a decisão tomada e o custo dela em linhas.</p></div>
+          <div class="concept-card"><h3>02. Qualidade</h3><p>O registro de tratamento: cada advertência, a decisão e o custo dela em linhas.</p></div>
           <div class="concept-card"><h3>03. Univariada</h3><p>Tendência central, dispersão e forma na mesma tabela, com a leitura escrita de cada figura.</p></div>
           <div class="concept-card"><h3>04. Bivariada</h3><p>Cruzamentos contra o rótulo, com tamanho de base em cada célula e a explicação alternativa que a medida não descarta.</p></div>
         </div>
@@ -756,7 +957,49 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">21</p>
+          <p class="footer-page">27</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">skills/limpeza-de-dados.md</p>
+          <div class="accent-bar"></div>
+          <h2>A skill calcula o custo das três decisões e para antes de escolher</h2>
+        </div>
+        <div class="side-by-side">
+          <div>
+            <pre class="code-compact"><code># Skill: limpeza de dados
+<span class="hl-restricao">Não preencha lacuna.
+Não decida no lugar de quem
+responde pelo número.</span>
+## Por advertência
+<span class="hl-dados">1. Meça o tamanho
+2. A ausência é condicionada?
+3. Escolha o indicador
+4. Calcule sob as três decisões
+5. Pare e pergunte</span>
+<span class="hl-formato">## registro-de-tratamento.md</span></code></pre>
+          </div>
+          <div>
+            <div class="concept-cards">
+              <div class="concept-card"><h3>Excluir</h3><p>Assume que o que falta é aleatório.</p></div>
+              <div class="concept-card"><h3>Imputar</h3><p>Inventa variação que não foi observada.</p></div>
+              <div class="concept-card"><h3>Sinalizar</h3><p>Adia a decisão para a análise seguinte.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Nada nela é específico da Kovan, e o artefato que ela produz é o registro de tratamento.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
+          <p class="footer-page">28</p>
         </div>
       </section>
 
@@ -764,52 +1007,53 @@
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
-          <p class="sobrelinha">Prática 4 &middot; 65 minutos &middot; Antigravity</p>
+          <p class="sobrelinha">Prática 4 &middot; 55 minutos &middot; Antigravity</p>
           <div class="accent-bar"></div>
-          <h2>As quatro seções que fecham hoje</h2>
+          <h2>A oficina fecha quatro das sete seções do artefato</h2>
         </div>
         <div class="pratica">
           <div class="pratica-trilho">
             <div class="pratica-tempo">
-              <p class="tempo">65</p>
+              <p class="tempo">55</p>
               <p class="tempo-unidade">minutos</p>
             </div>
             <dl>
               <dt>Formato</dt><dd>Em grupo, na pasta clonada</dd>
-              <dt>Entrega</dt><dd>A pasta do grupo, com código, figuras e o relatório das quatro seções</dd>
-              <dt>Checkpoint</dt><dd>Às 15h30 cada mesa mostra a seção que está mais atrasada</dd>
+              <dt>Entrega</dt><dd>A pasta do grupo, com código, figuras e o registro de tratamento</dd>
+              <dt>Checkpoint</dt><dd>Às 15h20 as mesas trocam de pasta e executam a skill uma da outra</dd>
             </dl>
           </div>
           <div class="pratica-passos">
           <div class="pratica-passo">
             <span class="num">01</span>
             <div>
-              <p class="acao">Estação 1, 15 min. Carga: contagem por aba, grão e contas em comum.</p>
+              <p class="acao">Estação 1, 10 min. Carga: contagem por aba, grão e contas em comum.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">02</span>
             <div>
-              <p class="acao">Estação 2, 20 min. Qualidade: uma decisão por advertência, com custo em linhas.</p>
+              <p class="acao">Estação 2, 25 min. Qualidade: rode a skill e decida cada advertência.</p>
+            <code class="prompt-literal">Execute skills/limpeza-de-dados.md sobre dados/datasets_case_modulo2.xlsx, uma advertência por vez.</code>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">03</span>
             <div>
-              <p class="acao">Estação 3, 15 min. Univariada: aproveite as figuras da Prática 2.</p>
+              <p class="acao">Troca de pastas: execute a skill e o registro da mesa ao lado.</p>
+            <p class="detalhe">Número que não bate indica passo do registro que só fazia sentido para quem escreveu.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">04</span>
             <div>
-              <p class="acao">Estação 4, 15 min. Bivariada: some um corte por setor à tabela da Prática 3.</p>
+              <p class="acao">Estação 3, 10 min. Univariada: aproveite as figuras da Prática 2.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">05</span>
             <div>
-              <p class="acao">Confira a reexecução antes de sair.</p>
-            <code class="prompt-literal">Liste os arquivos desta sessão e diga, para cada número do relatório, qual script o produz. Aponte os que não têm código.</code>
+              <p class="acao">Estação 4, 10 min. Bivariada: some um corte por setor à tabela da Prática 3.</p>
             </div>
           </div>
           </div>
@@ -817,12 +1061,12 @@
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Critério de conclusão</span>
-          <p>Outra pessoa clona a pasta, coloca o dataset e obtém os mesmos números</p>
+          <p>A mesa ao lado executa o registro de vocês e chega aos mesmos números</p>
         </div>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">22</p>
+          <p class="footer-page">29</p>
         </div>
       </section>
 
@@ -847,7 +1091,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">23</p>
+          <p class="footer-page">30</p>
         </div>
       </section>
 
@@ -871,7 +1115,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
-          <p class="footer-page">24</p>
+          <p class="footer-page">31</p>
         </div>
       </section>
 

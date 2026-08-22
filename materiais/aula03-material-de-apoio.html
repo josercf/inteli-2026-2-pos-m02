@@ -499,18 +499,20 @@
         <code>AGENTS.md</code> da raiz já carrega as regras da sessão, então os prompts abaixo não
         repetem a proibição de preencher lacuna nem a exigência de mostrar o código.</p>
 
-        <h3>Prática 1: a skill da Aula 02 contra a base nova</h3>
+        <h3>Prática 1: o perfilamento das cinco abas</h3>
 
         <pre class="doc-codigo">Execute skills/perfilamento.md sobre as cinco abas de
-dados/datasets_case_modulo2.xlsx. Depois execute a skill de
-limpeza do grupo sobre a mesma base. Ao final, liste os passos
-dela que não puderam ser executados e por quê.</pre>
+dados/datasets_case_modulo2.xlsx.</pre>
 
-        <p>O resultado esperado não é uma base limpa. É a lista dos passos que falharam, porque a
-        skill foi escrita para colunas em português (<code>receita_brl</code>,
-        <code>visitas_registradas</code>, <code>taxonomia_mix</code>) que não existem aqui. O que
-        interessa medir é quanto da <em>estrutura</em> da skill sobrevive quando os nomes de
-        coluna mudam.</p>
+        <p>Repare no formato do pedido: um caminho de arquivo, sem nenhuma instrução colada na
+        conversa. O agente lê o <code>AGENTS.md</code> e a skill da própria pasta. É o que separa
+        um fluxo que outra pessoa reexecuta de um que só existiu naquela janela de chat.</p>
+
+        <p>O resultado esperado é o <code>perfil.md</code> com as advertências ordenadas por
+        linhas afetadas. Vale conferir quais das quatro da seção 2 o agente achou sozinho, e qual
+        passou: em geral a chave do engajamento e o cadastro duplicado saem fácil, e o grão
+        temporal incompatível costuma escapar, porque exige comparar duas abas em vez de
+        descrever uma.</p>
 
         <h3>Prática 2: a distribuição, com a leitura escrita</h3>
 
@@ -536,6 +538,31 @@ separa os dois grupos sem exceção?</pre>
         <pre class="doc-codigo">Construa rótulos com cortes de 6, 9 e 12 meses de inatividade a
 partir de 2026-03. Traga o tamanho da fila e a receita marcada
 em cada um.</pre>
+
+        <h3>Oficina, estação 2: a skill de limpeza</h3>
+
+        <pre class="doc-codigo">Execute skills/limpeza-de-dados.md sobre
+dados/datasets_case_modulo2.xlsx, uma advertência por vez.</pre>
+
+        <p>A skill vem pronta na pasta e não é específica da Kovan: as seções de regras, de
+        decisões possíveis e de medição de custo valem para qualquer base que chegar na mesa de
+        vocês depois deste curso.</p>
+
+        <p>O que ela faz por advertência: mede o tamanho, testa se a ausência é condicionada
+        comparando a taxa entre grupos formados por colunas observadas, escolhe o indicador de
+        negócio que a decisão altera, calcula esse indicador sob as três decisões possíveis, e
+        <strong>para para perguntar</strong>. A decisão continua sendo de quem responde pelo
+        número.</p>
+
+        <p>O artefato que sai dela é o <code>registro-de-tratamento.md</code>, com uma linha por
+        advertência. O registro vale mais do que a base tratada: a base sai dele de novo por
+        execução, e ele não sai da base.</p>
+
+        <p><strong>O teste da troca de pastas.</strong> Copie a skill e o registro do seu grupo
+        para a pasta da mesa ao lado e peça a execução contra a base crua. Os números precisam
+        bater com os que vocês apresentaram. Quando não batem, o passo que divergiu é o que estava
+        escrito de um jeito que só fazia sentido para quem escreveu, e ele precisa de mais uma
+        linha de instrução. Esse teste só é possível porque a skill é um arquivo numa pasta.</p>
 
         <h3>Prática 4: a conferência de reexecução</h3>
 
@@ -566,7 +593,7 @@ relatório, qual script o produz. Aponte os que não têm código.</pre>
             </thead>
             <tbody>
               <tr><td>01. Carga</td><td>contagem por aba conferida, grão declarado, contas em comum</td><td>oficina</td></tr>
-              <tr><td>02. Qualidade</td><td>uma decisão por advertência, com custo em linhas</td><td>oficina</td></tr>
+              <tr><td>02. Qualidade</td><td>o registro de tratamento, com custo em linhas por decisão</td><td>oficina</td></tr>
               <tr><td>03. Univariada</td><td>centro, dispersão e forma, com leitura escrita por figura</td><td>oficina</td></tr>
               <tr><td>04. Bivariada</td><td>contingência com tamanho de base e a alternativa não descartada</td><td>oficina</td></tr>
               <tr><td>05. Rótulo</td><td>o critério recuperado e três cortes alternativos</td><td>autoestudo</td></tr>

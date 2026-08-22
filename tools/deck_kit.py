@@ -156,7 +156,15 @@ def figura_embutida(titulo, arquivo, sobrelinha=None, contexto=None, conclusao=N
 
 
 def pratica(numero, tarefa, minutos, formato, entrega, checkpoint, passos, criterio,
-            ambiente="Colab") -> str:
+            ambiente="Colab", trilho=True, sobrelinha=None) -> str:
+    """Slide de pratica.
+
+    `trilho=False` omite a faixa de tempo, formato, entrega e checkpoint. Serve
+    para dividir uma pratica longa em dois slides: o primeiro enquadra e o
+    segundo lista os passos com os prompts. Em 15/08 a turma leu uma pratica de
+    cinco passos com prompt como se fosse um prompt unico, e como se fosse uma
+    etapa unica.
+    """
     linhas = []
     for i, passo in enumerate(passos, 1):
         detalhe = f'\n            <p class="detalhe">{passo["detalhe"]}</p>' if passo.get("detalhe") else ""
@@ -169,8 +177,7 @@ def pratica(numero, tarefa, minutos, formato, entrega, checkpoint, passos, crite
             "            </div>\n"
             "          </div>\n"
         )
-    corpo = (
-        '        <div class="pratica">\n'
+    faixa = (
         '          <div class="pratica-trilho">\n'
         '            <div class="pratica-tempo">\n'
         f'              <p class="tempo">{minutos}</p>\n'
@@ -182,14 +189,27 @@ def pratica(numero, tarefa, minutos, formato, entrega, checkpoint, passos, crite
         f"              <dt>Checkpoint</dt><dd>{checkpoint}</dd>\n"
         "            </dl>\n"
         "          </div>\n"
-        '          <div class="pratica-passos">\n' + "".join(linhas) + "          </div>\n"
-        "        </div>\n"
-    )
+    ) if trilho else ""
+    if trilho:
+        corpo = (
+            '        <div class="pratica">\n' + faixa +
+            '          <div class="pratica-passos">\n' + "".join(linhas) + "          </div>\n"
+            "        </div>\n"
+        )
+    else:
+        # `.pratica` e uma grade de duas colunas dimensionada para o trilho.
+        # Sem ele os passos caiam na coluna estreita e o slide estourava por
+        # 80 a 260px. Sem trilho, os passos usam a largura inteira, como no
+        # bloco de checklist.
+        corpo = (
+            '        <div class="exercise-steps">\n' + "".join(linhas) + "        </div>\n"
+        )
     return (
         '      <section class="exercise-slide">\n'
         '        <div class="top-bar"></div>\n'
         f"        {LOGO}\n"
-        + _cabecalho(f"Prática {numero} &middot; {minutos} minutos &middot; {ambiente}", tarefa, None)
+        + _cabecalho(sobrelinha or f"Prática {numero} &middot; {minutos} minutos &middot; {ambiente}",
+                     tarefa, None)
         + corpo
         + _fecho(criterio, "Critério de conclusão", True, None)
         + _rodape()

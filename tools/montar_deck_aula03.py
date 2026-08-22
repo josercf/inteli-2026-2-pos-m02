@@ -103,24 +103,33 @@ SLIDES.append(conteudo(
 # ---------------------------------------------------------------------------
 # 4. Os dois artefatos da trilha
 # ---------------------------------------------------------------------------
+# Tabela transposta, e nao duas colunas de prosa: os dois artefatos compartilham
+# as mesmas quatro dimensoes, e a tabela obriga a declarar o criterio de
+# comparacao em vez de justapor dois blocos de texto que nem alinham entre si.
 SLIDES.append(conteudo(
     "A Trilha de Tecnologia entrega dois artefatos avaliados",
-    '        <div class="side-by-side">\n'
-    "          <div>\n"
-    "            <h3>Artefato 1 &middot; Análise Exploratória de Dados</h3>\n"
-    "            <p>O código que carrega, limpa e visualiza a base, identificando os padrões "
-    "associados ao churn. Entregue como pasta reexecutável.</p>\n"
-    "            <p><strong>05/09/2026.</strong> Critério binário, com o foco no feedback. "
-    "Alimenta o Customer Segmentation Report da manhã.</p>\n"
-    "          </div>\n"
-    "          <div>\n"
-    "            <h3>Artefato 2 &middot; Aplicativo Web Preditivo-Generativo</h3>\n"
-    "            <p>Executa o modelo de churn treinado em Python e consome uma API generativa "
-    "para produzir o texto de retenção personalizado.</p>\n"
-    "            <p><strong>03/10/2026.</strong> Critério por rubrica, defendido em banca. "
-    "Alimenta o Plano de Inteligência de Retenção da manhã.</p>\n"
-    "          </div>\n"
-    "        </div>\n",
+    '        <table class="tabela-criterios pares">\n'
+    "            <thead><tr><th></th>"
+    "<th>Artefato 1 &middot; Análise Exploratória de Dados</th>"
+    "<th>Artefato 2 &middot; Aplicativo Web Preditivo-Generativo</th></tr></thead>\n"
+    "            <tbody>\n"
+    "              <tr><td>O que é</td>"
+    "<td>o código que carrega, limpa e visualiza a base, entregue como pasta "
+    "reexecutável</td>"
+    "<td>executa o modelo de churn treinado em Python e consome uma API generativa "
+    "para o texto de retenção</td></tr>\n"
+
+    "              <tr><td>Entrega</td>"
+    "<td>05/09/2026, na Semana 5</td>"
+    "<td>03/10/2026, na Semana 9</td></tr>\n"
+    "              <tr><td>Critério</td>"
+    "<td>binário, entregou ou não entregou, com o foco no feedback</td>"
+    "<td>rubrica, defendido em banca no papel do Comitê de Receita</td></tr>\n"
+    "              <tr><td>Alimenta</td>"
+    "<td>o Customer Segmentation Report da manhã</td>"
+    "<td>o Plano de Inteligência de Retenção da manhã</td></tr>\n"
+    "            </tbody>\n"
+    "        </table>\n",
     sobrelinha="O destino da trilha",
     conclusao="A oficina de hoje começa a pasta do Artefato 1, e o critério de aceite é a reexecução.",
 ))
@@ -129,24 +138,21 @@ SLIDES.append(conteudo(
 # 5. O checklist do Artefato 1
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "O Artefato 1 tem sete seções, e a oficina de hoje fecha quatro",
-    '        <div class="embed-tabela">\n'
-    "          <table>\n"
-    "            <thead><tr><th>Seção</th><th>O que precisa ter</th><th>Quando</th></tr></thead>\n"
+    "O Artefato 1 tem sete seções, e hoje fecham quatro",
+    '        <table class="tabela-criterios compacta">\n'
+    "            <thead><tr><th>Seção</th><th>O que precisa ter</th></tr></thead>\n"
     "            <tbody>\n"
-    "              <tr><td>01. Carga</td><td>contagem por aba conferida, grão declarado, contas em comum</td><td>hoje</td></tr>\n"
-    "              <tr><td>02. Qualidade</td><td>o registro de tratamento, com o custo de cada decisão em linhas</td><td>hoje</td></tr>\n"
-    "              <tr><td>03. Univariada</td><td>centro, dispersão e forma, com a leitura escrita de cada figura</td><td>hoje</td></tr>\n"
-    "              <tr><td>04. Bivariada</td><td>contingência com o tamanho da base e a explicação alternativa</td><td>hoje</td></tr>\n"
-    "              <tr><td>05. Rótulo</td><td>o critério recuperado do dado e três cortes alternativos</td><td>autoestudo</td></tr>\n"
-    "              <tr><td>06. Visuais</td><td>as figuras que sustentam a segmentação e as personas da manhã</td><td>autoestudo</td></tr>\n"
-    "              <tr><td>07. Limitações</td><td>o que esta base não permite responder</td><td>autoestudo</td></tr>\n"
+    "              <tr><td>01. Carga</td><td>contagem por aba conferida e grão declarado</td></tr>\n"
+    "              <tr><td>02. Qualidade</td><td>o registro de tratamento, com o custo por decisão</td></tr>\n"
+    "              <tr><td>03. Univariada</td><td>centro, dispersão e forma, com a leitura de cada figura</td></tr>\n"
+    "              <tr><td>04. Bivariada</td><td>contingência com o tamanho da base em cada célula</td></tr>\n"
+    "              <tr><td>05. Rótulo</td><td>o critério recuperado e três cortes alternativos</td></tr>\n"
+    "              <tr><td>06. Visuais</td><td>as figuras que a segmentação da manhã pede</td></tr>\n"
+    "              <tr><td>07. Limitações</td><td>o que esta base não permite responder</td></tr>\n"
     "            </tbody>\n"
-    "          </table>\n"
-    "        </div>\n",
+    "        </table>\n",
     sobrelinha="Análise Exploratória de Dados &middot; entrega 05/09/2026",
-    conclusao="A seção 06 é o item que o checklist da manhã cobra de vocês, então ela tem destinatário e prazo próprios.",
-    fonte="O checklist completo está em CHECKLIST-ARTEFATO-1.md, na raiz da pasta clonada.",
+    conclusao="As quatro primeiras fecham nesta tarde, e a 06 alimenta o checklist da manhã.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -258,21 +264,23 @@ SLIDES.append(conteudo(
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
     1,
-    "O perfilamento das cinco abas, com a skill que o agente carrega sozinho",
+    "O perfilamento das cinco abas",
     20,
     "Em grupo, na pasta clonada",
-    "O arquivo perfil.md, com as advertências ordenadas por linhas afetadas",
+    "O arquivo perfil.md, com as advertências ordenadas",
     "Cada mesa diz quantas das quatro advertências o agente achou sozinho",
     [
-        {"acao": "Clone o repositório e coloque o xlsx em dados/.",
+        {"acao": "Clone o repositório da turma.",
          "prompt": "git clone https://github.com/josercf/inteli-pos-2026-2a-eda.git"},
+        {"acao": "Baixe o dataset e salve como .xlsx dentro de dados/, na pasta clonada.",
+         "detalhe": "Arquivo > Fazer download > Microsoft Excel, e salve como dados/datasets_case_modulo2.xlsx.",
+         "prompt": "docs.google.com/spreadsheets/d/1wX8BgKz4Wq0A3cWBZLC3PxYcqmCzBOSe"},
         {"acao": "Abra a pasta no Antigravity e peça ao agente que resuma as regras da sessão.",
-         "detalhe": "Se ele não citar a proibição de preencher lacuna, ele não leu o AGENTS.md."},
-        {"acao": "Peça o perfilamento pelo caminho do arquivo, sem colar instrução na conversa.",
+         "detalhe": "Se ele não citar a proibição de preencher lacuna, não leu o AGENTS.md."},
+        {"acao": "Peça o perfilamento pelo caminho do arquivo, e confira qual advertência passou.",
          "prompt": "Execute skills/perfilamento.md sobre as cinco abas de dados/datasets_case_modulo2.xlsx."},
-        {"acao": "Confira quais das quatro advertências ele achou sozinho, e qual passou."},
     ],
-    "A mesa tem o perfil.md em disco e sabe qual advertência o agente deixou passar",
+    "A mesa tem o perfil.md em disco, com as advertências ordenadas",
     ambiente=AMBIENTE,
 ))
 
@@ -453,8 +461,7 @@ SLIDES.append(pratica(
 # hipoteses, senao a turma le a resposta antes de formular.
 SLIDES.append(conteudo(
     "A prevalência de 19,2% vale para a carteira inteira e não localiza nenhum grupo",
-    '        <div class="embed-tabela">\n'
-    "          <table>\n"
+    '        <table class="tabela-criterios pares">\n'
     "            <thead><tr><th>Sobre</th><th>O que a univariada entrega</th>"
     "<th>O que fica sem resposta</th></tr></thead>\n"
     "            <tbody>\n"
@@ -468,14 +475,12 @@ SLIDES.append(conteudo(
     "<td>1.593 contas, ou 19,2% da carteira</td>"
     "<td>em que grupo essas contas estão</td></tr>\n"
     "            </tbody>\n"
-    "          </table>\n"
-    "        </div>\n"
-    "        <p>A bivariada responde a coluna da direita condicionando uma variável à outra: em "
-    "vez da prevalência da carteira, a prevalência <em>dentro</em> de cada segmento, setor ou "
-    "faixa de receita. O preço é que cada célula divide a base, e célula pequena produz ruído "
-    "com aparência de achado.</p>\n",
+    "        </table>\n"
+    "        <p>A bivariada responde a coluna da direita condicionando uma variável à outra: a "
+    "prevalência <em>dentro</em> de cada segmento, em vez da prevalência da carteira. O preço é "
+    "que cada célula divide a base.</p>\n",
     sobrelinha="O limite desta seção",
-    conclusao="Toda medida univariada é uma média sobre grupos que podem se comportar de forma oposta, e localizar esses grupos é o trabalho da próxima seção.",
+    conclusao="Toda medida univariada é uma média sobre grupos que podem se comportar de forma oposta.",
 ))
 
 # ---------------------------------------------------------------------------

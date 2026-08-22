@@ -525,6 +525,36 @@
 .tabela-criterios th,
 .tabela-criterios td { border-bottom-color: var(--seg-cinza-linha); }
 
+/* Tabela longa. A partir de seis linhas, o espacamento de 13px por celula
+   soma mais que a altura util do slide: sete linhas do checklist do artefato
+   estouravam por 133px. Aqui a linha encolhe sem que o texto perca corpo de
+   leitura projetada. */
+.tabela-criterios.compacta { font-size: 16px; }
+
+.tabela-criterios.compacta th,
+.tabela-criterios.compacta td { padding: 4px 16px; }
+
+/* A largura de 340px da segunda coluna foi medida para a tabela de tres
+   colunas da Aula 01. Numa tabela de duas colunas ela forca quebra de linha em
+   toda linha e o ganho do espacamento menor se perde. */
+.tabela-criterios.compacta td:nth-child(2),
+.tabela-criterios.compacta th:nth-child(2) { width: auto; }
+
+/* Comparacao de dois objetos lado a lado. As larguras fixas acima foram
+   medidas para a tabela de duas colunas da Aula 01; com tres colunas elas
+   davam 210, 340 e o resto, e as duas colunas comparadas saiam com tamanhos
+   diferentes, o que faz a leitura pender para a mais larga. Aqui o rotulo fica
+   estreito e as duas colunas comparadas dividem o resto em partes iguais. */
+.tabela-criterios.pares { table-layout: fixed; }
+
+.tabela-criterios.pares td:first-child,
+.tabela-criterios.pares th:first-child { width: 168px; }
+
+.tabela-criterios.pares td:nth-child(2),
+.tabela-criterios.pares th:nth-child(2),
+.tabela-criterios.pares td:nth-child(3),
+.tabela-criterios.pares th:nth-child(3) { width: auto; }
+
 .tabela-criterios tr.decisiva td:first-child {
   border-left: 4px solid var(--seg-destaque);
   padding-left: 12px;

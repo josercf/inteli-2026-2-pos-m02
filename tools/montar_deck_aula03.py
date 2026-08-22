@@ -446,6 +446,39 @@ SLIDES.append(pratica(
 ))
 
 # ---------------------------------------------------------------------------
+# 15. O limite da univariada
+# ---------------------------------------------------------------------------
+# Fecha a secao declarando o que ela nao alcanca, sem entregar o achado da
+# bivariada: a variacao entre segmentos aparece so depois do slide de
+# hipoteses, senao a turma le a resposta antes de formular.
+SLIDES.append(conteudo(
+    "A prevalência de 19,2% vale para a carteira inteira e não localiza nenhum grupo",
+    '        <div class="embed-tabela">\n'
+    "          <table>\n"
+    "            <thead><tr><th>Sobre</th><th>O que a univariada entrega</th>"
+    "<th>O que fica sem resposta</th></tr></thead>\n"
+    "            <tbody>\n"
+    "              <tr><td>Receita típica</td>"
+    "<td>mediana de USD 18.552 por conta</td>"
+    "<td>se a conta que se perdeu se parece com a que ficou</td></tr>\n"
+    "              <tr><td>Concentração</td>"
+    "<td>1% do topo com 65,1% da receita</td>"
+    "<td>se estar no topo protege ou expõe a conta</td></tr>\n"
+    "              <tr><td>Contas perdidas</td>"
+    "<td>1.593 contas, ou 19,2% da carteira</td>"
+    "<td>em que grupo essas contas estão</td></tr>\n"
+    "            </tbody>\n"
+    "          </table>\n"
+    "        </div>\n"
+    "        <p>A bivariada responde a coluna da direita condicionando uma variável à outra: em "
+    "vez da prevalência da carteira, a prevalência <em>dentro</em> de cada segmento, setor ou "
+    "faixa de receita. O preço é que cada célula divide a base, e célula pequena produz ruído "
+    "com aparência de achado.</p>\n",
+    sobrelinha="O limite desta seção",
+    conclusao="Toda medida univariada é uma média sobre grupos que podem se comportar de forma oposta, e localizar esses grupos é o trabalho da próxima seção.",
+))
+
+# ---------------------------------------------------------------------------
 # 15. Divisor: bivariada
 # ---------------------------------------------------------------------------
 SLIDES.append(secao(

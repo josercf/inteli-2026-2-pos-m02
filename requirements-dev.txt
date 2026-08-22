@@ -9,3 +9,5 @@ playwright>=1.60
 # Usados por tools/gerar_figuras_aula01.py para gerar os GIFs e conferi-los.
 matplotlib>=3.10
 pillow>=11.0
+# Usado por dados/analise_aula04.py para o IC de Wilson e o qui-quadrado.
+scipy>=1.14

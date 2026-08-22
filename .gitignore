@@ -28,3 +28,7 @@ docs/notas-do-professor/
 !materiais/*.md
 caderno_de_hipoteses.csv
 .superpowers/
+
+# Dataset oficial da Lenovo (ADR-005). Dado real de carteira LATAM, e este
+# repositorio e publico: o arquivo chega a turma pelo canal do programa.
+dados/datasets_case_modulo2.xlsx

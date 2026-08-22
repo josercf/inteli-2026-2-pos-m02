@@ -35,7 +35,7 @@
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>A base oficial da Lenovo substitui o painel sintético e traz 8.282 contas em 24 meses</h2>
-          <p class="linha-contexto">O painel sintético das Aulas 01 e 02 tinha 1.187 contas e nenhuma coluna de rótulo. A base oficial chegou em 21/08 e passa a ser a única a partir de hoje.</p>
+          <p class="linha-contexto">O painel das Aulas 01 e 02 tinha 1.187 contas e nenhuma coluna de rótulo.</p>
         </div>
         <div class="stat-tiles">
           <div class="stat-tile"><p class="stat-numero">8.282</p><p class="stat-rotulo">contas na carteira LATAM</p></div>
@@ -44,16 +44,16 @@
           <div class="stat-tile destaque"><p class="stat-numero">1.593</p><p class="stat-rotulo">contas que a base já marca como perdidas</p></div>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>O que a Aula 02 deixou</h3><p>Uma skill de limpeza escrita para uma base que deixou de existir.</p></div>
+          <div class="concept-card"><h3>O que a Aula 02 deixou</h3><p>Uma skill escrita para uma base que deixou de existir.</p></div>
           <div class="concept-card"><h3>O que mudou na pergunta</h3><p>O rótulo não precisa mais ser construído. Ele veio pronto.</p></div>
-          <div class="concept-card"><h3>O que a tarde apura</h3><p>Qual critério esse rótulo usa e o que ele deixa de fora.</p></div>
+          <div class="concept-card"><h3>O que a tarde apura</h3><p>Qual critério ele usa e o que deixa de fora.</p></div>
         </div>
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
           <p>A skill que cada grupo escreveu na semana passada é o primeiro item a ser testado contra a base nova.</p>
         </div>
-        <p class="fonte-nota">Fonte: datasets_case_modulo2.xlsx, cinco abas. Números travados em dados/tests/test_dataset_oficial.py.</p>
+        <p class="fonte-nota">Fonte: datasets_case_modulo2.xlsx.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
@@ -196,16 +196,16 @@
           <h2>Cinco perguntas separam a base que chegou da base que você acha que chegou</h2>
         </div>
         <div class="exercise-steps">
-          <div class="pratica-passo"><span class="num">01</span><div><p class="acao">Quantas linhas o agente está vendo?</p><p class="detalhe">Se não bater com a fonte, o arquivo chegou quebrado.</p></div></div>
+          <div class="pratica-passo"><span class="num">01</span><div><p class="acao">Quantas linhas o agente está vendo? Se não bater com a fonte, o arquivo chegou quebrado.</p></div></div>
           <div class="pratica-passo"><span class="num">02</span><div><p class="acao">Uma linha representa o quê? Procure a combinação de colunas que não se repete.</p></div></div>
-          <div class="pratica-passo"><span class="num">03</span><div><p class="acao">As chaves cruzam?</p><p class="detalhe">Junção que perde linha aparece com o número antes de ser usada.</p></div></div>
-          <div class="pratica-passo"><span class="num">04</span><div><p class="acao">Quantos vazios por coluna, e o vazio é zero ou desconhecido?</p><p class="detalhe">A resposta muda o tratamento e não está no dado.</p></div></div>
+          <div class="pratica-passo"><span class="num">03</span><div><p class="acao">As chaves cruzam? Junção que perde linha aparece com o número antes de ser usada.</p></div></div>
+          <div class="pratica-passo"><span class="num">04</span><div><p class="acao">Quantos vazios por coluna, e o vazio é zero ou desconhecido? A resposta não está no dado.</p></div></div>
           <div class="pratica-passo"><span class="num">05</span><div><p class="acao">Existe valor impossível? Receita negativa, participação acima de 1.</p></div></div>
         </div>
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>As cinco estão em skills/perfilamento.md, e o agente as executa sem que o grupo as repita.</p>
+          <p>As cinco estão em skills/perfilamento.md, e o agente as executa sozinho.</p>
         </div>
         </div>
         <div class="slide-footer">
@@ -412,8 +412,7 @@
           <div class="pratica-passo">
             <span class="num">02</span>
             <div>
-              <p class="acao">Confira a escala de cada figura.</p>
-            <p class="detalhe">Assimetria acima de 3 pede escala logarítmica, declarada na legenda.</p>
+              <p class="acao">Confira a escala: assimetria acima de 3 pede log, declarado na legenda.</p>
             </div>
           </div>
           <div class="pratica-passo">
@@ -434,7 +433,7 @@
         <div class="fecho">
         <div class="faixa-conclusao clara">
           <span class="rotulo">Critério de conclusão</span>
-          <p>Cada figura tem duas frases escritas embaixo, e a segunda diz o que ela não sustenta</p>
+          <p>Cada figura tem duas frases embaixo, e a segunda diz o que ela não sustenta</p>
         </div>
         </div>
         <div class="slide-footer">
@@ -594,19 +593,19 @@
           <p class="sobrelinha">Vazamento de informação</p>
           <div class="accent-bar"></div>
           <h2>Nenhuma das 4.494 contas com menos de 17 meses de casa aparece como perdida</h2>
-          <p class="linha-contexto">Separação perfeita entre os dois grupos é sinal de vazamento antes de ser sinal de achado. Um modelo treinado com uma variável assim funciona no teste e falha em produção.</p>
+          <p class="linha-contexto">Separação perfeita é sinal de vazamento antes de ser sinal de achado: o modelo funciona no teste e falha em produção.</p>
         </div>
         <div class="concept-cards">
-          <div class="concept-card"><h3>O que a variável parece ser</h3><p>Tempo de casa separa os dois grupos com uma fronteira limpa em 17 meses. Num modelo, ela apareceria como o preditor mais forte da base.</p></div>
-          <div class="concept-card"><h3>O que ela é</h3><p>O rótulo exige treze meses de inatividade, e o painel começa quatro meses antes. Conta com menos de 17 meses não teve tempo de satisfazer a regra.</p></div>
-          <div class="concept-card"><h3>O teste que evita isso</h3><p>De toda variável que separa muito bem, pergunte se a informação existiria no momento em que a decisão precisa ser tomada.</p></div>
+          <div class="concept-card"><h3>O que a variável parece ser</h3><p>Tempo de casa separa os dois grupos em 17 meses. Num modelo, seria o preditor mais forte da base.</p></div>
+          <div class="concept-card"><h3>O que ela é</h3><p>O rótulo exige treze meses de inatividade. Conta com menos de 17 meses de casa não teve tempo de satisfazer a regra.</p></div>
+          <div class="concept-card"><h3>O teste que evita isso</h3><p>De toda variável que separa bem, pergunte se a informação existiria na hora da decisão.</p></div>
         </div>
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>A fronteira de 17 meses é uma consequência da regra de rotulagem, medida sobre a janela do painel.</p>
+          <p>A fronteira de 17 meses mede a regra de rotulagem contra a janela do painel.</p>
         </div>
-        <p class="fonte-nota">Fonte: Dataset 1 e Dataset 4. Travado em dados/tests/test_dataset_oficial.py.</p>
+        <p class="fonte-nota">Fonte: Dataset 1 e Dataset 4.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 03</p>
@@ -686,14 +685,14 @@
             <span class="num">01</span>
             <div>
               <p class="acao">Cruze o rótulo com o último mês de receita de cada conta.</p>
-            <code class="prompt-literal">Calcule o último período com receita de cada conta e monte a contingência desse período contra churn_label. Identifique o único mês com contas dos dois lados.</code>
+            <code class="prompt-literal">Calcule o último período com receita de cada conta e cruze com churn_label. Ache o único mês com contas dos dois lados.</code>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">02</span>
             <div>
               <p class="acao">Desça ao grão do pedido para resolver o resíduo.</p>
-            <code class="prompt-literal">Na aba raw data, para as contas do mês de sobreposição, cruze a data do último pedido com churn_label. Existe uma data que separa os dois grupos sem exceção?</code>
+            <code class="prompt-literal">Na raw data, para as contas desse mês, cruze a data do último pedido com churn_label. Existe data que separe sem exceção?</code>
             </div>
           </div>
           <div class="pratica-passo">
@@ -706,8 +705,7 @@
           <div class="pratica-passo">
             <span class="num">04</span>
             <div>
-              <p class="acao">Escreva o critério recuperado em uma frase.</p>
-            <p class="detalhe">Sem recuperar, o registro é critério desconhecido. Isso também é resultado.</p>
+              <p class="acao">Escreva o critério em uma frase. Sem recuperar, registre como desconhecido.</p>
             </div>
           </div>
           </div>
@@ -742,7 +740,7 @@
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>O Artefato 1 tem sete seções, e quatro delas fecham nesta oficina</h2>
-          <p class="linha-contexto">As três seções restantes vão para o autoestudo da semana: 05. Rótulo, com o critério recuperado e três cortes alternativos; 06. Visuais, com as figuras que a manhã pede; 07. Limitações. O checklist completo está em CHECKLIST-ARTEFATO-1.md.</p>
+          <p class="linha-contexto">Vão para o autoestudo da semana: 05. Rótulo, 06. Visuais e 07. Limitações. O checklist completo está em CHECKLIST-ARTEFATO-1.md, na raiz da pasta clonada.</p>
         </div>
         <div class="concept-cards quatro">
           <div class="concept-card"><h3>01. Carga</h3><p>As cinco abas carregadas, com a contagem de linhas conferida contra a fonte e o grão de cada uma declarado.</p></div>
@@ -786,29 +784,25 @@
           <div class="pratica-passo">
             <span class="num">01</span>
             <div>
-              <p class="acao">Estação 1, quinze minutos. Feche a seção de carga.</p>
-            <p class="detalhe">Contagem por aba, grão declarado, contas em comum com o painel.</p>
+              <p class="acao">Estação 1, 15 min. Carga: contagem por aba, grão e contas em comum.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">02</span>
             <div>
-              <p class="acao">Estação 2, vinte minutos. Feche a seção de qualidade.</p>
-            <p class="detalhe">Uma decisão por advertência, com justificativa e custo em linhas.</p>
+              <p class="acao">Estação 2, 20 min. Qualidade: uma decisão por advertência, com custo em linhas.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">03</span>
             <div>
-              <p class="acao">Estação 3, quinze minutos. Feche a seção de univariada.</p>
-            <p class="detalhe">Aproveite as figuras da Prática 2 e escreva a leitura que faltar.</p>
+              <p class="acao">Estação 3, 15 min. Univariada: aproveite as figuras da Prática 2.</p>
             </div>
           </div>
           <div class="pratica-passo">
             <span class="num">04</span>
             <div>
-              <p class="acao">Estação 4, quinze minutos. Feche a seção de bivariada.</p>
-            <p class="detalhe">Aproveite a tabela da Prática 3 e acrescente um corte por setor.</p>
+              <p class="acao">Estação 4, 15 min. Bivariada: some um corte por setor à tabela da Prática 3.</p>
             </div>
           </div>
           <div class="pratica-passo">

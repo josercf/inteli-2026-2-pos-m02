@@ -23,10 +23,19 @@ Tres checagens, porque sao tres defeitos diferentes:
    Comparamos as caixas de LINHA do titulo (nao a caixa do h2, que costuma ser
    larga e vazia a direita) com o retangulo do logo.
 
+3. FOLGA. Passar por 6px aqui nao garante passar no CI. O runner e Linux, as
+   metricas de fonte diferem das do macOS, e um paragrafo que aqui cabe numa
+   linha pode quebrar em duas la, o que empurra tudo abaixo dele em cerca de
+   30px. Aconteceu em 22/08/2026 com a Aula 03: dois slides com 29px e 19px de
+   folga local estouraram por 6px e 28px no CI. O relatorio mostra sempre os
+   tres slides mais apertados, e `--folga-minima N` transforma folga pequena em
+   reprovacao. Capa e divisor sao ignorados: eles ocupam o quadro de proposito.
+
 Uso:
     python3 tools/check_slides.py                      # todos os decks
     python3 tools/check_slides.py aulas/aula01.html
     python3 tools/check_slides.py --shots out/         # salva PNG dos slides com problema
+    python3 tools/check_slides.py --folga-minima 40    # reprova slide com menos de 40px de folga
 
 Requer: pip install playwright && python3 -m playwright install chromium
 """
@@ -83,6 +92,10 @@ JS_MEDIR = """
     const limiteBaixo = base.top + 720 - padBottom;
     const limiteDireita = base.left + 1280 - padRight;
 
+    // Folga vertical: quanto sobra entre o bloco mais baixo e o limite.
+    // Medida junto com o vazamento porque e a mesma varredura.
+    let maisBaixo = base.top;
+
     const vazamentos = [];
     for (const el of sec.querySelectorAll('*')) {
       const ecs = getComputedStyle(el);
@@ -91,6 +104,7 @@ JS_MEDIR = """
       if (el.closest('.slide-footer, .top-bar, [class*="logo-header"]')) continue;
       const r = el.getBoundingClientRect();
       if (r.width === 0 && r.height === 0) continue;
+      if (r.bottom > maisBaixo) maisBaixo = r.bottom;
 
       const excessoBaixo = r.bottom - limiteBaixo;
       const excessoDireita = r.right - limiteDireita;
@@ -187,6 +201,10 @@ JS_MEDIR = """
       pior: vazamentos.sort((a, b) =>
         (b.abaixo + b.direita) - (a.abaixo + a.direita))[0] || null,
       total: vazamentos.length,
+      folga: Math.round(limiteBaixo - maisBaixo),
+      // Capa, divisor e fecho preenchem o quadro por desenho: cobrar folga
+      // deles reprovaria o layout correto.
+      cheio: /cover-slide|section-slide|end-slide/.test(sec.className),
       sobreposicoes: sobreposicoes.sort((x, y) => y.px - x.px).slice(0, 3),
       colisoes: colisoes.sort((x, y) => x.folga - y.folga).slice(0, 2),
     };
@@ -195,7 +213,7 @@ JS_MEDIR = """
 """
 
 
-def checar(page, url, nome, shots_dir=None, contador=None):
+def checar(page, url, nome, shots_dir=None, contador=None, folga_minima=0):
     page.goto(url, wait_until="networkidle")
     page.wait_for_timeout(900)
     slides = page.evaluate(JS_MEDIR)
@@ -218,8 +236,20 @@ def checar(page, url, nome, shots_dir=None, contador=None):
         print("  ERRO: nenhuma section encontrada, o deck nao carregou")
         return 1
 
+    # Slides que ocupam o quadro por desenho ficam fora da conta de folga.
+    medidos = [s for s in slides if not s.get("cheio")]
+    apertados = sorted(medidos, key=lambda s: s.get("folga", 0))[:3]
+
     problemas = [s for s in slides
                  if s["pior"] or s.get("sobreposicoes") or s.get("colisoes")]
+    if folga_minima:
+        problemas += [s for s in medidos
+                      if s.get("folga", 0) < folga_minima and s not in problemas]
+
+    if apertados:
+        print("  folga: " + ", ".join(
+            "slide %d com %dpx" % (s["indice"], s.get("folga", 0)) for s in apertados))
+
     if not problemas:
         print("  OK: nada estourando 1280x720, sem bloco sobreposto nem titulo no logo")
         return 0
@@ -243,6 +273,10 @@ def checar(page, url, nome, shots_dir=None, contador=None):
                   % (sob["a"], sob["b"], sob["px"]))
             print("           texto coberto: %s" % sob["texto"])
 
+        if folga_minima and s.get("folga", 0) < folga_minima and not s["pior"]:
+            print("           FOLGA CURTA: %dpx, abaixo do minimo de %dpx"
+                  % (s.get("folga", 0), folga_minima))
+
         for col in s.get("colisoes", []):
             print("           TITULO NO LOGO: <%s> a %dpx do logo do Inteli"
                   % (col["alvo"], col["folga"]))
@@ -265,7 +299,7 @@ def _parse_args(argv):
     """Separa decks de opcoes. O --shots consome o proprio valor: sem isso o
     diretorio de screenshots entra na lista de decks, o servidor devolve 404,
     e o validador reporta sucesso sem ter medido nada."""
-    decks, shots_dir = [], None
+    decks, shots_dir, folga_minima = [], None, 0
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -273,12 +307,18 @@ def _parse_args(argv):
             shots_dir = argv[i + 1] if i + 1 < len(argv) else "shots"
             i += 2
             continue
+        if a == "--folga-minima":
+            # Consome o proprio valor, pelo mesmo motivo do --shots: sem isso
+            # o numero entraria na lista de decks e viraria 404.
+            folga_minima = int(argv[i + 1]) if i + 1 < len(argv) else 0
+            i += 2
+            continue
         if a.startswith("--"):
             i += 1
             continue
         decks.append(a)
         i += 1
-    return decks, shots_dir
+    return decks, shots_dir, folga_minima
 
 
 def _descobrir_decks(pasta_aulas):
@@ -295,7 +335,7 @@ def _descobrir_decks(pasta_aulas):
 
 
 def main():
-    decks, shots_dir = _parse_args(sys.argv[1:])
+    decks, shots_dir, folga_minima = _parse_args(sys.argv[1:])
 
     if not decks:
         pasta = os.path.join(RAIZ, "aulas")
@@ -330,7 +370,8 @@ def main():
                 url = "http://127.0.0.1:%d/%s" % (porta, rel)
                 try:
                     problemas_totais += checar(
-                        page, url, os.path.basename(deck), shots_dir, contador
+                        page, url, os.path.basename(deck), shots_dir, contador,
+                        folga_minima
                     )
                 except Exception as exc:
                     # Uma excecao aqui (navegacao que trava, pagina que

@@ -89,8 +89,8 @@ def distribuicao_receita() -> Path:
     r = c.receita.clip(lower=1)
     medidas = an.receita_univariada()
 
-    fig = _figura(400)
-    ax = fig.add_axes([0.075, 0.28, 0.895, 0.60])
+    fig = _figura(350)
+    ax = fig.add_axes([0.075, 0.30, 0.895, 0.62])
     _estilo_eixo(ax)
 
     ax.hist(np.log10(r), bins=60, color=CINZA_MEDIO, edgecolor=BRANCO, linewidth=0.6)
@@ -132,8 +132,8 @@ def contingencia_rotulo() -> Path:
     ativas = ct[0].to_numpy()
     perdidas = ct[1].to_numpy()
 
-    fig = _figura(400)
-    ax = fig.add_axes([0.075, 0.28, 0.895, 0.53])
+    fig = _figura(350)
+    ax = fig.add_axes([0.075, 0.32, 0.895, 0.50])
     _estilo_eixo(ax)
 
     x = np.arange(len(meses))
@@ -174,8 +174,8 @@ def prevalencia_por_segmento() -> Path:
     prev = t.prevalencia.to_numpy() * 100
     receita = t.participacao_receita.to_numpy() * 100
 
-    fig = _figura(400)
-    ax = fig.add_axes([0.155, 0.26, 0.815, 0.50])
+    fig = _figura(350)
+    ax = fig.add_axes([0.155, 0.29, 0.815, 0.48])
     _estilo_eixo(ax)
 
     y = np.arange(len(nomes))

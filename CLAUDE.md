@@ -19,6 +19,7 @@ python3 -m http.server 8931                  # preview local (Reveal exige http,
 .venv/bin/python -m pytest dados/tests -q    # trava os numeros do case
 .venv/bin/python tools/check_brand.py        # paleta, tipografia, segmento, emoji
 .venv/bin/python tools/check_slides.py       # estouro de 1280x720 e sobreposicao
+.venv/bin/python tools/check_slides.py --folga-minima 40  # cobra folga contra a quebra de linha do CI
 .venv/bin/python tools/check_retorica.py     # paralelismo, antitese e frase de efeito
 .venv/bin/python tools/build_site.py         # monta _site/ e confere referencias locais
 .venv/bin/python dados/gerar_painel_kovan.py # regera o painel
@@ -88,6 +89,15 @@ que cita dado inexistente.
 - **`concept-cards` é uma grade de três colunas.** Para quatro blocos, use o
   modificador `quatro`, senão o quarto fica sozinho com meio slide vazio ao lado.
   O layout passa no validador e mesmo assim lê como erro de montagem.
+- **Passar no `check_slides.py` local não garante passar no CI.** O runner é
+  Linux e as métricas de fonte diferem das do macOS: um parágrafo que aqui cabe
+  numa linha quebra em duas lá e empurra tudo abaixo dele uns 30px. Em 22/08 dois
+  slides da Aula 03 com 29px e 19px de folga local estouraram por 6px e 28px no
+  CI. O validador imprime sempre os três slides mais apertados; deixe pelo menos
+  40px de folga, e use `--folga-minima 40` para cobrar isso.
+- **Publicou aula, acompanhe o build.** `gh run watch` até terminar, e
+  `gh run view <id> --log-failed` se quebrar. Deck no ar sem build verde é deck
+  que o aluno abre quebrado.
 - **`check_slides.py` é cego a estado pós-interação**: ele nunca clica em nada.
   Responder o quiz e conferir o resultado é verificação manual.
 - **`--window-size` de headless não é viewport CSS.** Para medir rolagem

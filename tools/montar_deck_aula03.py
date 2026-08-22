@@ -68,15 +68,15 @@ SLIDES.append(conteudo(
     "        </div>\n"
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>O que a Aula 02 deixou</h3>'
-    "<p>Uma skill de limpeza escrita para uma base que deixou de existir.</p></div>\n"
+    "<p>Uma skill escrita para uma base que deixou de existir.</p></div>\n"
     '          <div class="concept-card"><h3>O que mudou na pergunta</h3>'
     "<p>O rótulo não precisa mais ser construído. Ele veio pronto.</p></div>\n"
     '          <div class="concept-card"><h3>O que a tarde apura</h3>'
-    "<p>Qual critério esse rótulo usa e o que ele deixa de fora.</p></div>\n"
+    "<p>Qual critério ele usa e o que deixa de fora.</p></div>\n"
     "        </div>\n",
-    contexto="O painel sintético das Aulas 01 e 02 tinha 1.187 contas e nenhuma coluna de rótulo. A base oficial chegou em 21/08 e passa a ser a única a partir de hoje.",
+    contexto="O painel das Aulas 01 e 02 tinha 1.187 contas e nenhuma coluna de rótulo.",
     conclusao="A skill que cada grupo escreveu na semana passada é o primeiro item a ser testado contra a base nova.",
-    fonte="Fonte: datasets_case_modulo2.xlsx, cinco abas. Números travados em dados/tests/test_dataset_oficial.py.",
+    fonte="Fonte: datasets_case_modulo2.xlsx.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -190,21 +190,18 @@ SLIDES.append(conteudo(
     "Cinco perguntas separam a base que chegou da base que você acha que chegou",
     '        <div class="exercise-steps">\n'
     '          <div class="pratica-passo"><span class="num">01</span><div>'
-    '<p class="acao">Quantas linhas o agente está vendo?</p>'
-    '<p class="detalhe">Se não bater com a fonte, o arquivo chegou quebrado.</p></div></div>\n'
+    '<p class="acao">Quantas linhas o agente está vendo? Se não bater com a fonte, o arquivo chegou quebrado.</p></div></div>\n'
     '          <div class="pratica-passo"><span class="num">02</span><div>'
     '<p class="acao">Uma linha representa o quê? Procure a combinação de colunas que não se repete.</p></div></div>\n'
     '          <div class="pratica-passo"><span class="num">03</span><div>'
-    '<p class="acao">As chaves cruzam?</p>'
-    '<p class="detalhe">Junção que perde linha aparece com o número antes de ser usada.</p></div></div>\n'
+    '<p class="acao">As chaves cruzam? Junção que perde linha aparece com o número antes de ser usada.</p></div></div>\n'
     '          <div class="pratica-passo"><span class="num">04</span><div>'
-    '<p class="acao">Quantos vazios por coluna, e o vazio é zero ou desconhecido?</p>'
-    '<p class="detalhe">A resposta muda o tratamento e não está no dado.</p></div></div>\n'
+    '<p class="acao">Quantos vazios por coluna, e o vazio é zero ou desconhecido? A resposta não está no dado.</p></div></div>\n'
     '          <div class="pratica-passo"><span class="num">05</span><div>'
     '<p class="acao">Existe valor impossível? Receita negativa, participação acima de 1.</p></div></div>\n'
     "        </div>\n",
     sobrelinha="Checklist de perfilamento",
-    conclusao="As cinco estão em skills/perfilamento.md, e o agente as executa sem que o grupo as repita.",
+    conclusao="As cinco estão em skills/perfilamento.md, e o agente as executa sozinho.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -319,13 +316,12 @@ SLIDES.append(pratica(
     [
         {"acao": "Rode a skill de univariada sobre receita, pedidos e tempo de casa.",
          "prompt": "Execute skills/univariada.md sobre receita_usd, qtd_pedidos e tempo_como_cliente. Declare o grão antes de cada medida."},
-        {"acao": "Confira a escala de cada figura.",
-         "detalhe": "Assimetria acima de 3 pede escala logarítmica, declarada na legenda."},
+        {"acao": "Confira a escala: assimetria acima de 3 pede log, declarado na legenda."},
         {"acao": "Peça a leitura de negócio de uma das figuras.",
          "prompt": "Explique este boxplot para quem nunca estudou estatística e não vai perguntar o que é quartil. Depois diga, em três frases, o que olhar nele para entender a perda de contas."},
         {"acao": "Escreva, abaixo de cada figura, o que ela não permite concluir."},
     ],
-    "Cada figura tem duas frases escritas embaixo, e a segunda diz o que ela não sustenta",
+    "Cada figura tem duas frases embaixo, e a segunda diz o que ela não sustenta",
     ambiente=AMBIENTE,
 ))
 
@@ -437,19 +433,16 @@ SLIDES.append(conteudo(
     "Nenhuma das 4.494 contas com menos de 17 meses de casa aparece como perdida",
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>O que a variável parece ser</h3>'
-    "<p>Tempo de casa separa os dois grupos com uma fronteira limpa em 17 meses. "
-    "Num modelo, ela apareceria como o preditor mais forte da base.</p></div>\n"
+    "<p>Tempo de casa separa os dois grupos em 17 meses. Num modelo, seria o preditor mais forte da base.</p></div>\n"
     '          <div class="concept-card"><h3>O que ela é</h3>'
-    "<p>O rótulo exige treze meses de inatividade, e o painel começa quatro meses "
-    "antes. Conta com menos de 17 meses não teve tempo de satisfazer a regra.</p></div>\n"
+    "<p>O rótulo exige treze meses de inatividade. Conta com menos de 17 meses de casa não teve tempo de satisfazer a regra.</p></div>\n"
     '          <div class="concept-card"><h3>O teste que evita isso</h3>'
-    "<p>De toda variável que separa muito bem, pergunte se a informação existiria no "
-    "momento em que a decisão precisa ser tomada.</p></div>\n"
+    "<p>De toda variável que separa bem, pergunte se a informação existiria na hora da decisão.</p></div>\n"
     "        </div>\n",
     sobrelinha="Vazamento de informação",
-    contexto="Separação perfeita entre os dois grupos é sinal de vazamento antes de ser sinal de achado. Um modelo treinado com uma variável assim funciona no teste e falha em produção.",
-    conclusao="A fronteira de 17 meses é uma consequência da regra de rotulagem, medida sobre a janela do painel.",
-    fonte="Fonte: Dataset 1 e Dataset 4. Travado em dados/tests/test_dataset_oficial.py.",
+    contexto="Separação perfeita é sinal de vazamento antes de ser sinal de achado: o modelo funciona no teste e falha em produção.",
+    conclusao="A fronteira de 17 meses mede a regra de rotulagem contra a janela do painel.",
+    fonte="Fonte: Dataset 1 e Dataset 4.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -496,13 +489,12 @@ SLIDES.append(pratica(
     "Cada mesa apresenta o critério que recuperou e a evidência que o sustenta",
     [
         {"acao": "Cruze o rótulo com o último mês de receita de cada conta.",
-         "prompt": "Calcule o último período com receita de cada conta e monte a contingência desse período contra churn_label. Identifique o único mês com contas dos dois lados."},
+         "prompt": "Calcule o último período com receita de cada conta e cruze com churn_label. Ache o único mês com contas dos dois lados."},
         {"acao": "Desça ao grão do pedido para resolver o resíduo.",
-         "prompt": "Na aba raw data, para as contas do mês de sobreposição, cruze a data do último pedido com churn_label. Existe uma data que separa os dois grupos sem exceção?"},
+         "prompt": "Na raw data, para as contas desse mês, cruze a data do último pedido com churn_label. Existe data que separe sem exceção?"},
         {"acao": "Meça o que cortes alternativos fariam com a fila.",
          "prompt": "Construa rótulos com cortes de 6, 9 e 12 meses de inatividade a partir de 2026-03. Traga o tamanho da fila e a receita marcada em cada um."},
-        {"acao": "Escreva o critério recuperado em uma frase.",
-         "detalhe": "Sem recuperar, o registro é critério desconhecido. Isso também é resultado."},
+        {"acao": "Escreva o critério em uma frase. Sem recuperar, registre como desconhecido."},
     ],
     "A mesa enuncia o critério do rótulo e mostra a tabela que o sustenta",
     ambiente=AMBIENTE,
@@ -539,7 +531,7 @@ SLIDES.append(conteudo(
     "<p>Cruzamentos contra o rótulo, com tamanho de base em cada célula e a "
     "explicação alternativa que a medida não descarta.</p></div>\n"
     "        </div>\n",
-    contexto="As três seções restantes vão para o autoestudo da semana: 05. Rótulo, com o critério recuperado e três cortes alternativos; 06. Visuais, com as figuras que a manhã pede; 07. Limitações. O checklist completo está em CHECKLIST-ARTEFATO-1.md.",
+    contexto="Vão para o autoestudo da semana: 05. Rótulo, 06. Visuais e 07. Limitações. O checklist completo está em CHECKLIST-ARTEFATO-1.md, na raiz da pasta clonada.",
     conclusao="A seção 06 alimenta o relatório de segmentação da manhã, que pede as visualizações da EDA da tarde.",
 ))
 
@@ -554,14 +546,10 @@ SLIDES.append(pratica(
     "A pasta do grupo, com código, figuras e o relatório das quatro seções",
     "Às 15h30 cada mesa mostra a seção que está mais atrasada",
     [
-        {"acao": "Estação 1, quinze minutos. Feche a seção de carga.",
-         "detalhe": "Contagem por aba, grão declarado, contas em comum com o painel."},
-        {"acao": "Estação 2, vinte minutos. Feche a seção de qualidade.",
-         "detalhe": "Uma decisão por advertência, com justificativa e custo em linhas."},
-        {"acao": "Estação 3, quinze minutos. Feche a seção de univariada.",
-         "detalhe": "Aproveite as figuras da Prática 2 e escreva a leitura que faltar."},
-        {"acao": "Estação 4, quinze minutos. Feche a seção de bivariada.",
-         "detalhe": "Aproveite a tabela da Prática 3 e acrescente um corte por setor."},
+        {"acao": "Estação 1, 15 min. Carga: contagem por aba, grão e contas em comum."},
+        {"acao": "Estação 2, 20 min. Qualidade: uma decisão por advertência, com custo em linhas."},
+        {"acao": "Estação 3, 15 min. Univariada: aproveite as figuras da Prática 2."},
+        {"acao": "Estação 4, 15 min. Bivariada: some um corte por setor à tabela da Prática 3."},
         {"acao": "Confira a reexecução antes de sair.",
          "prompt": "Liste os arquivos desta sessão e diga, para cada número do relatório, qual script o produz. Aponte os que não têm código."},
     ],

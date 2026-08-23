@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de apoio &middot; Aula 04 &middot; A figura que decide</title>
+  <meta name="description" content="Material de apoio da Aula 04 do Módulo 2 do MBA Inteli x Lenovo: a população que o rótulo consegue marcar, o perfil de compra por segmento, o intervalo de Wilson e o qui-quadrado como filtro de ruído, a estratificação como filtro de confundidor, a frequência de compra como vazamento, e a figura que sustenta a hipótese sobrevivente.">
+
+  <!-- Este material NAO e o roteiro do deck em prosa. Onde o slide aponta, a
+       pagina deriva, calcula e explica. Todo numero citado vem de
+       dados/datasets_case_modulo2.xlsx atraves de dados/analise_aula04.py e
+       esta travado em dados/tests/test_aula04_numeros.py. O xlsx nao e
+       versionado: ver docs/adrs/ADR-005. -->
+
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-material.css">
+
+  <!-- Figura gerada. A convencao do acervo e a mesma do deck: a LARGURA
+       governa. Com max-height a imagem encolheria para caber numa altura
+       arbitraria e sobraria faixa branca nos flancos. -->
+  <style>
+    .doc-figura {
+      margin: 0 0 14px;
+    }
+
+    .doc-figura img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--seg-borda);
+      border-radius: 10px;
+    }
+
+    .doc-figura figcaption {
+      font-size: var(--escala-complementar);
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="doc">
+
+    <header class="doc-header">
+      <p class="doc-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo &middot; Módulo 2 &middot; Aula 04 &middot; 29/08/2026</p>
+      <h1>A figura que decide</h1>
+      <p class="doc-subtitulo">O <code>churn_label</code> não alcança a carteira inteira, e nenhuma
+      hipótese de causa sobre ele vale sem passar por três filtros: o ruído, o confundidor e o
+      vazamento. Cada seção parte de um número que apareceu no slide, mostra o cálculo por trás
+      dele e o que ele decide.</p>
+    </header>
+
+    <nav class="doc-toc" aria-label="Sumário">
+      <h2>Nesta página</h2>
+      <ol>
+        <li><a href="#censura">1. Quem podia ser marcado</a></li>
+        <li><a href="#perfil">2. O perfil de compra por segmento</a></li>
+        <li><a href="#ruido">3. O ruído: intervalo de confiança e qui-quadrado</a></li>
+        <li><a href="#confundidor">4. O confundidor: estratificação</a></li>
+        <li><a href="#vazamento">5. O vazamento: frequência de compra</a></li>
+        <li><a href="#figura">6. A figura que decide</a></li>
+        <li><a href="#prompts">7. Os prompts das três práticas</a></li>
+        <li><a href="#artefato">8. As seções 05, 06 e 07 do Artefato 1</a></li>
+        <li><a href="#leitura">9. Leitura complementar e referências</a></li>
+      </ol>
+    </nav>
+
+    <main class="doc-conteudo">
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="censura">
+        <h2>1. Quem podia ser marcado</h2>
+
+        <p>A Aula 03 recuperou, a partir da base oficial <a href="#r2">[2]</a>, o critério do
+        <code>churn_label</code>: última compra até 08/02/2025 marca a conta como perdida, o que
+        equivale a treze meses de inatividade contados a partir do fim do painel, em 2026-03. Um critério de recência tem uma
+        consequência que não aparece na tabela de contingência sozinha: ele só consegue marcar
+        quem teve tempo de acumular os treze meses de silêncio. Uma conta cuja primeira compra
+        aconteceu depois de 2025-02 tem, no máximo, doze meses de painel pela frente, e nenhum
+        comportamento dela poderia satisfazer a regra. Essa conta está fora do alcance do rótulo
+        por construção, e não por ter comprado bem.</p>
+
+        <p>Separar a carteira pela data da primeira compra produz três populações.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>População</th><th>Contas</th><th>Perdidas</th><th>Prevalência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Carteira inteira</td><td>8.282</td><td>1.593</td><td>19,2%</td></tr>
+              <tr><td>Elegíveis (primeira compra até 2025-02)</td><td>3.748</td><td>1.593</td><td>42,5%</td></tr>
+              <tr><td>Não elegíveis (primeira compra de 2025-03 em diante)</td><td>4.534</td><td>0</td><td>0,0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>As duas partes somam a carteira inteira, e a prevalência das não elegíveis é
+        exatamente zero, o que confirma o critério: nenhuma dessas 4.534 contas teve como
+        acumular treze meses de silêncio dentro do painel. Dentro das elegíveis, a prevalência
+        salta de 19,2% para 42,5%, porque o denominador deixou de incluir quem não tinha chance
+        de ser marcado. O intervalo de Wilson da prevalência elegível fecha entre 40,9% e 44,1%,
+        com 95% de confiança <a href="#r3">[3]</a>: mesmo no piso do intervalo, mais de quatro em
+        cada dez contas elegíveis estão marcadas como perdidas.</p>
+
+        <p class="doc-porque">O que muda na fila, se o Comitê usar 19,2% como base em vez de
+        42,5%: a base de 19,2% inclui as 4.534 contas que nunca poderiam ter sido marcadas, então
+        qualquer taxa calculada sobre a carteira inteira dilui o risco real das contas elegíveis
+        por um denominador que carrega contas sem desfecho possível. Um plano de retenção
+        dimensionado sobre 19,2% subestima o tamanho do problema dentro do grupo que o modelo
+        pode de fato prever, e um plano dimensionado sobre 42,5% descreve a fração de risco
+        observável dentro da população onde o rótulo tem competência para falar.</p>
+
+        <p>Este é o motivo de toda hipótese de causa da tarde rodar sobre as 3.748 elegíveis, e
+        não sobre a carteira inteira. Testar mix de marcas, setor ou frequência de compra contra
+        a carteira inteira mistura duas populações com significados diferentes: quem não perdeu
+        de fato e quem não teve tempo de perder aparecem no mesmo grupo de referência, e uma
+        associação encontrada ali pode ser artefato da mistura, não do comportamento.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="perfil">
+        <h2>2. O perfil de compra por segmento</h2>
+
+        <p>Antes de testar qualquer hipótese de causa, a skill <code>skills/perfil-por-segmento.md</code>
+        descreve como cada segmento compra, sobre a população elegível. São cinco medidas no grão
+        da conta, agregadas por mediana dentro de cada segmento.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Segmento</th><th>Contas</th><th>Prevalência</th><th>Receita mediana (USD)</th><th>Dias de compra</th><th>Marcas</th><th>Intervalo (dias)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Setor público</td><td>449</td><td>58,1%</td><td>42.388</td><td>3</td><td>3</td><td>18</td></tr>
+              <tr><td>Mid market</td><td>1.508</td><td>47,5%</td><td>10.016</td><td>2</td><td>2</td><td>45,5</td></tr>
+              <tr><td>Small market</td><td>366</td><td>47,3%</td><td>7.692</td><td>2</td><td>1</td><td>20</td></tr>
+              <tr><td>Grandes contas</td><td>786</td><td>33,5%</td><td>36.926</td><td>4</td><td>3</td><td>24</td></tr>
+              <tr><td>Contas globais</td><td>568</td><td>28,5%</td><td>56.294</td><td>4</td><td>3</td><td>16</td></tr>
+              <tr><td>Estratégicas</td><td>71</td><td>25,4%</td><td>125.757</td><td>8</td><td>4</td><td>12</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A leitura direta é que quem mais perde compra menos vezes, com menos marcas e recebe
+        menos receita por conta. É perfil, e a palavra importa: a tabela descreve como os grupos
+        se diferenciam, sem dizer se essa diferença é a causa do churn ou se os dois fenômenos
+        compartilham uma terceira origem. A seção 4 mostra por que a diferença entre segmentos
+        não fecha o argumento sozinha.</p>
+
+        <p>A skill exige também declarar o que a tabela não mede. A conta mediana da carteira tem
+        dois meses ativos em 24, e uma conta que comprou em um único mês não tem duas datas para
+        calcular intervalo entre compras. O intervalo mediano só existe para as contas com duas
+        ou mais datas distintas: das 3.748 elegíveis, essa condição restringe a coluna a 4.910
+        observações no conjunto ampliado usado no cálculo, um número que já mistura elegíveis e
+        não elegíveis porque o intervalo é calculado antes do corte de elegibilidade. Tratar
+        "periodicidade" como variável de entrada de um modelo, sem essa ressalva, produziria uma
+        coluna ausente para toda conta de compra única, e essa ausência carrega significado
+        próprio: marca uma conta com pouquíssima atividade, um fato sobre o comportamento da
+        conta e não uma falha de coleta.</p>
+
+        <p>Duas colunas do cadastro completam o quadro sem entrar na tabela. O canal de aquisição
+        tem um único valor distinto em toda a base, o que o torna inútil para qualquer corte por
+        segmento. O engajamento comercial cobre 1.560 das 3.748 contas elegíveis, pouco mais de
+        quatro em cada dez, com mediana de 4 contatos registrados entre as contas ativas contra 3
+        entre as perdidas. A diferença de um contato é pequena diante da cobertura parcial, e por
+        isso o engajamento entra na seção 3 como hipótese com veredito de insuficiência, e não
+        como achado.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="ruido">
+        <h2>3. O ruído: intervalo de confiança e qui-quadrado</h2>
+
+        <p>Toda prevalência calculada sobre uma amostra carrega incerteza, e o tamanho dessa
+        incerteza depende do tamanho da amostra. O intervalo de confiança de Wilson responde à
+        pergunta "qual a faixa de valores compatível com esta proporção, dado quantas contas a
+        sustentam" <a href="#r3">[3]</a>. Ele desloca o centro do intervalo para dentro da faixa
+        de 0 a 1, o que evita que uma prevalência próxima de 0% ou 100% produza limites fora do
+        intervalo possível, e a largura da faixa cai com a raiz quadrada do tamanho da amostra: uma
+        base quatro vezes maior produz um intervalo cerca de duas vezes mais estreito, não quatro.
+        Quando os intervalos de duas categorias se cruzam, a diferença observada entre elas cabe
+        dentro do que o acaso de amostragem explicaria, e essa diferença não sustenta uma decisão
+        sozinha.</p>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-ic-didatico.png"
+               alt="Quatro barras horizontais com intervalos de confiança comparando dois grupos de 30 contas com intervalos que se cruzam e dois grupos de 600 contas com intervalos separados">
+          <figcaption>A mesma diferença de 10 pontos percentuais entre dois grupos muda de
+          veredito conforme o tamanho da base: com 30 contas por grupo os intervalos se cruzam,
+          com 600 eles se separam. O tamanho da base decide o que a prevalência consegue
+          afirmar.</figcaption>
+        </figure>
+
+        <p>Com a população elegível segmentada, o intervalo de cada segmento aparece ao lado da
+        linha de referência de 42,5%.</p>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-prevalencia-elegiveis.png"
+               alt="Barras horizontais de prevalência de churn por segmento nas contas elegíveis, com intervalo de confiança de 95% em cada barra e a linha da carteira elegível em 42,5%">
+          <figcaption>O setor público perde 58,1% das contas elegíveis, com o intervalo inteiro
+          acima da linha de referência. Estratégicas, com apenas 71 contas, têm o intervalo mais
+          largo da figura.</figcaption>
+        </figure>
+
+        <p>Quando a comparação envolve mais de duas categorias ao mesmo tempo, o teste que decide
+        se a diferença entre todas elas é compatível com o acaso é o qui-quadrado de
+        contingência <a href="#r4">[4]</a>. Ele compara a tabela observada de contas por
+        categoria e por desfecho contra a tabela que se esperaria se a categoria e o desfecho
+        fossem independentes, e devolve uma estatística, os graus de liberdade da tabela (número
+        de linhas menos um, vezes número de colunas menos um) e um valor de p. Um p abaixo de
+        0,05 indica que a distribuição observada seria rara sob a hipótese de independência, e o
+        acaso deixa de ser explicação confortável para a diferença.</p>
+
+        <p>Três hipóteses do caderno, testadas nas 3.748 elegíveis, ilustram como os dois testes
+        se combinam.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Hipótese</th><th>Categoria</th><th>Contas</th><th>Prevalência</th><th>IC 95%</th><th>Qui-quadrado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td rowspan="4">Amplitude de mix</td><td>1 marca</td><td>1.086</td><td>66,4%</td><td>63,5% a 69,1%</td><td rowspan="4">615,4, 3 gl</td></tr>
+              <tr><td>2 marcas</td><td>915</td><td>51,5%</td><td>48,2% a 54,7%</td></tr>
+              <tr><td>3 marcas</td><td>640</td><td>34,8%</td><td>31,3% a 38,6%</td></tr>
+              <tr><td>4 ou mais</td><td>1.107</td><td>16,1%</td><td>14,0% a 18,4%</td></tr>
+              <tr><td>Setor</td><td>GOVERNMENT</td><td>310</td><td>59,7%</td><td>54,1% a 65,0%</td><td>93,9, 12 gl</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Nenhum dos quatro intervalos de amplitude de mix se cruza com o vizinho, e o
+        qui-quadrado da tabela inteira é 615,4 com 3 graus de liberdade, o que descarta o acaso
+        como explicação para a diferença entre uma marca e quatro ou mais. Setor tem
+        qui-quadrado de 93,9 com 12 graus de liberdade, também incompatível com independência.
+        Canal de aquisição não entra nessa lista: por ter um único valor em toda a base, não há
+        categoria para comparar, e o veredito de insuficiência vem da própria construção da
+        coluna, antes de qualquer cálculo sobre o resultado.
+        Engajamento comercial cobre 1.560 das 3.748 elegíveis e entra marcado como cobertura
+        parcial: um teste sobre 41,6% da população não fala pelas outras 58,4%.</p>
+
+        <p>Passar no filtro do ruído elimina uma explicação, o acaso, e apenas essa. Uma
+        diferença estatisticamente separada de zero ainda pode ser produzida por um terceiro
+        fator que está associado tanto à categoria testada quanto ao desfecho. A seção 4 aplica
+        o segundo filtro sobre a hipótese de mix, que passou neste primeiro.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="confundidor">
+        <h2>4. O confundidor: estratificação</h2>
+
+        <p>Estratificar significa repetir a mesma comparação dentro de subgrupos definidos por
+        uma terceira variável, para verificar se a diferença observada no total se mantém, some
+        ou troca de sinal dentro de cada subgrupo. Os três desfechos possíveis têm nomes
+        diferentes e decisões diferentes.</p>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-estratificacao-didatica.png"
+               alt="Barras de prevalência de dois grupos no total e em dois estratos, mostrando uma diferença de 30 pontos que some dentro de cada estrato">
+          <figcaption>No total, o grupo X perde 65% e o grupo Y perde 35%, uma diferença de 30
+          pontos. Dentro de cada estrato os dois grupos perdem praticamente igual: a diferença do
+          total era composição, não comportamento.</figcaption>
+        </figure>
+
+        <p><strong>O primeiro desfecho é sobreviver</strong>: a diferença entre categorias se
+        mantém em todos os estratos, o que descarta o fator de estratificação como explicação
+        alternativa e sustenta a hipótese original. É o que acontece com o mix de marcas quando
+        estratificado por segmento.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Segmento</th><th>1 marca</th><th>Prevalência</th><th>3 ou mais</th><th>Prevalência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Contas globais</td><td>133</td><td>63,2%</td><td>307</td><td>11,4%</td></tr>
+              <tr><td>Grandes contas</td><td>196</td><td>66,8%</td><td>413</td><td>14,3%</td></tr>
+              <tr><td>Mid market</td><td>466</td><td>67,4%</td><td>601</td><td>25,1%</td></tr>
+              <tr><td>Setor público</td><td>83</td><td>84,3%</td><td>273</td><td>46,9%</td></tr>
+              <tr><td>Small market</td><td>192</td><td>57,3%</td><td>105</td><td>22,9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Em todos os cinco segmentos com base suficiente, o teto da prevalência de três ou mais
+        marcas fica abaixo do piso da prevalência de uma marca. Controlada por segmento, a
+        hipótese do mix sobrevive: o segmento não explica a diferença sozinho.</p>
+
+        <p><strong>O segundo desfecho é desaparecer</strong>: a diferença que existia no total
+        deixa de existir dentro dos estratos, o que indica que a variável testada era um
+        substituto (proxy) do fator de estratificação, e não uma causa independente. É o que
+        acontece com o mesmo mix de marcas, estratificado por faixa de dias de compra em vez de
+        segmento.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Faixa de dias de compra</th><th>1 marca</th><th>Prevalência</th><th>3 ou mais</th><th>Prevalência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 dia</td><td>719</td><td>81,5%</td><td>161</td><td>92,5%</td></tr>
+              <tr><td>2 dias</td><td>198</td><td>52,5%</td><td>204</td><td>53,4%</td></tr>
+              <tr><td>3 a 5 dias</td><td>126</td><td>21,4%</td><td>473</td><td>20,3%</td></tr>
+              <tr><td>6 ou mais dias</td><td>43</td><td>9,3%</td><td>909</td><td>5,2%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-marcas-por-dias.png"
+               alt="Barras pareadas de prevalência para contas de uma marca e de três ou mais marcas, em quatro faixas de dias de compra, com intervalos de confiança que se cruzam em três das quatro faixas">
+          <figcaption>Na faixa de 2 dias, 52,5% contra 53,4%: os intervalos se cruzam. Na faixa de
+          3 a 5 dias, 21,4% contra 20,3%: também se cruzam. Controlada pela frequência de compra,
+          a diferença entre uma marca e três ou mais desaparece em três das quatro faixas.</figcaption>
+        </figure>
+
+        <p>Quem compra em uma única marca tende a comprar em um único dia, e quem compra em três
+        ou mais marcas tende a comprar em vários dias diferentes ao longo do ano. A amplitude de
+        mix não é uma causa independente do churn: ela é um substituto da frequência de compra, e
+        a diferença de 66,4% contra 16,1% da seção 3 mistura os dois fatores sem separar
+        qual dos dois pesa.</p>
+
+        <p><strong>O terceiro desfecho é inverter</strong>: a direção da diferença muda de sinal
+        dentro de um ou mais estratos, o efeito descrito por Simpson como paradoxo de composição
+        <a href="#r5">[5]</a>. Ele aparece na comparação entre Brasil e os demais países.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Segmento (elegíveis)</th><th>Brasil</th><th>Prevalência</th><th>Outros países</th><th>Prevalência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Contas globais</td><td>161</td><td>18,6%</td><td>407</td><td>32,4%</td></tr>
+              <tr><td>Grandes contas</td><td>381</td><td>31,2%</td><td>405</td><td>35,6%</td></tr>
+              <tr><td>Mid market</td><td>1.168</td><td>48,2%</td><td>340</td><td>45,0%</td></tr>
+              <tr><td>Setor público</td><td>346</td><td>60,1%</td><td>103</td><td>51,5%</td></tr>
+              <tr><td>Small market</td><td>73</td><td>72,6%</td><td>293</td><td>41,0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Em quatro dos cinco segmentos o Brasil tem prevalência menor ou igual à dos demais
+        países, e o único segmento em que a relação se inverte é o de contas globais, onde o
+        Brasil tem prevalência mais baixa. A explicação está na composição: 69,7% das contas
+        elegíveis do Brasil estão em mid market e setor público, os dois segmentos de prevalência
+        mais alta, contra 28,1% nos demais países. Uma comparação de Brasil contra o resto do
+        mundo sem controlar por segmento mede, em boa parte, a mistura de segmentos de cada
+        região, e não um efeito de país.</p>
+
+        <p class="doc-porque">O que a estratificação decide, na prática: uma diferença que
+        sobrevive ao controle é uma associação mais forte para sustentar uma hipótese de causa,
+        ainda que não seja prova de causa. Uma diferença que desaparece ou inverte é composição, e
+        levar essa diferença ao Comitê como causa direciona esforço para a variável errada.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="vazamento">
+        <h2>5. O vazamento: frequência de compra</h2>
+
+        <p>Vazamento acontece quando uma variável carrega, na sua própria construção, informação
+        que só existe porque o desfecho já aconteceu <a href="#r6">[6]</a>. A frequência de
+        compra medida em número de dias distintos de compra é esse caso, e a tabela sozinha já
+        mostra o sintoma clássico: separação quase perfeita entre categorias adjacentes.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Dias de compra</th><th>Contas</th><th>Prevalência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>1.194</td><td>85,4%</td></tr>
+              <tr><td>2</td><td>620</td><td>52,3%</td></tr>
+              <tr><td>3 a 5</td><td>861</td><td>22,0%</td></tr>
+              <tr><td>6 ou mais</td><td>1.073</td><td>5,6%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>O qui-quadrado desta tabela é 1.671,4 com 3 graus de liberdade, o maior de toda a
+        tarde, e ele descarta o acaso com folga. O que ele não descarta é a construção do rótulo:
+        uma conta elegível com um único dia de compra registrado no painel de 24 meses está, por
+        definição do próprio critério de elegibilidade, com toda a atividade concentrada em um
+        único mês. Se esse mês fica no início do painel, a conta acumula os treze meses de
+        inatividade que o rótulo exige quase automaticamente. A variável não descreve um
+        comportamento de risco anterior ao desfecho: ela descreve, de outro ângulo, o mesmo fato
+        que o rótulo mede. Testar essa variável como preditora de churn seria testar se o rótulo
+        prevê o rótulo.</p>
+
+        <p>O mesmo raciocínio já havia aparecido na Aula 03, na fronteira de tempo de casa que
+        separava com precisão as contas que podiam ou não ser marcadas: uma variável construída a
+        partir da mesma janela temporal que define o alvo tende a reproduzir o alvo, em vez de
+        antecipá-lo. A ligação segue até a Aula 06 <a href="#r6">[6]</a>: recência de compra é
+        candidata natural a feature de um modelo de churn, e a forma correta de calculá-la exige
+        fixar um ponto de corte no tempo anterior ao início da janela de observação do rótulo, não
+        o fim dela. Calculada sobre a janela inteira, como a frequência desta seção, recência vira
+        vazamento em vez de sinal antecipado.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="figura">
+        <h2>6. A figura que decide</h2>
+
+        <p>A skill <code>skills/figura-que-decide.md</code> parte do princípio de que a forma de
+        uma figura é escolhida pela pergunta que ela responde, nunca pelo gosto de quem desenha.
+        Cinco perguntas recorrentes na análise exploratória pedem cinco formas diferentes.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Pergunta</th><th>Forma</th><th>O que vai junto</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Como a variável se distribui?</td><td>Histograma</td><td>Escala log se assimetria acima de 3</td></tr>
+              <tr><td>Onde está a maioria por grupo?</td><td>Boxplot</td><td>Escala e base iguais entre grupos</td></tr>
+              <tr><td>Duas variáveis andam juntas?</td><td>Scatterplot</td><td>Número de pontos e alternativa considerada</td></tr>
+              <tr><td>Proporção difere por categoria?</td><td>Barras com intervalo de confiança</td><td>Intervalo e qui-quadrado</td></tr>
+              <tr><td>Duas contas divergem no tempo?</td><td>Séries lado a lado</td><td>Eixo comum e o corte do rótulo marcado</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Depois de escolhida a forma, o título da figura precisa ser a conclusão que ela
+        sustenta, com o número que a prova dentro do título: "Uma marca perde 66,4% e quatro ou
+        mais perdem 16,1%" é título; "Prevalência por número de marcas" é rótulo de eixo, e
+        rótulo de eixo não substitui título. Abaixo da figura, uma linha declara o teste que a
+        sustenta (intervalo de confiança, qui-quadrado com graus de liberdade, ou estratificação),
+        a população sobre a qual ele rodou, e o que a figura não permite concluir. Uma figura sem
+        essa linha não entra no artefato, porque ela deixa de declarar sobre o que está falando.</p>
+
+        <p>Duas figuras reais da aula seguem essa estrutura. A primeira aplica a fila de contas
+        marcadas contra a capacidade operacional.</p>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-fila-por-segmento.png"
+               alt="Barras horizontais de contas marcadas como perdidas por segmento nas elegíveis, com a linha de capacidade operacional em 138 planos por trimestre">
+          <figcaption>Mid market soma 716 contas marcadas; grandes contas, 263; setor público,
+          261; small market, 173; contas globais, 162. Cinco dos seis segmentos ultrapassam
+          sozinhos a capacidade operacional de 138 planos por trimestre, o que torna a priorização
+          entre eles uma decisão obrigatória, não uma preferência.</figcaption>
+        </figure>
+
+        <p>A segunda figura volta ao par de contas que abriu a aula.</p>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-par-pbl.png"
+               alt="Séries mensais de receita de duas contas lado a lado, de abril de 2024 a março de 2026, com a linha do corte do rótulo em fevereiro de 2025">
+          <figcaption>Conta A voltou a comprar depois de fevereiro de 2025 e segue na base; Conta
+          B parou de comprar em 2024 e foi marcada. As duas caem cerca de 90% da receita do
+          primeiro para o segundo semestre do painel, e nenhuma variável testada na aula separa
+          as duas antes do corte.</figcaption>
+        </figure>
+
+        <p>O par vem de um filtro sobre a base inteira: contas com receita acima de USD 50 mil no
+        primeiro semestre do painel, queda para menos de 30% desse valor no segundo semestre, e
+        seis meses ou mais de atividade. Esse filtro produz <strong>66 contas</strong> candidatas,
+        das quais 63 seguem ativas e 3 foram marcadas como perdidas. <strong>Conta A</strong> e
+        <strong>Conta B</strong> são as duas contas usadas como ilustração, escolhidas por
+        pertencerem ao mesmo segmento e à mesma região, sem que seus identificadores apareçam
+        neste material: o argumento depende do padrão da série, e a identidade da conta
+        específica é irrelevante para ele. O que o par ensina é que a diferença entre as duas não está em nenhuma das
+        variáveis testadas até aqui: segmento, região e mês de primeira compra são iguais. A
+        diferença de desfecho está em uma compra que a Conta A fez depois do corte do rótulo, e
+        que a Conta B não fez. Nenhuma das hipóteses de causa discutidas nas seções 3 e 4 previu
+        essa divergência antes de olhar a série mensal, o que é o argumento central para produzir
+        a figura, e não apenas a tabela agregada.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="prompts">
+        <h2>7. Os prompts das três práticas</h2>
+
+        <p>Todos rodam em Antigravity, sobre a pasta clonada de
+        <code>github.com/josercf/inteli-pos-2026-2a-eda</code> <a href="#r7">[7]</a>, com duas
+        skills novas em <code>skills/</code>: <code>skills/perfil-por-segmento.md</code> e
+        <code>skills/figura-que-decide.md</code>. Os prompts abaixo são os mesmos que aparecem no
+        deck, copiados sem alteração.</p>
+
+        <h3>Prática 1: a população elegível e o perfil de compra por segmento</h3>
+
+        <pre class="doc-codigo">Execute skills/perfil-por-segmento.md, Passo 1, sobre
+dados/datasets_case_modulo2.xlsx. Traga contas, perdidas e
+prevalência das três populações.</pre>
+
+        <pre class="doc-codigo">Agora o Passo 2 e o Passo 3 da mesma skill: as cinco medidas por
+segmento, nas elegíveis, e quantas contas ficaram sem
+intervalo em cada segmento.</pre>
+
+        <p>O primeiro prompt confere o critério de elegibilidade antes de qualquer outra medida:
+        se a prevalência das não elegíveis não sair zero, o critério do rótulo está errado na
+        pasta do grupo, e nenhum número seguinte é confiável.</p>
+
+        <h3>Prática 2: uma hipótese do caderno, testada contra o ruído</h3>
+
+        <pre class="doc-codigo">Execute skills/bivariada.md, Passos 1a e 2, cruzando
+churn_label com [sua variável] nas contas elegíveis. Inclua o
+intervalo de confiança de 95% (Wilson) de cada categoria.</pre>
+
+        <pre class="doc-codigo">Calcule o qui-quadrado de contingência desta tabela, com graus
+de liberdade e p. Depois escreva o veredito contra o critério
+de refutação que eu escrevi.</pre>
+
+        <p>O veredito sai em uma de três palavras: Confirmada, Contraditada ou Insuficiente, como
+        no caderno da Aula 01. O critério de refutação precisa estar escrito antes de rodar o
+        teste, e não depois de ver o resultado.</p>
+
+        <h3>Prática 3: a figura da hipótese que sobreviveu</h3>
+
+        <pre class="doc-codigo">Execute skills/bivariada.md, Passo 4a, sobre a hipótese que
+testei, estratificando por faixa de dias de compra. Diga se
+ela sobrevive, desaparece ou inverte.</pre>
+
+        <pre class="doc-codigo">Execute skills/figura-que-decide.md sobre o resultado: escolha
+a forma pela pergunta, escreva o título como conclusão com o
+número, desenhe o intervalo e escreva o teste embaixo.</pre>
+
+        <p>Se a hipótese desaparecer sob controle, a figura correta é a de estratificação, com as
+        barras pareadas dentro de cada estrato, e o título precisa dizer isso, não escondê-lo. Uma
+        figura com título de achado sobre uma hipótese que a própria estratificação derrubou é uma
+        figura que engana quem só lê o título.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="artefato">
+        <h2>8. As seções 05, 06 e 07 do Artefato 1</h2>
+
+        <p>O Artefato 1 de Tecnologia é a Análise Exploratória de Dados, com entrega em
+        05/09/2026 e critério binário: entregou ou não entregou, com foco no feedback. Quatro
+        seções fecharam na oficina da Aula 03 (carga, qualidade, univariada, bivariada). As três
+        restantes fecham na oficina de hoje.</p>
+
+        <p>O checklist completo está em
+        <a href="checklist-artefato-1-tecnologia.md">checklist-artefato-1-tecnologia.md</a> e na
+        raiz da pasta clonada. Os itens novos por seção:</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Seção</th><th>Itens do checklist</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>05. Rótulo</td><td>a população que o rótulo consegue marcar, com a contagem das contas que ficam fora; o critério recuperado, com a evidência que o sustenta; o que o critério deixa de fora; pelo menos três cortes alternativos, com o tamanho da fila de cada um; o teste de vazamento aplicado a toda variável que separa bem demais</td></tr>
+              <tr><td>06. Visuais</td><td>uma figura por segmento da segmentação do grupo; faixas reais das variáveis usadas em cada persona; cada característica de persona apontando para o número que a produziu; o teste escrito embaixo de cada figura, com a população</td></tr>
+              <tr><td>07. Limitações</td><td>a causa que o dado observacional não fecha, dita com a associação que sobreviveu; as perguntas do Comitê que esta base não fecha; o dado que faltaria para fechá-las; o que a análise assume e não conseguiu verificar</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A seção 06 tem destinatário definido: as figuras que sustentam a segmentação da manhã
+        da Trilha de Negócios são o mesmo insumo que o item de visualizações do checklist do Prof.
+        Rafael Donaire pede. A seção 07 é onde o resultado das seções 3 e 4 deste material precisa
+        aparecer por escrito: mix de marcas sobrevive à estratificação por segmento e é uma
+        associação candidata a causa; ele desaparece quando controlado por frequência de compra, o
+        que reduz a lista de candidatas reais; e nenhuma das duas conclusões prova causa em dado
+        observacional, porque nenhuma delas veio de um experimento controlado.</p>
+
+        <p>O critério de aceite permanece o da Aula 03: outra pessoa clona a pasta do grupo,
+        coloca o dataset em <code>dados/</code>, executa e obtém os mesmos números do relatório.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="leitura">
+        <h2>9. Leitura complementar e referências</h2>
+
+        <p>O business case da Kovan <a href="#r1">[1]</a> chama de Caminho B a proposta de um
+        alvo contínuo de erosão de share of wallet, antecipado e sem rótulo pronto no sistema, em
+        contraste com o rótulo binário e tardio do Caminho A. As 4.534 contas não elegíveis desta
+        aula são metade do argumento a favor do Caminho B: um rótulo que não alcança 55% da
+        carteira, por construção, não pode ser o único alvo de um modelo de retenção que precisa
+        cobrir a carteira inteira.</p>
+
+        <p>Wilson <a href="#r3">[3]</a> propôs o intervalo usado nesta aula em 1927, como correção
+        ao intervalo mais simples baseado na aproximação normal, que produz limites fora de 0 e 1
+        quando a prevalência está perto dos extremos. Pearson <a href="#r4">[4]</a> formulou o
+        teste de qui-quadrado de aderência e de independência em 1900, e ele segue sendo o teste
+        padrão para comparar uma tabela observada contra a tabela esperada sob a hipótese de que
+        duas variáveis categóricas não têm relação. Simpson <a href="#r5">[5]</a> descreveu, em
+        1951, a inversão de sinal entre o total e os estratos que dá nome ao terceiro desfecho da
+        seção 4, embora o próprio fenômeno já aparecesse em trabalhos anteriores a ele. Kaufman e
+        colegas <a href="#r6">[6]</a> formalizaram, em 2012, o vocabulário de vazamento usado na
+        seção 5 e retomado na Aula 06.</p>
+
+        <p>Sobre o que é citável e o que é construção deste módulo: os três filtros de causa
+        (ruído, confundidor, vazamento), o critério de elegibilidade do rótulo e as duas skills de
+        agente em <code>skills/</code> foram organizados para esta trilha e <strong>não são
+        framework publicado</strong>. Cite-os como material do curso. Os testes estatísticos, o
+        nome do terceiro desfecho da estratificação e o vocabulário de vazamento são literatura, e
+        as referências completas estão abaixo.</p>
+
+        <h3>Referências citadas neste material</h3>
+        <ol class="doc-referencias">
+          <li id="r1">Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026,
+          versão v2.</li>
+          <li id="r2"><code>datasets_case_modulo2.xlsx</code>, base oficial recebida em
+          21/08/2026. A base não é distribuída por este acervo, por ser dado real de carteira: ver
+          <code>docs/adrs/ADR-005</code>.</li>
+          <li id="r3">Wilson, E. B. Probable Inference, the Law of Succession, and Statistical
+          Inference. <em>Journal of the American Statistical Association</em>, v. 22, n. 158,
+          p. 209-212, 1927. O intervalo de confiança usado em toda tabela de prevalência desta
+          aula.</li>
+          <li id="r4">Pearson, K. On the Criterion that a Given System of Deviations from the
+          Probable in the Case of a Correlated System of Variables is such that it can be
+          Reasonably Supposed to have Arisen from Random Sampling. <em>Philosophical Magazine</em>,
+          série 5, v. 50, n. 302, p. 157-175, 1900. A formulação do teste de qui-quadrado.</li>
+          <li id="r5">Simpson, E. H. The Interpretation of Interaction in Contingency Tables.
+          <em>Journal of the Royal Statistical Society, Series B</em>, v. 13, n. 2, p. 238-241,
+          1951. O nome do terceiro desfecho da estratificação, a inversão de sinal.</li>
+          <li id="r6">Kaufman, S.; Rosset, S.; Perlich, C.; Stitelman, O. Leakage in Data Mining:
+          Formulation, Detection, and Avoidance. <em>ACM Transactions on Knowledge Discovery from
+          Data</em>, v. 6, n. 4, 2012. A formulação de vazamento usada na seção 5 e a ligação com a
+          feature de recência da Aula 06.</li>
+          <li id="r7">Repositório de trabalho da turma:
+          <code>github.com/josercf/inteli-pos-2026-2a-eda</code>. Traz o <code>AGENTS.md</code>,
+          as skills, o checklist e a saída de emergência, sem o dataset. Ver
+          <code>docs/adrs/ADR-006</code>.</li>
+        </ol>
+      </section>
+
+    </main>
+
+    <footer class="doc-rodape">
+      <p>Módulo 2 &middot; Aula 04 &middot; Prof. José Romualdo da Costa Filho &middot;
+      MBA em IA e Dados para Negócios, Inteli x Lenovo.</p>
+      <p>Os números citados aqui são reproduzíveis a partir de
+      <code>dados/datasets_case_modulo2.xlsx</code> através de
+      <code>dados/analise_aula04.py</code>, e estão travados por teste em
+      <code>dados/tests/test_aula04_numeros.py</code>.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

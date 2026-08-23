@@ -338,18 +338,116 @@ combinados com o Prof. Rafael Donaire para as Aulas 03 e 04, e o título mudou d
 
 ---
 
-## S4, 29/08/2026: Visualização para decidir
+## S4, 29/08/2026: A figura que decide
 
 **Ementa:** UC1, Aula 4. Conceitos de visualização de dados.
 
-**Conteúdo:** a figura que muda uma decisão contra a figura que ilustra um
-texto. Distribuições por segmento, séries lado a lado e o gráfico de valor em
-risco por probabilidade com a linha de capacidade operacional desenhada.
+**Horário:** 13h00 às 16h00, folga até 16h30, intervalo 14h20 às 14h40.
 
-**Atividade PBL:** produzir a figura que faz o diretor comercial ver a diferença
-entre duas contas que caíram igual e terminaram diferente.
+**Espiral:** a Aula 03 deixou pronto o critério do rótulo; a maioria dos grupos
+chegou ao corte de 08/02/2025. A Aula 04 assume o critério como sabido e parte
+dele para a população que ele alcança.
 
-**Entregável:** as figuras do Artefato 1.
+**Conteúdo:** censura e população elegível; perfil de compra por segmento; IC
+de Wilson e qui-quadrado; estratificação com os três desfechos; frequência
+como vazamento; forma da figura pela pergunta, título como conclusão, teste
+embaixo.
+
+**O achado do dia:** 4.534 das 8.282 contas fizeram a primeira compra depois de
+2025-02 e não têm como estar marcadas; entre as 3.748 elegíveis a prevalência é
+42,5%. A hipótese do mix sobrevive ao controle por segmento e desaparece sob
+controle por frequência de compra.
+
+**Objetivos de aprendizagem:**
+1. Restringir a população de teste à que pode exibir o desfecho e medir o
+   efeito da restrição sobre a prevalência.
+2. Ler um intervalo de confiança de proporção (Wilson) e um teste qui-quadrado
+   como resposta à pergunta "a diferença é maior que o ruído?".
+3. Estratificar uma associação por um terceiro fator e declarar se ela
+   sobrevive, desaparece ou inverte.
+4. Escolher a forma da figura (histograma, boxplot, scatterplot, série, barras
+   com IC) pela pergunta que ela responde, e escrever o título como conclusão
+   com o número dentro.
+
+**Contrato do dia:** nenhuma figura entra no artefato sem o teste escrito
+embaixo.
+
+**Ambiente:** Antigravity, pasta clonada, duas skills novas.
+
+### Agenda em minutos
+
+| Horário | Bloco | Conteúdo |
+|---|---|---|
+| `13h00 - 13h15` | Resgate e contrato | O critério do rótulo como sabido. A PBL apresentada sem o perfil das contas; cada mesa escreve três hipóteses. Contrato: nenhuma figura entra no artefato sem o teste que a sustenta escrito embaixo |
+| `13h15 - 13h40` | Bloco 1 e Prática 1 | Quem podia ser marcado: censura, a tabela das três populações. O perfil de compra por segmento (receita mediana, dias de compra, marcas, intervalo mediano entre compras, marca dominante) em tabela única. Prática 1: construir elegíveis e perfil por segmento com `skills/perfil-por-segmento.md` |
+| `13h40 - 14h05` | Bloco 2 e Prática 2 | A diferença é maior que o ruído: IC de Wilson e qui-quadrado, cada um apresentado pela pergunta que responde, com figura didática (duas proporções cujos IC se cruzam, duas cujos IC não se cruzam) antes de qualquer número da base. Prática 2: cada mesa testa uma hipótese do caderno nas elegíveis (marcas, setor, região, marca comprada) e registra o veredito |
+| `14h05 - 14h20` | Bloco 3 e quiz | A hipótese sobrevive ao controle: estratificação de marcas por segmento (sobrevive), de marcas por dias de compra (desaparece), de BR por segmento (inverte). Frequência de compra como vazamento. Quiz de verificação |
+| `14h20 - 14h40` | Intervalo | |
+| `14h40 - 14h55` | Bloco 4 e Prática 3 | A figura que decide: forma escolhida pela pergunta; título como conclusão; IC desenhado; linha de capacidade (138 planos) no gráfico de valor em risco. Prática 3: reestratificar a hipótese da mesa e produzir a figura com `skills/figura-que-decide.md` |
+| `14h55 - 15h45` | Oficina do Artefato 1 | Seções 05 (rótulo, com a população elegível acrescentada), 06 (uma figura por segmento com o teste embaixo) e 07 (limitações, a começar pela causa que o dado observacional não fecha). Checkpoint às 15h30. Elástica até 16h15 |
+| `15h45 - 16h00` | Amarração | O que fica pronto para a Entrega 1 de 05/09; o que a manhã do Prof. Donaire recebe (figuras da seção 06 com IC); a pergunta da Aula 05: um rótulo que não consegue marcar 55% da carteira serve de alvo? |
+
+### Verificações do encontro
+
+1. A prevalência da carteira é 19,2% e a das elegíveis é 42,5%. Qual vai para a
+   figura do Comitê, e o que muda no tamanho da fila?
+2. Contas de uma marca perdem 66,4% e de quatro ou mais perdem 16,1%, com IC que
+   não se cruzam. Isso autoriza recomendar venda cruzada como retenção?
+3. Duas mesas estratificaram a mesma hipótese por fatores diferentes e chegaram
+   a vereditos opostos. Qual das duas está certa?
+
+### Entregável
+
+Três das sete seções do Artefato 1, em pasta reexecutável: rótulo (05), visuais
+(06) e limitações (07). Com as quatro da Aula 03, o artefato fica completo para
+a Entrega 1 de 05/09. Critério de aceite inalterado: outra pessoa clona, coloca
+o dataset em `dados/`, executa e obtém as mesmas figuras e os mesmos números.
+
+### Frameworks apresentados
+
+IC de Wilson (Wilson, 1927); qui-quadrado de contingência (Pearson, 1900);
+estratificação e paradoxo de Simpson (Simpson, 1951); vazamento (Kaufman et
+al., 2012); censura como conceito de análise de sobrevivência, apresentado sem
+o ferramental. Os três filtros, a elegibilidade e as skills são organização do
+módulo, sem padrão publicado.
+
+### Artefatos
+
+| Artefato | Caminho | Observação |
+|---|---|---|
+| Números | `dados/analise_aula04.py` | elegíveis, perfil por segmento, IC, qui-quadrado, estratificações, par da PBL. `scipy` entra em `requirements-dev.txt` |
+| Testes | `dados/tests/test_aula04_numeros.py`, `tools/tests/test_figuras_aula04.py`, `tools/tests/test_skills_aula04.py`, `tools/tests/test_deck_aula04.py`, `tools/tests/test_material_aula04.py` | cada número do deck transcrito literal; pulado quando o xlsx não existe |
+| Figuras | `tools/gerar_figuras_aula04.py` | seis figuras: `aula04-ic-didatico`, `aula04-estratificacao-didatica`, `aula04-prevalencia-elegiveis`, `aula04-marcas-por-dias`, `aula04-par-pbl`, `aula04-fila-por-segmento`. 1168px, 1:1 |
+| Deck | `tools/montar_deck_aula04.py` gerando `aulas/aula04.html` | 32 slides; não editado à mão |
+| Material de apoio | `materiais/aula04-material-de-apoio.html` | explica IC, qui-quadrado e estratificação em prosa, com a leitura de negócio de cada teste |
+| Skills | `inteli-pos-2026-2a-eda/skills/perfil-por-segmento.md`, `figura-que-decide.md`; `bivariada.md` ganha passo de elegibilidade e de estratificação | em duplicata com `materiais/` no acervo, como as anteriores |
+| Repositório de clone | `AGENTS.md` e `CHECKLIST-ARTEFATO-1.md` | a seção 05 ganha "a população que o rótulo consegue marcar"; a 06 ganha "o teste escrito embaixo de cada figura" |
+| Checklist no acervo | `materiais/checklist-artefato-1-tecnologia.md` | mesma mudança |
+| Condução | `docs/notas-do-professor/aula04.md` | gabarito das estratificações e dos `account_id` da PBL; não distribuído |
+| Planejamento | `PLANEJAMENTO_AULA_A_AULA.md`, seção S4 | reescrita no formato da S3, com divergência registrada |
+| Portal e site | `index.html`, `tools/build_site.py` | card da Aula 04 e allowlist |
+
+### Pendências abertas ao fim da S4
+
+Registradas em 22/08/2026, antes da aula, para não virarem suposição na
+condução.
+
+1. **A oficina com o Prof. Donaire ainda não está confirmada para 29/08.** Este
+   planejamento assume que os 50 minutos previstos se mantêm, com elasticidade
+   até 16h15.
+2. **O que os cadernos de hipóteses da Aula 01 registraram não está no
+   repositório.** O veredito de cada hipótese testada em mesa depende desse
+   registro, e ele precisa ser recuperado antes da condução.
+
+### Divergência registrada
+
+O planejamento original previa, para a S4, um gráfico de valor em risco por
+probabilidade com a linha de capacidade operacional desenhada. A probabilidade
+por conta só existe depois do modelo (UC2), então o gráfico entra com a
+receita da conta no eixo e a linha de capacidade desenhada, sem probabilidade.
+A PBL original falava em "ordem de deterioração" (receita, mix, cadência), que
+o painel sintético tinha e a base oficial não tem alinhado; o par da PBL passa
+a ser escolhido pela queda de receita entre semestres.
 
 ---
 

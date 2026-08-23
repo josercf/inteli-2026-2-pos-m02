@@ -192,8 +192,8 @@ def par_pbl() -> Path:
     meses = list(s.index)
     rotulos = [f"{MESES_CURTOS[m[5:]]}/{m[2:4]}" for m in meses]
     rotulos_mostrados = [r if i % 2 == 0 else "" for i, r in enumerate(rotulos)]
-    fig = _figura(440)
-    ax = fig.add_axes([0.09, 0.2, 0.88, 0.52])
+    fig = _figura(400)
+    ax = fig.add_axes([0.09, 0.22, 0.88, 0.5])
     _estilo_eixo(ax)
     x = np.arange(len(meses))
     ax.bar(x - 0.2, s.conta_a, width=0.4, color=VERDE_ESCURO, label="Conta A, seguiu na base")

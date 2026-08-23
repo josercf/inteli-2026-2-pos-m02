@@ -77,8 +77,8 @@
         consequência que não aparece na tabela de contingência sozinha: ele só consegue marcar
         quem teve tempo de acumular os treze meses de silêncio. Uma conta cuja primeira compra
         aconteceu depois de 2025-02 tem, no máximo, doze meses de painel pela frente, e nenhum
-        comportamento dela poderia satisfazer a regra. Essa conta está fora do alcance do rótulo
-        por construção, e não por ter comprado bem.</p>
+        comportamento dela poderia satisfazer a regra. O motivo é inteiramente temporal: essa conta está fora do alcance do rótulo por
+        construção do critério, qualquer que tenha sido o comportamento de compra dela.</p>
 
         <p>Separar a carteira pela data da primeira compra produz três populações.</p>
 
@@ -103,19 +103,22 @@
         com 95% de confiança <a href="#r3">[3]</a>: mesmo no piso do intervalo, mais de quatro em
         cada dez contas elegíveis estão marcadas como perdidas.</p>
 
-        <p class="doc-porque">O que muda na fila, se o Comitê usar 19,2% como base em vez de
-        42,5%: a base de 19,2% inclui as 4.534 contas que nunca poderiam ter sido marcadas, então
-        qualquer taxa calculada sobre a carteira inteira dilui o risco real das contas elegíveis
-        por um denominador que carrega contas sem desfecho possível. Um plano de retenção
-        dimensionado sobre 19,2% subestima o tamanho do problema dentro do grupo que o modelo
-        pode de fato prever, e um plano dimensionado sobre 42,5% descreve a fração de risco
-        observável dentro da população onde o rótulo tem competência para falar.</p>
+        <div class="doc-nota">
+          <p>O que muda na fila, se o Comitê usar 19,2% como base em vez de
+          42,5%: a base de 19,2% inclui as 4.534 contas que nunca poderiam ter sido marcadas, então
+          qualquer taxa calculada sobre a carteira inteira dilui o risco real das contas elegíveis
+          por um denominador que carrega contas sem desfecho possível. Um plano de retenção
+          dimensionado sobre 19,2% subestima o tamanho do problema dentro do grupo que o modelo
+          pode de fato prever, e um plano dimensionado sobre 42,5% descreve a fração de risco
+          observável dentro da população onde o rótulo tem competência para falar.</p>
+        </div>
 
-        <p>Este é o motivo de toda hipótese de causa da tarde rodar sobre as 3.748 elegíveis, e
-        não sobre a carteira inteira. Testar mix de marcas, setor ou frequência de compra contra
+        <p>Por isso toda hipótese de causa da tarde roda sobre as 3.748 elegíveis. Testar mix de
+        marcas, setor ou frequência de compra contra
         a carteira inteira mistura duas populações com significados diferentes: quem não perdeu
         de fato e quem não teve tempo de perder aparecem no mesmo grupo de referência, e uma
-        associação encontrada ali pode ser artefato da mistura, não do comportamento.</p>
+        associação encontrada ali pode nascer inteiramente da mistura dessas duas populações,
+        sem relação nenhuma com o comportamento de compra.</p>
       </section>
 
       <!-- ================================================================= -->
@@ -178,7 +181,8 @@
         sustentam" <a href="#r3">[3]</a>. Ele desloca o centro do intervalo para dentro da faixa
         de 0 a 1, o que evita que uma prevalência próxima de 0% ou 100% produza limites fora do
         intervalo possível, e a largura da faixa cai com a raiz quadrada do tamanho da amostra: uma
-        base quatro vezes maior produz um intervalo cerca de duas vezes mais estreito, não quatro.
+        base quatro vezes maior produz um intervalo cerca de duas vezes mais estreito, a metade do
+        que a intuição linear sugeriria.
         Quando os intervalos de duas categorias se cruzam, a diferença observada entre elas cabe
         dentro do que o acaso de amostragem explicaria, e essa diferença não sustenta uma decisão
         sozinha.</p>
@@ -260,7 +264,8 @@
                alt="Barras de prevalência de dois grupos no total e em dois estratos, mostrando uma diferença de 30 pontos que some dentro de cada estrato">
           <figcaption>No total, o grupo X perde 65% e o grupo Y perde 35%, uma diferença de 30
           pontos. Dentro de cada estrato os dois grupos perdem praticamente igual: a diferença do
-          total era composição, não comportamento.</figcaption>
+          total era um efeito puro de composição dos grupos, independente do comportamento de cada
+          um.</figcaption>
         </figure>
 
         <p><strong>O primeiro desfecho é sobreviver</strong>: a diferença entre categorias se
@@ -289,7 +294,8 @@
 
         <p><strong>O segundo desfecho é desaparecer</strong>: a diferença que existia no total
         deixa de existir dentro dos estratos, o que indica que a variável testada era um
-        substituto (proxy) do fator de estratificação, e não uma causa independente. É o que
+        substituto (proxy) do fator de estratificação, sem efeito próprio quando ele é
+        controlado. É o que
         acontece com o mesmo mix de marcas, estratificado por faixa de dias de compra em vez de
         segmento.</p>
 
@@ -346,12 +352,14 @@
         elegíveis do Brasil estão em mid market e setor público, os dois segmentos de prevalência
         mais alta, contra 28,1% nos demais países. Uma comparação de Brasil contra o resto do
         mundo sem controlar por segmento mede, em boa parte, a mistura de segmentos de cada
-        região, e não um efeito de país.</p>
+        região: o efeito de país isolado é pequeno diante dessa composição.</p>
 
-        <p class="doc-porque">O que a estratificação decide, na prática: uma diferença que
-        sobrevive ao controle é uma associação mais forte para sustentar uma hipótese de causa,
-        ainda que não seja prova de causa. Uma diferença que desaparece ou inverte é composição, e
-        levar essa diferença ao Comitê como causa direciona esforço para a variável errada.</p>
+        <div class="doc-nota">
+          <p>O que a estratificação decide, na prática: uma diferença que
+          sobrevive ao controle é uma associação mais forte para sustentar uma hipótese de causa,
+          ainda que não seja prova de causa. Uma diferença que desaparece ou inverte é composição, e
+          levar essa diferença ao Comitê como causa direciona esforço para a variável errada.</p>
+        </div>
       </section>
 
       <!-- ================================================================= -->
@@ -392,8 +400,8 @@
         partir da mesma janela temporal que define o alvo tende a reproduzir o alvo, em vez de
         antecipá-lo. A ligação segue até a Aula 06 <a href="#r6">[6]</a>: recência de compra é
         candidata natural a feature de um modelo de churn, e a forma correta de calculá-la exige
-        fixar um ponto de corte no tempo anterior ao início da janela de observação do rótulo, não
-        o fim dela. Calculada sobre a janela inteira, como a frequência desta seção, recência vira
+        fixar o ponto de corte no tempo antes do início da janela de observação do rótulo, na
+        fronteira em que o desfecho ainda é desconhecido. Calculada sobre a janela inteira, como a frequência desta seção, recência vira
         vazamento em vez de sinal antecipado.</p>
       </section>
 
@@ -437,7 +445,8 @@
           <figcaption>Mid market soma 716 contas marcadas; grandes contas, 263; setor público,
           261; small market, 173; contas globais, 162. Cinco dos seis segmentos ultrapassam
           sozinhos a capacidade operacional de 138 planos por trimestre, o que torna a priorização
-          entre eles uma decisão obrigatória, não uma preferência.</figcaption>
+          entre eles uma decisão obrigatória: o volume de contas em risco decide sozinho quem entra
+          primeiro na fila.</figcaption>
         </figure>
 
         <p>A segunda figura volta ao par de contas que abriu a aula.</p>
@@ -462,8 +471,8 @@
         variáveis testadas até aqui: segmento, região e mês de primeira compra são iguais. A
         diferença de desfecho está em uma compra que a Conta A fez depois do corte do rótulo, e
         que a Conta B não fez. Nenhuma das hipóteses de causa discutidas nas seções 3 e 4 previu
-        essa divergência antes de olhar a série mensal, o que é o argumento central para produzir
-        a figura, e não apenas a tabela agregada.</p>
+        essa divergência antes de olhar a série mensal, e é esse detalhe escondido na tabela
+        agregada o argumento central para produzir a figura.</p>
       </section>
 
       <!-- ================================================================= -->
@@ -501,8 +510,8 @@ de liberdade e p. Depois escreva o veredito contra o critério
 de refutação que eu escrevi.</pre>
 
         <p>O veredito sai em uma de três palavras: Confirmada, Contraditada ou Insuficiente, como
-        no caderno da Aula 01. O critério de refutação precisa estar escrito antes de rodar o
-        teste, e não depois de ver o resultado.</p>
+        no caderno da Aula 01. O critério de refutação precisa estar escrito e registrado antes de
+        rodar o teste, como compromisso assumido com antecedência pela mesa.</p>
 
         <h3>Prática 3: a figura da hipótese que sobreviveu</h3>
 
@@ -515,7 +524,8 @@ a forma pela pergunta, escreva o título como conclusão com o
 número, desenhe o intervalo e escreva o teste embaixo.</pre>
 
         <p>Se a hipótese desaparecer sob controle, a figura correta é a de estratificação, com as
-        barras pareadas dentro de cada estrato, e o título precisa dizer isso, não escondê-lo. Uma
+        barras pareadas dentro de cada estrato, e o título precisa declarar esse resultado com
+        todas as letras. Uma
         figura com título de achado sobre uma hipótese que a própria estratificação derrubou é uma
         figura que engana quem só lê o título.</p>
       </section>

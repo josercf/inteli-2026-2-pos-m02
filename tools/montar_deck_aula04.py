@@ -71,7 +71,7 @@ SLIDES.append(conteudo(
 # 3. A PBL, sem o perfil das contas
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Duas contas caíram 90% e terminaram diferente",
+    "Duas contas caíram mais de 90% e divergiram",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Critério</th><th>Conta A</th><th>Conta B</th></tr></thead>\n"
     "          <tbody>\n"
@@ -133,7 +133,7 @@ SLIDES.append(conteudo(
 # 7. Perfil de compra por segmento
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Setor público perde 58,1%; estratégicas, 25,4%",
+    "A perda vai de 25,4% a 58,1% conforme o segmento",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Segmento</th><th>Contas</th><th>Prevalência</th><th>Receita</th><th>Dias</th><th>Marcas</th><th>Intervalo</th></tr></thead>\n"
     "          <tbody>\n"
@@ -233,7 +233,7 @@ SLIDES.append(figura(
 # 14. Três hipóteses do caderno, testadas nas elegíveis
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Uma marca perde 66,4%; quatro ou mais, 16,1%",
+    "A perda cai de 66,4% para 16,1% com mais marcas",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Hipótese</th><th>Categoria</th><th>Contas</th><th>Prevalência</th><th>IC 95%</th><th>Qui-quadrado</th></tr></thead>\n"
     "          <tbody>\n"

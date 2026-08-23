@@ -443,8 +443,9 @@ condução.
 
 O planejamento original previa, para a S4, um gráfico de valor em risco por
 probabilidade com a linha de capacidade operacional desenhada. A probabilidade
-por conta só existe depois do modelo (UC2), então o gráfico entra com a
-receita da conta no eixo e a linha de capacidade desenhada, sem probabilidade.
+por conta só existe depois do modelo (UC2), então o gráfico entra com as
+contas marcadas como perdidas por segmento no eixo e a linha de capacidade
+operacional desenhada, sem probabilidade.
 A PBL original falava em "ordem de deterioração" (receita, mix, cadência), que
 o painel sintético tinha e a base oficial não tem alinhado; o par da PBL passa
 a ser escolhido pela queda de receita entre semestres.

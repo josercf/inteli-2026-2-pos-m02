@@ -14,6 +14,11 @@ from tools.check_retorica import analisar  # noqa: E402
 
 CLONE = RAIZ / "inteli-pos-2026-2a-eda"
 
+pytestmark = pytest.mark.skipif(
+    not CLONE.exists(),
+    reason="inteli-pos-2026-2a-eda/ ausente: repositório de clone da turma, não versionado no acervo",
+)
+
 PARES = {
     "perfil-por-segmento": (RAIZ / "materiais" / "skill-perfil-por-segmento.md",
                             CLONE / "skills" / "perfil-por-segmento.md"),

@@ -145,22 +145,22 @@
           </table>
         </div>
 
-        <p>A leitura direta é que quem mais perde compra menos vezes, com menos marcas e recebe
-        menos receita por conta. É perfil, e a palavra importa: a tabela descreve como os grupos
-        se diferenciam, sem dizer se essa diferença é a causa do churn ou se os dois fenômenos
-        compartilham uma terceira origem. A seção 4 mostra por que a diferença entre segmentos
-        não fecha o argumento sozinha.</p>
+        <p>A leitura direta é que quem mais perde compra menos vezes e com menos marcas, com uma
+        exceção: o setor público perde 58,1% com apenas 3 dias de compra e 3 marcas, o maior
+        índice da tabela mesmo sem o menor perfil de compra. É perfil, e a palavra importa: a
+        tabela descreve como os grupos se diferenciam, sem dizer se essa diferença é a causa do
+        churn ou se os dois fenômenos compartilham uma terceira origem. A seção 4 mostra por que a
+        diferença entre segmentos não fecha o argumento sozinha.</p>
 
         <p>A skill exige também declarar o que a tabela não mede. A conta mediana da carteira tem
         dois meses ativos em 24, e uma conta que comprou em um único mês não tem duas datas para
-        calcular intervalo entre compras. O intervalo mediano só existe para as contas com duas
-        ou mais datas distintas: das 3.748 elegíveis, essa condição restringe a coluna a 4.910
-        observações no conjunto ampliado usado no cálculo, um número que já mistura elegíveis e
-        não elegíveis porque o intervalo é calculado antes do corte de elegibilidade. Tratar
-        "periodicidade" como variável de entrada de um modelo, sem essa ressalva, produziria uma
-        coluna ausente para toda conta de compra única, e essa ausência carrega significado
-        próprio: marca uma conta com pouquíssima atividade, um fato sobre o comportamento da
-        conta e não uma falha de coleta.</p>
+        calcular intervalo entre compras. O intervalo mediano só existe para as contas com duas ou
+        mais datas distintas: na carteira inteira, de 8.282 contas, 4.910 satisfazem essa condição;
+        entre as 3.748 elegíveis, apenas 2.554 têm intervalo calculável, e as 1.194 restantes
+        compraram em um único dia dentro do painel. Tratar "periodicidade" como variável de entrada
+        de um modelo, sem essa ressalva, produziria uma coluna ausente para toda conta de compra
+        única, e essa ausência carrega significado próprio: marca uma conta com pouquíssima
+        atividade, um fato sobre o comportamento da conta e não uma falha de coleta.</p>
 
         <p>Duas colunas do cadastro completam o quadro sem entrar na tabela. O canal de aquisição
         tem um único valor distinto em toda a base, o que o torna inútil para qualquer corte por
@@ -346,13 +346,15 @@
           </table>
         </div>
 
-        <p>Em quatro dos cinco segmentos o Brasil tem prevalência menor ou igual à dos demais
-        países, e o único segmento em que a relação se inverte é o de contas globais, onde o
-        Brasil tem prevalência mais baixa. A explicação está na composição: 69,7% das contas
-        elegíveis do Brasil estão em mid market e setor público, os dois segmentos de prevalência
-        mais alta, contra 28,1% nos demais países. Uma comparação de Brasil contra o resto do
-        mundo sem controlar por segmento mede, em boa parte, a mistura de segmentos de cada
-        região: o efeito de país isolado é pequeno diante dessa composição.</p>
+        <p>Nos cinco segmentos, o Brasil tem prevalência menor que a dos demais países em dois
+        (contas globais, 18,6% contra 32,4%; grandes contas, 31,2% contra 35,6%) e maior em três
+        (mid market, 48,2% contra 45,0%; setor público, 60,1% contra 51,5%; small market, 72,6%
+        contra 41,0%). Nenhum desses cinco números isolados chega perto da diferença de 28,2%
+        contra 12,5% que separa o Brasil do México na carteira inteira, e a explicação está na
+        composição: 69,7% das contas elegíveis do Brasil estão em mid market e setor público, os
+        dois segmentos de prevalência mais alta, contra 28,1% nos demais países. Uma comparação de
+        Brasil contra o México sem controlar por segmento mede, em boa parte, a mistura de
+        segmentos de cada região, e o efeito de país isolado é pequeno diante dessa composição.</p>
 
         <div class="doc-nota">
           <p>O que a estratificação decide, na prática: uma diferença que
@@ -444,9 +446,9 @@
                alt="Barras horizontais de contas marcadas como perdidas por segmento nas elegíveis, com a linha de capacidade operacional em 138 planos por trimestre">
           <figcaption>Mid market soma 716 contas marcadas; grandes contas, 263; setor público,
           261; small market, 173; contas globais, 162. Cinco dos seis segmentos ultrapassam
-          sozinhos a capacidade operacional de 138 planos por trimestre, o que torna a priorização
-          entre eles uma decisão obrigatória: o volume de contas em risco decide sozinho quem entra
-          primeiro na fila.</figcaption>
+          sozinhos a capacidade operacional de 138 planos por trimestre, o que exige um critério
+          de priorização além da contagem: é essa a lacuna que o mapa de valor contra risco da
+          manhã preenche.</figcaption>
         </figure>
 
         <p>A segunda figura volta ao par de contas que abriu a aula.</p>
@@ -455,9 +457,11 @@
           <img src="../assets/img/aula04-par-pbl.png"
                alt="Séries mensais de receita de duas contas lado a lado, de abril de 2024 a março de 2026, com a linha do corte do rótulo em fevereiro de 2025">
           <figcaption>Conta A voltou a comprar depois de fevereiro de 2025 e segue na base; Conta
-          B parou de comprar em 2024 e foi marcada. As duas caem cerca de 90% da receita do
-          primeiro para o segundo semestre do painel, e nenhuma variável testada na aula separa
-          as duas antes do corte.</figcaption>
+          B parou de comprar em 2024 e foi marcada. As duas caem mais de 98% da receita do
+          primeiro para o segundo semestre do painel (99,1% na Conta A, 98,6% na Conta B). O
+          número de marcas separa o par (3 na Conta A, 1 na Conta B), mas a estratificação da
+          seção 4 mostra que esse sinal é um proxy da frequência de compra, e não teria sido um
+          preditor seguro antes de olhar a série mensal.</figcaption>
         </figure>
 
         <p>O par vem de um filtro sobre a base inteira: contas com receita acima de USD 50 mil no

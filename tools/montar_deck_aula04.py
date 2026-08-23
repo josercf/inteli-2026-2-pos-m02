@@ -145,8 +145,9 @@ SLIDES.append(conteudo(
     "            <tr><td>Estratégicas</td><td>71</td><td>25,4%</td><td>125.757</td><td>8</td><td>4</td><td>12</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
-    contexto="3.748 elegíveis; medianas por segmento.",
-    conclusao="Quem mais perde compra menos e com menos marcas: é perfil, ainda não causa.",
+    contexto="3.748 elegíveis; medianas por segmento. É perfil: a causa vem nos filtros seguintes.",
+    conclusao="Setor público, com 3 dias e 3 marcas, perde 58,1%, mais que as estratégicas, "
+              "com 8 dias, 4 marcas e 25,4%.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -326,17 +327,19 @@ SLIDES.append(conteudo(
 # 20. Figura real: mix desaparece por frequência
 # ---------------------------------------------------------------------------
 SLIDES.append(figura(
-    "Controlada pela frequência, o mix desaparece",
+    "Controlado pela frequência, o mix desaparece",
     "aula04-marcas-por-dias.png",
     "Barras pareadas de prevalência para contas de uma marca e de três ou mais marcas, em quatro faixas de dias de compra, com intervalos de confiança que se cruzam em três das quatro faixas",
-    conclusao="1 dia: 81,5% contra 92,5%; 2 dias: 52,5% contra 53,4%; 3 a 5: 21,4% contra 20,3%. É a frequência que acompanha o rótulo.",
+    conclusao="Em três das quatro faixas os intervalos se cruzam: 2 dias, 52,5% contra 53,4%; "
+              "3 a 5, 21,4% contra 20,3%; 6+, 9,3% contra 5,2%. Na de 1 dia a relação inverte: "
+              "81,5% contra 92,5%.",
 ))
 
 # ---------------------------------------------------------------------------
 # 21. Brasil inverte
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Brasil perde 28,2% da carteira, contra 12,5% do México",
+    "Segmento explica 28,2% no Brasil e 12,5% no México",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Segmento (elegíveis)</th><th>Brasil</th><th>Prevalência</th><th>Outros países</th><th>Prevalência</th></tr></thead>\n"
     "          <tbody>\n"
@@ -385,7 +388,8 @@ SLIDES.append(quiz(
          "errado": "Passar no ruído elimina o acaso, e só isso. A associação some quando controlada pela frequência de compra."},
         {"texto": "É composição: quem compra mais vezes compra mais marcas.",
          "certa": True,
-         "certo": "Dentro de cada faixa de dias de compra, uma marca e três ou mais perdem igual. O mix é proxy da frequência.",
+         "certo": "Em três das quatro faixas de dias de compra, uma marca e três ou mais perdem "
+                  "igual; na faixa de 1 dia a relação inverte. O mix é proxy da frequência.",
          "errado": ""},
         {"texto": "Falta o qui-quadrado para decidir, e o p vai responder.",
          "certa": False, "certo": "",
@@ -407,7 +411,7 @@ SLIDES.append(secao("04", "A figura que decide", "Forma pela pergunta, título c
 # 25. Forma pela pergunta
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Cinco perguntas pedem cinco formas de figura",
+    "Forma da figura pela pergunta",
     '        <table class="tabela-criterios compacta">\n'
     "          <thead><tr><th>Pergunta</th><th>Forma</th><th>O que vai junto</th></tr></thead>\n"
     "          <tbody>\n"
@@ -471,7 +475,7 @@ SLIDES.append(secao("05", "Oficina do Artefato 1", "Seções 05, 06 e 07, das 14
 # 30. Oficina
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
-    4, "As três seções que fecham o Artefato 1", 50,
+    4, "Oficina do Artefato 1, seções 05, 06 e 07", 50,
     "Em grupo, três estações de tempo marcado", "A pasta do grupo com as sete seções reexecutáveis",
     "Checkpoint às 15h30: cada mesa mostra a seção mais atrasada",
     [

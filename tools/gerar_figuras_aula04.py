@@ -19,14 +19,13 @@ import matplotlib
 
 matplotlib.use("Agg")
 
-import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
 
 from tools.gerar_figuras_aula01 import (  # noqa: E402
-    BRANCO, CINZA_CLARO, CINZA_ESCURO, CINZA_MEDIO, CORAL, ROXO, VERDE_ESCURO,
+    CINZA_CLARO, CINZA_ESCURO, CINZA_MEDIO, CORAL, ROXO, VERDE_ESCURO,
 )
 from tools.gerar_figuras_aula03 import ROTULO_SEGMENTO, _estilo_eixo, _figura, _fmt, salvar  # noqa: E402
 from dados import analise_aula04 as an  # noqa: E402
@@ -171,9 +170,10 @@ def marcas_por_dias() -> Path:
     ax.set_xlim(0, 1.05)
     ax.set_xticks(np.linspace(0, 1, 6)); ax.set_xticklabels([_pct(v) for v in np.linspace(0, 1, 6)], fontsize=14)
     ax.legend(fontsize=15, frameon=False, loc="lower left", bbox_to_anchor=(0, 1.02), ncol=2)
-    ax.set_title("Em cada faixa de frequência, 1 marca e 3+ marcas perdem igual",
+    ax.set_title("Em três das quatro faixas, uma marca e três ou mais perdem igual",
                  fontsize=17, color=CINZA_ESCURO, loc="left", pad=40)
-    ax.text(0.0, -0.28, "Contas elegíveis, IC 95% (Wilson). Carteira toda: 1 marca perde 66,4%; 4+, 16,1%.",
+    ax.text(0.0, -0.28, "IC 95%. Nas 3.748 elegíveis, uma marca perde 66,4% e quatro ou mais "
+            "perdem 16,1%.",
             transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO)
     return salvar(fig, "aula04-marcas-por-dias.png")
 
@@ -193,7 +193,7 @@ def par_pbl() -> Path:
     rotulos = [f"{MESES_CURTOS[m[5:]]}/{m[2:4]}" for m in meses]
     rotulos_mostrados = [r if i % 2 == 0 else "" for i, r in enumerate(rotulos)]
     fig = _figura(400)
-    ax = fig.add_axes([0.09, 0.22, 0.88, 0.5])
+    ax = fig.add_axes([0.09, 0.30, 0.88, 0.52])
     _estilo_eixo(ax)
     x = np.arange(len(meses))
     ax.bar(x - 0.2, s.conta_a, width=0.4, color=VERDE_ESCURO, label="Conta A, seguiu na base")
@@ -201,6 +201,13 @@ def par_pbl() -> Path:
     corte = meses.index("2025-02")
     ax.axvline(corte + 0.5, color=ROXO, linestyle="--", linewidth=1.6)
     ax.text(corte + 0.7, ax.get_ylim()[1] * 0.9, "corte do rótulo", fontsize=14, color=ROXO)
+    idx_abril = meses.index("2025-04")
+    valor_abril = p["series"]["conta_a"].iloc[idx_abril]
+    ax.annotate(f"abril de 2025: USD {valor_abril:,.0f}".replace(",", "."),
+                xy=(idx_abril - 0.2, s.conta_a.iloc[idx_abril]),
+                xytext=(idx_abril - 3.6, ax.get_ylim()[1] * 0.32),
+                fontsize=13, color=CINZA_ESCURO, ha="left",
+                arrowprops=dict(arrowstyle="->", color=ROXO, lw=1.6))
     ax.set_xticks(x); ax.set_xticklabels(rotulos_mostrados, fontsize=14, rotation=45, ha="right")
     ax.set_ylabel("receita mensal, USD mil", fontsize=14)
     ax.legend(fontsize=15, frameon=False, loc="lower left", bbox_to_anchor=(0, 1.03), ncol=2)
@@ -209,7 +216,7 @@ def par_pbl() -> Path:
     a, b = p["conta_a"], p["conta_b"]
     marcas_a, dias_a = int(a["marcas"]), int(a["dias_de_compra"])
     marcas_b, dias_b = int(b["marcas"]), int(b["dias_de_compra"])
-    ax.text(0.0, -0.34, f"GLOBAL ACCOUNT, Brasil. Conta A: {marcas_a} "
+    ax.text(0.0, -0.50, f"GLOBAL ACCOUNT, Brasil. Conta A: {marcas_a} "
             f"{_plural(marcas_a, 'marca', 'marcas')}, {dias_a} dias de compra. "
             f"Conta B: {marcas_b} {_plural(marcas_b, 'marca', 'marcas')}, {dias_b} dias.",
             transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO)

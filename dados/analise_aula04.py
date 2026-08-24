@@ -182,6 +182,78 @@ def fila_por_segmento() -> pd.Series:
     return e[e.churn == 1].groupby("segmento").size().sort_values(ascending=False)
 
 
+# ---------------------------------------------------------------------------
+# Setores: o mapa dos 13, o padrão de rajada e a mega-conta de licitação
+# ---------------------------------------------------------------------------
+
+# A conta de governo que sozinha concentra a maior parte da receita perdida
+# elegível: um ciclo único de compra que o rótulo lê como conta perdida. O id
+# real fica aqui e nas notas de condução; o material a apelida de Conta C.
+CONTA_C = "CLI002953"
+
+
+def perfil_por_setor() -> pd.DataFrame:
+    """Prevalência com IC e perfil de compra por setor, nas elegíveis."""
+    t, _, _, _ = tabela_com_ic("setor")
+    e = elegiveis()
+    perfil = e.groupby("setor").agg(
+        receita_mediana=("receita", "median"), dias_mediano=("dias_de_compra", "median"),
+        marcas_mediana=("marcas", "median"), intervalo_mediano=("intervalo_mediano", "median"),
+        marca_dominante=("marca_dominante", lambda s: s.mode().iloc[0]),
+    )
+    return t.join(perfil).sort_values("prevalencia", ascending=False)
+
+
+def rajada_por_setor() -> pd.DataFrame:
+    """Concentração temporal da compra, por setor, nas elegíveis.
+
+    `pico` é a fração da receita da conta concentrada no melhor mês dela;
+    `recorrentes` é a fração de contas do setor com seis ou mais meses ativos.
+    Compra por edital deixa assinatura nas duas medidas.
+    """
+    pm = _receita_mensal()
+    pico = (pm.max(axis=1) / pm.sum(axis=1).replace(0, np.nan)).rename("pico")
+    e = elegiveis().join(pico)
+    return e.groupby("setor").agg(
+        contas=("churn", "size"), pico_mediano=("pico", "median"),
+        recorrentes=("meses_ativos", lambda s: float((s >= 6).mean())),
+    ).sort_values("pico_mediano", ascending=False)
+
+
+def conta_c() -> dict:
+    """A mega-conta de licitação, com a participação dela na receita perdida."""
+    e = elegiveis()
+    perdidas = e[e.churn == 1]
+    c = e.loc[CONTA_C]
+    return {"setor": c.setor, "segmento": c.segmento, "regiao": c.regiao,
+            "receita": float(c.receita), "meses_ativos": int(c.meses_ativos),
+            "dias_de_compra": int(c.dias_de_compra), "ultimo_mes": c.ultimo_mes,
+            "churn": int(c.churn),
+            "participacao_na_receita_perdida": float(c.receita / perdidas.receita.sum()),
+            "receita_perdida_total": float(perdidas.receita.sum())}
+
+
+def receita_perdida_por_setor(incluir_conta_c: bool = True) -> pd.Series:
+    """Receita, em USD, das contas perdidas elegíveis, por setor."""
+    e = elegiveis()
+    perdidas = e[e.churn == 1]
+    if not incluir_conta_c:
+        perdidas = perdidas.drop(CONTA_C)
+    return perdidas.groupby("setor").receita.sum().sort_values(ascending=False)
+
+
+def setor_x_segmento() -> dict[str, int]:
+    """O quanto o setor GOVERNMENT e o segmento PUBLIC SECTOR se cruzam.
+
+    Setor vem do cadastro e segmento do painel: os dois recortes não coincidem,
+    e a leitura do material precisa declarar isso antes de comparar."""
+    c = contas_enriquecidas()
+    return {"contas_government": int((c.setor == "GOVERNMENT").sum()),
+            "government_em_public_sector": int(((c.setor == "GOVERNMENT")
+                                                & (c.segmento == "PUBLIC SECTOR")).sum()),
+            "contas_public_sector": int((c.segmento == "PUBLIC SECTOR").sum())}
+
+
 def main() -> None:
     print("=== populações ===")
     for nome, v in populacoes().items():
@@ -205,6 +277,19 @@ def main() -> None:
     print("  conta B", p["conta_b"])
     print("\n=== fila por segmento ===")
     print(fila_por_segmento().to_string())
+    print("\n=== perfil por setor (elegíveis) ===")
+    print(perfil_por_setor().round(3).to_string())
+    print("\n=== rajada por setor ===")
+    print(rajada_por_setor().round(3).to_string())
+    c = conta_c()
+    print(f"\n=== Conta C: {c['participacao_na_receita_perdida']:.1%} da receita perdida ===")
+    print(" ", c)
+    print("\n=== receita perdida por setor, USD mi (com e sem a Conta C) ===")
+    lado_a_lado = pd.DataFrame({"com": receita_perdida_por_setor() / 1e6,
+                                "sem": receita_perdida_por_setor(False) / 1e6})
+    print(lado_a_lado.round(1).to_string())
+    print("\n=== setor x segmento ===")
+    print(" ", setor_x_segmento())
 
 
 if __name__ == "__main__":

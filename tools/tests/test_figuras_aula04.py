@@ -18,6 +18,8 @@ FIGURAS = (
     "aula04-marcas-por-dias.png",
     "aula04-par-pbl.png",
     "aula04-fila-por-segmento.png",
+    "aula04-prevalencia-setor.png",
+    "aula04-rajada-setor.png",
 )
 
 

@@ -58,10 +58,11 @@
         <li><a href="#ruido">3. O ruído: intervalo de confiança e qui-quadrado</a></li>
         <li><a href="#confundidor">4. O confundidor: estratificação</a></li>
         <li><a href="#vazamento">5. O vazamento: frequência de compra</a></li>
-        <li><a href="#figura">6. A figura que decide</a></li>
-        <li><a href="#prompts">7. Os prompts das três práticas</a></li>
-        <li><a href="#artefato">8. As seções 05, 06 e 07 do Artefato 1</a></li>
-        <li><a href="#leitura">9. Leitura complementar e referências</a></li>
+        <li><a href="#setores">6. Os setores, um a um</a></li>
+        <li><a href="#figura">7. A figura que decide</a></li>
+        <li><a href="#prompts">8. Os prompts das três práticas</a></li>
+        <li><a href="#artefato">9. As seções 05, 06 e 07 do Artefato 1</a></li>
+        <li><a href="#leitura">10. Leitura complementar e referências</a></li>
       </ol>
     </nav>
 
@@ -408,8 +409,116 @@
       </section>
 
       <!-- ================================================================= -->
+      <section class="doc-secao" id="setores">
+        <h2>6. Os setores, um a um</h2>
+
+        <p>O deck cruza o rótulo com o setor uma única vez, para mostrar que a variável passa
+        pelo filtro do ruído. Esta seção abre o cruzamento inteiro: os 13 setores do cadastro,
+        com o intervalo de confiança dizendo quais deles sustentam veredito e o perfil de compra
+        dizendo como cada um compra. O setor de governo fica como exemplo trabalhado, porque o
+        mecanismo de compra dele, a licitação, produz uma assinatura no dado que muda a leitura
+        do próprio rótulo.</p>
+
+        <p>Antes da tabela, uma distinção que evita erro de junção: <strong>setor e segmento são
+        recortes diferentes</strong>. O setor vem do cadastro (Dataset 4) e descreve a atividade
+        econômica da conta; o segmento vem do painel e descreve a classificação comercial da
+        Lenovo. Os dois se sobrepõem sem coincidir: das 631 contas do setor GOVERNMENT, 479 estão
+        no segmento PUBLIC SECTOR, que tem 837 contas no total, e o restante do segmento é
+        formado por educação, mídia e outros setores. Comparar um número de setor com um número
+        de segmento sem declarar o recorte mistura duas populações.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Setor</th><th>Contas</th><th>Perdidas</th><th>Prevalência</th><th>IC 95%</th><th>Receita mediana (USD)</th><th>Dias de compra</th><th>Marcas</th><th>Intervalo (dias)</th><th>Marca dominante</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>GOVERNMENT</td><td>310</td><td>185</td><td>59,7%</td><td>54,1% a 65,0%</td><td>38.079</td><td>3</td><td>3</td><td>18,5</td><td>DESKTOP</td></tr>
+              <tr><td>EDUCATION</td><td>189</td><td>105</td><td>55,6%</td><td>48,4% a 62,5%</td><td>30.427</td><td>2</td><td>2</td><td>32</td><td>NOTEBOOK</td></tr>
+              <tr><td>POWER AND UTILITIES</td><td>46</td><td>25</td><td>54,3%</td><td>40,2% a 67,8%</td><td>16.498</td><td>2</td><td>2</td><td>28</td><td>NOTEBOOK</td></tr>
+              <tr><td>UNCLASSIFIED</td><td>37</td><td>19</td><td>51,4%</td><td>35,9% a 66,6%</td><td>14.883</td><td>2</td><td>2</td><td>22,5</td><td>NOTEBOOK</td></tr>
+              <tr><td>COMMUNICATIONS, MEDIA AND SERVICES</td><td>1.041</td><td>482</td><td>46,3%</td><td>43,3% a 49,3%</td><td>17.820</td><td>2</td><td>2</td><td>34,5</td><td>NOTEBOOK</td></tr>
+              <tr><td>OIL AND GAS</td><td>35</td><td>16</td><td>45,7%</td><td>30,5% a 61,8%</td><td>39.530</td><td>2</td><td>3</td><td>28</td><td>NOTEBOOK</td></tr>
+              <tr><td>HEALTHCARE AND LIFE SCIENCES</td><td>143</td><td>54</td><td>37,8%</td><td>30,2% a 45,9%</td><td>29.523</td><td>3</td><td>3</td><td>22,5</td><td>NOTEBOOK</td></tr>
+              <tr><td>TRANSPORTATION</td><td>133</td><td>50</td><td>37,6%</td><td>29,8% a 46,1%</td><td>17.293</td><td>3</td><td>3</td><td>19</td><td>NOTEBOOK</td></tr>
+              <tr><td>MANUFACTURING AND NATURAL RESOURCES</td><td>757</td><td>282</td><td>37,3%</td><td>33,9% a 40,8%</td><td>14.387</td><td>4</td><td>3</td><td>25,5</td><td>NOTEBOOK</td></tr>
+              <tr><td>BANKING AND INVESTMENT SERVICES</td><td>228</td><td>84</td><td>36,8%</td><td>30,8% a 43,3%</td><td>38.020</td><td>3</td><td>2</td><td>21</td><td>NOTEBOOK</td></tr>
+              <tr><td>RETAIL</td><td>280</td><td>102</td><td>36,4%</td><td>31,0% a 42,2%</td><td>12.108</td><td>3</td><td>2</td><td>28</td><td>NOTEBOOK</td></tr>
+              <tr><td>INSURANCE</td><td>86</td><td>31</td><td>36,0%</td><td>26,7% a 46,6%</td><td>30.322</td><td>2</td><td>2</td><td>37</td><td>NOTEBOOK</td></tr>
+              <tr><td>WHOLESALE TRADE</td><td>463</td><td>158</td><td>34,1%</td><td>30,0% a 38,6%</td><td>23.043</td><td>3</td><td>2</td><td>25</td><td>NOTEBOOK</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-prevalencia-setor.png"
+               alt="Barras horizontais de prevalência de churn por setor nas contas elegíveis, com intervalo de confiança de 95%, tamanho da base entre parênteses e os quatro setores de base pequena em cinza">
+          <figcaption>Contas elegíveis, IC de 95% (Wilson) <a href="#r3">[3]</a>. A tabela tem
+          três andares: governo e educação acima de 55%, um miolo entre 34% e 46%, e quatro
+          setores em cinza cuja base fica abaixo de 90 contas.</figcaption>
+        </figure>
+
+        <p><strong>O que o intervalo autoriza dizer.</strong> Governo (59,7%) e educação (55,6%)
+        perdem mais que o miolo, e os intervalos deles ficam inteiros acima do intervalo de
+        atacado (34,1%), o setor de menor prevalência entre os grandes. Já POWER AND UTILITIES,
+        UNCLASSIFIED, OIL AND GAS e INSURANCE têm menos de 90 contas elegíveis cada, e os
+        intervalos passam de 15 pontos de largura: 54,3% em energia é compatível com qualquer
+        valor entre 40,2% e 67,8%. Para esses quatro, o registro honesto no artefato é o veredito
+        Insuficiente da Aula 01, com o tamanho da base ao lado. O miolo (comunicações e mídia,
+        manufatura, bancos, varejo, saúde, transporte e atacado) varia de 34,1% a 46,3%, com
+        1.041 contas em comunicações e mídia, o maior setor da carteira.</p>
+
+        <p><strong>O perfil de compra acompanha os andares.</strong> Manufatura, o setor de menor
+        rajada, é também o de compra mais recorrente: 4 dias de compra medianos. No topo da
+        tabela, governo compra em 3 dias medianos com o menor intervalo entre compras da carteira
+        (18,5 dias) e é o único setor cuja marca dominante é DESKTOP, o padrão de quem equipa
+        repartição em lote. Compra intensa, concentrada e com silêncio depois: essa é a
+        assinatura que a próxima figura mede.</p>
+
+        <h3>O exemplo trabalhado: governo compra por licitação</h3>
+
+        <figure class="doc-figura">
+          <img src="../assets/img/aula04-rajada-setor.png"
+               alt="Barras horizontais da fração mediana da receita da conta concentrada no melhor mês, por setor, com governo, educação e energia no topo e manufatura na base">
+          <figcaption>A fração mediana da receita concentrada no melhor mês da conta: 90,5% em
+          governo, 98,2% em educação e 97,1% em energia, contra 69,5% em manufatura. Só 12,6%
+          das contas de governo têm seis ou mais meses ativos, contra 20,3% dos demais
+          setores.</figcaption>
+        </figure>
+
+        <p>Compra pública passa por edital: o órgão abre a licitação, concentra o pedido de uma
+        vez e volta ao mercado apenas no ciclo seguinte, que pode demorar mais de um ano. A
+        figura mostra que esse mecanismo deixa assinatura no dado. E a consequência para o rótulo
+        é direta: <strong>um critério de 13 meses de inatividade lê o intervalo entre dois
+        editais como conta perdida</strong>. Parte dos 59,7% de prevalência do governo pode ser
+        ciclo de compra, e o dado desta base não permite separar quanto, porque nenhuma aba
+        registra edital, vigência de contrato ou ata de registro de preços. Essa fronteira vai
+        escrita na seção 07 do Artefato 1: a licitação é a explicação alternativa que a medida
+        não descarta.</p>
+
+        <div class="doc-nota">
+          <p><strong>A Conta C.</strong> Uma única conta de governo em El Salvador, classificada
+          como SMALL MARKET no painel, comprou USD 147,3 milhões em um único mês, janeiro de
+          2025, em um único dia de compra, e nunca mais apareceu. O rótulo a marca como perdida,
+          e ela sozinha responde por 65,7% dos USD 224,2 milhões de receita das contas perdidas
+          elegíveis. Sem ela, a receita perdida da carteira cai para USD 76,9 milhões, e a do
+          setor de governo cai de USD 174,8 para USD 27,5 milhões. É o retrato extremo do ciclo
+          único de licitação: nenhum plano de retenção reataria essa compra, e qualquer figura de
+          receita em risco que a inclua sem destacá-la atribui ao churn um valor que pertence a
+          um edital encerrado.</p>
+        </div>
+
+        <p><strong>O que isso muda no Artefato 1.</strong> Na seção 06, as figuras por setor
+        entram com a mesma regra das demais: intervalo desenhado, base declarada e o teste
+        escrito embaixo. Na seção 07, entram duas limitações que esta seção produziu: a base não
+        tem dado de edital para separar ciclo de compra de abandono no setor público, e a receita
+        em risco precisa ser lida com e sem a Conta C, porque um único evento concentra dois
+        terços do total.</p>
+      </section>
+
+      <!-- ================================================================= -->
       <section class="doc-secao" id="figura">
-        <h2>6. A figura que decide</h2>
+        <h2>7. A figura que decide</h2>
 
         <p>A skill <code>skills/figura-que-decide.md</code> parte do princípio de que a forma de
         uma figura é escolhida pela pergunta que ela responde, nunca pelo gosto de quem desenha.
@@ -481,7 +590,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="prompts">
-        <h2>7. Os prompts das três práticas</h2>
+        <h2>8. Os prompts das três práticas</h2>
 
         <p>Todos rodam em Antigravity, sobre a pasta clonada de
         <code>github.com/josercf/inteli-pos-2026-2a-eda</code> <a href="#r7">[7]</a>, com duas
@@ -536,7 +645,7 @@ número, desenhe o intervalo e escreva o teste embaixo.</pre>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="artefato">
-        <h2>8. As seções 05, 06 e 07 do Artefato 1</h2>
+        <h2>9. As seções 05, 06 e 07 do Artefato 1</h2>
 
         <p>O Artefato 1 de Tecnologia é a Análise Exploratória de Dados, com entrega em
         05/09/2026 e critério binário: entregou ou não entregou, com foco no feedback. Quatro
@@ -574,7 +683,7 @@ número, desenhe o intervalo e escreva o teste embaixo.</pre>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="leitura">
-        <h2>9. Leitura complementar e referências</h2>
+        <h2>10. Leitura complementar e referências</h2>
 
         <p>O business case da Kovan <a href="#r1">[1]</a> chama de Caminho B a proposta de um
         alvo contínuo de erosão de share of wallet, antecipado e sem rótulo pronto no sistema, em

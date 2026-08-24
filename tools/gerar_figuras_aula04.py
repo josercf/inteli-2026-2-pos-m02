@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Gera as seis figuras da Aula 04 em assets/img/.
+"""Gera as oito figuras da Aula 04 em assets/img/.
 
 Duas são didáticas, com semente fixa, para o conceito chegar antes do número.
-Quatro saem do dataset oficial através de dados/analise_aula04.py, cujos valores
+Seis saem do dataset oficial através de dados/analise_aula04.py, cujos valores
 estão travados em dados/tests/test_aula04_numeros.py.
 
 Figura é governada pela largura: 1168px, renderizada 1:1 no slide.
@@ -32,6 +32,22 @@ from dados import analise_aula04 as an  # noqa: E402
 
 MESES_CURTOS = {"01": "jan", "02": "fev", "03": "mar", "04": "abr", "05": "mai", "06": "jun",
                 "07": "jul", "08": "ago", "09": "set", "10": "out", "11": "nov", "12": "dez"}
+
+ROTULO_SETOR = {
+    "GOVERNMENT": "Governo",
+    "EDUCATION": "Educação",
+    "POWER AND UTILITIES": "Energia e utilities",
+    "UNCLASSIFIED": "Sem classificação",
+    "COMMUNICATIONS, MEDIA AND SERVICES": "Comunicações e mídia",
+    "OIL AND GAS": "Óleo e gás",
+    "HEALTHCARE AND LIFE SCIENCES": "Saúde",
+    "TRANSPORTATION": "Transporte",
+    "MANUFACTURING AND NATURAL RESOURCES": "Manufatura",
+    "BANKING AND INVESTMENT SERVICES": "Bancos e investimentos",
+    "RETAIL": "Varejo",
+    "INSURANCE": "Seguros",
+    "WHOLESALE TRADE": "Atacado",
+}
 
 
 def _pct(v: float) -> str:
@@ -253,11 +269,81 @@ def fila_por_segmento() -> Path:
     return salvar(fig, "aula04-fila-por-segmento.png")
 
 
+# ---------------------------------------------------------------------------
+# Real 5: prevalência por setor nas elegíveis, com IC
+# ---------------------------------------------------------------------------
+
+def prevalencia_por_setor() -> Path:
+    """Os 13 setores, com o IC separando quem sustenta veredito.
+
+    Os quatro setores com menos de 90 contas elegíveis entram em cinza: o
+    intervalo deles é largo demais para conclusão, e a cor diz isso antes da
+    legenda."""
+    t = an.perfil_por_setor()
+    nomes = [ROTULO_SETOR[s] for s in t.index]
+    cores = [CINZA_MEDIO if n < 90 else CORAL for n in t.contas]
+    fig = _figura(490)
+    ax = fig.add_axes([0.21, 0.20, 0.72, 0.63])
+    _estilo_eixo(ax)
+    y = np.arange(len(nomes))
+    ax.barh(y, t.prevalencia.to_numpy(), height=0.62, color=cores)
+    ax.errorbar(t.prevalencia, y, xerr=[t.prevalencia - t.ic_inferior, t.ic_superior - t.prevalencia],
+                fmt="none", ecolor=ROXO, elinewidth=2, capsize=4, capthick=2)
+    for yi, (p, h, n) in enumerate(zip(t.prevalencia, t.ic_superior, t.contas)):
+        ax.text(h + 0.012, yi, f"{_pct(p)}  ({_fmt(n, 0)})", fontsize=14, color=ROXO,
+                va="center", weight="bold")
+    ax.set_yticks(y)
+    ax.set_yticklabels(nomes, fontsize=14)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 0.9)
+    ax.set_xticks(np.linspace(0, 0.9, 7))
+    ax.set_xticklabels([_pct(v) for v in np.linspace(0, 0.9, 7)], fontsize=14)
+    ax.set_title("Prevalência de churn por setor nas elegíveis, com a base entre parênteses",
+                 fontsize=17, color=CINZA_ESCURO, loc="left", pad=14)
+    ax.text(0.0, -0.17, "IC de 95% (Wilson). Em cinza, os quatro setores com menos de 90 contas elegíveis:\n"
+            "intervalos com mais de 15 pontos de largura, sem veredito.",
+            transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO, va="top")
+    return salvar(fig, "aula04-prevalencia-setor.png")
+
+
+# ---------------------------------------------------------------------------
+# Real 6: rajada de compra por setor
+# ---------------------------------------------------------------------------
+
+def rajada_por_setor() -> Path:
+    """Fração da receita da conta concentrada no melhor mês, mediana por setor.
+
+    É a assinatura da compra por ciclo: governo, educação e energia no topo,
+    manufatura na base."""
+    t = an.rajada_por_setor()
+    nomes = [ROTULO_SETOR[s] for s in t.index]
+    fig = _figura(490)
+    ax = fig.add_axes([0.21, 0.20, 0.72, 0.63])
+    _estilo_eixo(ax)
+    y = np.arange(len(nomes))
+    ax.barh(y, t.pico_mediano.to_numpy(), height=0.62, color=VERDE_ESCURO)
+    for yi, v in enumerate(t.pico_mediano):
+        ax.text(v + 0.012, yi, _pct(v), fontsize=14, color=VERDE_ESCURO, va="center", weight="bold")
+    ax.set_yticks(y)
+    ax.set_yticklabels(nomes, fontsize=14)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 1.12)
+    ax.set_xticks(np.linspace(0, 1, 6))
+    ax.set_xticklabels([_pct(v) for v in np.linspace(0, 1, 6)], fontsize=14)
+    ax.set_title("Fração da receita concentrada no melhor mês da conta, mediana por setor",
+                 fontsize=17, color=CINZA_ESCURO, loc="left", pad=14)
+    ax.text(0.0, -0.17, "Contas elegíveis. No setor de governo a mediana é 90,5% e só 12,6% das contas\n"
+            "têm seis ou mais meses ativos: compra em rajada, com silêncio entre ciclos.",
+            transform=ax.transAxes, fontsize=14, color=CINZA_ESCURO, va="top")
+    return salvar(fig, "aula04-rajada-setor.png")
+
+
 def main() -> None:
     if not an.XLSX.exists():
         raise SystemExit(f"{an.XLSX} não encontrado. O dataset oficial não é versionado (ADR-005).")
     for fn in (ic_didatico, estratificacao_didatica, prevalencia_elegiveis,
-               marcas_por_dias, par_pbl, fila_por_segmento):
+               marcas_por_dias, par_pbl, fila_por_segmento,
+               prevalencia_por_setor, rajada_por_setor):
         print(f"  {fn().relative_to(RAIZ)}")
 
 

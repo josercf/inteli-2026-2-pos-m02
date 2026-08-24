@@ -62,6 +62,8 @@ ARQUIVOS = [
     ("assets/img/aula04-marcas-por-dias.png", "assets/img/aula04-marcas-por-dias.png"),
     ("assets/img/aula04-par-pbl.png", "assets/img/aula04-par-pbl.png"),
     ("assets/img/aula04-fila-por-segmento.png", "assets/img/aula04-fila-por-segmento.png"),
+    ("assets/img/aula04-prevalencia-setor.png", "assets/img/aula04-prevalencia-setor.png"),
+    ("assets/img/aula04-rajada-setor.png", "assets/img/aula04-rajada-setor.png"),
     (
         "assets/img/aula02-gemini-pratica2-prompt.jpg",
         "assets/img/aula02-gemini-pratica2-prompt.jpg",

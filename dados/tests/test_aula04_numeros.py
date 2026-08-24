@@ -219,3 +219,102 @@ def test_fila_por_segmento_contra_a_capacidade(an):
                            "SMALL MARKET": 173, "GLOBAL ACCOUNT": 162, "STRATEGIC ACCOUNT": 18}
     assert an.CAPACIDADE_OPERACIONAL == 138
     assert (f > 138).sum() == 5
+
+
+# ---------------------------------------------------------------------------
+# Setores
+# ---------------------------------------------------------------------------
+
+def test_perfil_por_setor_nas_elegiveis(an):
+    t = an.perfil_por_setor()
+    assert len(t) == 13
+    esperado = {
+        # setor: (contas, perdidas, prev, lo, hi)
+        "GOVERNMENT": (310, 185, 0.597, 0.541, 0.650),
+        "EDUCATION": (189, 105, 0.556, 0.484, 0.625),
+        "POWER AND UTILITIES": (46, 25, 0.543, 0.402, 0.678),
+        "UNCLASSIFIED": (37, 19, 0.514, 0.359, 0.666),
+        "COMMUNICATIONS, MEDIA AND SERVICES": (1041, 482, 0.463, 0.433, 0.493),
+        "OIL AND GAS": (35, 16, 0.457, 0.305, 0.618),
+        "HEALTHCARE AND LIFE SCIENCES": (143, 54, 0.378, 0.302, 0.459),
+        "TRANSPORTATION": (133, 50, 0.376, 0.298, 0.461),
+        "MANUFACTURING AND NATURAL RESOURCES": (757, 282, 0.373, 0.339, 0.408),
+        "BANKING AND INVESTMENT SERVICES": (228, 84, 0.368, 0.308, 0.433),
+        "RETAIL": (280, 102, 0.364, 0.310, 0.422),
+        "INSURANCE": (86, 31, 0.360, 0.267, 0.466),
+        "WHOLESALE TRADE": (463, 158, 0.341, 0.300, 0.386),
+    }
+    assert list(t.index) == list(esperado)
+    for setor, (n, k, prev, lo, hi) in esperado.items():
+        l = t.loc[setor]
+        assert (int(l.contas), int(l.perdidas)) == (n, k), setor
+        assert (round(l.prevalencia, 3), round(l.ic_inferior, 3), round(l.ic_superior, 3)) == (prev, lo, hi), setor
+    # O perfil de compra completo, coluna a coluna, porque a tabela do
+    # material imprime as cinco medidas de cada setor.
+    perfil = {
+        "GOVERNMENT": (38079, 3, 3, 18.5, "DESKTOP"),
+        "EDUCATION": (30427, 2, 2, 32.0, "NOTEBOOK"),
+        "POWER AND UTILITIES": (16498, 2, 2, 28.0, "NOTEBOOK"),
+        "UNCLASSIFIED": (14883, 2, 2, 22.5, "NOTEBOOK"),
+        "COMMUNICATIONS, MEDIA AND SERVICES": (17820, 2, 2, 34.5, "NOTEBOOK"),
+        "OIL AND GAS": (39530, 2, 3, 28.0, "NOTEBOOK"),
+        "HEALTHCARE AND LIFE SCIENCES": (29523, 3, 3, 22.5, "NOTEBOOK"),
+        "TRANSPORTATION": (17293, 3, 3, 19.0, "NOTEBOOK"),
+        "MANUFACTURING AND NATURAL RESOURCES": (14387, 4, 3, 25.5, "NOTEBOOK"),
+        "BANKING AND INVESTMENT SERVICES": (38020, 3, 2, 21.0, "NOTEBOOK"),
+        "RETAIL": (12108, 3, 2, 28.0, "NOTEBOOK"),
+        "INSURANCE": (30322, 2, 2, 37.0, "NOTEBOOK"),
+        "WHOLESALE TRADE": (23043, 3, 2, 25.0, "NOTEBOOK"),
+    }
+    for setor, (rec, dias, marcas, intervalo, dominante) in perfil.items():
+        l = t.loc[setor]
+        assert round(l.receita_mediana) == rec, setor
+        assert (int(l.dias_mediano), int(l.marcas_mediana)) == (dias, marcas), setor
+        assert l.intervalo_mediano == intervalo, setor
+        assert l.marca_dominante == dominante, setor
+
+
+def test_quatro_setores_tem_base_pequena(an):
+    t = an.perfil_por_setor()
+    pequenos = t[t.contas < 90]
+    assert set(pequenos.index) == {"OIL AND GAS", "UNCLASSIFIED",
+                                   "POWER AND UTILITIES", "INSURANCE"}
+    # Nos quatro, o intervalo tem mais de 15 pontos de largura: sem veredito.
+    assert ((pequenos.ic_superior - pequenos.ic_inferior) > 0.15).all()
+
+
+def test_rajada_por_setor(an):
+    t = an.rajada_por_setor()
+    assert round(t.loc["GOVERNMENT", "pico_mediano"], 3) == 0.905
+    assert round(t.loc["EDUCATION", "pico_mediano"], 3) == 0.982
+    assert round(t.loc["MANUFACTURING AND NATURAL RESOURCES", "pico_mediano"], 3) == 0.695
+    assert round(t.loc["GOVERNMENT", "recorrentes"], 3) == 0.126
+    # Fora do governo, a recorrência de seis ou mais meses é mais comum.
+    e = an.elegiveis()
+    assert round(float((e[e.setor != "GOVERNMENT"].meses_ativos >= 6).mean()), 3) == 0.203
+
+
+def test_a_conta_c_concentra_a_receita_perdida(an):
+    c = an.conta_c()
+    assert (c["setor"], c["segmento"], c["regiao"]) == ("GOVERNMENT", "SMALL MARKET", "SV")
+    assert (c["meses_ativos"], c["dias_de_compra"], c["churn"]) == (1, 1, 1)
+    assert c["ultimo_mes"] == "2025-01"
+    assert round(c["receita"] / 1e6, 1) == 147.3
+    assert round(c["participacao_na_receita_perdida"], 3) == 0.657
+    assert round(c["receita_perdida_total"] / 1e6, 1) == 224.2
+
+
+def test_receita_perdida_por_setor_com_e_sem_a_conta_c(an):
+    com = an.receita_perdida_por_setor()
+    sem = an.receita_perdida_por_setor(incluir_conta_c=False)
+    assert round(com["GOVERNMENT"] / 1e6, 1) == 174.8
+    assert round(sem["GOVERNMENT"] / 1e6, 1) == 27.5
+    assert com.index[0] == "GOVERNMENT"
+    assert round(com.sum() / 1e6, 1) == 224.2
+    assert round(sem.sum() / 1e6, 1) == 76.9
+
+
+def test_setor_e_segmento_nao_coincidem(an):
+    x = an.setor_x_segmento()
+    assert x == {"contas_government": 631, "government_em_public_sector": 479,
+                 "contas_public_sector": 837}

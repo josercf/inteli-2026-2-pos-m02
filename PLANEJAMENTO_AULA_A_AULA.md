@@ -351,7 +351,10 @@ dele para a população que ele alcança.
 **Conteúdo:** censura e população elegível; perfil de compra por segmento; IC
 de Wilson e qui-quadrado; estratificação com os três desfechos; frequência
 como vazamento; forma da figura pela pergunta, título como conclusão, teste
-embaixo.
+embaixo. No material de apoio, a leitura setorial completa: os 13 setores com
+IC, a assinatura de licitação do setor público (rajada de compra e
+recorrência) e a mega-conta de ciclo único apelidada de Conta C, que
+concentra 65,7% da receita perdida elegível.
 
 **O achado do dia:** 4.534 das 8.282 contas fizeram a primeira compra depois de
 2025-02 e não têm como estar marcadas; entre as 3.748 elegíveis a prevalência é
@@ -415,11 +418,11 @@ módulo, sem padrão publicado.
 
 | Artefato | Caminho | Observação |
 |---|---|---|
-| Números | `dados/analise_aula04.py` | elegíveis, perfil por segmento, IC, qui-quadrado, estratificações, par da PBL. `scipy` entra em `requirements-dev.txt` |
+| Números | `dados/analise_aula04.py` | elegíveis, perfil por segmento e por setor, IC, qui-quadrado, estratificações, rajada por setor, par da PBL e Conta C. `scipy` entra em `requirements-dev.txt` |
 | Testes | `dados/tests/test_aula04_numeros.py`, `tools/tests/test_figuras_aula04.py`, `tools/tests/test_skills_aula04.py`, `tools/tests/test_deck_aula04.py`, `tools/tests/test_material_aula04.py` | cada número do deck transcrito literal; pulado quando o xlsx não existe |
-| Figuras | `tools/gerar_figuras_aula04.py` | seis figuras: `aula04-ic-didatico`, `aula04-estratificacao-didatica`, `aula04-prevalencia-elegiveis`, `aula04-marcas-por-dias`, `aula04-par-pbl`, `aula04-fila-por-segmento`. 1168px, 1:1 |
-| Deck | `tools/montar_deck_aula04.py` gerando `aulas/aula04.html` | 32 slides; não editado à mão |
-| Material de apoio | `materiais/aula04-material-de-apoio.html` | explica IC, qui-quadrado e estratificação em prosa, com a leitura de negócio de cada teste |
+| Figuras | `tools/gerar_figuras_aula04.py` | oito figuras: `aula04-ic-didatico`, `aula04-estratificacao-didatica`, `aula04-prevalencia-elegiveis`, `aula04-marcas-por-dias`, `aula04-par-pbl`, `aula04-fila-por-segmento`, `aula04-prevalencia-setor`, `aula04-rajada-setor`. 1168px, 1:1 |
+| Deck | `tools/montar_deck_aula04.py` gerando `aulas/aula04.html` | 33 slides; não editado à mão |
+| Material de apoio | `materiais/aula04-material-de-apoio.html` | explica IC, qui-quadrado e estratificação em prosa, com a leitura de negócio de cada teste e a seção setorial com a Conta C |
 | Skills | `inteli-pos-2026-2a-eda/skills/perfil-por-segmento.md`, `figura-que-decide.md`; `bivariada.md` ganha passo de elegibilidade e de estratificação | em duplicata com `materiais/` no acervo, como as anteriores |
 | Repositório de clone | `AGENTS.md` e `CHECKLIST-ARTEFATO-1.md` | a seção 05 ganha "a população que o rótulo consegue marcar"; a 06 ganha "o teste escrito embaixo de cada figura" |
 | Checklist no acervo | `materiais/checklist-artefato-1-tecnologia.md` | mesma mudança |

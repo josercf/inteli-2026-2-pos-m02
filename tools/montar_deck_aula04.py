@@ -251,6 +251,27 @@ SLIDES.append(conteudo(
 ))
 
 # ---------------------------------------------------------------------------
+# 14b. Os tres andares dos setores, com a mega-conta de licitacao
+# ---------------------------------------------------------------------------
+# Tabela, e nao a figura de 13 barras: a figura completa tem 490px de altura e
+# nao cabe no orcamento vertical de um slide com fecho. Ela vive na secao 6 do
+# material de apoio; aqui entra o resumo em tres andares.
+SLIDES.append(conteudo(
+    "Governo perde 59,7% e quatro setores ficam sem veredito",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Andar</th><th>Setores</th><th>Prevalência</th><th>O que o intervalo autoriza</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Topo</td><td>GOVERNMENT (310) e EDUCATION (189)</td><td>59,7% e 55,6%</td><td>Intervalos acima do de WHOLESALE (34,1%)</td></tr>\n"
+    "            <tr><td>Miolo</td><td>Sete setores; o maior: COMMUNICATIONS (1.041)</td><td>34,1% a 46,3%</td><td>Intervalos que se cruzam entre vizinhos</td></tr>\n"
+    "            <tr><td>Base pequena</td><td>POWER, UNCLASSIFIED, OIL e INSURANCE</td><td>36,0% a 54,3%</td><td>Menos de 90 contas: veredito Insuficiente</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="Contas elegíveis, 13 setores do cadastro. Figura completa e leitura de licitação na seção 6 do material de apoio.",
+    conclusao="A conta de USD 147,3 mi, de um só dia de compra, é 65,7% da receita perdida: licitação lida como perda.",
+    fonte="Fonte: dados/analise_aula04.py, perfil_por_setor e conta_c.",
+))
+
+# ---------------------------------------------------------------------------
 # 15. Prática 2, enquadramento
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(

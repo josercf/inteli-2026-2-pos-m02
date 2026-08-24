@@ -157,3 +157,43 @@ def test_a_pbl_em_numeros(html, analise):
 
 def test_o_material_aponta_as_skills_novas(html):
     assert "skills/perfil-por-segmento.md" in html and "skills/figura-que-decide.md" in html
+
+
+# ---------------------------------------------------------------------------
+# Seção 6: os setores, um a um
+# ---------------------------------------------------------------------------
+
+@pytestmark_dataset
+def test_a_tabela_de_setores_esta_no_material(html, analise):
+    t = analise.perfil_por_setor()
+    assert len(t) == 13
+    assert round(t.loc["GOVERNMENT", "intervalo_mediano"], 1) == 18.5
+    for trecho in ("59,7%", "55,6%", "34,1%", "18,5", "38.079", "DESKTOP"):
+        assert trecho in html, trecho
+
+
+@pytestmark_dataset
+def test_a_rajada_do_setor_publico(html, analise):
+    t = analise.rajada_por_setor()
+    assert round(t.loc["GOVERNMENT", "pico_mediano"], 3) == 0.905
+    assert round(t.loc["GOVERNMENT", "recorrentes"], 3) == 0.126
+    for trecho in ("90,5%", "98,2%", "97,1%", "69,5%", "12,6%", "20,3%"):
+        assert trecho in html, trecho
+
+
+@pytestmark_dataset
+def test_a_conta_c_no_material(html, analise):
+    c = analise.conta_c()
+    assert round(c["receita"] / 1e6, 1) == 147.3
+    assert round(c["participacao_na_receita_perdida"], 3) == 0.657
+    for trecho in ("147,3", "65,7%", "224,2", "76,9", "174,8", "27,5", "El Salvador"):
+        assert trecho in html, trecho
+    assert "CLI002953" not in html
+
+
+@pytestmark_dataset
+def test_setor_e_segmento_declarados_como_recortes_diferentes(html, analise):
+    x = analise.setor_x_segmento()
+    assert x["contas_government"] == 631
+    for trecho in ("631", "479", "837"):
+        assert trecho in html, trecho

@@ -460,6 +460,13 @@ a ser escolhido pela queda de receita entre semestres.
 **Formato:** primeira metade, entrega e feedback cruzado entre grupos. Segunda
 metade, fechamento da recomendação de alvo com número.
 
+**Insumo preparado na S4:** a análise de corte por segmento (seção 7 do
+material da Aula 04 e `corte_por_segmento` em `dados/analise_aula04.py`). O
+ritmo de recompra difere por segmento e sustenta cortes de 5 a 9 meses no
+lugar do corte único de 13, com o custo medido em fila; os silêncios de 13
+meses ou mais seguidos de recompra e a censura do painel entram como ressalvas
+no veredito.
+
 **Entregável avaliado:** Artefato 1 de Tecnologia, a Análise Exploratória de
 Dados. Entrega binária, com foco em feedback.
 

@@ -197,3 +197,26 @@ def test_setor_e_segmento_declarados_como_recortes_diferentes(html, analise):
     assert x["contas_government"] == 631
     for trecho in ("631", "479", "837"):
         assert trecho in html, trecho
+
+
+# ---------------------------------------------------------------------------
+# Seção 7: um corte para cada segmento
+# ---------------------------------------------------------------------------
+
+@pytestmark_dataset
+def test_os_silencios_com_retorno_no_material(html, analise):
+    g = analise.gaps_de_retorno()
+    assert int(g.retornos_13_ou_mais.sum()) == 123
+    assert int(g.loc["MID MARKET", "retornos_13_ou_mais"]) == 83
+    for trecho in ("123", "83", "4.650", "4 e 8 meses"):
+        assert trecho in html, trecho
+
+
+@pytestmark_dataset
+def test_o_corte_por_segmento_no_material(html, analise):
+    t = analise.corte_por_segmento()
+    assert int(t.fila.sum()) == 4660
+    assert (t.captura_do_oficial == 1.0).all()
+    for trecho in ("4.660", "1.593", "9 meses", "2.266", "1.456", "138",
+                   "corte_por_segmento", "entre\n        5 e 9 meses"):
+        assert trecho in html, trecho

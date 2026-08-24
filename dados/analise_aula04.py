@@ -254,6 +254,78 @@ def setor_x_segmento() -> dict[str, int]:
             "contas_public_sector": int((c.segmento == "PUBLIC SECTOR").sum())}
 
 
+# ---------------------------------------------------------------------------
+# O corte por segmento: ritmo de recompra e o efeito de abandonar o corte único
+# ---------------------------------------------------------------------------
+
+def _meses_ativos_por_conta() -> pd.Series:
+    """Lista ordenada dos meses com receita positiva de cada conta, como
+    índice inteiro (ano vezes 12 mais mês), para medir silêncio em meses."""
+    painel = carregar()["painel"]
+    com_receita = painel[painel.receita_usd > 0].copy()
+    m = com_receita.periodo.str[:4].astype(int) * 12 + com_receita.periodo.str[5:].astype(int)
+    return com_receita.assign(m=m).groupby("account_id").m.apply(lambda s: sorted(s.unique()))
+
+
+def gaps_de_retorno() -> pd.DataFrame:
+    """Silêncios seguidos de retorno, em meses, por segmento.
+
+    Cada observação é um intervalo entre dois meses com receita da mesma
+    conta. A medida é censurada à direita: um silêncio longo só aparece aqui
+    se o retorno coube nos 24 meses do painel, então os percentis subestimam
+    o silêncio tolerável nos grupos de ciclo longo. `retornos_13_ou_mais`
+    conta os silêncios de 13 meses ou mais que terminaram em recompra: contas
+    que o corte oficial teria marcado como perdidas no meio do silêncio.
+    """
+    seq = _meses_ativos_por_conta()
+    linhas = []
+    for conta, meses in seq.items():
+        for a, b in zip(meses, meses[1:]):
+            linhas.append((conta, b - a))
+    g = pd.DataFrame(linhas, columns=["account_id", "gap"])
+    g = g.join(contas_enriquecidas()[["segmento"]], on="account_id")
+    return g.groupby("segmento").gap.agg(
+        gaps="size",
+        p50="median",
+        p75=lambda s: float(s.quantile(0.75)),
+        p90=lambda s: float(s.quantile(0.90)),
+        p95=lambda s: float(s.quantile(0.95)),
+        maximo="max",
+        retornos_13_ou_mais=lambda s: int((s >= 13).sum()),
+    )
+
+
+def corte_por_segmento(percentil: float = 0.95) -> pd.DataFrame:
+    """O efeito de trocar o corte único de 13 meses por um corte por segmento.
+
+    O corte sugerido é o teto do percentil dos silêncios com retorno, mais um
+    mês de margem. Elegibilidade e fila são recalculadas sob o corte do
+    próprio segmento: mudar o corte muda quem tem painel suficiente para ser
+    marcado. `captura_do_oficial` mede quantas das contas do rótulo oficial,
+    entre as elegíveis do corte novo, o corte novo mantém marcadas.
+    """
+    g = gaps_de_retorno()
+    c = contas_enriquecidas()
+    fim_ano, fim_mes = (int(p) for p in "2026-03".split("-"))
+    fim = fim_ano * 12 + fim_mes
+    prim = c.primeiro_mes.str[:4].astype(int) * 12 + c.primeiro_mes.str[5:].astype(int)
+    linhas = {}
+    for seg, row in g.iterrows():
+        corte = int(np.ceil(row[f"p{int(percentil * 100)}"])) + 1
+        sub = c[c.segmento == seg]
+        eleg = sub[prim.loc[sub.index] <= fim - corte]
+        fila = eleg[eleg.inatividade >= corte]
+        oficial = eleg[eleg.churn == 1]
+        capturadas = len(fila.index.intersection(oficial.index))
+        linhas[seg] = {
+            "corte_meses": corte, "elegiveis": len(eleg), "fila": len(fila),
+            "fila_corte_13": int(sub[prim.loc[sub.index] <= fim - 13].churn.sum()),
+            "captura_do_oficial": capturadas / len(oficial) if len(oficial) else float("nan"),
+        }
+    t = pd.DataFrame.from_dict(linhas, orient="index")
+    return t.sort_values("fila", ascending=False)
+
+
 def main() -> None:
     print("=== populações ===")
     for nome, v in populacoes().items():
@@ -290,6 +362,10 @@ def main() -> None:
     print(lado_a_lado.round(1).to_string())
     print("\n=== setor x segmento ===")
     print(" ", setor_x_segmento())
+    print("\n=== silêncios com retorno, por segmento ===")
+    print(gaps_de_retorno().round(2).to_string())
+    print("\n=== corte por segmento (p95 + 1) contra o corte único de 13 ===")
+    print(corte_por_segmento().round(3).to_string())
 
 
 if __name__ == "__main__":

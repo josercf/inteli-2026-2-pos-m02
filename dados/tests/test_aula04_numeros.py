@@ -318,3 +318,51 @@ def test_setor_e_segmento_nao_coincidem(an):
     x = an.setor_x_segmento()
     assert x == {"contas_government": 631, "government_em_public_sector": 479,
                  "contas_public_sector": 837}
+
+
+# ---------------------------------------------------------------------------
+# O corte por segmento
+# ---------------------------------------------------------------------------
+
+def test_silencios_com_retorno_por_segmento(an):
+    g = an.gaps_de_retorno()
+    esperado = {
+        # segmento: (gaps, p75, p90, p95, maximo, retornos de 13 meses ou mais)
+        "GLOBAL ACCOUNT": (3550, 2.0, 3.0, 4.0, 18, 5),
+        "LARGE ENTERPRISE": (4323, 2.0, 4.0, 5.0, 21, 21),
+        "MID MARKET": (4650, 3.0, 6.0, 8.0, 22, 83),
+        "PUBLIC SECTOR": (1449, 2.0, 5.0, 7.0, 21, 10),
+        "SMALL MARKET": (1166, 2.0, 3.0, 5.0, 15, 3),
+        "STRATEGIC ACCOUNT": (457, 2.0, 3.0, 5.0, 18, 1),
+    }
+    for seg, (n, p75, p90, p95, maximo, tardios) in esperado.items():
+        l = g.loc[seg]
+        assert int(l.gaps) == n, seg
+        assert (l.p75, l.p90, l.p95) == (p75, p90, p95), seg
+        assert (int(l.maximo), int(l.retornos_13_ou_mais)) == (maximo, tardios), seg
+    assert (g.p50 == 1.0).all()
+    assert int(g.retornos_13_ou_mais.sum()) == 123
+    assert int(g.gaps.sum()) == 15595
+
+
+def test_corte_por_segmento_contra_o_corte_unico(an):
+    t = an.corte_por_segmento()
+    esperado = {
+        # segmento: (corte, elegiveis, fila, fila com o corte de 13)
+        "MID MARKET": (9, 2266, 1456, 716),
+        "LARGE ENTERPRISE": (6, 1566, 989, 263),
+        "SMALL MARKET": (6, 1052, 871, 173),
+        "GLOBAL ACCOUNT": (5, 1192, 825, 162),
+        "PUBLIC SECTOR": (8, 648, 462, 261),
+        "STRATEGIC ACCOUNT": (6, 106, 57, 18),
+    }
+    assert list(t.index) == list(esperado)
+    for seg, (corte, eleg, fila, fila13) in esperado.items():
+        l = t.loc[seg]
+        assert (int(l.corte_meses), int(l.elegiveis)) == (corte, eleg), seg
+        assert (int(l.fila), int(l.fila_corte_13)) == (fila, fila13), seg
+    # Todo corte próprio captura 100% do rótulo oficial entre as elegíveis
+    # dele: cortes mais curtos que 13 nunca desmarcam conta oficial.
+    assert (t.captura_do_oficial == 1.0).all()
+    assert int(t.fila.sum()) == 4660
+    assert int(t.fila_corte_13.sum()) == 1593

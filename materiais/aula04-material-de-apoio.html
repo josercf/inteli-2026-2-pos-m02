@@ -59,10 +59,11 @@
         <li><a href="#confundidor">4. O confundidor: estratificação</a></li>
         <li><a href="#vazamento">5. O vazamento: frequência de compra</a></li>
         <li><a href="#setores">6. Os setores, um a um</a></li>
-        <li><a href="#figura">7. A figura que decide</a></li>
-        <li><a href="#prompts">8. Os prompts das três práticas</a></li>
-        <li><a href="#artefato">9. As seções 05, 06 e 07 do Artefato 1</a></li>
-        <li><a href="#leitura">10. Leitura complementar e referências</a></li>
+        <li><a href="#corte-segmento">7. Um corte para cada segmento</a></li>
+        <li><a href="#figura">8. A figura que decide</a></li>
+        <li><a href="#prompts">9. Os prompts das três práticas</a></li>
+        <li><a href="#artefato">10. As seções 05, 06 e 07 do Artefato 1</a></li>
+        <li><a href="#leitura">11. Leitura complementar e referências</a></li>
       </ol>
     </nav>
 
@@ -517,8 +518,89 @@
       </section>
 
       <!-- ================================================================= -->
+      <section class="doc-secao" id="corte-segmento">
+        <h2>7. Um corte para cada segmento</h2>
+
+        <p>O rótulo oficial aplica o mesmo silêncio de 13 meses a toda a carteira. A seção 6
+        mostrou que os grupos compram em ritmos diferentes, e isso abre a pergunta desta seção:
+        <strong>que corte cada segmento sustentaria, se o critério fosse derivado do ritmo de
+        recompra do próprio segmento?</strong> A medida que responde é o silêncio seguido de
+        retorno: cada intervalo, em meses, entre dois meses com receita da mesma conta. Um
+        silêncio que aparece nessa distribuição é um silêncio que a carteira já viu terminar em
+        recompra.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Segmento</th><th>Silêncios observados</th><th>p75</th><th>p90</th><th>p95</th><th>Máximo com retorno</th><th>Retornos após 13+ meses</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mid market</td><td>4.650</td><td>3</td><td>6</td><td>8</td><td>22</td><td>83</td></tr>
+              <tr><td>Grandes contas</td><td>4.323</td><td>2</td><td>4</td><td>5</td><td>21</td><td>21</td></tr>
+              <tr><td>Contas globais</td><td>3.550</td><td>2</td><td>3</td><td>4</td><td>18</td><td>5</td></tr>
+              <tr><td>Setor público</td><td>1.449</td><td>2</td><td>5</td><td>7</td><td>21</td><td>10</td></tr>
+              <tr><td>Small market</td><td>1.166</td><td>2</td><td>3</td><td>5</td><td>15</td><td>3</td></tr>
+              <tr><td>Estratégicas</td><td>457</td><td>2</td><td>3</td><td>5</td><td>18</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Duas leituras saem da tabela antes de qualquer corte novo. A primeira: o silêncio
+        típico é curto em todos os segmentos (a mediana é de 1 mês em todos, e o p95 fica entre
+        4 e 8 meses), então um corte calibrado pelo percentil do próprio segmento ficaria entre
+        5 e 9 meses, sempre abaixo dos 13 do rótulo oficial. A segunda: <strong>123 silêncios de
+        13 meses ou mais terminaram em recompra</strong>, 83 deles no mid market. São contas que
+        o corte oficial teria marcado como perdidas no meio de um silêncio que acabou em pedido:
+        a evidência direta de que 13 meses erram para os dois lados, cedo demais para quem tem
+        ciclo longo e tarde demais para quem compra todo mês.</p>
+
+        <div class="doc-nota">
+          <p><strong>A censura, de novo.</strong> Esta distribuição só contém silêncios cujo
+          retorno coube nos 24 meses do painel. Um ciclo de licitação de 18 meses raramente
+          deixa dois pedidos dentro da janela, então o p95 observado subestima o silêncio
+          tolerável justamente nos grupos de ciclo longo, como o setor público da seção 6. O
+          corte derivado do percentil é um piso informado pelo dado, e a decisão final é de
+          negócio.</p>
+        </div>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Segmento</th><th>Corte sugerido (p95 + 1)</th><th>Elegíveis sob o corte</th><th>Fila com o corte próprio</th><th>Fila com o corte de 13</th><th>Captura do rótulo oficial</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mid market</td><td>9 meses</td><td>2.266</td><td>1.456</td><td>716</td><td>100%</td></tr>
+              <tr><td>Grandes contas</td><td>6 meses</td><td>1.566</td><td>989</td><td>263</td><td>100%</td></tr>
+              <tr><td>Small market</td><td>6 meses</td><td>1.052</td><td>871</td><td>173</td><td>100%</td></tr>
+              <tr><td>Contas globais</td><td>5 meses</td><td>1.192</td><td>825</td><td>162</td><td>100%</td></tr>
+              <tr><td>Setor público</td><td>8 meses</td><td>648</td><td>462</td><td>261</td><td>100%</td></tr>
+              <tr><td>Estratégicas</td><td>6 meses</td><td>106</td><td>57</td><td>18</td><td>100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>O custo do corte fino é a fila.</strong> Somados, os cortes por segmento
+        marcam 4.660 contas, contra 1.593 do corte único de 13 meses, e a capacidade operacional
+        segue em 138 planos por trimestre. Encurtar o corte antecipa o alarme e multiplica os
+        falsos positivos de ciclo (a conta que ia voltar sozinha), e é por isso que a captura de
+        100% do rótulo oficial não encerra a discussão: capturar tudo custa sinalizar três vezes
+        mais conta. O corte por segmento entrega uma régua mais fina; quanto da fila extra vale
+        intervenção é a pergunta de priorização que o mapa de valor contra risco da manhã
+        responde.</p>
+
+        <p><strong>Como isso entra no artefato e na Aula 05.</strong> A seção 05 do checklist
+        ganhou o item correspondente: o corte por segmento entra ao lado dos três cortes
+        alternativos, com fila, captura e a censura declarada. No veredito de alvo da Aula 05,
+        esta análise sustenta a recomendação com três peças: o ritmo próprio de cada segmento, o
+        custo em fila de cada corte e os 123 retornos tardios que o corte único trataria como
+        perda consumada. A função que produz as duas tabelas é <code>corte_por_segmento</code>,
+        em <code>dados/analise_aula04.py</code>, e aceita outro percentil como parâmetro para a
+        mesa que quiser testar uma régua mais conservadora.</p>
+      </section>
+
+      <!-- ================================================================= -->
       <section class="doc-secao" id="figura">
-        <h2>7. A figura que decide</h2>
+        <h2>8. A figura que decide</h2>
 
         <p>A skill <code>skills/figura-que-decide.md</code> parte do princípio de que a forma de
         uma figura é escolhida pela pergunta que ela responde, nunca pelo gosto de quem desenha.
@@ -590,7 +672,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="prompts">
-        <h2>8. Os prompts das três práticas</h2>
+        <h2>9. Os prompts das três práticas</h2>
 
         <p>Todos rodam em Antigravity, sobre a pasta clonada de
         <code>github.com/josercf/inteli-pos-2026-2a-eda</code> <a href="#r7">[7]</a>, com duas
@@ -645,7 +727,7 @@ número, desenhe o intervalo e escreva o teste embaixo.</pre>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="artefato">
-        <h2>9. As seções 05, 06 e 07 do Artefato 1</h2>
+        <h2>10. As seções 05, 06 e 07 do Artefato 1</h2>
 
         <p>O Artefato 1 de Tecnologia é a Análise Exploratória de Dados, com entrega em
         05/09/2026 e critério binário: entregou ou não entregou, com foco no feedback. Quatro
@@ -683,7 +765,7 @@ número, desenhe o intervalo e escreva o teste embaixo.</pre>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="leitura">
-        <h2>10. Leitura complementar e referências</h2>
+        <h2>11. Leitura complementar e referências</h2>
 
         <p>O business case da Kovan <a href="#r1">[1]</a> chama de Caminho B a proposta de um
         alvo contínuo de erosão de share of wallet, antecipado e sem rótulo pronto no sistema, em

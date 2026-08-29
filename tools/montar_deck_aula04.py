@@ -123,7 +123,7 @@ SLIDES.append(conteudo(
     "          </tbody>\n"
     "        </table>\n"
     '        <p class="linha-contexto fragment">O rótulo exige treze meses sem compra; quem entrou em março de 2025 teve no máximo doze meses de painel.</p>\n',
-    contexto="Censura: o desfecho existe, mas a janela de observação não alcança parte das contas.",
+    contexto="Censura (Janela Insuficiente): o desfecho pode até existir, mas a janela de observação não teve tempo de alcançar parte das contas.",
     conclusao="Toda hipótese de causa testada na carteira inteira mistura quem não perdeu com quem não teve tempo de perder. Hoje testamos nas 3.748 elegíveis.",
     fonte="Fonte: dados/analise_aula04.py, populacoes.",
     por_passos=True,
@@ -242,11 +242,10 @@ SLIDES.append(conteudo(
     "            <tr><td>2 marcas</td><td>915</td><td>51,5%</td><td>48,2% a 54,7%</td></tr>\n"
     "            <tr><td>3 marcas</td><td>640</td><td>34,8%</td><td>31,3% a 38,6%</td></tr>\n"
     "            <tr><td>4 ou mais</td><td>1.107</td><td>16,1%</td><td>14,0% a 18,4%</td></tr>\n"
-    "            <tr><td>Setor</td><td>GOVERNMENT</td><td>310</td><td>59,7%</td><td>54,1% a 65,0%</td><td>93,9, 12 gl</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
     contexto="3.748 contas elegíveis. Canal tem valor único e não testa nada; engajamento cobre 1.560 contas.",
-    conclusao="Mix e setor passam pelo filtro do ruído; canal é Insuficiente por construção, e engajamento por cobertura.",
+    conclusao="Mix passa pelo filtro do ruído; canal é Insuficiente por construção, e engajamento por cobertura.",
     fonte="Fonte: dados/analise_aula04.py, tabela_com_ic.",
 ))
 
@@ -266,9 +265,24 @@ SLIDES.append(conteudo(
     "            <tr><td>Base pequena</td><td>POWER, UNCLASSIFIED, OIL e INSURANCE</td><td>36,0% a 54,3%</td><td>Menos de 90 contas: veredito Insuficiente</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
-    contexto="Contas elegíveis, 13 setores do cadastro. Figura completa e leitura de licitação na seção 6 do material de apoio.",
-    conclusao="A conta de USD 147,3 mi, de um só dia de compra, é 65,7% da receita perdida: licitação lida como perda.",
-    fonte="Fonte: dados/analise_aula04.py, perfil_por_setor e conta_c.",
+    contexto='Contas elegíveis, 13 setores do cadastro. <strong class="destaque">Atenção: Setor do cadastro ≠ Segmento do painel.</strong>',
+    conclusao="Setores de ciclo longo parecem liderar a inatividade, mas é preciso cuidado com a composição dessa prevalência.",
+    fonte="Fonte: dados/analise_aula04.py, perfil_por_setor.",
+))
+
+# ---------------------------------------------------------------------------
+# 14c. A mega-conta de licitação
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "O perigo do número agregado: licitação lida como churn",
+    '        <div class="stat-tiles">\n'
+    '          <div class="stat-tile destaque"><p class="stat-numero">65,7%</p><p class="stat-rotulo">da receita perdida elegível na base toda</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">USD 147,3 mi</p><p class="stat-rotulo">em uma única conta</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">1</p><p class="stat-rotulo">dia de compra (janeiro/25)</p></div>\n'
+    "        </div>\n",
+    contexto="A ilusão da alta prevalência no setor de Governo esconde uma única operação atípica.",
+    conclusao="Intervir na causa raiz depende de isolar essas anomalias. Prevalência alta com ciclo de licitação por trás pode ser falso positivo em massa.",
+    fonte="Fonte: dados/analise_aula04.py, conta_c.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -392,7 +406,7 @@ SLIDES.append(conteudo(
     "        </table>\n"
     '        <p class="linha-contexto">Uma conta com um único dia de compra, em 2024, já está a treze meses ou mais sem comprar: a variável conta o desfecho.</p>\n',
     contexto="Qui-quadrado de 1.671,4 com 3 graus de liberdade, o maior da tarde.",
-    conclusao="O terceiro filtro é o vazamento: a variável foi construída com a informação que define o rótulo.",
+    conclusao="O terceiro filtro é o vazamento: usar uma variável que já é a própria resposta disfarçada (construída com a informação do rótulo).",
     fonte="Fonte: dados/analise_aula04.py, tabela_com_ic(\"faixa_dias\").",
 ))
 
@@ -520,7 +534,7 @@ SLIDES.append(conteudo(
     '          <div class="etapa fragment"><p class="quando">29/08 &middot; hoje</p><h3>Fica pronto</h3>'
     "<p>Rótulo, visuais e limitações, e três filtros para qualquer hipótese de causa.</p></div>\n"
     '          <div class="etapa fragment"><p class="quando">Trilha de Negócios</p><h3>Segmentação e personas</h3>'
-    "<p>As figuras da seção 06, com intervalo e teste embaixo, sustentam o mapa valor contra risco da manhã.</p></div>\n"
+    "<p>As figuras da seção 06, e a fila real (1.593) vs capacidade (138), sustentam o mapa valor contra risco da manhã.</p></div>\n"
     '          <div class="etapa avaliada fragment"><p class="quando">05/09 &middot; Semana 5</p><h3>Artefato 1 e veredito de alvo</h3>'
     "<p>Entrega binária com feedback cruzado, e o fechamento da recomendação de alvo com número.</p></div>\n"
     '          <div class="etapa fragment"><p class="quando">12/09 &middot; Aula 06</p><h3>Feature engineering</h3>'

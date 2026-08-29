@@ -393,7 +393,7 @@
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>Governo perde 59,7% e quatro setores ficam sem veredito</h2>
-          <p class="linha-contexto">Contas elegíveis, 13 setores do cadastro. Figura completa e leitura de licitação na seção 6 do material de apoio.</p>
+          <p class="linha-contexto">Contas elegíveis, 13 setores do cadastro. <strong class="destaque">Atenção: Setor do cadastro ≠ Segmento do painel.</strong></p>
         </div>
         <table class="tabela-criterios compacta">
           <thead><tr><th>Andar</th><th>Setores</th><th>Prevalência</th><th>O que o intervalo autoriza</th></tr></thead>
@@ -406,13 +406,39 @@
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>A conta de USD 147,3 mi, de um só dia de compra, é 65,7% da receita perdida: licitação lida como perda.</p>
+          <p>Setores de ciclo longo parecem liderar a inatividade, mas é preciso cuidado com a composição dessa prevalência.</p>
         </div>
-        <p class="fonte-nota">Fonte: dados/analise_aula04.py, perfil_por_setor e conta_c.</p>
+        <p class="fonte-nota">Fonte: dados/analise_aula04.py, perfil_por_setor.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
           <p class="footer-page">13</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O perigo do número agregado: licitação lida como churn</h2>
+          <p class="linha-contexto">A ilusão da alta prevalência no setor de Governo esconde uma única operação atípica.</p>
+        </div>
+        <div class="stat-tiles">
+          <div class="stat-tile destaque"><p class="stat-numero">65,7%</p><p class="stat-rotulo">da receita perdida elegível na base toda</p></div>
+          <div class="stat-tile"><p class="stat-numero">USD 147,3 mi</p><p class="stat-rotulo">em uma única conta</p></div>
+          <div class="stat-tile"><p class="stat-numero">1</p><p class="stat-rotulo">dia de compra (janeiro/25)</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Intervir na causa raiz depende de isolar essas anomalias. Prevalência alta com ciclo de licitação por trás pode ser falso positivo em massa.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula04.py, conta_c.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
+          <p class="footer-page">14</p>
         </div>
       </section>
 
@@ -468,7 +494,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">14</p>
+          <p class="footer-page">15</p>
         </div>
       </section>
 
@@ -506,7 +532,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">15</p>
+          <p class="footer-page">16</p>
         </div>
       </section>
 
@@ -538,7 +564,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">16</p>
+          <p class="footer-page">17</p>
         </div>
       </section>
 
@@ -569,7 +595,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">17</p>
+          <p class="footer-page">18</p>
         </div>
       </section>
 
@@ -589,7 +615,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">18</p>
+          <p class="footer-page">19</p>
         </div>
       </section>
 
@@ -620,7 +646,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">19</p>
+          <p class="footer-page">20</p>
         </div>
       </section>
 
@@ -645,13 +671,13 @@
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>O terceiro filtro é o vazamento: a variável foi construída com a informação que define o rótulo.</p>
+          <p>O terceiro filtro é o vazamento: usar uma variável que já é a própria resposta disfarçada (construída com a informação do rótulo).</p>
         </div>
         <p class="fonte-nota">Fonte: dados/analise_aula04.py, tabela_com_ic("faixa_dias").</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">20</p>
+          <p class="footer-page">21</p>
         </div>
       </section>
 
@@ -698,7 +724,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">21</p>
+          <p class="footer-page">22</p>
         </div>
       </section>
 
@@ -739,7 +765,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">22</p>
+          <p class="footer-page">23</p>
         </div>
       </section>
 
@@ -760,7 +786,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">23</p>
+          <p class="footer-page">24</p>
         </div>
       </section>
 
@@ -780,7 +806,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">24</p>
+          <p class="footer-page">25</p>
         </div>
       </section>
 
@@ -831,7 +857,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">25</p>
+          <p class="footer-page">26</p>
         </div>
       </section>
 
@@ -899,7 +925,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">26</p>
+          <p class="footer-page">27</p>
         </div>
       </section>
 
@@ -912,7 +938,7 @@
         </div>
         <div class="linha-tempo">
           <div class="etapa fragment"><p class="quando">29/08 &middot; hoje</p><h3>Fica pronto</h3><p>Rótulo, visuais e limitações, e três filtros para qualquer hipótese de causa.</p></div>
-          <div class="etapa fragment"><p class="quando">Trilha de Negócios</p><h3>Segmentação e personas</h3><p>As figuras da seção 06, com intervalo e teste embaixo, sustentam o mapa valor contra risco da manhã.</p></div>
+          <div class="etapa fragment"><p class="quando">Trilha de Negócios</p><h3>Segmentação e personas</h3><p>As figuras da seção 06, e a fila real (1.593) vs capacidade (138), sustentam o mapa valor contra risco da manhã.</p></div>
           <div class="etapa avaliada fragment"><p class="quando">05/09 &middot; Semana 5</p><h3>Artefato 1 e veredito de alvo</h3><p>Entrega binária com feedback cruzado, e o fechamento da recomendação de alvo com número.</p></div>
           <div class="etapa fragment"><p class="quando">12/09 &middot; Aula 06</p><h3>Feature engineering</h3><p>Recência, frequência e valor, sobre a população elegível, e o vazamento temporal que a frequência de hoje antecipou.</p></div>
         </div>
@@ -924,7 +950,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">27</p>
+          <p class="footer-page">28</p>
         </div>
       </section>
 
@@ -948,7 +974,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 04</p>
-          <p class="footer-page">28</p>
+          <p class="footer-page">29</p>
         </div>
       </section>
 

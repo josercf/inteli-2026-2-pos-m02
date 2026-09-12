@@ -70,7 +70,8 @@ def _celula(col: int, lin: int, sigla: str, nome: str, valor: int, acerto: bool)
         f'  <g class="{classe}">\n'
         f'    <rect x="{x}" y="{y}" width="{CEL_L}" height="{CEL_A}" rx="10"/>\n'
         f'    <text class="sigla" x="{x + 16}" y="{y + 22}">{sigla}</text>\n'
-        f'    <text class="valor" x="{x + 16}" y="{y + 52}">{_milhar(valor)}</text>\n'
+        f'    <text class="valor" x="{x + 16}" y="{y + 52}">{_milhar(valor)}'
+        f'<tspan class="unidade" dx="8">contas</tspan></text>\n'
         f'    <text class="legenda" x="{x + 16}" y="{y + 70}">{nome}</text>\n'
         "  </g>"
     )
@@ -101,14 +102,16 @@ def _grade() -> str:
         f'  <text class="eixo" x="16" y="26">O QUE O MODELO DISSE</text>',
         f'  <text class="cabecalho" x="230" y="{l0 + 6:.0f}" text-anchor="end">Marcou</text>',
         f'  <text class="cabecalho" x="230" y="{l1 + 6:.0f}" text-anchor="end">Não marcou</text>',
-        _celula(0, 0, "VP", "acertou o alarme", VP, True),
-        _celula(1, 0, "FP", "alarme falso", FP, False),
-        _celula(0, 1, "FN", "perda que passou", FN, False),
-        _celula(1, 1, "VN", "acertou o silêncio", VN, True),
+        # A sigla sozinha nao ensina nada. Cada caixa carrega o nome por
+        # extenso e a frase em portugues do que aconteceu ali.
+        _celula(0, 0, "VP · Verdadeiro positivo", "marcadas, e se perderam", VP, True),
+        _celula(1, 0, "FP · Falso positivo", "marcadas, e continuaram", FP, False),
+        _celula(0, 1, "FN · Falso negativo", "não marcadas, e se perderam", FN, False),
+        _celula(1, 1, "VN · Verdadeiro negativo", "não marcadas, e continuaram", VN, True),
     ])
 
 
-def _painel(formula: str, conta: str, resultado: str, rotulo: str) -> str:
+def _painel(formula: str, conta: str, conta_legenda: str, resultado: str, rotulo: str) -> str:
     """Painel da direita, revelado como último passo."""
     x = PAINEL_X
     return "\n".join([
@@ -116,6 +119,7 @@ def _painel(formula: str, conta: str, resultado: str, rotulo: str) -> str:
         f'    <rect x="{x}" y="{Y0}" width="{PAINEL_L - 16}" height="{CEL_A * 2 + GAP}" rx="10"/>',
         f'    <text class="formula" x="{x + 20}" y="{Y0 + 32}">{formula}</text>',
         f'    <text class="conta" x="{x + 20}" y="{Y0 + 58}">{conta}</text>',
+        f'    <text class="legenda" x="{x + 20}" y="{Y0 + 80}">{conta_legenda}</text>',
         f'    <text class="resultado" x="{x + 20}" y="{Y0 + 122}">{resultado}</text>',
         f'    <text class="resultado-rotulo" x="{x + 20}" y="{Y0 + 148}">{rotulo}</text>',
         "  </g>",
@@ -131,9 +135,22 @@ def _svg(rotulo_aria: str, corpo: str) -> str:
     )
 
 
+REGRA = ("Positivo e negativo dizem o que o modelo falou. "
+         "Verdadeiro e falso dizem se ele acertou.")
+
+
 def _diagrama_de_matriz(nome, aria, numerador, denominador,
-                        rotulo_num, rotulo_den, formula, conta, resultado, rotulo) -> str:
+                        rotulo_num, rotulo_den, formula, conta, conta_legenda,
+                        resultado, rotulo) -> str:
     partes = [_grade()]
+    partes.append(
+        f'  <text class="legenda" x="{PAINEL_X}" y="{Y0 + CEL_A * 2 + GAP + 26}">'
+        f"{REGRA.split('. ')[0]}.</text>"
+    )
+    partes.append(
+        f'  <text class="legenda" x="{PAINEL_X}" y="{Y0 + CEL_A * 2 + GAP + 46}">'
+        f"{REGRA.split('. ')[1]}</text>"
+    )
     partes.append(
         '  <g class="fragment">\n'
         + _realce(denominador, "realce-den", 7) + "\n"
@@ -148,7 +165,7 @@ def _diagrama_de_matriz(nome, aria, numerador, denominador,
         + f"{rotulo_num}</text>\n"
         "  </g>"
     )
-    partes.append(_painel(formula, conta, resultado, rotulo))
+    partes.append(_painel(formula, conta, conta_legenda, resultado, rotulo))
     return _svg(aria, "\n".join(partes))
 
 
@@ -162,6 +179,7 @@ def acuracia() -> tuple[str, str]:
         rotulo_den="Denominador: as quatro caixas, ou seja, a carteira elegível inteira",
         formula="(VP + VN) dividido pelo total",
         conta=f"({_milhar(VP)} + {_milhar(VN)}) / {_milhar(TOTAL)}",
+        conta_legenda="acertos divididos pelo total de contas",
         resultado=_pct(valor), rotulo="ACURÁCIA")
 
 
@@ -175,6 +193,7 @@ def precisao() -> tuple[str, str]:
         rotulo_den="Denominador: a linha de cima, tudo que o modelo marcou",
         formula="VP dividido por (VP + FP)",
         conta=f"{_milhar(VP)} / {_milhar(VP + FP)}",
+        conta_legenda="acertos divididos por tudo que foi marcado",
         resultado=_pct(valor), rotulo="PRECISÃO")
 
 
@@ -188,6 +207,7 @@ def revocacao() -> tuple[str, str]:
         rotulo_den="Denominador: a coluna da esquerda, todas as perdas que existiram",
         formula="VP dividido por (VP + FN)",
         conta=f"{_milhar(VP)} / {_milhar(VP + FN)}",
+        conta_legenda="acertos divididos por todas as perdas reais",
         resultado=_pct(valor), rotulo="REVOCAÇÃO")
 
 

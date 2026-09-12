@@ -416,18 +416,20 @@ SLIDES.append(secao("05", "Medidas de qualidade", "Quatro números que saem da m
                     ["Acurácia", "Precisão", "Revocação", "F1"]))
 
 SLIDES.append(conteudo(
-    "As quatro caixas de onde sai toda métrica",
-    '        <table class="tabela-criterios compacta numerica">\n'
-    "          <thead><tr><th></th><th>Perdeu a conta</th><th>Seguiu comprando</th></tr></thead>\n"
+    "As quatro caixas somam as 4.708 contas elegíveis",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Sigla</th><th>Nome</th><th>O que aconteceu com a conta</th><th>Contas</th></tr></thead>\n"
     "          <tbody>\n"
-    '            <tr><td>O modelo marcou</td><td>VP: 2.018 acertos de alarme</td><td>FP: 643 alarmes falsos</td></tr>\n'
-    "            <tr><td>O modelo não marcou</td><td>FN: 438 perdas que passaram</td><td>VN: 1.609 silêncios certos</td></tr>\n"
+    '            <tr class="destaque"><td>VP</td><td>Verdadeiro positivo</td><td>o modelo marcou, e ela se perdeu mesmo</td><td>2.018</td></tr>\n'
+    "            <tr><td>FP</td><td>Falso positivo</td><td>o modelo marcou, e ela seguiu comprando</td><td>643</td></tr>\n"
+    "            <tr><td>FN</td><td>Falso negativo</td><td>o modelo não marcou, e ela se perdeu</td><td>438</td></tr>\n"
+    "            <tr><td>VN</td><td>Verdadeiro negativo</td><td>o modelo não marcou, e ela seguiu comprando</td><td>1.609</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n"
-    '        <p class="linha-contexto">Na Kovan os dois erros custam coisas diferentes. Um FP gasta uma hora de Account Manager com quem ficaria de qualquer jeito. Um FN deixa passar uma conta que a empresa vai perder.</p>\n',
-    contexto="Escore de oito colunas no limiar de 0,5, sobre as 4.708 contas elegíveis. As quatro caixas somam a população inteira.",
-    conclusao="Toda métrica das próximas telas é uma razão entre pedaços desta tabela. Muda o pedaço, muda a pergunta.",
-    fonte="Fonte: dados/analise_aula06_longa.py, limiar de 0,5.",
+    '        <p class="linha-contexto">Positivo e negativo dizem o que o modelo falou. Verdadeiro e falso dizem se ele acertou.</p>\n',
+    contexto="Marcar a conta como em risco é o positivo. Escore de oito colunas no limiar de 0,5.",
+    conclusao="Um FP gasta uma hora de Account Manager com quem ficaria. Um FN deixa passar uma conta que a empresa vai perder.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
 ))
 
 SLIDES.append(figura_embutida(
@@ -449,7 +451,7 @@ SLIDES.append(figura_embutida(
 SLIDES.append(figura_embutida(
     "A revocação de 82,2% olha só a coluna das perdas reais",
     "aula06-metrica-revocacao.svg",
-    contexto="Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?",
+    contexto="Também chamada de recall ou sensibilidade. Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?",
     conclusao="É a métrica que o Comitê sente. Baixar o limiar sobe este número e derruba a precisão.",
     fonte="Fonte: dados/analise_aula06_longa.py.",
 ))

@@ -622,23 +622,25 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>As quatro caixas de onde sai toda métrica</h2>
-          <p class="linha-contexto">Escore de oito colunas no limiar de 0,5, sobre as 4.708 contas elegíveis. As quatro caixas somam a população inteira.</p>
+          <h2>As quatro caixas somam as 4.708 contas elegíveis</h2>
+          <p class="linha-contexto">Marcar a conta como em risco é o positivo. Escore de oito colunas no limiar de 0,5.</p>
         </div>
-        <table class="tabela-criterios compacta numerica">
-          <thead><tr><th></th><th>Perdeu a conta</th><th>Seguiu comprando</th></tr></thead>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Sigla</th><th>Nome</th><th>O que aconteceu com a conta</th><th>Contas</th></tr></thead>
           <tbody>
-            <tr><td>O modelo marcou</td><td>VP: 2.018 acertos de alarme</td><td>FP: 643 alarmes falsos</td></tr>
-            <tr><td>O modelo não marcou</td><td>FN: 438 perdas que passaram</td><td>VN: 1.609 silêncios certos</td></tr>
+            <tr class="destaque"><td>VP</td><td>Verdadeiro positivo</td><td>o modelo marcou, e ela se perdeu mesmo</td><td>2.018</td></tr>
+            <tr><td>FP</td><td>Falso positivo</td><td>o modelo marcou, e ela seguiu comprando</td><td>643</td></tr>
+            <tr><td>FN</td><td>Falso negativo</td><td>o modelo não marcou, e ela se perdeu</td><td>438</td></tr>
+            <tr><td>VN</td><td>Verdadeiro negativo</td><td>o modelo não marcou, e ela seguiu comprando</td><td>1.609</td></tr>
           </tbody>
         </table>
-        <p class="linha-contexto">Na Kovan os dois erros custam coisas diferentes. Um FP gasta uma hora de Account Manager com quem ficaria de qualquer jeito. Um FN deixa passar uma conta que a empresa vai perder.</p>
+        <p class="linha-contexto">Positivo e negativo dizem o que o modelo falou. Verdadeiro e falso dizem se ele acertou.</p>
         <div class="fecho">
         <div class="faixa-conclusao">
           <span class="rotulo">Implicação</span>
-          <p>Toda métrica das próximas telas é uma razão entre pedaços desta tabela. Muda o pedaço, muda a pergunta.</p>
+          <p>Um FP gasta uma hora de Account Manager com quem ficaria. Um FN deixa passar uma conta que a empresa vai perder.</p>
         </div>
-        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py, limiar de 0,5.</p>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
@@ -664,28 +666,30 @@
           <text class="cabecalho" x="230" y="209" text-anchor="end">Não marcou</text>
           <g class="celula acerto">
             <rect x="250" y="74" width="240" height="78" rx="10"/>
-            <text class="sigla" x="266" y="96">VP</text>
-            <text class="valor" x="266" y="126">2.018</text>
-            <text class="legenda" x="266" y="144">acertou o alarme</text>
+            <text class="sigla" x="266" y="96">VP · Verdadeiro positivo</text>
+            <text class="valor" x="266" y="126">2.018<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="266" y="144">marcadas, e se perderam</text>
           </g>
           <g class="celula">
             <rect x="502" y="74" width="240" height="78" rx="10"/>
-            <text class="sigla" x="518" y="96">FP</text>
-            <text class="valor" x="518" y="126">643</text>
-            <text class="legenda" x="518" y="144">alarme falso</text>
+            <text class="sigla" x="518" y="96">FP · Falso positivo</text>
+            <text class="valor" x="518" y="126">643<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="518" y="144">marcadas, e continuaram</text>
           </g>
           <g class="celula">
             <rect x="250" y="164" width="240" height="78" rx="10"/>
-            <text class="sigla" x="266" y="186">FN</text>
-            <text class="valor" x="266" y="216">438</text>
-            <text class="legenda" x="266" y="234">perda que passou</text>
+            <text class="sigla" x="266" y="186">FN · Falso negativo</text>
+            <text class="valor" x="266" y="216">438<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="266" y="234">não marcadas, e se perderam</text>
           </g>
           <g class="celula acerto">
             <rect x="502" y="164" width="240" height="78" rx="10"/>
-            <text class="sigla" x="518" y="186">VN</text>
-            <text class="valor" x="518" y="216">1.609</text>
-            <text class="legenda" x="518" y="234">acertou o silêncio</text>
+            <text class="sigla" x="518" y="186">VN · Verdadeiro negativo</text>
+            <text class="valor" x="518" y="216">1.609<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="518" y="234">não marcadas, e continuaram</text>
           </g>
+          <text class="legenda" x="806" y="268">Positivo e negativo dizem o que o modelo falou.</text>
+          <text class="legenda" x="806" y="288">Verdadeiro e falso dizem se ele acertou.</text>
           <g class="fragment">
             <rect class="realce-den" x="243" y="67" width="254" height="92" rx="12"/>
             <rect class="realce-den" x="495" y="67" width="254" height="92" rx="12"/>
@@ -702,6 +706,7 @@
             <rect x="806" y="74" width="346" height="168" rx="10"/>
             <text class="formula" x="826" y="106">(VP + VN) dividido pelo total</text>
             <text class="conta" x="826" y="132">(2.018 + 1.609) / 4.708</text>
+            <text class="legenda" x="826" y="154">acertos divididos pelo total de contas</text>
             <text class="resultado" x="826" y="196">77,0%</text>
             <text class="resultado-rotulo" x="826" y="222">ACURÁCIA</text>
           </g>
@@ -737,28 +742,30 @@
           <text class="cabecalho" x="230" y="209" text-anchor="end">Não marcou</text>
           <g class="celula acerto">
             <rect x="250" y="74" width="240" height="78" rx="10"/>
-            <text class="sigla" x="266" y="96">VP</text>
-            <text class="valor" x="266" y="126">2.018</text>
-            <text class="legenda" x="266" y="144">acertou o alarme</text>
+            <text class="sigla" x="266" y="96">VP · Verdadeiro positivo</text>
+            <text class="valor" x="266" y="126">2.018<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="266" y="144">marcadas, e se perderam</text>
           </g>
           <g class="celula">
             <rect x="502" y="74" width="240" height="78" rx="10"/>
-            <text class="sigla" x="518" y="96">FP</text>
-            <text class="valor" x="518" y="126">643</text>
-            <text class="legenda" x="518" y="144">alarme falso</text>
+            <text class="sigla" x="518" y="96">FP · Falso positivo</text>
+            <text class="valor" x="518" y="126">643<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="518" y="144">marcadas, e continuaram</text>
           </g>
           <g class="celula">
             <rect x="250" y="164" width="240" height="78" rx="10"/>
-            <text class="sigla" x="266" y="186">FN</text>
-            <text class="valor" x="266" y="216">438</text>
-            <text class="legenda" x="266" y="234">perda que passou</text>
+            <text class="sigla" x="266" y="186">FN · Falso negativo</text>
+            <text class="valor" x="266" y="216">438<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="266" y="234">não marcadas, e se perderam</text>
           </g>
           <g class="celula acerto">
             <rect x="502" y="164" width="240" height="78" rx="10"/>
-            <text class="sigla" x="518" y="186">VN</text>
-            <text class="valor" x="518" y="216">1.609</text>
-            <text class="legenda" x="518" y="234">acertou o silêncio</text>
+            <text class="sigla" x="518" y="186">VN · Verdadeiro negativo</text>
+            <text class="valor" x="518" y="216">1.609<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="518" y="234">não marcadas, e continuaram</text>
           </g>
+          <text class="legenda" x="806" y="268">Positivo e negativo dizem o que o modelo falou.</text>
+          <text class="legenda" x="806" y="288">Verdadeiro e falso dizem se ele acertou.</text>
           <g class="fragment">
             <rect class="realce-den" x="243" y="67" width="254" height="92" rx="12"/>
             <rect class="realce-den" x="495" y="67" width="254" height="92" rx="12"/>
@@ -772,6 +779,7 @@
             <rect x="806" y="74" width="346" height="168" rx="10"/>
             <text class="formula" x="826" y="106">VP dividido por (VP + FP)</text>
             <text class="conta" x="826" y="132">2.018 / 2.661</text>
+            <text class="legenda" x="826" y="154">acertos divididos por tudo que foi marcado</text>
             <text class="resultado" x="826" y="196">75,8%</text>
             <text class="resultado-rotulo" x="826" y="222">PRECISÃO</text>
           </g>
@@ -795,7 +803,7 @@
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>A revocação de 82,2% olha só a coluna das perdas reais</h2>
-          <p class="linha-contexto">Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?</p>
+          <p class="linha-contexto">Também chamada de recall ou sensibilidade. Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
              class="matriz-confusao" role="img" aria-label="Revocação: acertos sobre todas as perdas reais, 82,2%">
@@ -807,28 +815,30 @@
           <text class="cabecalho" x="230" y="209" text-anchor="end">Não marcou</text>
           <g class="celula acerto">
             <rect x="250" y="74" width="240" height="78" rx="10"/>
-            <text class="sigla" x="266" y="96">VP</text>
-            <text class="valor" x="266" y="126">2.018</text>
-            <text class="legenda" x="266" y="144">acertou o alarme</text>
+            <text class="sigla" x="266" y="96">VP · Verdadeiro positivo</text>
+            <text class="valor" x="266" y="126">2.018<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="266" y="144">marcadas, e se perderam</text>
           </g>
           <g class="celula">
             <rect x="502" y="74" width="240" height="78" rx="10"/>
-            <text class="sigla" x="518" y="96">FP</text>
-            <text class="valor" x="518" y="126">643</text>
-            <text class="legenda" x="518" y="144">alarme falso</text>
+            <text class="sigla" x="518" y="96">FP · Falso positivo</text>
+            <text class="valor" x="518" y="126">643<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="518" y="144">marcadas, e continuaram</text>
           </g>
           <g class="celula">
             <rect x="250" y="164" width="240" height="78" rx="10"/>
-            <text class="sigla" x="266" y="186">FN</text>
-            <text class="valor" x="266" y="216">438</text>
-            <text class="legenda" x="266" y="234">perda que passou</text>
+            <text class="sigla" x="266" y="186">FN · Falso negativo</text>
+            <text class="valor" x="266" y="216">438<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="266" y="234">não marcadas, e se perderam</text>
           </g>
           <g class="celula acerto">
             <rect x="502" y="164" width="240" height="78" rx="10"/>
-            <text class="sigla" x="518" y="186">VN</text>
-            <text class="valor" x="518" y="216">1.609</text>
-            <text class="legenda" x="518" y="234">acertou o silêncio</text>
+            <text class="sigla" x="518" y="186">VN · Verdadeiro negativo</text>
+            <text class="valor" x="518" y="216">1.609<tspan class="unidade" dx="8">contas</tspan></text>
+            <text class="legenda" x="518" y="234">não marcadas, e continuaram</text>
           </g>
+          <text class="legenda" x="806" y="268">Positivo e negativo dizem o que o modelo falou.</text>
+          <text class="legenda" x="806" y="288">Verdadeiro e falso dizem se ele acertou.</text>
           <g class="fragment">
             <rect class="realce-den" x="243" y="67" width="254" height="92" rx="12"/>
             <rect class="realce-den" x="243" y="157" width="254" height="92" rx="12"/>
@@ -842,6 +852,7 @@
             <rect x="806" y="74" width="346" height="168" rx="10"/>
             <text class="formula" x="826" y="106">VP dividido por (VP + FN)</text>
             <text class="conta" x="826" y="132">2.018 / 2.456</text>
+            <text class="legenda" x="826" y="154">acertos divididos por todas as perdas reais</text>
             <text class="resultado" x="826" y="196">82,2%</text>
             <text class="resultado-rotulo" x="826" y="222">REVOCAÇÃO</text>
           </g>

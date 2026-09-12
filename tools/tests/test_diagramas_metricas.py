@@ -67,7 +67,8 @@ def test_o_arquivo_existe_e_e_svg(nome):
 def test_nenhuma_cor_literal_no_svg(nome):
     """Cor literal aqui entraria no HTML do deck e reprovaria o check_brand."""
     svg = _svg(nome)
-    assert not re.search(r"#[0-9a-fA-F]{3,8}\b", svg), nome
+    # O (?<!&) evita confundir entidade HTML (&#183;) com cor literal.
+    assert not re.search(r"(?<!&)#[0-9a-fA-F]{3,8}\b", svg), nome
     assert "rgb(" not in svg and "hsl(" not in svg
 
 

@@ -1331,7 +1331,12 @@
 
 .matriz-confusao .sigla { font-size: 15px; fill: var(--seg-texto); letter-spacing: 0.06em; }
 .matriz-confusao .valor { font-size: 30px; font-weight: 600; fill: var(--seg-texto); }
-.matriz-confusao .legenda { font-size: 14px; fill: var(--seg-texto); }
+/* A unidade fica colada ao numero, num tspan: sem ela o executivo le "2.018"
+   e nao sabe se sao contas, pedidos ou dolares. */
+.matriz-confusao .unidade { font-size: 14px; font-weight: 400; fill: var(--seg-texto); }
+/* 13px porque a frase da caixa passou a dizer a unidade: "contas nao
+   marcadas que se perderam" tem 35 caracteres e a caixa tem 208px uteis. */
+.matriz-confusao .legenda { font-size: 13px; fill: var(--seg-texto); }
 .matriz-confusao .cabecalho { font-size: 16px; font-weight: 600; fill: var(--seg-texto); }
 .matriz-confusao .eixo { font-size: 14px; fill: var(--seg-texto); letter-spacing: 0.08em; }
 

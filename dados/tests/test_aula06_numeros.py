@@ -14,7 +14,6 @@ Rodar: .venv/bin/python -m pytest dados/tests/test_aula06_numeros.py -q
 
 from __future__ import annotations
 
-import re
 import sys
 from pathlib import Path
 
@@ -23,7 +22,6 @@ import pytest
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
 
-DECK = RAIZ / "aulas" / "aula06.html"
 XLSX = RAIZ / "dados" / "datasets_case_modulo2.xlsx"
 
 pytestmark = pytest.mark.skipif(
@@ -35,11 +33,6 @@ def a():
     from dados import analise_aula06
 
     return analise_aula06
-
-
-@pytest.fixture(scope="module")
-def deck() -> str:
-    return DECK.read_text(encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -290,34 +283,9 @@ def test_nenhuma_feature_honesta_muda_quando_o_painel_e_truncado(a, monkeypatch)
 
 
 # ---------------------------------------------------------------------------
-# O deck cita os mesmos números
+# O deck migrou para a base longa em 12/09/2026
 # ---------------------------------------------------------------------------
-
-NUMEROS_NO_DECK = [
-    "207.826", "3.748", "1.593", "42,5%", "2025-02", "2024-04", "2026-03", "2025-03",
-    "0,994", "0,885", "0,752", "0,772", "0,693", "0,680", "0,618", "0,608",
-    "0,567", "0,540", "89,8%", "3.366", "0,794", "0,995", "0,201",
-    "+0,804", "2,234", "33,1%", "-0,588", "0,555", "24,2%",
-    "-0,554", "0,574", "22,8%", "-0,159", "0,853", "6,6%",
-    "80,1%", "10,0%", "13,3%",
-    "735", "420", "57,1%", "218", "17,0%", "2.426", "1.088", "44,8%",
-    "369", "13,0%",
-]
-
-
-@pytest.mark.parametrize("numero", NUMEROS_NO_DECK)
-def test_o_numero_aparece_no_deck(deck, numero):
-    assert numero in deck, numero
-
-
-def test_o_deck_nao_cita_numero_de_auc_fora_da_faixa_medida(deck):
-    """Uma AUC solta no texto, escrita à mão e nunca medida, é o defeito que
-    esta trava procura. Toda AUC citada precisa estar na lista acima."""
-    citadas = set(re.findall(r"0,\d{3}", deck))
-    conhecidas = {n.lstrip("+-") for n in NUMEROS_NO_DECK
-                  if re.fullmatch(r"[+-]?0,\d{3}", n)}
-    # As razões de chances e os coeficientes menores, que a lista acima cobre
-    # por linha da tabela de pesos.
-    conhecidas |= {"0,555", "0,574", "0,853", "0,892", "0,923",
-                   "0,129", "0,114", "0,080"}
-    assert citadas <= conhecidas, citadas - conhecidas
+# As asserções de presença no deck viviam aqui. Elas foram para
+# dados/tests/test_aula06_longa.py junto com o deck, que passou a usar a base
+# de 65 meses. Este arquivo continua guardando dados/analise_aula06.py, que é
+# o que o material de apoio cita.

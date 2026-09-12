@@ -38,3 +38,7 @@ dados/datasets_case_modulo2.xlsx
 # ~/Projects/Inteli/MBA/inteli-pos-2026-2a-eda: dentro do acervo viraria repo
 # aninhado, com o checklist e as skills duplicados e divergindo em silencio.
 inteli-pos-2026-2a-eda/
+
+# Cache local da base longa, derivado do xlsx que nao e versionado.
+dados/.cache_5yrs/
+dados/datasets_case_modulo2_5yrs.xlsx

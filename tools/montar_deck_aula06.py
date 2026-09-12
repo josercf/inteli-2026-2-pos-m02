@@ -54,17 +54,17 @@ SLIDES.append(
 # 2. Resgate
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A Entrega 1 fechou o alvo em 3.748 contas elegíveis",
+    "A base longa traz 65 meses no lugar dos 24 do Artefato 1",
     '        <div class="stat-tiles">\n'
-    '          <div class="stat-tile"><p class="stat-numero">3.748</p><p class="stat-rotulo">contas que o rótulo alcança</p></div>\n'
-    '          <div class="stat-tile"><p class="stat-numero">1.593</p><p class="stat-rotulo">marcadas como perdidas</p></div>\n'
-    '          <div class="stat-tile"><p class="stat-numero">42,5%</p><p class="stat-rotulo">prevalência na população elegível</p></div>\n'
-    '          <div class="stat-tile destaque"><p class="stat-numero">13</p><p class="stat-rotulo">meses de inatividade que o rótulo exige</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">65</p><p class="stat-rotulo">meses de painel, de 2021-04 a 2026-08</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">7.259</p><p class="stat-rotulo">contas na carteira</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">4.708</p><p class="stat-rotulo">contas que o rótulo alcança</p></div>\n'
+    '          <div class="stat-tile destaque"><p class="stat-numero">2.456</p><p class="stat-rotulo">marcadas como perdidas, 52,2%</p></div>\n'
     "        </div>\n"
     '        <p class="linha-contexto">O modelo da tarde precisa de uma linha por conta com colunas numéricas. Nenhuma dessas colunas existe no dataset.</p>\n',
-    contexto="A Aula 04 recortou quem podia ser marcado; a Entrega 1 fechou o Artefato 1 com sete seções.",
+    contexto="A Entrega 1 fechou o Artefato 1 sobre o painel de 24 meses, com 3.748 contas elegíveis. A base de cinco anos chegou hoje e é sobre ela que a manhã constrói as features.",
     conclusao="A manhã constrói as colunas de entrada e mede o peso de cada uma. A tarde treina e avalia.",
-    fonte="Fonte: datasets_case_modulo2.xlsx; dados/analise_aula06.py.",
+    fonte="Fonte: datasets_case_modulo2_5yrs.xlsx; dados/analise_aula06_longa.py.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -75,7 +75,7 @@ SLIDES.append(conteudo(
     '        <table class="tabela-criterios compacta">\n'
     "          <thead><tr><th>Item</th><th>O que vale hoje</th></tr></thead>\n"
     "          <tbody>\n"
-    "            <tr><td>Contrato</td><td>Nenhuma coluna entra na tabela de treino sem a data de corte declarada e sem a medida de quanto ela separa conta perdida de conta mantida.</td></tr>\n"
+    "            <tr><td>Contrato</td><td>Nenhuma coluna entra na tabela de treino sem a data de corte declarada e sem a medida de quanto ela separa conta perdida de conta mantida. A base é a longa, de 65 meses.</td></tr>\n"
     "            <tr><td>Ambiente</td><td>Gemini sobre a pasta clonada, com os prompts literais de cada prática nos slides.</td></tr>\n"
     "            <tr><td>Método</td><td>09h00 às 10h20, o corte temporal e as três famílias de variável. 10h35 às 11h20, o peso de cada uma.</td></tr>\n"
     "            <tr><td>Oficina</td><td>11h20 às 11h50, a tabela de features do grupo, reexecutável, com o dicionário de colunas.</td></tr>\n"
@@ -111,10 +111,10 @@ SLIDES.append(secao("01", "Engenharia de feature", "Do evento cru à coluna que 
 # 4b. A definição, em forma de esteira
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "De 207.826 itens de pedido para 3.748 linhas de 7 colunas",
+    "De 492.393 itens de pedido para 4.708 linhas de 8 colunas",
     '        <div class="processo-fases">\n'
     '          <div class="processo-fase fragment"><h4>01. Evento</h4>'
-    "<p>Um item de pedido, com data, conta, marca e valor. 207.826 linhas.</p></div>\n"
+    "<p>Um item de pedido, com data, conta, marca e valor. 492.393 linhas.</p></div>\n"
     '          <div class="processo-fase fragment"><h4>02. Corte</h4>'
     "<p>Fica só o que aconteceu até a data da previsão.</p></div>\n"
     '          <div class="processo-fase fragment"><h4>03. Agregação</h4>'
@@ -122,13 +122,13 @@ SLIDES.append(conteudo(
     '          <div class="processo-fase fragment"><h4>04. Coluna</h4>'
     "<p>Cada agregação vira uma coluna com nome e fórmula.</p></div>\n"
     '          <div class="processo-fase fragment"><h4>05. Matriz</h4>'
-    "<p>Uma linha por conta elegível. 3.748 por 7.</p></div>\n"
+    "<p>Uma linha por conta elegível. 4.708 por 8.</p></div>\n"
     '          <div class="processo-fase fragment ativa"><h4>06. Escore</h4>'
     "<p>O modelo lê a linha e devolve uma probabilidade.</p></div>\n"
     "        </div>\n",
     contexto="Engenharia de feature é o trabalho de converter o registro de um evento em uma medida por unidade de decisão, dentro de uma janela de tempo declarada.",
     conclusao="A unidade de decisão da Kovan é a conta. Todo dado do case precisa chegar a esse grão antes de virar entrada.",
-    fonte="Fonte: dados/analise_aula06.py, do_evento_a_conta.",
+    fonte="Fonte: dados/analise_aula06_longa.py, do_evento_a_conta.",
     por_passos=True,
 ))
 
@@ -141,9 +141,9 @@ SLIDES.append(conteudo(
     "          <thead><tr><th>O que fixar</th><th>Na Kovan</th></tr></thead>\n"
     "          <tbody>\n"
     "            <tr><td>Unidade de decisão</td><td>a conta, porque é sobre a conta que o Account Manager age</td></tr>\n"
-    "            <tr><td>Instante da previsão</td><td>2025-02, a data de corte</td></tr>\n"
-    "            <tr><td>Horizonte</td><td>os 13 meses seguintes, que é o que o rótulo cobre</td></tr>\n"
-    "            <tr><td>População</td><td>as 3.748 contas que o rótulo consegue marcar</td></tr>\n"
+    "            <tr><td>Instante da previsão</td><td>2024-03, a data de corte</td></tr>\n"
+    "            <tr><td>Horizonte</td><td>os 29 meses seguintes, que é o que o rótulo cobre</td></tr>\n"
+    "            <tr><td>População</td><td>as 4.708 contas que o rótulo consegue marcar</td></tr>\n"
     "            <tr><td>Uso da saída</td><td>uma lista de 138 contas por ciclo, o limite operacional</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
@@ -199,21 +199,21 @@ SLIDES.append(secao("02", "O corte temporal", "A data que separa o que se observ
 # 5. O painel se parte em dois
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "O rótulo de 13 meses parte o painel de 24 em duas janelas",
+    "A base longa parte 65 meses em 36 de observação e 29 de rótulo",
     '        <div class="linha-tempo">\n'
-    '          <div class="etapa fragment"><p class="quando">2024-04 a 2025-02 &middot; 11 meses</p>'
+    '          <div class="etapa fragment"><p class="quando">2021-04 a 2024-03 &middot; 36 meses</p>'
     "<h3>Janela de observação</h3>"
-    "<p>O que a conta fez aqui dentro vira coluna de entrada. Recência, frequência, valor, mix e sequência.</p></div>\n"
-    '          <div class="etapa avaliada fragment"><p class="quando">2025-02</p>'
+    "<p>O que a conta fez aqui dentro vira coluna de entrada. Cabe janela de 12 meses.</p></div>\n"
+    '          <div class="etapa avaliada fragment"><p class="quando">07/03/2024</p>'
     "<h3>Data de corte</h3>"
-    "<p>O instante em que a previsão seria feita na vida real. O que vem depois não existe para o modelo.</p></div>\n"
-    '          <div class="etapa fragment"><p class="quando">2025-03 a 2026-03 &middot; 13 meses</p>'
+    "<p>A última compra que ainda marca a conta. É o instante em que a previsão seria feita.</p></div>\n"
+    '          <div class="etapa fragment"><p class="quando">2024-04 a 2026-08 &middot; 29 meses</p>'
     "<h3>Janela do rótulo</h3>"
     "<p>A conta comprou ou não comprou. É a resposta, e resposta não entra como pergunta.</p></div>\n"
     "        </div>\n",
-    contexto="A data de corte sai da aritmética do rótulo. O painel termina em 2026-03, o rótulo exige treze meses sem compra, e treze meses antes de 2026-03 é 2025-02.",
-    conclusao="Toda coluna construída hoje é calculada com dado até 2025-02, e só com ele.",
-    fonte="Fonte: dados/analise_aula06.py, particao_temporal.",
+    contexto="A base de cinco anos cobre 2021-04 a 2026-08 e traz 7.259 contas. O rótulo marca quem não compra desde 07/03/2024, e 2.551 contas entraram tarde demais para serem alcançadas por ele.",
+    conclusao="Toda coluna daqui em diante é calculada com dado até 2024-03, sobre as 4.708 contas elegíveis.",
+    fonte="Fonte: dados/analise_aula06_longa.py, particao_temporal.",
     por_passos=True,
 ))
 
@@ -221,14 +221,14 @@ SLIDES.append(conteudo(
 # 6. O vazamento medido
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A recência do fim do painel repete o rótulo em 89,8%",
+    "A recência do fim do painel repete o rótulo em 99,6%",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Variável</th><th>Janela usada</th><th>AUC isolada</th></tr></thead>\n"
     "          <tbody>\n"
-    '            <tr class="destaque"><td>Recência no fim do painel</td><td>painel inteiro</td><td>0,994</td></tr>\n'
-    "            <tr><td>Meses ativos no painel inteiro</td><td>painel inteiro</td><td>0,885</td></tr>\n"
-    "            <tr><td>Receita do painel inteiro</td><td>painel inteiro</td><td>0,752</td></tr>\n"
-    '            <tr class="fragment"><td>Recência no corte</td><td>observação</td><td>0,772</td></tr>\n'
+    '            <tr class="destaque"><td>Recência no fim do painel</td><td>painel inteiro</td><td>0,9999</td></tr>\n'
+    "            <tr><td>Meses ativos no painel inteiro</td><td>painel inteiro</td><td>0,919</td></tr>\n"
+    "            <tr><td>Receita do painel inteiro</td><td>painel inteiro</td><td>0,832</td></tr>\n"
+    '            <tr class="fragment"><td>Recência no corte</td><td>observação</td><td>0,818</td></tr>\n'
     "          </tbody>\n"
     "        </table>\n"
     '        <div class="faixa-conclusao clara fragment">\n'
@@ -236,8 +236,8 @@ SLIDES.append(conteudo(
     "          <p><strong>Recência:</strong> meses entre a última compra e uma data de referência. "
     "<strong>AUC:</strong> chance de a conta perdida pontuar acima da mantida, de 0,5 a 1,0.</p>\n"
     "        </div>\n",
-    conclusao="Mudar a referência para 2026-03 faz a coluna copiar o rótulo em 3.366 das 3.748.",
-    fonte="Fonte: dados/analise_aula06.py.",
+    conclusao="Marcar quem está há 30 meses sem comprar acerta 4.691 das 4.708. A regra reconstrói o rótulo.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
     por_passos=True,
 ))
 
@@ -248,9 +248,9 @@ SLIDES.append(conteudo(
     "Três perguntas reprovam uma coluna antes do treino",
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>01. Data</h3>'
-    "<p>Algum dado usado no cálculo tem data posterior a 2025-02? Receita total, meses ativos e última compra do painel inteiro reprovam aqui.</p></div>\n"
+    "<p>Algum dado usado no cálculo tem data posterior a 2024-03? Receita total, meses ativos e última compra do painel inteiro reprovam aqui.</p></div>\n"
     '          <div class="concept-card"><h3>02. Definição</h3>'
-    "<p>A coluna usa a mesma regra que define o rótulo? Recência com corte em 13 meses é o rótulo escrito com outro nome.</p></div>\n"
+    "<p>A coluna usa a mesma regra que define o rótulo? Recência com corte em 30 meses é o rótulo escrito com outro nome.</p></div>\n"
     '          <div class="concept-card"><h3>03. Operação</h3>'
     "<p>O valor só é preenchido depois que alguém percebeu o problema? Contato de retenção e desconto emergencial chegam depois do desfecho.</p></div>\n"
     "        </div>\n",
@@ -267,10 +267,10 @@ SLIDES.append(pratica(
     "Cada mesa lê em voz alta uma coluna que reprovou e em qual das três perguntas",
     [
         {"acao": "Peça a lista de candidatas ao Gemini, sem pedir código ainda.",
-         "prompt": "Sou analista da Kovan LATAM. Tenho um painel mensal por conta de 2024-04 a 2026-03 com receita_usd, qtd_pedidos, segmento e região, mais os pedidos linha a linha com marca e data. O rótulo marca a conta cuja última compra é até 2025-02. Liste 12 colunas candidatas de entrada. Para cada uma, diga a data mais recente que ela usa. Não escreva código.",
+         "prompt": "Sou analista da Kovan LATAM. Tenho um painel mensal por conta de 2021-04 a 2026-08 com receita_usd, qtd_pedidos, segment e country, mais os pedidos linha a linha com brand_lenovo e billing_dt. O rótulo marca a conta cuja última compra é até 07/03/2024. Liste 12 colunas candidatas de entrada. Para cada uma, diga a data mais recente que ela usa. Não escreva código.",
          "detalhe": "Peça a data mais recente por coluna: é o que torna o vazamento visível na própria resposta."},
         {"acao": "Aplique as três perguntas na resposta dele.",
-         "prompt": "Para cada uma das 12 colunas, responda as três perguntas: usa dado depois de 2025-02? usa a mesma regra do rótulo? só é preenchida depois que alguém percebeu o problema? Marque APROVADA ou REPROVADA e diga em qual pergunta.",
+         "prompt": "Para cada uma das 12 colunas, responda as três perguntas: usa dado depois de 2024-03? usa a mesma regra do rótulo? só é preenchida depois que alguém percebeu o problema? Marque APROVADA ou REPROVADA e diga em qual pergunta.",
          "detalhe": "Confira à mão duas linhas do veredito. O Gemini aprova coluna vazada quando ela tem nome inocente."},
     ],
     "A dupla nomeia uma coluna que o Gemini sugeriu e que reprovou na pergunta 01",
@@ -287,39 +287,41 @@ SLIDES.append(secao("03", "Recência, frequência e valor", "Três famílias de 
 # 10. A tabela RFV
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Recência no corte lidera as sete colunas com AUC de 0,772",
+    "Recência no corte lidera as oito colunas, com 0,818",
     '        <table class="tabela-criterios compacta numerica">\n'
-    "          <thead><tr><th>Família</th><th>Coluna</th><th>Como é calculada até 2025-02</th><th>AUC</th></tr></thead>\n"
+    "          <thead><tr><th>Família</th><th>Coluna</th><th>Cálculo até 2024-03</th><th>AUC</th></tr></thead>\n"
     "          <tbody>\n"
-    '            <tr class="destaque"><td>Recência</td><td>recencia_corte</td><td>meses entre a última compra e 2025-02</td><td>0,772</td></tr>\n'
-    "            <tr><td>Frequência</td><td>freq_dias</td><td>dias distintos com pedido</td><td>0,693</td></tr>\n"
-    "            <tr><td>Frequência</td><td>freq_meses</td><td>meses distintos com receita</td><td>0,680</td></tr>\n"
-    "            <tr><td>Valor</td><td>valor_obs</td><td>soma da receita na janela</td><td>0,618</td></tr>\n"
-    "            <tr><td>Mix</td><td>marcas_obs</td><td>marcas distintas compradas</td><td>0,608</td></tr>\n"
+    '            <tr class="destaque"><td>Recência</td><td>recencia_corte</td><td>meses desde a última compra</td><td>0,818</td></tr>\n'
+    "            <tr><td>Frequência</td><td>freq_meses</td><td>meses distintos com receita</td><td>0,771</td></tr>\n"
+    "            <tr><td>Frequência</td><td>freq_dias</td><td>dias distintos com pedido</td><td>0,771</td></tr>\n"
+    "            <tr><td>Valor</td><td>valor_obs</td><td>soma da receita na janela</td><td>0,742</td></tr>\n"
+    "            <tr><td>Mix</td><td>marcas_obs</td><td>marcas distintas compradas</td><td>0,705</td></tr>\n"
+    '            <tr class="fragment"><td>Sequência</td><td>razao_12m e razao_3m</td><td>razão entre blocos de 12 e de 3 meses</td><td>0,637 e 0,534</td></tr>\n'
     "          </tbody>\n"
     "        </table>\n",
-    conclusao="Nenhuma coluna honesta passa de 0,772. Ticket médio e razão dos 3 meses fecham a lista, com 0,540 e 0,567.",
-    fonte="Fonte: dados/analise_aula06.py, auc_das_candidatas.",
+    conclusao="Ticket médio fecha a lista com 0,651. A janela de 12 meses só existe nesta base, e vale 0,637.",
+    fonte="Fonte: dados/analise_aula06_longa.py, auc_das_candidatas.",
+    por_passos=True,
 ))
 
 # ---------------------------------------------------------------------------
 # 11. A variável de sequência
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Conta sem receita nos 3 meses finais perde em 57,1%",
+    "A queda até 50% concentra 2.166 das 2.456 perdas",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Razão entre os dois blocos de 3 meses</th><th>Contas</th><th>Perdidas</th><th>Prevalência</th></tr></thead>\n"
     "          <tbody>\n"
-    '            <tr class="destaque"><td>Sem receita nos 3 meses finais</td><td>735</td><td>420</td><td>57,1%</td></tr>\n'
-    "            <tr><td>Queda acima de 50%</td><td>218</td><td>37</td><td>17,0%</td></tr>\n"
-    "            <tr><td>Queda até 50%</td><td>2.426</td><td>1.088</td><td>44,8%</td></tr>\n"
-    "            <tr><td>Estável ou em alta</td><td>369</td><td>48</td><td>13,0%</td></tr>\n"
+    "            <tr><td>Sem receita nos 3 meses finais</td><td>606</td><td>257</td><td>42,4%</td></tr>\n"
+    "            <tr><td>Queda acima de 50%</td><td>278</td><td>17</td><td>6,1%</td></tr>\n"
+    '            <tr class="destaque"><td>Queda até 50%</td><td>3.485</td><td>2.166</td><td>62,2%</td></tr>\n'
+    "            <tr><td>Estável ou em alta</td><td>339</td><td>16</td><td>4,7%</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n"
-    '        <p class="linha-contexto">Quem caiu muito e seguiu comprando ainda estava vivo em 2025-02.</p>\n',
-    contexto="Blocos comparados: 2024-12 a 2025-02 contra 2024-09 a 2024-11.",
-    conclusao="A razão sozinha vale 0,567 de AUC. O que ela acrescenta é a distinção entre queda e ausência, que a recência não separa.",
-    fonte="Fonte: dados/analise_aula06.py, perfil_da_razao.",
+    '        <p class="linha-contexto">A faixa de queda acima de 50% exige receita nos três meses finais, e isso derruba a prevalência dela para 6,1%.</p>\n',
+    contexto="Blocos: 2024-01 a 2024-03 contra 2023-10 a 2023-12.",
+    conclusao="A razão de 3 meses sozinha vale 0,534 de AUC, quase um sorteio.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -328,20 +330,20 @@ SLIDES.append(conteudo(
 SLIDES.append(quiz(
     "Verificação &middot; 5 minutos",
     "Qual coluna entra na tabela de treino?",
-    "Corte em 2025-02. Qual das quatro colunas pode entrar no treino?",
+    "Corte em 2024-03. Qual das quatro colunas pode entrar no treino?",
     [
         {"texto": "Receita total no painel inteiro", "certa": False,
          "certo": "", "errado": "Não: a soma inclui a janela do rótulo. Reprova na pergunta 01."},
-        {"texto": "Dias com pedido entre 2024-04 e 2025-02", "certa": True,
-         "certo": "Certo: fecha em 2025-02, não repete a regra do rótulo e existe antes do desfecho.",
+        {"texto": "Dias com pedido entre 2021-04 e 2024-03", "certa": True,
+         "certo": "Certo: fecha em 2024-03, não repete a regra do rótulo e existe antes do desfecho.",
          "errado": ""},
-        {"texto": "Meses desde a última compra até 2026-03", "certa": False,
-         "certo": "", "errado": "Não: é a coluna de AUC 0,994, que reconstrói o rótulo."},
+        {"texto": "Meses desde a última compra até 2026-08", "certa": False,
+         "certo": "", "errado": "Não: é a coluna de AUC 0,9999, que reconstrói o rótulo."},
         {"texto": "Contatos de retenção do Account Manager", "certa": False,
          "certo": "", "errado": "Não: o contato vem depois que alguém percebeu a queda. Reprova na 03."},
     ],
-    {"fichas": [("População", "3.748 elegíveis"), ("Prevalência", "42,5%"),
-                ("Corte", "2025-02")]},
+    {"fichas": [("População", "4.708 elegíveis"), ("Prevalência", "52,2%"),
+                ("Corte", "2024-03")]},
 ))
 
 # ---------------------------------------------------------------------------
@@ -372,39 +374,76 @@ SLIDES.append(conteudo(
 # 15. A tabela de pesos
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Recência responde por 33,1% do peso do modelo",
+    "Meses ativos responde por 41,2% do peso",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Coluna</th><th>Coeficiente padronizado</th><th>Razão de chances</th><th>Peso relativo</th></tr></thead>\n"
     "          <tbody>\n"
-    '            <tr class="destaque"><td>recencia_corte</td><td>+0,804</td><td>2,234</td><td>33,1%</td></tr>\n'
-    "            <tr><td>freq_meses</td><td>-0,588</td><td>0,555</td><td>24,2%</td></tr>\n"
-    "            <tr><td>freq_dias</td><td>-0,554</td><td>0,574</td><td>22,8%</td></tr>\n"
-    "            <tr><td>marcas_obs</td><td>-0,159</td><td>0,853</td><td>6,6%</td></tr>\n"
-    "            <tr><td>ticket_medio, valor_obs e razao_3m</td><td>+0,129, -0,114 e -0,080</td><td>1,138, 0,892 e 0,923</td><td>13,3%</td></tr>\n"
+    '            <tr class="destaque"><td>freq_meses</td><td>-1,366</td><td>0,255</td><td>41,2%</td></tr>\n'
+    "            <tr><td>recencia_corte</td><td>+0,867</td><td>2,379</td><td>26,1%</td></tr>\n"
+    "            <tr><td>freq_dias</td><td>+0,352</td><td>1,422</td><td>10,6%</td></tr>\n"
+    "            <tr><td>razao_3m</td><td>-0,274</td><td>0,760</td><td>8,3%</td></tr>\n"
+    "            <tr><td>razao_12m</td><td>-0,202</td><td>0,817</td><td>6,1%</td></tr>\n"
+    "            <tr><td>marcas_obs, ticket_medio e valor_obs</td><td>-0,148, -0,101 e -0,009</td><td>0,863, 0,904 e 0,991</td><td>7,7%</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
-    contexto="Regressão logística sobre as sete colunas padronizadas, nas 3.748 elegíveis.",
-    conclusao="Recência e as duas colunas de frequência somam 80,1% do peso. Valor entra com 10,0%.",
-    fonte="Fonte: dados/analise_aula06.py, pesos_do_modelo.",
+    conclusao="Recência e as duas de frequência somam 77,9%. Receita acumulada entra com 0,3%.",
+    fonte="Fonte: dados/analise_aula06_longa.py, pesos_do_modelo. Colunas padronizadas, 4.708 contas.",
+))
+
+# ---------------------------------------------------------------------------
+# 15b. O sinal invertido
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "freq_dias separa em 0,771 e entra no modelo com sinal invertido",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th>Coluna</th><th>AUC isolada</th><th>Direção sozinha</th><th>Coeficiente no modelo</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>freq_meses</td><td>0,771</td><td>protege</td><td>-1,366</td></tr>\n"
+    '            <tr class="destaque"><td>freq_dias</td><td>0,771</td><td>protege</td><td>+0,352</td></tr>\n'
+    "          </tbody>\n"
+    "        </table>\n"
+    '        <p class="linha-contexto">As duas medem a mesma coisa por caminhos diferentes, e a correlação entre elas faz o modelo dividir crédito de forma instável. Com freq_meses no modelo, dias de compra a mais passam a indicar conta que concentra pedidos em poucos meses.</p>\n',
+    contexto="Coeficiente de variável correlacionada não se lê isoladamente.",
+    conclusao="O par soma 51,8% de peso de forma confiável. A divisão entre 41,2% e 10,6% é o número frágil da tabela.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
 ))
 
 # ---------------------------------------------------------------------------
 # 16. A medida de qualidade
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "O conjunto honesto marca 0,794 e o vazado marca 0,995",
+    "O conjunto honesto marca 0,834 e o vazado marca 0,9999",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Tabela de features</th><th>Colunas</th><th>AUC do escore</th><th>Serve para decidir?</th></tr></thead>\n"
     "          <tbody>\n"
-    "            <tr><td>Sete colunas fechadas em 2025-02</td><td>7</td><td>0,794</td><td>sim</td></tr>\n"
-    '            <tr class="fragment destaque"><td>As mesmas sete, mais a recência do fim do painel</td><td>8</td><td>0,995</td><td>não</td></tr>\n'
+    "            <tr><td>Oito colunas fechadas em 2024-03</td><td>8</td><td>0,834</td><td>sim</td></tr>\n"
+    '            <tr class="fragment destaque"><td>As mesmas oito, mais a recência do fim do painel</td><td>9</td><td>0,9999</td><td>não</td></tr>\n'
     "          </tbody>\n"
     "        </table>\n"
-    '        <p class="linha-contexto fragment">A segunda linha sobe 0,201 de AUC e perde todo o valor de decisão: em produção a recência do fim do painel não existe no momento em que o Account Manager precisa da lista.</p>\n',
+    '        <p class="linha-contexto fragment">A segunda linha sobe 0,166 de AUC e perde todo o valor de decisão: em produção a recência do fim do painel não existe no momento em que o Account Manager precisa da lista.</p>\n',
     contexto="Mesmo dado, mesma população, mesma regressão. A única diferença é uma coluna que atravessa o corte.",
     conclusao="A coluna precisa existir no instante da previsão. O ganho de métrica não entra nessa decisão.",
-    fonte="Fonte: dados/analise_aula06.py, qualidade_do_modelo.",
+    fonte="Fonte: dados/analise_aula06_longa.py, qualidade_do_modelo.",
     por_passos=True,
+))
+
+# ---------------------------------------------------------------------------
+# 16b. O limiar sai da capacidade
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "A fila de 138 contas acerta 114 e alcança 4,6% das perdas",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th>Corte</th><th>Marcadas</th><th>Precisão</th><th>Revocação</th><th>Acurácia</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Limiar de 0,5</td><td>2.661</td><td>75,8%</td><td>82,2%</td><td>77,0%</td></tr>\n"
+    '            <tr class="destaque"><td>Capacidade de 138 contas</td><td>138</td><td>82,6%</td><td>4,6%</td><td>49,7%</td></tr>\n'
+    "            <tr><td>Marcar conta nenhuma</td><td>0</td><td>indefinida</td><td>0,0%</td><td>47,8%</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n"
+    '        <p class="linha-contexto">Com 2.456 perdas e 138 vagas, o teto de qualquer modelo neste ciclo é 5,6%. A revocação de 4,6% mede a fila.</p>\n',
+    contexto="O limiar de 0,5 vem por padrão em qualquer biblioteca e não tem relação com a capacidade do time.",
+    conclusao="Das 138 conversas da semana, 114 seriam com conta que estava mesmo a caminho da perda.",
+    fonte="Fonte: dados/analise_aula06_longa.py, lista_priorizada.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -416,12 +455,11 @@ SLIDES.append(pratica(
     "Cada mesa mostra a AUC isolada da coluna que criou",
     [
         {"acao": "Gere o código da tabela, com a data de corte no argumento.",
-         "prompt": "Escreva uma função em pandas que receba a data de corte como parâmetro e devolva uma linha por conta elegível com as sete colunas da tabela anterior, sem usar dado posterior ao corte."},
+         "prompt": "Escreva uma função em pandas que receba a data de corte como parâmetro e devolva uma linha por conta elegível com as oito colunas da tabela anterior, sem usar dado posterior ao corte. Nos pedidos, a data é billing_dt e a marca é brand_lenovo."},
         {"acao": "Peça a auditoria do próprio código.",
-         "prompt": "Percorra a função e aponte cada trecho que lê dado posterior ao corte. Se não houver, diga qual filtro garante isso em cada coluna.",
-         "detalhe": "O erro comum é filtrar o painel e esquecer os pedidos."},
-        {"acao": "Meça a AUC de cada coluna e acrescente uma sua. Acima de 0,90, ela vaza.",
-         "prompt": "Calcule a AUC isolada de cada coluna por Mann-Whitney. Depois proponha uma oitava coluna que respeite o corte e calcule a AUC dela."},
+         "prompt": "Percorra a função e aponte cada trecho que lê dado posterior ao corte. Se não houver, diga qual filtro garante isso em cada coluna."},
+        {"acao": "Meça a AUC de cada coluna e acrescente uma sua. Acima de 0,95, ela vaza.",
+         "prompt": "Calcule a AUC isolada de cada coluna por Mann-Whitney. Depois proponha uma nona coluna que respeite o corte e calcule a AUC dela."},
     ],
     "features.csv reexecutável, com a AUC isolada de cada coluna",
     ambiente=AMBIENTE,
@@ -455,8 +493,8 @@ SLIDES.append(pratica(
     "Em grupo, três estações de tempo marcado", "A pasta do grupo com features.csv e dicionario.md",
     "Checkpoint às 11h40: cada mesa mostra a coluna de maior peso e a data que ela usa",
     [
-        {"acao": "Estação 1, 10 minutos: fechar as sete colunas.",
-         "detalhe": "Rodar a função sobre a população elegível e conferir a contagem de 3.748 linhas."},
+        {"acao": "Estação 1, 10 minutos: fechar as oito colunas.",
+         "detalhe": "Rodar a função sobre a população elegível e conferir a contagem de 4.708 linhas."},
         {"acao": "Estação 2, 10 minutos: o dicionário de colunas.",
          "detalhe": "Nome, fórmula, data mais recente usada, AUC isolada e o veredito nas três perguntas. Uma linha por coluna."},
         {"acao": "Estação 3, 10 minutos: o peso de cada coluna.",
@@ -473,15 +511,15 @@ SLIDES.append(conteudo(
     "A tabela de hoje é a entrada do modelo da tarde",
     '        <div class="linha-tempo">\n'
     '          <div class="etapa fragment"><p class="quando">Hoje, manhã</p><h3>Fica pronto</h3>'
-    "<p>Sete colunas fechadas em 2025-02, o dicionário com a data de cada uma e o peso relativo de cada coluna.</p></div>\n"
+    "<p>Oito colunas fechadas em 2024-03 sobre a base de 65 meses, o dicionário com a data de cada uma e o peso relativo.</p></div>\n"
     '          <div class="etapa fragment"><p class="quando">Hoje, tarde</p><h3>Treinamento e avaliação</h3>'
     "<p>Regressão logística, matriz de confusão e AUC-ROC. O limiar sai da capacidade operacional de 138 contas, não de 0,5.</p></div>\n"
-    '          <div class="etapa fragment"><p class="quando">Base longa</p><h3>Cinco anos de painel</h3>'
-    "<p>A base de 65 meses permite mais de uma data de corte e o histórico de 12 meses que a janela de 11 não comporta.</p></div>\n"
+    '          <div class="etapa fragment"><p class="quando">Próximo ciclo</p><h3>Mais de uma data de corte</h3>'
+    "<p>Com 36 meses de observação cabem vários recortes da mesma carteira, e dá para checar se o peso das variáveis é estável no tempo.</p></div>\n"
     '          <div class="etapa avaliada fragment"><p class="quando">03/10 &middot; Semana 9</p><h3>Artefato 2 e banca</h3>'
     "<p>O aplicativo preditivo-generativo, defendido no papel do Comitê de Receita.</p></div>\n"
     "        </div>\n",
-    conclusao="Uma coluna com AUC de 0,99 na primeira tentativa é o achado mais caro que um grupo pode levar para a banca.",
+    conclusao="Uma coluna com AUC de 0,9999 na primeira tentativa é o achado mais caro que um grupo pode levar para a banca.",
     por_passos=True,
 ))
 
@@ -493,15 +531,15 @@ SLIDES.append(conteudo(
     '        <div class="concept-cards">\n'
     '          <div class="concept-card"><h3>Caso e dados</h3>'
     "<p>1. Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão v2.</p>"
-    "<p>2. datasets_case_modulo2.xlsx, base oficial recebida em 21/08/2026. Não distribuída por este acervo.</p></div>\n"
+    "<p>2. datasets_case_modulo2_5yrs.xlsx, base longa de 65 meses recebida em 12/09/2026. Não distribuída por este acervo.</p></div>\n"
     '          <div class="concept-card"><h3>Métodos citáveis</h3>'
     "<p>3. Kaufman, S. et al. Leakage in Data Mining. ACM TKDD, 2012.</p>"
     "<p>4. Hosmer, D. e Lemeshow, S. Applied Logistic Regression. Wiley, 2013.</p>"
     "<p>5. Mann, H. e Whitney, D. On a Test of Whether One of Two Random Variables is Stochastically Larger. AMS, 1947.</p></div>\n"
     '          <div class="concept-card"><h3>O que é nosso</h3>'
-    "<p>O corte em 2025-02, as três perguntas de vazamento e a tabela de sete colunas, organizados para este módulo.</p></div>\n"
+    "<p>O corte em 2024-03, as três perguntas de vazamento e a tabela de oito colunas, organizados para este módulo.</p></div>\n"
     "        </div>\n",
-    conclusao="Todo número desta aula está travado em dados/tests/test_aula06_numeros.py.",
+    conclusao="Todo número desta aula está travado em dados/tests/test_aula06_longa.py.",
 ))
 
 # ---------------------------------------------------------------------------

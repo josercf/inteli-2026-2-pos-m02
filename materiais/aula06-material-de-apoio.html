@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de apoio &middot; Aula 06 &middot; As variáveis de entrada</title>
+  <meta name="description" content="Material de apoio da Aula 06 do Módulo 2 do MBA Inteli x Lenovo: o corte temporal que separa observação de rótulo, as famílias de recência, frequência e valor, a variável de sequência, as três perguntas que reprovam uma coluna vazada, o peso de cada variável na regressão logística e as medidas de qualidade.">
+
+  <!-- Este material NAO e o roteiro do deck em prosa. Onde o slide aponta, a
+       pagina deriva, calcula e explica. Todo numero citado vem de
+       dados/datasets_case_modulo2.xlsx atraves de dados/analise_aula06.py e
+       esta travado em dados/tests/test_aula06_numeros.py. O xlsx nao e
+       versionado: ver docs/adrs/ADR-005. -->
+
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-material.css">
+</head>
+<body>
+  <div class="doc">
+
+    <header class="doc-header">
+      <p class="doc-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo &middot; Módulo 2 &middot; Aula 06 &middot; 12/09/2026</p>
+      <h1>As variáveis de entrada</h1>
+      <p class="doc-subtitulo">O modelo da tarde precisa de uma linha por conta com colunas
+      numéricas, e nenhuma dessas colunas existe no dataset. Esta página mostra como cada uma é
+      construída, por que todas param em 2025-02, como medir o que cada uma vale sozinha e quanto
+      cada uma pesa quando entram juntas.</p>
+    </header>
+
+    <nav class="doc-toc" aria-label="Sumário">
+      <h2>Nesta página</h2>
+      <ol>
+        <li><a href="#corte">1. Por que o corte cai em 2025-02</a></li>
+        <li><a href="#rfv">2. Recência, frequência e valor</a></li>
+        <li><a href="#sequencia">3. A variável de sequência</a></li>
+        <li><a href="#auc">4. Medir o que uma coluna vale sozinha</a></li>
+        <li><a href="#vazamento">5. O vazamento temporal, medido</a></li>
+        <li><a href="#perguntas">6. As três perguntas que reprovam uma coluna</a></li>
+        <li><a href="#peso">7. O peso de cada variável no modelo</a></li>
+        <li><a href="#qualidade">8. O que a AUC não diz</a></li>
+        <li><a href="#realimentacao">9. A realimentação do score</a></li>
+        <li><a href="#prompts">10. Os prompts das duas práticas</a></li>
+        <li><a href="#base-longa">11. O que muda com a base de cinco anos</a></li>
+        <li><a href="#leitura">12. Leitura complementar e referências</a></li>
+      </ol>
+    </nav>
+
+    <main class="doc-conteudo">
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="corte">
+        <h2>1. Por que o corte cai em 2025-02</h2>
+
+        <p>A Aula 03 recuperou da base oficial <a href="#r2">[2]</a> o critério do
+        <code>churn_label</code>: a conta cuja última compra aconteceu até 08/02/2025 está marcada
+        como perdida. Isso equivale a treze meses de inatividade contados a partir do fim do
+        painel, em 2026-03. A Aula 04 mostrou que esse critério só alcança quem teve tempo de
+        acumular os treze meses de silêncio, o que reduz a população utilizável de 8.282 contas
+        para 3.748, das quais 1.593 estão marcadas, uma prevalência de 42,5%.</p>
+
+        <p>A consequência que a Aula 06 explora é temporal. O rótulo faz uma pergunta sobre um
+        pedaço específico do painel: a conta comprou alguma coisa entre 2025-03 e 2026-03? Esse
+        pedaço tem treze meses. O que sobra antes dele tem onze meses, de 2024-04 a 2025-02. As
+        duas janelas somam exatamente os 24 meses do painel, sem buraco entre elas e sem
+        sobreposição.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Janela</th><th>De</th><th>Até</th><th>Meses</th><th>Papel</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Observação</td><td>2024-04</td><td>2025-02</td><td>11</td><td>onde as features são calculadas</td></tr>
+              <tr><td>Rótulo</td><td>2025-03</td><td>2026-03</td><td>13</td><td>onde o alvo é determinado</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A data de corte não é escolha de conveniência analítica. Ela sai da aritmética do
+        próprio rótulo: treze meses antes de 2026-03 cai em 2025-02. Qualquer outra data produziria
+        uma de duas coisas ruins. Um corte mais tarde deixaria a janela de features invadir o
+        período que define o alvo. Um corte mais cedo jogaria fora meses de comportamento
+        observável sem ganho nenhum em troca.</p>
+
+        <p>Vale insistir no significado operacional do corte, porque ele é o que justifica todo o
+        resto. A data de corte representa o instante em que a previsão seria feita na vida real.
+        Um Account Manager que abre a lista priorizada em 2025-02 tem à disposição, naquele
+        momento, tudo que a conta fez até ali, e não tem como saber o que ela fará nos treze meses
+        seguintes. Um modelo treinado com informação que o Account Manager não teria funciona no
+        notebook e falha no primeiro mês de produção.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="rfv">
+        <h2>2. Recência, frequência e valor</h2>
+
+        <p>As três famílias vêm da tradição de análise de carteira que Hughes <a href="#r6">[6]</a>
+        popularizou sob a sigla RFM, em 1994, para segmentação de base de clientes em marketing
+        direto. A adaptação usada aqui troca o M de valor monetário por um conjunto um pouco mais
+        largo, que inclui mix de marcas e a sequência dos sinais, e fixa todas as medidas na janela
+        de observação.</p>
+
+        <p><strong>Recência</strong> é o número de meses entre a última compra da conta e uma data
+        de referência. É a única das três que depende inteiramente de qual data de referência se
+        escolhe, e é por isso que ela é ao mesmo tempo a coluna mais forte da tabela e a mais
+        perigosa. Calculada com referência em 2025-02, ela é uma coluna de entrada legítima.
+        Calculada com referência em 2026-03, ela reconstrói o rótulo, como a seção 5 mede.</p>
+
+        <p><strong>Frequência</strong> aparece em duas versões, porque elas respondem a perguntas
+        diferentes. <code>freq_meses</code> conta quantos meses distintos da janela tiveram
+        receita, e mede regularidade ao longo do tempo. <code>freq_dias</code> conta quantos dias
+        distintos tiveram pedido, lido da aba de pedidos linha a linha, e mede intensidade de
+        relacionamento. Uma conta com um único pedido enorme e uma conta com doze pedidos pequenos
+        podem ter a mesma receita, e as duas colunas de frequência são o que as separa.</p>
+
+        <p><strong>Valor</strong> também aparece em duas versões. <code>valor_obs</code> é a soma
+        da receita na janela. <code>ticket_medio</code> divide essa soma pelo número de dias com
+        pedido, e descreve o tamanho típico da compra em vez do volume acumulado.</p>
+
+        <p><strong>Mix</strong> entra como <code>marcas_obs</code>, o número de marcas distintas
+        que a conta comprou dentro da janela. A Aula 04 já havia observado associação entre
+        variedade de marcas e permanência na base, e a coluna preserva esse sinal em forma
+        numérica.</p>
+
+        <p>A tabela abaixo reúne as sete colunas com a fórmula de cada uma e o que ela vale
+        sozinha, medido como descrito na seção 4.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Coluna</th><th>Família</th><th>Cálculo, sempre até 2025-02</th><th>AUC isolada</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>recencia_corte</code></td><td>Recência</td><td>meses entre a última compra e 2025-02</td><td>0,772</td></tr>
+              <tr><td><code>freq_dias</code></td><td>Frequência</td><td>dias distintos com pedido</td><td>0,693</td></tr>
+              <tr><td><code>freq_meses</code></td><td>Frequência</td><td>meses distintos com receita</td><td>0,680</td></tr>
+              <tr><td><code>valor_obs</code></td><td>Valor</td><td>soma da receita na janela</td><td>0,618</td></tr>
+              <tr><td><code>marcas_obs</code></td><td>Mix</td><td>marcas distintas compradas</td><td>0,608</td></tr>
+              <tr><td><code>razao_3m</code></td><td>Sequência</td><td>receita dos 3 meses finais sobre os 3 anteriores</td><td>0,567</td></tr>
+              <tr><td><code>ticket_medio</code></td><td>Valor</td><td>receita da janela sobre dias com pedido</td><td>0,540</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Duas decisões de construção merecem registro, porque elas mudam o número e não aparecem
+        na fórmula. A primeira é o tratamento de conta sem nenhuma compra na janela de observação:
+        a recência dela recebe 11, o comprimento inteiro da janela, em vez de ficar vazia. A
+        segunda é que a tabela roda apenas sobre as 3.748 contas elegíveis. Rodar sobre a carteira
+        inteira mediria a data de entrada da conta em vez da deterioração dela, pelo motivo que a
+        Aula 04 detalhou.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="sequencia">
+        <h2>3. A variável de sequência</h2>
+
+        <p>Recência, frequência e valor descrevem o estado da conta ao fim da janela. Nenhuma das
+        três descreve o caminho até esse estado. Duas contas podem chegar a 2025-02 com a mesma
+        receita acumulada, uma delas em trajetória de alta e a outra em queda contínua, e as cinco
+        colunas anteriores não conseguem separá-las.</p>
+
+        <p>A coluna <code>razao_3m</code> preenche essa lacuna com a comparação mais simples que
+        cabe na janela: a receita dos três meses finais, de 2024-12 a 2025-02, dividida pela
+        receita dos três meses anteriores, de 2024-09 a 2024-11. Valor acima de 1,0 indica
+        aceleração e valor abaixo indica desaceleração. A razão é limitada em 10 para que uma conta
+        que saiu de uma base quase nula não domine a escala.</p>
+
+        <p>Conta sem receita nos dois blocos recebe razão 1,0. Isso parece estranho à primeira
+        vista, e a razão é que essa conta não acelerou nem desacelerou dentro da janela: ela já
+        havia sumido antes dela. Quem carrega esse caso é a recência, e forçar a razão a assumir
+        um valor extremo apenas duplicaria a informação que a recência já tem.</p>
+
+        <p>A prevalência por faixa da razão traz o achado menos intuitivo da manhã.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Faixa</th><th>Contas</th><th>Perdidas</th><th>Prevalência</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Sem receita nos 3 meses finais</td><td>735</td><td>420</td><td>57,1%</td></tr>
+              <tr><td>Queda acima de 50%</td><td>218</td><td>37</td><td>17,0%</td></tr>
+              <tr><td>Queda até 50%</td><td>2.426</td><td>1.088</td><td>44,8%</td></tr>
+              <tr><td>Estável ou em alta</td><td>369</td><td>48</td><td>13,0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A faixa de queda acima de 50% tem prevalência de 17,0%, bem abaixo dos 44,8% da faixa de
+        queda até 50%. A leitura ingênua diria que cair mais protege a conta, o que é absurdo. A
+        explicação está na definição da própria faixa: para uma conta aparecer ali, ela precisa ter
+        tido receita nos três meses finais. Quem caiu muito e mesmo assim continuou comprando em
+        2024-12, 2025-01 ou 2025-02 ainda estava viva no momento do corte, e conta viva no corte
+        tem menos chance de completar treze meses de silêncio depois. Quem parou de vez não aparece
+        nessa faixa, e sim na primeira, com 57,1%.</p>
+
+        <p>Esse é um caso de seleção induzida pela definição da variável, e ele vale como advertência
+        geral. Uma faixa construída sobre uma razão só existe quando o denominador e o numerador
+        existem, e a população de cada faixa muda junto com a fórmula. Antes de interpretar
+        prevalência por faixa, confira quantas contas a faixa tem e o que foi preciso para entrar
+        nela.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="auc">
+        <h2>4. Medir o que uma coluna vale sozinha</h2>
+
+        <p>Antes de treinar qualquer modelo, é útil saber o que cada coluna candidata vale por
+        conta própria. A medida usada aqui é a AUC, a área sob a curva ROC, que responde a uma
+        pergunta direta: tomando ao acaso uma conta perdida e uma conta mantida, qual a chance de a
+        conta perdida receber o valor maior naquela coluna? Uma coluna sem informação nenhuma
+        entrega 0,5, que é o resultado de um sorteio. Uma coluna que separa as duas populações por
+        completo entrega 1,0.</p>
+
+        <p>Hanley e McNeil <a href="#r8">[8]</a> mostraram, em 1982, que essa área é numericamente
+        igual à estatística de Mann-Whitney <a href="#r5">[5]</a> normalizada pelo produto dos
+        tamanhos dos dois grupos. A consequência prática é conveniente: a AUC de uma variável
+        isolada pode ser calculada com uma única chamada a
+        <code>scipy.stats.mannwhitneyu</code>, sem treinar modelo nenhum, sem separar treino de
+        teste e sem escolher limiar. É o mesmo número que uma regressão logística de uma variável
+        só produziria.</p>
+
+        <p>Duas cautelas acompanham essa medida. A primeira é que a AUC de uma variável isolada
+        ignora direção: uma coluna que cai quando o risco sobe entrega valor abaixo de 0,5, e a
+        leitura correta é tomar o maior entre o valor e o complemento dele. É por isso que
+        <code>freq_meses</code>, cujo valor bruto é 0,320, aparece na tabela como 0,680. A segunda
+        é que AUC alta em uma coluna isolada não garante contribuição alta no modelo conjunto,
+        porque duas colunas fortes e redundantes entre si somam menos do que a soma das partes.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="vazamento">
+        <h2>5. O vazamento temporal, medido</h2>
+
+        <p>Kaufman e colegas <a href="#r3">[3]</a> formalizaram, em 2012, o vocabulário de
+        vazamento em mineração de dados. A forma que interessa nesta aula é a temporal: usar, como
+        entrada, informação que só existe depois do instante em que a previsão seria feita.</p>
+
+        <p>O experimento que torna isso visível compara as mesmas medidas dos dois lados do corte.
+        Três colunas foram calculadas sobre o painel inteiro, atravessando a janela do rótulo, e a
+        AUC isolada de cada uma foi medida contra o mesmo alvo.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Coluna</th><th>Janela usada</th><th>AUC isolada</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Recência no fim do painel</td><td>painel inteiro</td><td>0,994</td></tr>
+              <tr><td>Meses ativos no painel inteiro</td><td>painel inteiro</td><td>0,885</td></tr>
+              <tr><td>Receita do painel inteiro</td><td>painel inteiro</td><td>0,752</td></tr>
+              <tr><td>Recência no corte</td><td>janela de observação</td><td>0,772</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A recência lida no fim do painel entrega 0,994. A mesma medida, com a mesma fórmula, lida
+        no corte, entrega 0,772. A diferença inteira vem da data de referência.</p>
+
+        <p>Há uma forma ainda mais crua de mostrar o que aconteceu. Marcar como perdida toda conta
+        cuja recência no fim do painel é de treze meses ou mais acerta 3.366 das 3.748 contas, ou
+        89,8%. Essa regra não é um modelo: é a definição do rótulo escrita com outras palavras. Os
+        382 casos em que ela erra vêm de detalhes de granularidade, porque o rótulo original usa
+        08/02/2025 como data exata e a recência aqui é contada em meses fechados.</p>
+
+        <p>A trava mais forte que este acervo tem contra esse defeito não é a lista de valores
+        esperados. É um teste em <code>dados/tests/test_aula06_numeros.py</code> que recalcula as
+        sete colunas honestas sobre um painel truncado no corte, com a janela do rótulo removida da
+        entrada, e exige que nenhum valor mude em nenhuma das 3.748 linhas. Uma coluna que lê a
+        janela do rótulo muda de valor assim que essa janela some, e o teste acusa. A prova de que
+        esse teste é capaz de falhar está registrada no próprio arquivo: incluir
+        <code>recencia_fim</code> na lista das colunas verificadas produz 3.748 diferenças.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="perguntas">
+        <h2>6. As três perguntas que reprovam uma coluna</h2>
+
+        <p>Medir a AUC dos dois lados do corte funciona quando alguém já desconfia da coluna. Para
+        o trabalho de rotina, o que serve é uma checagem barata aplicada a toda candidata, antes de
+        qualquer cálculo. São três perguntas.</p>
+
+        <p><strong>01. Data.</strong> Algum dado usado no cálculo tem data posterior à data de
+        corte? Receita total do painel, número de meses ativos e última compra do painel reprovam
+        aqui. Esta é a pergunta que pega a maior parte dos casos, e é a única das três que pode ser
+        verificada de forma automática, comparando a data máxima lida por cada coluna contra a data
+        de corte.</p>
+
+        <p><strong>02. Definição.</strong> A coluna usa a mesma regra que define o rótulo? Uma
+        recência com corte em treze meses é o rótulo com outro nome, mesmo que a data de referência
+        esteja correta. Esta pergunta pega o caso em que alguém, de boa fé, reproduz a regra de
+        negócio dentro de uma feature.</p>
+
+        <p><strong>03. Operação.</strong> O valor da coluna só é preenchido depois que alguém
+        percebeu o problema? Contato de retenção, desconto emergencial e reabertura de oportunidade
+        são registros que existem porque a deterioração já foi notada. Uma coluna assim tem sinal
+        forte no histórico e valor nulo no momento em que a previsão precisaria ser feita. As
+        colunas de engajamento do Dataset 3 são as candidatas mais expostas a esse caso.</p>
+
+        <p>As três perguntas foram organizadas para esta trilha e <strong>não são framework
+        publicado</strong>. Cite-as como material do curso. O conceito de vazamento que elas
+        operacionalizam é literatura, e a referência é Kaufman e colegas <a href="#r3">[3]</a>.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="peso">
+        <h2>7. O peso de cada variável no modelo</h2>
+
+        <p>Saber o que cada coluna vale sozinha não diz quanto ela contribui quando todas entram
+        juntas. Para isso, as sete colunas foram padronizadas, subtraindo a média e dividindo pelo
+        desvio padrão de cada uma, e ajustadas em uma regressão logística por máxima
+        verossimilhança <a href="#r4">[4]</a>.</p>
+
+        <p>A padronização é o passo que torna a comparação possível. Sem ela, o coeficiente de
+        <code>valor_obs</code> estaria em unidades de dólar por unidade de log-odds e o de
+        <code>marcas_obs</code> em unidades de marca, e o número maior seria simplesmente o da
+        coluna com a escala menor. Depois de padronizar, todo coeficiente responde à mesma
+        pergunta: quanto muda o log-odds quando esta coluna sobe um desvio padrão, mantidas as
+        outras fixas?</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Coluna</th><th>Coeficiente padronizado</th><th>Razão de chances</th><th>Peso relativo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>recencia_corte</code></td><td>+0,804</td><td>2,234</td><td>33,1%</td></tr>
+              <tr><td><code>freq_meses</code></td><td>-0,588</td><td>0,555</td><td>24,2%</td></tr>
+              <tr><td><code>freq_dias</code></td><td>-0,554</td><td>0,574</td><td>22,8%</td></tr>
+              <tr><td><code>marcas_obs</code></td><td>-0,159</td><td>0,853</td><td>6,6%</td></tr>
+              <tr><td><code>ticket_medio</code></td><td>+0,129</td><td>1,138</td><td>5,3%</td></tr>
+              <tr><td><code>valor_obs</code></td><td>-0,114</td><td>0,892</td><td>4,7%</td></tr>
+              <tr><td><code>razao_3m</code></td><td>-0,080</td><td>0,923</td><td>3,3%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A razão de chances é a exponencial do coeficiente, e é a forma mais fácil de levar o
+        resultado para uma conversa de negócio. Um desvio padrão a mais de recência multiplica por
+        2,234 a chance de a conta ser perdida. Um desvio padrão a mais de meses ativos multiplica
+        essa chance por 0,555, ou seja, reduz quase pela metade.</p>
+
+        <p>O peso relativo divide o módulo de cada coeficiente pela soma dos módulos, e serve para
+        ordenar. Recência responde por 33,1%. As duas colunas de frequência somam 47,0%, o que faz
+        recência e frequência juntas chegarem a 80,1% do peso do modelo. As duas colunas de valor
+        somam 10,0%, e mix e sequência fecham os 9,9% restantes.</p>
+
+        <p>Esse resultado tem uma leitura de negócio que vale levar ao Comitê. Na carteira da Kovan,
+        o quanto a conta compra explica muito menos a perda do que a regularidade com que ela
+        compra. Uma conta grande que comprou uma única vez no ano está mais exposta do que uma
+        conta pequena que compra todo mês.</p>
+
+        <p>Duas cautelas sobre a leitura de coeficiente. A primeira é que <code>freq_meses</code> e
+        <code>freq_dias</code> são fortemente correlacionadas, e coeficiente de variável
+        correlacionada divide crédito de maneira instável: o par soma 47,0% de forma confiável, e a
+        divisão entre 24,2% e 22,8% é bem menos robusta que essa soma. A segunda é que o sinal
+        positivo de <code>ticket_medio</code>, com razão de chances de 1,138, aparece mantidas as
+        outras colunas fixas, e a AUC isolada dessa coluna é de apenas 0,540. Ela sozinha quase não
+        separa nada.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="qualidade">
+        <h2>8. O que a AUC não diz</h2>
+
+        <p>O escore combinado das sete colunas honestas atinge AUC de 0,794 sobre as 3.748 contas.
+        Acrescentando a recência do fim do painel como oitava coluna, o mesmo procedimento chega a
+        0,995, uma subida de 0,201.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Tabela de features</th><th>Colunas</th><th>AUC do escore</th><th>Utilizável em produção</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Fechadas em 2025-02</td><td>7</td><td>0,794</td><td>sim</td></tr>
+              <tr><td>As mesmas, mais a recência do fim do painel</td><td>8</td><td>0,995</td><td>não</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A segunda linha é o resultado que um grupo apressado levaria à banca como sucesso. Ela
+        vale zero, porque no instante em que o Account Manager precisa da lista a recência do fim do
+        painel ainda não existe. A pergunta que separa as duas linhas é se a coluna está disponível
+        no momento da previsão, e o ganho de métrica não tem peso nenhum nessa decisão.</p>
+
+        <p>Vale registrar o que estes números não são. Eles foram medidos sobre a mesma população
+        usada no ajuste, sem separação entre treino e teste, e portanto são otimistas. A avaliação
+        honesta, com partição de dados, matriz de confusão e intervalo de confiança da métrica, é o
+        assunto da tarde. O que a AUC de 0,794 estabelece aqui é uma régua para comparar duas listas
+        de features entre si, e é só para isso que ela é usada nesta seção.</p>
+
+        <p>A AUC também não diz nada sobre o limiar de decisão. Ela resume o quanto o escore ordena
+        a carteira, e uma carteira bem ordenada ainda precisa de um ponto de corte para virar lista
+        de trabalho. Na Kovan esse ponto sai da capacidade operacional de 138 contas por ciclo
+        medida na Aula 04, e não do 0,5 que vem por padrão em qualquer biblioteca.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="realimentacao">
+        <h2>9. A realimentação do score</h2>
+
+        <p>Há um tipo de vazamento que nenhuma das três perguntas pega na primeira rodada, porque
+        ele só nasce depois que o modelo entra em operação.</p>
+
+        <p>O ciclo é o seguinte. O modelo produz uma lista priorizada de 138 contas. O time comercial
+        atua sobre essas contas, e essa atuação fica registrada: contatos realizados, oportunidades
+        reabertas, descontos concedidos. Alguns meses depois, alguém treina a próxima versão do
+        modelo usando o histórico disponível, que agora inclui essas colunas de engajamento. Só que
+        elas não marcam mais as contas que estavam em risco. Elas marcam as contas que a versão
+        anterior do modelo apontou.</p>
+
+        <p>O efeito é que o novo modelo aprende a reproduzir a lista antiga, e a métrica dele
+        parece boa justamente por isso. O problema é conhecido em sistemas de decisão que agem
+        sobre a própria população que observam, e a única saída barata é reservar, desde o primeiro
+        ciclo, um conjunto de contas que ficam de fora da intervenção mesmo quando o escore delas é
+        alto. Esse grupo de controle é o único registro do que teria acontecido sem o modelo.</p>
+
+        <p>A decisão de manter o grupo de controle é de negócio, não de modelagem, porque ela custa
+        receita no curto prazo. Ela precisa estar escrita no Artefato 2 <a href="#r1">[1]</a> e
+        acordada com o Comitê antes do primeiro ciclo de intervenção.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="prompts">
+        <h2>10. Os prompts das duas práticas</h2>
+
+        <p>As duas práticas rodam no Gemini sobre a pasta clonada do repositório de trabalho da
+        turma <a href="#r7">[7]</a>. Os prompts abaixo são os mesmos que aparecem no deck, e estão
+        aqui para quem precisar reexecutar depois da aula.</p>
+
+        <h3>Prática 1: auditar as colunas candidatas</h3>
+
+        <p>O primeiro prompt pede a lista sem pedir código, e exige a data mais recente usada por
+        cada coluna. É esse pedido que torna o vazamento visível dentro da própria resposta do
+        modelo.</p>
+
+        <pre class="doc-codigo"><code>Sou analista da Kovan LATAM. Tenho um painel mensal por conta de 2024-04 a
+2026-03 com receita_usd, qtd_pedidos, segmento e região, mais os pedidos linha a
+linha com marca e data. O rótulo marca a conta cuja última compra é até 2025-02.
+Liste 12 colunas candidatas de entrada. Para cada uma, diga a data mais recente
+que ela usa. Não escreva código.</code></pre>
+
+        <pre class="doc-codigo"><code>Para cada uma das 12 colunas, responda as três perguntas: usa dado depois de
+2025-02? usa a mesma regra do rótulo? só é preenchida depois que alguém percebeu
+o problema? Marque APROVADA ou REPROVADA e diga em qual pergunta.</code></pre>
+
+        <p>Confira duas linhas do veredito à mão. O comportamento observado em sala é que o modelo
+        aprova com facilidade coluna vazada que tenha nome inocente, do tipo
+        <code>total_compras_cliente</code>.</p>
+
+        <h3>Prática 2: construir a tabela de features</h3>
+
+        <pre class="doc-codigo"><code>Escreva uma função em pandas que receba a data de corte como parâmetro e devolva
+uma linha por conta elegível com as sete colunas da tabela anterior, sem usar
+dado posterior ao corte.</code></pre>
+
+        <pre class="doc-codigo"><code>Percorra a função e aponte cada trecho que lê dado posterior ao corte. Se não
+houver, diga qual filtro garante isso em cada coluna.</code></pre>
+
+        <pre class="doc-codigo"><code>Calcule a AUC isolada de cada coluna por Mann-Whitney. Depois proponha uma
+oitava coluna que respeite o corte e calcule a AUC dela.</code></pre>
+
+        <p>A data de corte entra como parâmetro da função, e nunca fixa no meio do código. É essa
+        escolha que permite auditar a função e reexecutá-la com outro corte, que é justamente o que
+        a base longa vai exigir. O erro mais frequente na revisão do código gerado é filtrar o
+        painel mensal pelo corte e esquecer de aplicar o mesmo filtro na tabela de pedidos.</p>
+
+        <p>Se a oitava coluna proposta pelo modelo passar de 0,90 de AUC, ela está vazando. Volte
+        às três perguntas da seção 6 antes de aceitá-la.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="base-longa">
+        <h2>11. O que muda com a base de cinco anos</h2>
+
+        <p>Uma base mais longa da carteira, com 65 meses de painel em vez de 24, chegou ao curso em
+        12/09/2026. Todo número desta página vem da base de 24 meses <a href="#r2">[2]</a>, e a
+        migração ainda não foi feita. Três consequências já são previsíveis e valem para o
+        planejamento do Artefato 2.</p>
+
+        <p>A primeira é que a janela de observação deixa de ser o gargalo. Com onze meses, uma
+        feature de histórico de doze meses não cabe, e comparações ano contra ano são impossíveis.
+        Com um painel longo, o corte pode ser posicionado deixando anos de histórico atrás dele.</p>
+
+        <p>A segunda é que passa a existir mais de uma data de corte válida. Isso permite montar
+        vários recortes da mesma carteira, cada um com o seu par de janelas, o que aumenta o número
+        de exemplos de treino e permite verificar se o peso das variáveis é estável ao longo do
+        tempo. Uma variável cujo coeficiente muda de sinal entre dois cortes é um alerta.</p>
+
+        <p>A terceira é operacional. A base longa renomeia colunas de cadastro, e os carregadores
+        atuais quebram como estão. Nenhum número deve ser recalculado antes desse ajuste, e nenhum
+        número recalculado entra em material didático antes de ser travado por teste.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="leitura">
+        <h2>12. Leitura complementar e referências</h2>
+
+        <p>Hughes <a href="#r6">[6]</a> é a origem prática da tríade recência, frequência e valor,
+        e vale a leitura para entender que ela nasceu como ferramenta de segmentação manual, antes
+        de virar insumo de modelo. Kaufman e colegas <a href="#r3">[3]</a> continuam sendo a
+        referência mais completa sobre vazamento, com um catálogo de casos reais em competições
+        públicas que é útil como lista de verificação. Hosmer e Lemeshow <a href="#r4">[4]</a>
+        cobrem a interpretação de coeficiente e de razão de chances em regressão logística, que é o
+        conteúdo da seção 7 em profundidade. Hanley e McNeil <a href="#r8">[8]</a> e Mann e Whitney
+        <a href="#r5">[5]</a> sustentam o método de medição da seção 4.</p>
+
+        <p>Sobre o que é citável e o que é construção deste módulo: o corte em 2025-02, as três
+        perguntas de vazamento e a tabela de sete colunas foram organizados para esta trilha. Os
+        testes estatísticos, o vocabulário de vazamento e a interpretação de coeficiente são
+        literatura, e as referências completas estão abaixo.</p>
+
+        <h3>Referências citadas neste material</h3>
+        <ol class="doc-referencias">
+          <li id="r1">Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026,
+          versão v2.</li>
+          <li id="r2"><code>datasets_case_modulo2.xlsx</code>, base oficial recebida em
+          21/08/2026. A base não é distribuída por este acervo, por ser dado real de carteira: ver
+          <code>docs/adrs/ADR-005</code>.</li>
+          <li id="r3">Kaufman, S.; Rosset, S.; Perlich, C.; Stitelman, O. Leakage in Data Mining:
+          Formulation, Detection, and Avoidance. <em>ACM Transactions on Knowledge Discovery from
+          Data</em>, v. 6, n. 4, 2012. O vocabulário de vazamento usado nas seções 5 e 6.</li>
+          <li id="r4">Hosmer, D. W.; Lemeshow, S.; Sturdivant, R. X. <em>Applied Logistic
+          Regression</em>. 3. ed. Wiley, 2013. A interpretação de coeficiente e de razão de
+          chances da seção 7.</li>
+          <li id="r5">Mann, H. B.; Whitney, D. R. On a Test of Whether One of Two Random Variables
+          is Stochastically Larger than the Other. <em>Annals of Mathematical Statistics</em>,
+          v. 18, n. 1, p. 50-60, 1947. A estatística usada para calcular a AUC isolada.</li>
+          <li id="r6">Hughes, A. M. <em>Strategic Database Marketing</em>. Probus, 1994. A origem
+          da tríade recência, frequência e valor.</li>
+          <li id="r7">Repositório de trabalho da turma:
+          <code>github.com/josercf/inteli-pos-2026-2a-eda</code>. Traz o <code>AGENTS.md</code>, as
+          skills e o checklist, sem o dataset. Ver <code>docs/adrs/ADR-006</code>.</li>
+          <li id="r8">Hanley, J. A.; McNeil, B. J. The Meaning and Use of the Area under a Receiver
+          Operating Characteristic (ROC) Curve. <em>Radiology</em>, v. 143, n. 1, p. 29-36, 1982. A
+          equivalência entre a área sob a curva ROC e a estatística de Mann-Whitney.</li>
+        </ol>
+      </section>
+
+    </main>
+
+    <footer class="doc-rodape">
+      <p>Módulo 2 &middot; Aula 06 &middot; Prof. José Romualdo da Costa Filho &middot;
+      MBA em IA e Dados para Negócios, Inteli x Lenovo.</p>
+      <p>Os números citados aqui são reproduzíveis a partir de
+      <code>dados/datasets_case_modulo2.xlsx</code> através de
+      <code>dados/analise_aula06.py</code>, e estão travados por teste em
+      <code>dados/tests/test_aula06_numeros.py</code>.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -230,7 +230,7 @@ def _logistica(X: np.ndarray, y: np.ndarray, iteracoes: int = 40,
     entram quase colineares, que é o caso de freq_meses e freq_dias."""
     beta = np.zeros(X.shape[1])
     for _ in range(iteracoes):
-        p = 1 / (1 + np.exp(-X @ beta))
+        p = 1 / (1 + np.exp(-np.clip(X @ beta, -500, 500)))
         w = np.clip(p * (1 - p), 1e-9, None)
         H = X.T @ (X * w[:, None]) + ridge * np.eye(X.shape[1])
         passo = np.linalg.solve(H, X.T @ (y - p) - ridge * beta)

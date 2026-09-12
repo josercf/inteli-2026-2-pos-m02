@@ -75,7 +75,7 @@ SLIDES.append(conteudo(
     '        <table class="tabela-criterios compacta">\n'
     "          <thead><tr><th>Item</th><th>O que vale hoje</th></tr></thead>\n"
     "          <tbody>\n"
-    "            <tr><td>Contrato</td><td>Nenhuma coluna entra na tabela de treino sem a data de corte declarada e a AUC isolada medida.</td></tr>\n"
+    "            <tr><td>Contrato</td><td>Nenhuma coluna entra na tabela de treino sem a data de corte declarada e sem a medida de quanto ela separa conta perdida de conta mantida.</td></tr>\n"
     "            <tr><td>Ambiente</td><td>Gemini sobre a pasta clonada, com os prompts literais de cada prática nos slides.</td></tr>\n"
     "            <tr><td>Método</td><td>09h00 às 10h20, o corte temporal e as três famílias de variável. 10h35 às 11h20, o peso de cada uma.</td></tr>\n"
     "            <tr><td>Oficina</td><td>11h20 às 11h50, a tabela de features do grupo, reexecutável, com o dicionário de colunas.</td></tr>\n"
@@ -94,16 +94,19 @@ SLIDES.append(secao("01", "O corte temporal", "A data que separa o que se observ
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
     "O rótulo de 13 meses parte o painel de 24 em duas janelas",
-    '        <table class="tabela-criterios compacta numerica">\n'
-    "          <thead><tr><th>Janela</th><th>De</th><th>Até</th><th>Meses</th><th>Serve para</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Observação</td><td>2024-04</td><td>2025-02</td><td>11</td><td>calcular as features</td></tr>\n"
-    '            <tr class="fragment"><td>Rótulo</td><td>2025-03</td><td>2026-03</td><td>13</td><td>definir o alvo</td></tr>\n'
-    "          </tbody>\n"
-    "        </table>\n"
-    '        <p class="linha-contexto fragment">O rótulo pergunta se a conta comprou entre 2025-03 e 2026-03. Uma feature que enxerga esse pedaço já sabe a resposta antes de a pergunta ser feita.</p>\n',
-    contexto="O painel termina em 2026-03 e o rótulo exige treze meses sem compra: a última compra que ainda marca a conta é de 2025-02.",
-    conclusao="A data de corte é 2025-02. Toda coluna de hoje é calculada com dado até essa data, e só com ele.",
+    '        <div class="linha-tempo">\n'
+    '          <div class="etapa fragment"><p class="quando">2024-04 a 2025-02 &middot; 11 meses</p>'
+    "<h3>Janela de observação</h3>"
+    "<p>O que a conta fez aqui dentro vira coluna de entrada. Recência, frequência, valor, mix e sequência.</p></div>\n"
+    '          <div class="etapa avaliada fragment"><p class="quando">2025-02</p>'
+    "<h3>Data de corte</h3>"
+    "<p>O instante em que a previsão seria feita na vida real. O que vem depois não existe para o modelo.</p></div>\n"
+    '          <div class="etapa fragment"><p class="quando">2025-03 a 2026-03 &middot; 13 meses</p>'
+    "<h3>Janela do rótulo</h3>"
+    "<p>A conta comprou ou não comprou. É a resposta, e resposta não entra como pergunta.</p></div>\n"
+    "        </div>\n",
+    contexto="A data de corte sai da aritmética do rótulo. O painel termina em 2026-03, o rótulo exige treze meses sem compra, e treze meses antes de 2026-03 é 2025-02.",
+    conclusao="Toda coluna construída hoje é calculada com dado até 2025-02, e só com ele.",
     fonte="Fonte: dados/analise_aula06.py, particao_temporal.",
     por_passos=True,
 ))
@@ -112,7 +115,7 @@ SLIDES.append(conteudo(
 # 6. O vazamento medido
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A recência do fim do painel repete o rótulo em 89,8% das contas",
+    "A recência do fim do painel repete o rótulo em 89,8%",
     '        <table class="tabela-criterios compacta numerica">\n'
     "          <thead><tr><th>Variável</th><th>Janela usada</th><th>AUC isolada</th></tr></thead>\n"
     "          <tbody>\n"
@@ -121,10 +124,14 @@ SLIDES.append(conteudo(
     "            <tr><td>Receita do painel inteiro</td><td>painel inteiro</td><td>0,752</td></tr>\n"
     '            <tr class="fragment"><td>Recência no corte</td><td>observação</td><td>0,772</td></tr>\n'
     "          </tbody>\n"
-    "        </table>\n",
-    contexto="AUC isolada é a chance de a conta perdida receber valor maior que a mantida. 0,5 é sorteio, 1,0 separa por completo.",
-    conclusao="AUC próxima de 1,0 na primeira tentativa é o sintoma clássico de vazamento.",
-    fonte="Fonte: dados/analise_aula06.py, auc_das_candidatas e concordancia_do_vazamento.",
+    "        </table>\n"
+    '        <div class="faixa-conclusao clara fragment">\n'
+    '          <span class="rotulo">Definições</span>\n'
+    "          <p><strong>Recência:</strong> meses entre a última compra e uma data de referência. "
+    "<strong>AUC:</strong> chance de a conta perdida pontuar acima da mantida, de 0,5 a 1,0.</p>\n"
+    "        </div>\n",
+    conclusao="Mudar a referência para 2026-03 faz a coluna copiar o rótulo em 3.366 das 3.748.",
+    fonte="Fonte: dados/analise_aula06.py.",
     por_passos=True,
 ))
 
@@ -224,11 +231,11 @@ SLIDES.append(quiz(
          "errado": ""},
         {"texto": "Meses desde a última compra até 2026-03", "certa": False,
          "certo": "", "errado": "Não: é a coluna de AUC 0,994, que reconstrói o rótulo."},
-        {"texto": "Contatos de retenção registrados pelo Account Manager", "certa": False,
+        {"texto": "Contatos de retenção do Account Manager", "certa": False,
          "certo": "", "errado": "Não: o contato vem depois que alguém percebeu a queda. Reprova na 03."},
     ],
     {"fichas": [("População", "3.748 elegíveis"), ("Prevalência", "42,5%"),
-                ("Corte", "2025-02"), ("Rótulo", "2025-03 a 2026-03")]},
+                ("Corte", "2025-02")]},
 ))
 
 # ---------------------------------------------------------------------------
@@ -289,7 +296,7 @@ SLIDES.append(conteudo(
     "        </table>\n"
     '        <p class="linha-contexto fragment">A segunda linha sobe 0,201 de AUC e perde todo o valor de decisão: em produção a recência do fim do painel não existe no momento em que o Account Manager precisa da lista.</p>\n',
     contexto="Mesmo dado, mesma população, mesma regressão. A única diferença é uma coluna que atravessa o corte.",
-    conclusao="A pergunta que separa as duas linhas é se a coluna existe no instante da previsão, não o quanto ela melhora a métrica.",
+    conclusao="A coluna precisa existir no instante da previsão. O ganho de métrica não entra nessa decisão.",
     fonte="Fonte: dados/analise_aula06.py, qualidade_do_modelo.",
     por_passos=True,
 ))

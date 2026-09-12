@@ -67,7 +67,7 @@
         <table class="tabela-criterios compacta">
           <thead><tr><th>Item</th><th>O que vale hoje</th></tr></thead>
           <tbody>
-            <tr><td>Contrato</td><td>Nenhuma coluna entra na tabela de treino sem a data de corte declarada e a AUC isolada medida.</td></tr>
+            <tr><td>Contrato</td><td>Nenhuma coluna entra na tabela de treino sem a data de corte declarada e sem a medida de quanto ela separa conta perdida de conta mantida.</td></tr>
             <tr><td>Ambiente</td><td>Gemini sobre a pasta clonada, com os prompts literais de cada prática nos slides.</td></tr>
             <tr><td>Método</td><td>09h00 às 10h20, o corte temporal e as três famílias de variável. 10h35 às 11h20, o peso de cada uma.</td></tr>
             <tr><td>Oficina</td><td>11h20 às 11h50, a tabela de features do grupo, reexecutável, com o dicionário de colunas.</td></tr>
@@ -97,20 +97,17 @@
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>O rótulo de 13 meses parte o painel de 24 em duas janelas</h2>
-          <p class="linha-contexto">O painel termina em 2026-03 e o rótulo exige treze meses sem compra: a última compra que ainda marca a conta é de 2025-02.</p>
+          <p class="linha-contexto">A data de corte sai da aritmética do rótulo. O painel termina em 2026-03, o rótulo exige treze meses sem compra, e treze meses antes de 2026-03 é 2025-02.</p>
         </div>
-        <table class="tabela-criterios compacta numerica">
-          <thead><tr><th>Janela</th><th>De</th><th>Até</th><th>Meses</th><th>Serve para</th></tr></thead>
-          <tbody>
-            <tr><td>Observação</td><td>2024-04</td><td>2025-02</td><td>11</td><td>calcular as features</td></tr>
-            <tr class="fragment"><td>Rótulo</td><td>2025-03</td><td>2026-03</td><td>13</td><td>definir o alvo</td></tr>
-          </tbody>
-        </table>
-        <p class="linha-contexto fragment">O rótulo pergunta se a conta comprou entre 2025-03 e 2026-03. Uma feature que enxerga esse pedaço já sabe a resposta antes de a pergunta ser feita.</p>
+        <div class="linha-tempo">
+          <div class="etapa fragment"><p class="quando">2024-04 a 2025-02 &middot; 11 meses</p><h3>Janela de observação</h3><p>O que a conta fez aqui dentro vira coluna de entrada. Recência, frequência, valor, mix e sequência.</p></div>
+          <div class="etapa avaliada fragment"><p class="quando">2025-02</p><h3>Data de corte</h3><p>O instante em que a previsão seria feita na vida real. O que vem depois não existe para o modelo.</p></div>
+          <div class="etapa fragment"><p class="quando">2025-03 a 2026-03 &middot; 13 meses</p><h3>Janela do rótulo</h3><p>A conta comprou ou não comprou. É a resposta, e resposta não entra como pergunta.</p></div>
+        </div>
         <div class="fecho">
         <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
-          <p>A data de corte é 2025-02. Toda coluna de hoje é calculada com dado até essa data, e só com ele.</p>
+          <p>Toda coluna construída hoje é calculada com dado até 2025-02, e só com ele.</p>
         </div>
         <p class="fonte-nota">Fonte: dados/analise_aula06.py, particao_temporal.</p>
         </div>
@@ -125,8 +122,7 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
-          <h2>A recência do fim do painel repete o rótulo em 89,8% das contas</h2>
-          <p class="linha-contexto">AUC isolada é a chance de a conta perdida receber valor maior que a mantida. 0,5 é sorteio, 1,0 separa por completo.</p>
+          <h2>A recência do fim do painel repete o rótulo em 89,8%</h2>
         </div>
         <table class="tabela-criterios compacta numerica">
           <thead><tr><th>Variável</th><th>Janela usada</th><th>AUC isolada</th></tr></thead>
@@ -137,12 +133,16 @@
             <tr class="fragment"><td>Recência no corte</td><td>observação</td><td>0,772</td></tr>
           </tbody>
         </table>
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Definições</span>
+          <p><strong>Recência:</strong> meses entre a última compra e uma data de referência. <strong>AUC:</strong> chance de a conta perdida pontuar acima da mantida, de 0,5 a 1,0.</p>
+        </div>
         <div class="fecho">
         <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
-          <p>AUC próxima de 1,0 na primeira tentativa é o sintoma clássico de vazamento.</p>
+          <p>Mudar a referência para 2026-03 faz a coluna copiar o rótulo em 3.366 das 3.748.</p>
         </div>
-        <p class="fonte-nota">Fonte: dados/analise_aula06.py, auc_das_candidatas e concordancia_do_vazamento.</p>
+        <p class="fonte-nota">Fonte: dados/analise_aula06.py.</p>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
@@ -327,7 +327,7 @@
               <li data-letra="D"
                   data-correct="false"
                   data-correct-msg=""
-                  data-incorrect-msg="Não: o contato vem depois que alguém percebeu a queda. Reprova na 03.">Contatos de retenção registrados pelo Account Manager</li>
+                  data-incorrect-msg="Não: o contato vem depois que alguém percebeu a queda. Reprova na 03.">Contatos de retenção do Account Manager</li>
               </ul>
             </div>
             <div>
@@ -335,7 +335,6 @@
               <dt>População</dt><dd>3.748 elegíveis</dd>
               <dt>Prevalência</dt><dd>42,5%</dd>
               <dt>Corte</dt><dd>2025-02</dd>
-              <dt>Rótulo</dt><dd>2025-03 a 2026-03</dd>
               </dl>
               <p class="quiz-feedback"></p>
             </div>
@@ -438,7 +437,7 @@
         <div class="fecho">
         <div class="faixa-conclusao fragment">
           <span class="rotulo">Implicação</span>
-          <p>A pergunta que separa as duas linhas é se a coluna existe no instante da previsão, não o quanto ela melhora a métrica.</p>
+          <p>A coluna precisa existir no instante da previsão. O ganho de métrica não entra nessa decisão.</p>
         </div>
         <p class="fonte-nota">Fonte: dados/analise_aula06.py, qualidade_do_modelo.</p>
         </div>

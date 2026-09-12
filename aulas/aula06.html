@@ -604,6 +604,319 @@
         </div>
       </section>
 
+      <section class="section-slide">
+        <p class="secao-numero">05</p>
+        <div class="accent-bar"></div>
+        <h2>Medidas de qualidade</h2>
+        <h3>Quatro números que saem da mesma tabela de quatro caixas</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Acurácia</div>
+          <div><span class="num">02</span>Precisão</div>
+          <div><span class="num">03</span>Revocação</div>
+          <div><span class="num">04</span>F1</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>As quatro caixas de onde sai toda métrica</h2>
+          <p class="linha-contexto">Escore de oito colunas no limiar de 0,5, sobre as 4.708 contas elegíveis. As quatro caixas somam a população inteira.</p>
+        </div>
+        <table class="tabela-criterios compacta numerica">
+          <thead><tr><th></th><th>Perdeu a conta</th><th>Seguiu comprando</th></tr></thead>
+          <tbody>
+            <tr><td>O modelo marcou</td><td>VP: 2.018 acertos de alarme</td><td>FP: 643 alarmes falsos</td></tr>
+            <tr><td>O modelo não marcou</td><td>FN: 438 perdas que passaram</td><td>VN: 1.609 silêncios certos</td></tr>
+          </tbody>
+        </table>
+        <p class="linha-contexto">Na Kovan os dois erros custam coisas diferentes. Um FP gasta uma hora de Account Manager com quem ficaria de qualquer jeito. Um FN deixa passar uma conta que a empresa vai perder.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Toda métrica das próximas telas é uma razão entre pedaços desta tabela. Muda o pedaço, muda a pergunta.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py, limiar de 0,5.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">19</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A acurácia de 77,0% divide os acertos pela carteira inteira</h2>
+          <p class="linha-contexto">Pergunta que ela responde: que fração de todas as contas eu classifiquei bem?</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="matriz-confusao" role="img" aria-label="Acurácia: as duas caixas de acerto sobre as quatro, 77,0%">
+          <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
+          <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
+          <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>
+          <text class="eixo" x="16" y="26">O QUE O MODELO DISSE</text>
+          <text class="cabecalho" x="230" y="119" text-anchor="end">Marcou</text>
+          <text class="cabecalho" x="230" y="209" text-anchor="end">Não marcou</text>
+          <g class="celula acerto">
+            <rect x="250" y="74" width="240" height="78" rx="10"/>
+            <text class="sigla" x="266" y="96">VP</text>
+            <text class="valor" x="266" y="126">2.018</text>
+            <text class="legenda" x="266" y="144">acertou o alarme</text>
+          </g>
+          <g class="celula">
+            <rect x="502" y="74" width="240" height="78" rx="10"/>
+            <text class="sigla" x="518" y="96">FP</text>
+            <text class="valor" x="518" y="126">643</text>
+            <text class="legenda" x="518" y="144">alarme falso</text>
+          </g>
+          <g class="celula">
+            <rect x="250" y="164" width="240" height="78" rx="10"/>
+            <text class="sigla" x="266" y="186">FN</text>
+            <text class="valor" x="266" y="216">438</text>
+            <text class="legenda" x="266" y="234">perda que passou</text>
+          </g>
+          <g class="celula acerto">
+            <rect x="502" y="164" width="240" height="78" rx="10"/>
+            <text class="sigla" x="518" y="186">VN</text>
+            <text class="valor" x="518" y="216">1.609</text>
+            <text class="legenda" x="518" y="234">acertou o silêncio</text>
+          </g>
+          <g class="fragment">
+            <rect class="realce-den" x="243" y="67" width="254" height="92" rx="12"/>
+            <rect class="realce-den" x="495" y="67" width="254" height="92" rx="12"/>
+            <rect class="realce-den" x="243" y="157" width="254" height="92" rx="12"/>
+            <rect class="realce-den" x="495" y="157" width="254" height="92" rx="12"/>
+            <text class="rotulo-den" x="16" y="268">Denominador: as quatro caixas, ou seja, a carteira elegível inteira</text>
+          </g>
+          <g class="fragment">
+            <rect class="realce-num" x="248" y="72" width="244" height="82" rx="12"/>
+            <rect class="realce-num" x="500" y="162" width="244" height="82" rx="12"/>
+            <text class="rotulo-num" x="16" y="290">Numerador: VP mais VN, as duas caixas em que o modelo acertou</text>
+          </g>
+          <g class="painel fragment">
+            <rect x="806" y="74" width="346" height="168" rx="10"/>
+            <text class="formula" x="826" y="106">(VP + VN) dividido pelo total</text>
+            <text class="conta" x="826" y="132">(2.018 + 1.609) / 4.708</text>
+            <text class="resultado" x="826" y="196">77,0%</text>
+            <text class="resultado-rotulo" x="826" y="222">ACURÁCIA</text>
+          </g>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Marcar conta nenhuma já entregaria 47,8%. Acurácia perto disso está empatando com não fazer nada.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">20</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A precisão de 75,8% olha só a linha do que foi marcado</h2>
+          <p class="linha-contexto">Pergunta que ela responde: do esforço que o time vai gastar, quanto vale a pena?</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="matriz-confusao" role="img" aria-label="Precisão: acertos sobre tudo que o modelo marcou, 75,8%">
+          <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
+          <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
+          <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>
+          <text class="eixo" x="16" y="26">O QUE O MODELO DISSE</text>
+          <text class="cabecalho" x="230" y="119" text-anchor="end">Marcou</text>
+          <text class="cabecalho" x="230" y="209" text-anchor="end">Não marcou</text>
+          <g class="celula acerto">
+            <rect x="250" y="74" width="240" height="78" rx="10"/>
+            <text class="sigla" x="266" y="96">VP</text>
+            <text class="valor" x="266" y="126">2.018</text>
+            <text class="legenda" x="266" y="144">acertou o alarme</text>
+          </g>
+          <g class="celula">
+            <rect x="502" y="74" width="240" height="78" rx="10"/>
+            <text class="sigla" x="518" y="96">FP</text>
+            <text class="valor" x="518" y="126">643</text>
+            <text class="legenda" x="518" y="144">alarme falso</text>
+          </g>
+          <g class="celula">
+            <rect x="250" y="164" width="240" height="78" rx="10"/>
+            <text class="sigla" x="266" y="186">FN</text>
+            <text class="valor" x="266" y="216">438</text>
+            <text class="legenda" x="266" y="234">perda que passou</text>
+          </g>
+          <g class="celula acerto">
+            <rect x="502" y="164" width="240" height="78" rx="10"/>
+            <text class="sigla" x="518" y="186">VN</text>
+            <text class="valor" x="518" y="216">1.609</text>
+            <text class="legenda" x="518" y="234">acertou o silêncio</text>
+          </g>
+          <g class="fragment">
+            <rect class="realce-den" x="243" y="67" width="254" height="92" rx="12"/>
+            <rect class="realce-den" x="495" y="67" width="254" height="92" rx="12"/>
+            <text class="rotulo-den" x="16" y="268">Denominador: a linha de cima, tudo que o modelo marcou</text>
+          </g>
+          <g class="fragment">
+            <rect class="realce-num" x="248" y="72" width="244" height="82" rx="12"/>
+            <text class="rotulo-num" x="16" y="290">Numerador: VP, as contas marcadas que estavam mesmo se perdendo</text>
+          </g>
+          <g class="painel fragment">
+            <rect x="806" y="74" width="346" height="168" rx="10"/>
+            <text class="formula" x="826" y="106">VP dividido por (VP + FP)</text>
+            <text class="conta" x="826" y="132">2.018 / 2.661</text>
+            <text class="resultado" x="826" y="196">75,8%</text>
+            <text class="resultado-rotulo" x="826" y="222">PRECISÃO</text>
+          </g>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>É a métrica que o time comercial sente. Três em cada quatro conversas seriam com quem precisava.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">21</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A revocação de 82,2% olha só a coluna das perdas reais</h2>
+          <p class="linha-contexto">Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="matriz-confusao" role="img" aria-label="Revocação: acertos sobre todas as perdas reais, 82,2%">
+          <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
+          <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
+          <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>
+          <text class="eixo" x="16" y="26">O QUE O MODELO DISSE</text>
+          <text class="cabecalho" x="230" y="119" text-anchor="end">Marcou</text>
+          <text class="cabecalho" x="230" y="209" text-anchor="end">Não marcou</text>
+          <g class="celula acerto">
+            <rect x="250" y="74" width="240" height="78" rx="10"/>
+            <text class="sigla" x="266" y="96">VP</text>
+            <text class="valor" x="266" y="126">2.018</text>
+            <text class="legenda" x="266" y="144">acertou o alarme</text>
+          </g>
+          <g class="celula">
+            <rect x="502" y="74" width="240" height="78" rx="10"/>
+            <text class="sigla" x="518" y="96">FP</text>
+            <text class="valor" x="518" y="126">643</text>
+            <text class="legenda" x="518" y="144">alarme falso</text>
+          </g>
+          <g class="celula">
+            <rect x="250" y="164" width="240" height="78" rx="10"/>
+            <text class="sigla" x="266" y="186">FN</text>
+            <text class="valor" x="266" y="216">438</text>
+            <text class="legenda" x="266" y="234">perda que passou</text>
+          </g>
+          <g class="celula acerto">
+            <rect x="502" y="164" width="240" height="78" rx="10"/>
+            <text class="sigla" x="518" y="186">VN</text>
+            <text class="valor" x="518" y="216">1.609</text>
+            <text class="legenda" x="518" y="234">acertou o silêncio</text>
+          </g>
+          <g class="fragment">
+            <rect class="realce-den" x="243" y="67" width="254" height="92" rx="12"/>
+            <rect class="realce-den" x="243" y="157" width="254" height="92" rx="12"/>
+            <text class="rotulo-den" x="16" y="268">Denominador: a coluna da esquerda, todas as perdas que existiram</text>
+          </g>
+          <g class="fragment">
+            <rect class="realce-num" x="248" y="72" width="244" height="82" rx="12"/>
+            <text class="rotulo-num" x="16" y="290">Numerador: VP, as perdas que o modelo conseguiu enxergar</text>
+          </g>
+          <g class="painel fragment">
+            <rect x="806" y="74" width="346" height="168" rx="10"/>
+            <text class="formula" x="826" y="106">VP dividido por (VP + FN)</text>
+            <text class="conta" x="826" y="132">2.018 / 2.456</text>
+            <text class="resultado" x="826" y="196">82,2%</text>
+            <text class="resultado-rotulo" x="826" y="222">REVOCAÇÃO</text>
+          </g>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>É a métrica que o Comitê sente. Baixar o limiar sobe este número e derruba a precisão.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">22</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O F1 cai de 78,9% para 8,8% quando a revocação desaba</h2>
+          <p class="linha-contexto">F1 é a média harmônica entre precisão e revocação, e ela pune desequilíbrio.</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="matriz-confusao" role="img" aria-label="F1: 78,9% no limiar de 0,5 e 8,8% na fila de 138">
+          <text class="eixo" x="16" y="24">LIMIAR DE 0,5</text>
+          <g class="fragment">
+            <text class="barra-rotulo" x="290" y="54" text-anchor="end">Precisão</text>
+            <rect class="barra-fundo" x="300" y="36" width="420" height="26" rx="6"/>
+            <rect class="barra" x="300" y="36" width="318" height="26" rx="6"/>
+            <text class="barra-valor" x="736" y="54">75,8%</text>
+            <text class="barra-rotulo" x="290" y="88" text-anchor="end">Revocação</text>
+            <rect class="barra-fundo" x="300" y="70" width="420" height="26" rx="6"/>
+            <rect class="barra" x="300" y="70" width="345" height="26" rx="6"/>
+            <text class="barra-valor" x="736" y="88">82,2%</text>
+          </g>
+          <g class="fragment">
+            <text class="barra-rotulo" x="290" y="122" text-anchor="end">F1</text>
+            <rect class="barra-fundo" x="300" y="104" width="420" height="26" rx="6"/>
+            <rect class="barra" x="300" y="104" width="331" height="26" rx="6"/>
+            <text class="barra-valor" x="736" y="122">78,9%</text>
+            <text class="legenda" x="300" y="152">Com precisão e revocação parecidas, a média harmônica fica entre as duas.</text>
+          </g>
+          <text class="eixo" x="16" y="196">FILA DE 138 CONTAS</text>
+          <g class="fragment">
+            <text class="barra-rotulo" x="290" y="226" text-anchor="end">Precisão</text>
+            <rect class="barra-fundo" x="300" y="208" width="420" height="26" rx="6"/>
+            <rect class="barra" x="300" y="208" width="346" height="26" rx="6"/>
+            <text class="barra-valor" x="736" y="226">82,6%</text>
+            <text class="barra-rotulo" x="290" y="260" text-anchor="end">Revocação</text>
+            <rect class="barra-fundo" x="300" y="242" width="420" height="26" rx="6"/>
+            <rect class="barra baixa" x="300" y="242" width="19" height="26" rx="6"/>
+            <text class="barra-valor" x="736" y="260">4,6%</text>
+          </g>
+          <g class="painel fragment">
+            <rect x="806" y="190" width="346" height="90" rx="10"/>
+            <text class="formula" x="826" y="218">Média simples: 43,6%</text>
+            <text class="resultado" x="826" y="262">F1 8,8%</text>
+          </g>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Na fila de 138 a média simples daria 43,6% e o F1 dá 8,8%. É a diferença que faz o F1 útil.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">23</p>
+        </div>
+      </section>
+
       <section class="content-slide">
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
@@ -629,7 +942,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">19</p>
+          <p class="footer-page">24</p>
         </div>
       </section>
 
@@ -659,7 +972,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">20</p>
+          <p class="footer-page">25</p>
         </div>
       </section>
 
@@ -715,7 +1028,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">21</p>
+          <p class="footer-page">26</p>
         </div>
       </section>
 
@@ -741,7 +1054,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">22</p>
+          <p class="footer-page">27</p>
         </div>
       </section>
 
@@ -797,7 +1110,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">23</p>
+          <p class="footer-page">28</p>
         </div>
       </section>
 
@@ -822,7 +1135,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">24</p>
+          <p class="footer-page">29</p>
         </div>
       </section>
 
@@ -846,7 +1159,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">25</p>
+          <p class="footer-page">30</p>
         </div>
       </section>
 

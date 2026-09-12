@@ -23,7 +23,8 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
 
 from tools import deck_kit  # noqa: E402
-from tools.deck_kit import conteudo, pratica, quiz, secao  # noqa: E402
+from tools.deck_kit import (conteudo, figura_embutida, pratica, quiz,  # noqa: E402
+                            secao)
 
 SAIDA = RAIZ / "aulas" / "aula06.html"
 
@@ -405,6 +406,59 @@ SLIDES.append(conteudo(
     '        <p class="linha-contexto">As duas medem a mesma coisa por caminhos diferentes, e a correlação entre elas faz o modelo dividir crédito de forma instável. Com freq_meses no modelo, dias de compra a mais passam a indicar conta que concentra pedidos em poucos meses.</p>\n',
     contexto="Coeficiente de variável correlacionada não se lê isoladamente.",
     conclusao="O par soma 51,8% de peso de forma confiável. A divisão entre 41,2% e 10,6% é o número frágil da tabela.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
+))
+
+# ---------------------------------------------------------------------------
+# 15c. Divisor 05 e as quatro métricas
+# ---------------------------------------------------------------------------
+SLIDES.append(secao("05", "Medidas de qualidade", "Quatro números que saem da mesma tabela de quatro caixas",
+                    ["Acurácia", "Precisão", "Revocação", "F1"]))
+
+SLIDES.append(conteudo(
+    "As quatro caixas de onde sai toda métrica",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th></th><th>Perdeu a conta</th><th>Seguiu comprando</th></tr></thead>\n"
+    "          <tbody>\n"
+    '            <tr><td>O modelo marcou</td><td>VP: 2.018 acertos de alarme</td><td>FP: 643 alarmes falsos</td></tr>\n'
+    "            <tr><td>O modelo não marcou</td><td>FN: 438 perdas que passaram</td><td>VN: 1.609 silêncios certos</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n"
+    '        <p class="linha-contexto">Na Kovan os dois erros custam coisas diferentes. Um FP gasta uma hora de Account Manager com quem ficaria de qualquer jeito. Um FN deixa passar uma conta que a empresa vai perder.</p>\n',
+    contexto="Escore de oito colunas no limiar de 0,5, sobre as 4.708 contas elegíveis. As quatro caixas somam a população inteira.",
+    conclusao="Toda métrica das próximas telas é uma razão entre pedaços desta tabela. Muda o pedaço, muda a pergunta.",
+    fonte="Fonte: dados/analise_aula06_longa.py, limiar de 0,5.",
+))
+
+SLIDES.append(figura_embutida(
+    "A acurácia de 77,0% divide os acertos pela carteira inteira",
+    "aula06-metrica-acuracia.svg",
+    contexto="Pergunta que ela responde: que fração de todas as contas eu classifiquei bem?",
+    conclusao="Marcar conta nenhuma já entregaria 47,8%. Acurácia perto disso está empatando com não fazer nada.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
+))
+
+SLIDES.append(figura_embutida(
+    "A precisão de 75,8% olha só a linha do que foi marcado",
+    "aula06-metrica-precisao.svg",
+    contexto="Pergunta que ela responde: do esforço que o time vai gastar, quanto vale a pena?",
+    conclusao="É a métrica que o time comercial sente. Três em cada quatro conversas seriam com quem precisava.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
+))
+
+SLIDES.append(figura_embutida(
+    "A revocação de 82,2% olha só a coluna das perdas reais",
+    "aula06-metrica-revocacao.svg",
+    contexto="Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?",
+    conclusao="É a métrica que o Comitê sente. Baixar o limiar sobe este número e derruba a precisão.",
+    fonte="Fonte: dados/analise_aula06_longa.py.",
+))
+
+SLIDES.append(figura_embutida(
+    "O F1 cai de 78,9% para 8,8% quando a revocação desaba",
+    "aula06-metrica-f1.svg",
+    contexto="F1 é a média harmônica entre precisão e revocação, e ela pune desequilíbrio.",
+    conclusao="Na fila de 138 a média simples daria 43,6% e o F1 dá 8,8%. É a diferença que faz o F1 útil.",
     fonte="Fonte: dados/analise_aula06_longa.py.",
 ))
 

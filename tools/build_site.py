@@ -54,6 +54,7 @@ ARQUIVOS = [
     ("assets/img/aula03-forma.png", "assets/img/aula03-forma.png"),
     ("aulas/aula04.html", "aulas/aula04.html"),
     ("aulas/aula06.html", "aulas/aula06.html"),
+    ("aulas/aula07.html", "aulas/aula07.html"),
     ("materiais/aula06-material-de-apoio.html", "materiais/aula06-material-de-apoio.html"),
     ("materiais/aula04-material-de-apoio.html", "materiais/aula04-material-de-apoio.html"),
     ("materiais/skill-perfil-por-segmento.md", "materiais/skill-perfil-por-segmento.md"),

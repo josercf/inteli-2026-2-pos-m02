@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 07 &middot; Do script à tela &middot; MBA Inteli x Lenovo</title>
+
+  <!-- Gerado por tools/montar_deck_aula07.py. Nao editar a mao. -->
+
+  <link rel="stylesheet" href="../assets/vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-theme.css">
+  <link rel="stylesheet" href="../assets/css/inteli-print.css" media="print">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="cover-slide">
+        <div class="cover-panel">
+          <div class="cover-content">
+            <p class="cover-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo</p>
+            <h1>Do script à tela</h1>
+            <h3>O modelo exportado do Gemini vira pacote com teste, e a fila que o Account Manager abre revela qual critério de ordenação vale dinheiro</h3>
+            <p class="cover-meta">Módulo 2 &middot; Aula 07 &middot; Trilha de Tecnologia</p>
+            <p class="cover-meta">26 de setembro de 2026 &middot; 13h00 às 16h00</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A Aula 06 fechou 11 colunas e o Gemini devolveu 94 linhas</h2>
+          <p class="linha-contexto">A manhã da Aula 06 construiu a tabela de features e mediu o peso de cada coluna. O grupo exportou o modelo do Gemini.</p>
+        </div>
+        <div class="stat-tiles">
+          <div class="stat-tile"><p class="stat-numero">11</p><p class="stat-rotulo">colunas de entrada, fechadas em 2024-03</p></div>
+          <div class="stat-tile"><p class="stat-numero">4.708</p><p class="stat-rotulo">contas elegíveis</p></div>
+          <div class="stat-tile"><p class="stat-numero">94</p><p class="stat-rotulo">linhas do script exportado</p></div>
+          <div class="stat-tile destaque"><p class="stat-numero">0</p><p class="stat-rotulo">testes que o script trouxe</p></div>
+        </div>
+        <p class="linha-contexto">O script treina, prevê e imprime. Ele funciona, e é um bom ponto de partida. Ele não é um produto.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A tarde de hoje transforma o script em pacote com teste e em uma tela que alguém abre.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula07.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">2</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Contrato e escopo da tarde</h2>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Item</th><th>O que vale hoje</th></tr></thead>
+          <tbody>
+            <tr><td>Contrato</td><td>Nada entra no aplicativo sem teste que possa falhar. Número que a tela mostra e código que ninguém consegue reexecutar não contam.</td></tr>
+            <tr><td>Ambiente</td><td>Antigravity sobre a pasta clonada. O aplicativo vive em <code>app/</code>, ao lado das análises.</td></tr>
+            <tr><td>Método</td><td>13h00 às 14h20, do script ao pacote. 14h40 às 15h20, o critério da fila.</td></tr>
+            <tr><td>Oficina</td><td>15h20 às 15h50, a tela do grupo rodando. Checkpoint às 15h40.</td></tr>
+          </tbody>
+        </table>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">3</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">01</p>
+        <div class="accent-bar"></div>
+        <h2>O script que veio do Gemini</h2>
+        <h3>O que ele resolve e onde ele para</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Treina e prevê</div>
+          <div><span class="num">02</span>Inventa o próprio alvo</div>
+          <div><span class="num">03</span>Custa meio segundo por conta</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>As 94 linhas resolvem três coisas e param em três</h2>
+          <p class="linha-contexto">O código foi lido linha a linha antes desta aula, e roda sobre a base longa sem alteração.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>O script resolve</th><th>O script para em</th></tr></thead>
+          <tbody>
+            <tr><td>Monta oito colunas a partir da linha de pedido</td><td>Inventa o próprio alvo, com corte em 2022-06-30</td></tr>
+            <tr><td>Treina um HistGradientBoosting e prevê</td><td>Reprocessa 492.393 linhas a cada consulta</td></tr>
+            <tr><td>Devolve a probabilidade de uma conta</td><td>Devolve probabilidade, e não a lista de trabalho</td></tr>
+          </tbody>
+        </table>
+        <p class="linha-contexto">Os três da direita são o roteiro da tarde. Nenhum deles é erro de quem escreveu: são o que separa um script que responde de um aplicativo que alguém opera.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Refatorar aqui é trabalho de engenharia, e é o que o Artefato 2 avalia.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">4</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Um alvo próprio impede comparar com tudo que veio antes</h2>
+          <p class="linha-contexto">As duas definições produzem populações e prevalências diferentes.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Item</th><th>No script exportado</th><th>No case</th></tr></thead>
+          <tbody>
+            <tr><td>Data de corte</td><td>2022-06-30</td><td>07/03/2024</td></tr>
+            <tr><td>Definição de perda</td><td>sem compra até 2024-12-31</td><td><code>churn_label</code> do painel</td></tr>
+            <tr class="fragment"><td>População avaliada</td><td>toda conta com histórico</td><td>as 4.708 elegíveis</td></tr>
+          </tbody>
+        </table>
+        <p class="linha-contexto fragment">O alvo do script é defensável em abstrato. O problema é que ele não é o alvo que o Comitê aprovou, e a Entrega 1 inteira foi construída sobre o outro.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Modelo avaliado contra outro rótulo não se compara com nada que a turma produziu até aqui.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">5</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A tabela sai de 219 segundos para 0,6 com o cache</h2>
+          <p class="linha-contexto">Medido na mesma máquina, sobre a mesma base de 492.393 linhas de pedido.</p>
+        </div>
+        <table class="tabela-criterios compacta numerica">
+          <thead><tr><th>Etapa</th><th>No script</th><th>No pacote</th></tr></thead>
+          <tbody>
+            <tr><td>Ler as cinco abas do xlsx</td><td>a cada execução</td><td>uma vez, com cache em disco</td></tr>
+            <tr><td>Converter data e valor</td><td>a cada consulta, nas 492.393 linhas</td><td>uma vez, na carga</td></tr>
+            <tr><td>Calcular a cadência</td><td>laço Python por conta</td><td>vetorizado</td></tr>
+            <tr class="destaque"><td>Montar a tabela de 4.708 contas</td><td>219 segundos</td><td>0,6 segundo</td></tr>
+            <tr><td>Treinar</td><td>a cada chamada</td><td>uma vez, gravado em joblib</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Meio segundo por conta parece pouco até a tela pedir 138 de uma vez. Aí vira um minuto de espera por clique.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula07.py, custo_de_carga.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">6</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 1 &middot; 20 minutos &middot; Antigravity</p>
+          <div class="accent-bar"></div>
+          <h2>Auditar o script exportado no Antigravity</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">20</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, na pasta clonada</dd>
+              <dt>Entrega</dt><dd>auditoria.md com um achado por linha, e o trecho citado</dd>
+              <dt>Checkpoint</dt><dd>Cada mesa lê um achado que não está nesta lista de três</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Peça a leitura crítica, sem deixar o agente reescrever nada ainda.</p>
+            <p class="detalhe">Não deixe reescrever antes de listar. O agente conserta e a mesa perde o achado.</p>
+            <code class="prompt-literal">Leia churn_model.py inteiro. Liste cada ponto em que ele usa dado posterior à data de corte, cada ponto em que recalcula algo que já foi calculado, e cada ponto em que uma decisão de negócio está escrita no meio do código. Cite a linha. Não reescreva.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Confira dois achados à mão, na base.</p>
+            <p class="detalhe">Um achado que ninguém verificou vale zero na banca. Escolha os dois mais caros e rode o número.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A mesa tem um achado verificado que não estava na lista do professor</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">7</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">02</p>
+        <div class="accent-bar"></div>
+        <h2>De script para pacote</h2>
+        <h3>O que muda quando outra pessoa precisa rodar</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Módulo com responsabilidade</div>
+          <div><span class="num">02</span>Teste que pode falhar</div>
+          <div><span class="num">03</span>Modelo gravado em disco</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Cinco módulos, um assunto cada</h2>
+          <p class="linha-contexto">A tela importa os cinco e não calcula nada por conta própria.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Módulo</th><th>Responsabilidade</th><th>O que ele não faz</th></tr></thead>
+          <tbody>
+            <tr><td><code>dados.py</code></td><td>ler as cinco abas, com cache</td><td>não limpa nem decide nada</td></tr>
+            <tr><td><code>rotulo.py</code></td><td>o alvo do case e a população elegível</td><td>não inventa critério</td></tr>
+            <tr><td><code>features.py</code></td><td>as 11 colunas, com o corte no argumento</td><td>não lê nada depois do corte</td></tr>
+            <tr><td><code>modelo.py</code></td><td>treinar, gravar, escore fora da amostra</td><td>não escolhe limiar</td></tr>
+            <tr><td><code>lista.py</code></td><td>da probabilidade para a fila do ciclo</td><td>não treina nada</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A pergunta que separa um módulo do outro é quem precisa mudar quando o negócio muda de ideia.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">8</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O que mudou do script para o pacote</h2>
+          <p class="linha-contexto">As oito colunas do Gemini ficaram, e três de erosão entraram.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Defeito</th><th>O que foi feito</th></tr></thead>
+          <tbody>
+            <tr><td>Alvo próprio, corte fixo no código</td><td>o <code>churn_label</code> do case, corte no argumento</td></tr>
+            <tr><td>Cadência conta a conta, tudo reprocessado</td><td>vetorizado, com cache em disco</td></tr>
+            <tr><td>Treina a cada chamada, e avalia dentro da amostra</td><td>modelo em <code>joblib</code>, escore fora da amostra em 5 dobras</td></tr>
+            <tr><td>Probabilidade solta</td><td>a fila do ciclo, limiar pela capacidade</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>AUC de 0,8249 fora da amostra, sobre as 4.708 elegíveis.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula07.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">9</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Um teste de dez linhas fecha o vazamento da tabela inteira</h2>
+          <p class="linha-contexto">O mesmo teste roda duas vezes: sobre cinco pedidos de brinquedo e sobre as 4.708 contas reais.</p>
+        </div>
+        <pre class="code-compact"><code>def test_a_compra_posterior_ao_corte_nao_muda_nada():
+    ped = _pedidos_de_brinquedo()
+    completo = features.construir(ped, CORTE)
+    truncado = features.construir(ped[ped.billing_dt &lt;= CORTE], CORTE)
+    pd.testing.assert_frame_equal(completo, truncado)</code></pre>
+        <p class="linha-contexto">Apagar tudo que aconteceu depois do corte não pode mudar nenhuma coluna de nenhuma conta. Uma coluna que lê a janela do rótulo muda de valor assim que essa janela some da entrada.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Foi visto falhando. Trocar a comparação da data faz a recência da conta de teste cair de 241 para 0.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">10</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Escrever os testes encontrou dois defeitos e um engano meu</h2>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>O que apareceu</th><th>Como apareceu</th></tr></thead>
+          <tbody>
+            <tr><td>A fila estourava com valor infinito</td><td>receita anualizada dividida por tempo de casa igual a zero</td></tr>
+            <tr><td>Oito contas em primeiro lugar</td><td><code>rank</code> com empate, e fila de trabalho não tem oito primeiros</td></tr>
+            <tr class="destaque"><td>O teste da razão estava errado</td><td>a conta de teste tinha base de comparação, e o 0,0 estava certo</td></tr>
+          </tbody>
+        </table>
+        <p class="linha-contexto">O terceiro é o mais útil de todos. O teste reprovou, eu conferi o dado, e quem estava errado era o teste. Isso está escrito na docstring dele.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Teste que nunca falhou não é prova de que o código está certo. Pode ser prova de que ele não testa nada.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">11</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 2 &middot; 20 minutos &middot; Antigravity</p>
+          <div class="accent-bar"></div>
+          <h2>Rodar o treino e a suíte na pasta do grupo</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">20</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, na pasta clonada</dd>
+              <dt>Entrega</dt><dd>A saída de python -m app.treinar e de pytest, coladas em execucao.md</dd>
+              <dt>Checkpoint</dt><dd>Cada mesa mostra a AUC fora da amostra e o número de testes que passaram</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Treine e grave o modelo.</p>
+            <p class="detalhe">Divergência aqui quase sempre é base diferente ou cache velho.</p>
+            <code class="prompt-literal">Rode python -m app.treinar e cole a saída. Se algum número divergir do que está no README, aponte qual e investigue antes de seguir.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Rode a suíte e quebre um teste de propósito.</p>
+            <p class="detalhe">Reverta a alteração depois. O objetivo é ver a rede pegar.</p>
+            <code class="prompt-literal">Rode pytest app/tests -q. Depois altere features.py para usar o painel inteiro no lugar do histórico até o corte, rode de novo e mostre qual teste reprova.</code>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A mesa viu o teste de vazamento reprovar e voltou ao verde</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">12</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">03</p>
+        <div class="accent-bar"></div>
+        <h2>O critério da fila</h2>
+        <h3>Duas ordenações da mesma carteira</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Por probabilidade</div>
+          <div><span class="num">02</span>Por valor esperado</div>
+          <div><span class="num">03</span>A conta que muda de lugar</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A fila com 85,5% de precisão alcança 0,01% da receita em risco</h2>
+          <p class="linha-contexto">Mesmo modelo, mesma fila de 138, muda só o critério. O risco total é de USD 36.903.303, nas 2.456 contas perdidas.</p>
+        </div>
+        <table class="tabela-criterios compacta numerica">
+          <thead><tr><th>Ordenação da fila de 138</th><th>Acertos</th><th>Precisão</th><th>Receita alcançada</th><th>Do risco</th></tr></thead>
+          <tbody>
+            <tr><td>Por probabilidade de perda</td><td>118</td><td>85,5%</td><td>USD 2.641</td><td>0,01%</td></tr>
+            <tr class="destaque fragment"><td>Por valor esperado</td><td>41</td><td>29,7%</td><td>USD 25.242.093</td><td>68,4%</td></tr>
+          </tbody>
+        </table>
+        <p class="linha-contexto fragment">As contas de escore mais alto são compras únicas de 2021. A receita delas nos 12 meses antes do corte é zero, porque elas já tinham ido embora.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Valor esperado é o escore multiplicado pela receita dos 12 meses anteriores. Uma multiplicação reordena a carteira inteira.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula07.py, filas.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">13</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A Conta D sai de 3.024º para 1º ao trocar o critério</h2>
+        </div>
+        <table class="tabela-criterios compacta numerica">
+          <thead><tr><th>Critério</th><th>Conta D</th><th>Conta E</th></tr></thead>
+          <tbody>
+            <tr><td>Escore do modelo</td><td>0,448</td><td>0,820</td></tr>
+            <tr><td>Receita nos 12 meses até o corte</td><td>USD 4.642.422</td><td>USD 0</td></tr>
+            <tr><td>Posição por probabilidade</td><td>3.024º</td><td>910º</td></tr>
+            <tr class="destaque"><td>Posição por valor esperado</td><td>1º</td><td>4.085º</td></tr>
+          </tbody>
+          </tbody>
+        </table>
+        <p class="linha-contexto">A Conta D é a que a Aula 06 apresentou: a perda mais cara da carteira, invisível para o escore. Acrescentar colunas de erosão moveu ela de 3.254º para 3.024º. Trocar o critério moveu para 1º.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>O ponto cego não era da tabela de features. Era da pergunta que a lista respondia.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula07.py, par_de_contas.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">14</p>
+        </div>
+      </section>
+
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Verificação &middot; 5 minutos</p>
+          <div class="accent-bar"></div>
+          <h2>Qual mudança recupera mais receita?</h2>
+        </div>
+        <div class="quiz-container">
+          <div class="quiz-grade">
+            <div>
+              <p class="quiz-question">A fila de 138 alcança 0,01% da receita em risco. O que muda mais esse número?</p>
+              <ul class="quiz-options">
+              <li data-letra="A"
+                  data-correct="false"
+                  data-correct-msg=""
+                  data-incorrect-msg="Não: a AUC subiria alguns pontos e a ordem por probabilidade continuaria a mesma.">Trocar a regressão pelo XGBoost bem ajustado</li>
+              <li data-letra="B"
+                  data-correct="true"
+                  data-correct-msg="Certo: a mesma fila de 138 passa a alcançar 68,4% do risco, com precisão menor."
+                  data-incorrect-msg="">Ordenar a fila por escore vezes receita</li>
+              <li data-letra="C"
+                  data-correct="false"
+                  data-correct-msg=""
+                  data-incorrect-msg="Não: mais contas do mesmo tipo. O topo da lista continua sendo compra única de 2021.">Dobrar a capacidade para 276 contas</li>
+              <li data-letra="D"
+                  data-correct="false"
+                  data-correct-msg=""
+                  data-incorrect-msg="Não: já foram acrescentadas, e a Conta D andou de 3.254º para 3.024º.">Acrescentar colunas de erosão de receita</li>
+              </ul>
+            </div>
+            <div>
+              <dl class="quiz-cenario">
+              <dt>Fila</dt><dd>138 contas</dd>
+              <dt>Risco total</dt><dd>USD 36,9 mi</dd>
+              <dt>Precisão hoje</dt><dd>85,5%</dd>
+              </dl>
+              <p class="quiz-feedback"></p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">15</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">04</p>
+        <div class="accent-bar"></div>
+        <h2>A tela</h2>
+        <h3>O que o Account Manager abre na segunda de manhã</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>A fila do ciclo</div>
+          <div><span class="num">02</span>A conta aberta</div>
+          <div><span class="num">03</span>O que a tela não sabe</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A tela mostra a fila, a conta e o que ela não sabe</h2>
+          <p class="linha-contexto">Streamlit, carregando o modelo gravado. A tela não treina nada e abre em menos de um segundo.</p>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>A fila</h3><p>As 138 do ciclo, com escore, receita em risco e valor esperado. O critério de ordenação é um botão, e os cartões de precisão e de receita alcançada mudam junto.</p></div>
+          <div class="concept-card"><h3>A conta</h3><p>As compras mês a mês até o corte, as 11 colunas de entrada e as duas posições. É o que o Account Manager precisa para justificar a ligação internamente.</p></div>
+          <div class="concept-card"><h3>O rodapé</h3><p>As quatro coisas que a tela não sabe, escritas na própria tela. Limitação que só existe no relatório não chega a quem decide.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Um aviso aparece quando a conta tem valor alto e escore baixo, que é exatamente o caso da Conta D.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">16</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Quatro limitações ficam escritas na própria tela</h2>
+          <p class="linha-contexto">A Conta D não tem nenhuma linha de engajamento até o corte. O sinal que a salvaria não está em aba nenhuma da base.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Limitação</th><th>Consequência para quem usa</th></tr></thead>
+          <tbody>
+            <tr><td>O escore mede parada de compra</td><td>conta que encolhe e continua comprando não aparece</td></tr>
+            <tr><td>Engajamento cobre 33,8% das contas antes do corte</td><td>contato comercial não entra como coluna</td></tr>
+            <tr><td>Valor em risco é a receita dos 12 meses anteriores</td><td>conta parada há mais de um ano vale zero por construção</td></tr>
+            <tr><td>Nenhuma coluna usa dado posterior ao corte</td><td>verificado em teste, e não prometido em texto</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Estas quatro entram na seção de limitações do Artefato 2, com o número ao lado de cada uma.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">17</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; 30 minutos &middot; Antigravity</p>
+          <div class="accent-bar"></div>
+          <h2>Oficina: a tela do grupo no ar</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">30</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, três estações de tempo marcado</dd>
+              <dt>Entrega</dt><dd>A tela rodando na máquina do grupo, com o critério de ordenação funcionando</dd>
+              <dt>Checkpoint</dt><dd>Checkpoint às 15h40: cada mesa projeta a própria tela e troca o critério ao vivo</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Estação 1, 10 minutos: treinar e abrir.</p>
+            <p class="detalhe">python -m app.treinar e depois streamlit run. Se a tela demorar mais de dois segundos para abrir, ela está treinando na abertura.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Estação 2, 10 minutos: o botão de critério.</p>
+            <p class="detalhe">Trocar a ordenação e conferir que os cartões de precisão e de receita alcançada mudam junto. Anotar os dois pares de números.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">Estação 3, 10 minutos: o rodapé de limitações.</p>
+            <p class="detalhe">Escrever as quatro limitações do grupo com o número ao lado. Limitação sem número é opinião.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>Outra pessoa clona a pasta, roda os dois comandos e vê a mesma fila</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">18</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A tela de hoje é metade do Artefato 2</h2>
+        </div>
+        <div class="linha-tempo">
+          <div class="etapa fragment"><p class="quando">26/09 &middot; hoje</p><h3>Fica pronto</h3><p>O pacote com teste, o modelo gravado e a tela com os dois critérios de fila.</p></div>
+          <div class="etapa fragment"><p class="quando">Pendente</p><h3>A camada generativa</h3><p>O roteiro de intervenção por conta, com o guardrail de não citar número fora do escore. Depende da chave de API.</p></div>
+          <div class="etapa avaliada fragment"><p class="quando">03/10 &middot; Semana 9</p><h3>Entrega 2 e banca</h3><p>Defesa no papel do Comitê de Receita, com a limitação declarada junto com o número.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>O grupo que levar a fila por probabilidade sem a comparação de receita vai ser perguntado por que gastou o ciclo com contas que já tinham ido embora.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">19</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Referências e nota metodológica</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>Caso e dados</h3><p>1. Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão v2.</p><p>2. datasets_case_modulo2_5yrs.xlsx, base longa de 65 meses. Não distribuída por este acervo.</p></div>
+          <div class="concept-card"><h3>Métodos citáveis</h3><p>3. Ke, G. et al. LightGBM. NeurIPS, 2017. A família do HistGradientBoosting.</p><p>4. Breiman, L. Random Forests. Machine Learning, 2001. A importância por permutação.</p><p>5. Sculley, D. et al. Hidden Technical Debt in Machine Learning Systems. NeurIPS, 2015.</p></div>
+          <div class="concept-card"><h3>O que é nosso</h3><p>A comparação entre as duas ordenações da fila e as quatro limitações declaradas, organizadas para este módulo.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Todo número desta aula está travado em dados/tests/test_aula07_numeros.py.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 07</p>
+          <p class="footer-page">20</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../assets/vendor/reveal/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, center: false, margin: 0,
+      hash: true, slideNumber: false, transition: 'fade'
+    });
+  </script>
+  <script src="../assets/js/inteli-quiz.js"></script>
+  <script src="../assets/js/inteli-zoom.js"></script>
+  <script src="../assets/js/inteli-print.js"></script>
+</body>
+</html>

@@ -199,6 +199,7 @@ ALVOS_PADRAO = [
     "aulas/aula03.html",
     "aulas/aula04.html",
     "aulas/aula06.html",
+    "aulas/aula07.html",
     "materiais/aula01-material-de-apoio.html",
     "materiais/aula02-material-de-apoio.html",
     "materiais/aula03-material-de-apoio.html",

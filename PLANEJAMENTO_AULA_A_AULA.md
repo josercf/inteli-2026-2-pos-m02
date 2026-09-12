@@ -509,24 +509,31 @@ base longa de cinco anos e trazer o dicionário de colunas fechado para a S8.
 
 ---
 
-## S8, 26/09/2026: Prototipagem e pipeline integrado
+## S8, 26/09/2026: Prototipagem, só na tarde
 
-**Ementa:** UC2, Aulas 3 e 4, no mesmo dia. A Aula 3 chega aqui por causa da
-semana sem encontro em 19/09.
+**Ementa:** UC2, Aula 3. Confirmado em 12/09/2026 que o encontro é apenas
+vespertino, das 13h00 às 16h00.
 
-**Manhã, UC2 Aula 3:** frameworks de prototipagem de aplicações analíticas. Do
-notebook ao aplicativo em Streamlit. A tela que o Account Manager abriria, com a
-lista priorizada por valor em risco e a explicação que permite justificar a
+**Tarde, UC2 Aula 3:** frameworks de prototipagem de aplicações analíticas. Do
+script exportado do Gemini ao pacote com teste, e daí para a tela que o Account
+Manager abriria, com a lista priorizada e a explicação que permite justificar a
 priorização internamente.
 
-**Tarde, UC2 Aula 4:** modelo, API generativa e interface no mesmo fluxo.
+Construída em `aulas/aula07.html`, com os números em `dados/analise_aula07.py`,
+que importa o pacote `app/` do repositório de prática em vez de reimplementar a
+conta. O achado que organiza a tarde: a fila de 138 contas ordenada por
+probabilidade tem precisão de 85,5% e alcança 0,01% da receita em risco;
+ordenada por valor esperado tem precisão de 29,7% e alcança 68,4%. A conta de
+maior valor da carteira sai de 3.024º para 1º.
 
-O aplicativo consome a API generativa e produz o roteiro de intervenção por
-conta. Engenharia de prompt com CREATE. Guardrail: o texto gerado não cita
-número que não esteja no score. Marcação das contas mantidas fora da intervenção
-como grupo de controle.
+**Pendência de remanejamento:** a UC2 Aula 4, com a API generativa e o roteiro
+de intervenção por conta, não cabe nesta tarde junto com a Aula 3. Ela precisa
+de decisão até 19/09, entre três caminhos: entrar comprimida no fim da tarde,
+virar autoestudo guiado com entrega em 03/10, ou sair do módulo com o registro
+da ementa não cumprida.
 
-**Pendência:** chave de API para uso em sala.
+**Pendência:** chave de API para uso em sala. Sem ela nenhum dos três caminhos
+acima se sustenta.
 
 ---
 

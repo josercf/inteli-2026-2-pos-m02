@@ -403,6 +403,49 @@ def tamanho_da_particao() -> dict[str, int]:
     return {"treino": len(treino), "validacao": len(validacao)}
 
 
+# ---------------------------------------------------------------------------
+# O par de contas para testar o modelo
+#
+# Apelidos no deck, ids reais só aqui e nas notas de condução, pela mesma razão
+# da Aula 04: o repositório é público e o aluno chega nele.
+# ---------------------------------------------------------------------------
+
+CONTA_D = "CLI052938"   # perdida de maior valor, e o modelo não a vê
+CONTA_E = "CLI053457"   # perdida que o modelo pega, dentro da fila de 138
+
+
+def par_de_contas() -> pd.DataFrame:
+    """As duas contas perdidas que o slide compara.
+
+    A D é a perda mais cara da carteira elegível e cai no fundo da lista. A E é
+    uma compra única de três anos atrás e sobe para dentro da fila. As duas têm
+    churn igual a 1: o que muda é o que a tabela de features consegue enxergar.
+    """
+    e = painel_de_features()
+    s = escore()
+    posicao = s.rank(ascending=False, method="min").astype(int)
+    linhas = {}
+    for apelido, cid in (("Conta D", CONTA_D), ("Conta E", CONTA_E)):
+        r = e.loc[cid]
+        linhas[apelido] = {
+            "churn": int(r.churn), "escore": float(s[cid]), "posicao": int(posicao[cid]),
+            "recencia_corte": int(r.recencia_corte), "recencia_fim": int(r.recencia_fim),
+            "freq_meses": int(r.freq_meses), "freq_dias": int(r.freq_dias),
+            "marcas_obs": int(r.marcas_obs), "valor_obs": float(r.valor_obs),
+            "ticket_medio": float(r.ticket_medio),
+            "razao_3m": float(r.razao_3m), "razao_12m": float(r.razao_12m),
+            "segmento": r.segmento, "pais": r.pais, "setor": r.industry,
+        }
+    return pd.DataFrame(linhas).T
+
+
+def serie_da_conta(cid: str) -> pd.DataFrame:
+    """Os meses com receita de uma conta, para conferir a trajetória à mão."""
+    painel = carregar()["painel"]
+    s = painel[painel.account_id == cid].sort_values("periodo")
+    return s[["periodo", "receita_usd", "qtd_pedidos"]].reset_index(drop=True)
+
+
 def main() -> None:
     p = particao_temporal()
     print(f"Painel {p['inicio_painel']} a {p['fim_painel']}, {p['carteira']} contas")

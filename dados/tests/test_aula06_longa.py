@@ -358,6 +358,75 @@ def test_as_faixas_da_razao_de_3_meses(a):
 
 
 # ---------------------------------------------------------------------------
+# O par de contas
+# ---------------------------------------------------------------------------
+
+def test_as_duas_contas_do_par_estao_marcadas(a):
+    """Se uma delas deixar de ser churn, o slide inteiro perde o sentido."""
+    t = a.par_de_contas()
+    assert int(t.loc["Conta D", "churn"]) == 1
+    assert int(t.loc["Conta E", "churn"]) == 1
+
+
+def test_a_conta_d_e_a_perda_mais_cara_da_carteira_elegivel(a):
+    """O argumento do slide depende disto: não existe perdida com receita maior
+    na janela de observação."""
+    e = a.painel_de_features()
+    perdidas = e[e.churn == 1]
+    assert perdidas.valor_obs.idxmax() == a.CONTA_D
+
+
+def test_a_conta_d_cai_para_3787(a):
+    t = a.par_de_contas()
+    d = t.loc["Conta D"]
+    assert int(d["posicao"]) == 3787
+    assert round(float(d["escore"]), 3) == 0.215
+    assert round(float(d["valor_obs"])) == 12054974
+    assert int(d["recencia_corte"]) == 6
+    assert int(d["freq_meses"]) == 4
+    assert int(d["freq_dias"]) == 16
+    assert round(float(d["razao_12m"]), 3) == 0.347
+    assert round(float(d["razao_3m"]), 3) == 1.000
+
+
+def test_a_conta_e_entra_na_fila_de_138(a):
+    t = a.par_de_contas()
+    e = t.loc["Conta E"]
+    assert int(e["posicao"]) == 105
+    assert int(e["posicao"]) <= 138
+    assert round(float(e["escore"]), 3) == 0.934
+    assert round(float(e["valor_obs"])) == 77797
+    assert int(e["recencia_corte"]) == 34
+    assert int(e["freq_meses"]) == 1
+
+
+def test_a_conta_de_maior_valor_fica_atras_da_de_menor(a):
+    """A inversão é o achado. Se um dia a D subir acima da E, o slide vira
+    mentira e precisa ser refeito."""
+    t = a.par_de_contas()
+    assert float(t.loc["Conta D", "valor_obs"]) > float(t.loc["Conta E", "valor_obs"]) * 100
+    assert int(t.loc["Conta D", "posicao"]) > int(t.loc["Conta E", "posicao"]) * 30
+
+
+def test_a_serie_da_conta_d_tem_quatro_meses_com_receita(a):
+    s = a.serie_da_conta(a.CONTA_D)
+    assert len(s) == 4
+    assert list(s.periodo) == ["2022-08", "2023-03", "2023-07", "2023-09"]
+    assert round(float(s.receita_usd.iloc[0])) == 7412553
+    assert round(float(s.receita_usd.iloc[-1])) == 1844687
+    assert int(s.qtd_pedidos.iloc[-1]) == 31
+
+
+def test_o_deck_nao_expoe_o_id_real_das_contas(a):
+    """O repositório é público e o aluno chega nele. Os ids vivem no módulo e
+    nas notas de condução, e o deck usa apelido."""
+    deck = DECK.read_text(encoding="utf-8")
+    assert a.CONTA_D not in deck
+    assert a.CONTA_E not in deck
+    assert "Conta D" in deck and "Conta E" in deck
+
+
+# ---------------------------------------------------------------------------
 # O deck cita os mesmos números
 # ---------------------------------------------------------------------------
 
@@ -375,6 +444,8 @@ NUMEROS_NO_DECK = [
     "0,8287", "0,8256", "0,8263", "0,8230", "3,35", "2,76", "2,28",
     "1,20", "0,28", "0,8568", "0,8084", "0,8486", "0,8110",
     "0,0027", "0,0484", "0,0376", "0,0228", "0,0026", "0,0229", "208",
+    "3.787", "105", "0,215", "0,934", "12.054.974", "77.797", "0,347",
+    "7.412.553", "1.534.746", "1.262.988", "1.844.687",
     "77,0%", "47,8%", "5,6%",
 ]
 

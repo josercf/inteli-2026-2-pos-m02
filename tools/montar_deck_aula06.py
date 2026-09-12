@@ -526,6 +526,42 @@ SLIDES.append(conteudo(
 ))
 
 # ---------------------------------------------------------------------------
+# 16c. O par de contas que testa o modelo
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "A perda de USD 12,05 milhões cai para 3.787º",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th>Critério até 2024-03</th><th>Conta D</th><th>Conta E</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Receita na janela</td><td>USD 12.054.974</td><td>USD 77.797</td></tr>\n"
+    "            <tr><td>Meses ativos e dias com pedido</td><td>4 e 16</td><td>1 e 1</td></tr>\n"
+    "            <tr><td>Recência no corte</td><td>6 meses</td><td>34 meses</td></tr>\n"
+    "            <tr><td>Razão de 12 meses</td><td>0,347</td><td>1,000</td></tr>\n"
+    '            <tr class="destaque"><td>Escore e posição na lista</td><td>0,215, em 3.787º</td><td>0,934, em 105º</td></tr>\n'
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="Setor público e bancos na D, small market e transporte na E. As duas estão marcadas como perdidas.",
+    conclusao="A conta de maior valor da carteira elegível fica em 3.787º de 4.708.",
+    fonte="Fonte: dados/analise_aula06_longa.py, par_de_contas.",
+))
+
+SLIDES.append(conteudo(
+    "A Conta D foi de USD 7,4 milhões ao silêncio em 13 meses",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th>Mês</th><th>Receita</th><th>Pedidos</th><th>O que o modelo enxerga</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>2022-08</td><td>USD 7.412.553</td><td>21</td><td>conta grande e ativa</td></tr>\n"
+    "            <tr><td>2023-03 e 2023-07</td><td>USD 1.534.746 e 1.262.988</td><td>8 e 8</td><td>ainda compra</td></tr>\n"
+    "            <tr><td>2023-09</td><td>USD 1.844.687</td><td>31</td><td>último pedido</td></tr>\n"
+    '            <tr class="destaque"><td>2023-10 a 2024-03</td><td>zero</td><td>zero</td><td>seis meses, contra 35 da Conta E</td></tr>\n'
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="A única coluna que capta a erosão é a razão de 12 meses, em 0,347, e ela vale 6,1% do peso.",
+    conclusao="A tabela mede parada de compra. A erosão dentro de quem segue comprando é o Caminho B do case, e não tem coluna.",
+    fonte="Fonte: dados/analise_aula06_longa.py, serie_da_conta.",
+))
+
+# ---------------------------------------------------------------------------
 # 17. Prática 2
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(

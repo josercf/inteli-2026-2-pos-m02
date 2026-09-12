@@ -479,6 +479,19 @@ classificação. Recência, frequência e valor; janelas históricas; a variáve
 sequência dos sinais; vazamento temporal; o efeito de realimentação do score
 sobre a atividade registrada.
 
+Construída em `aulas/aula06.html`, com os números em `dados/analise_aula06.py`.
+O corte temporal fica em 2025-02: observação de 2024-04 a 2025-02 (11 meses),
+rótulo de 2025-03 a 2026-03 (13 meses). A demonstração de vazamento compara a
+AUC isolada dos dois lados do corte (0,994 contra 0,772) e a AUC do escore
+conjunto (0,995 com a coluna vazada, 0,794 sem ela). O peso de cada variável sai
+de uma regressão logística sobre as sete colunas padronizadas.
+
+**Pendência:** a base longa de cinco anos (2021-04 a 2026-08, 65 meses, 7.259
+contas) chegou em 12/09 e ainda não está em `dados/`. Ela renomeia
+`segmento_lenovo` para `segment` e `regiao` para `country`, então os carregadores
+de `dados/analise_aula03.py` precisam de ajuste antes de qualquer número ser
+recalculado. Todo número da Aula 06 sai da base de 24 meses.
+
 **Tarde, UC2 Aula 2:** treinamento e avaliação. Regressão logística, matriz de
 confusão, AUC-ROC. O limiar de decisão calibrado pela capacidade operacional, e
 não em 0,5. Treinar o Caminho A com os eventos efetivos disponíveis e observar o
@@ -486,19 +499,27 @@ intervalo de confiança da métrica.
 
 ---
 
-## S7, 19/09/2026: Prototipagem
+## S7, 19/09/2026: sem encontro da trilha de Tecnologia
 
-**Ementa:** UC2, Aula 3. Frameworks de prototipagem de aplicações analíticas.
+Confirmado em 12/09/2026: a turma não tem aula com o professor da trilha de
+Tecnologia nesta semana. A UC2 Aula 3, prototipagem, passa para a S8.
 
-Do notebook ao aplicativo em Streamlit. A tela que o Account Manager abriria, com
-a lista priorizada por valor em risco e a explicação que permite justificar a
-priorização internamente.
+**O que a semana pede do aluno:** avançar a tabela de features da S6 sobre a
+base longa de cinco anos e trazer o dicionário de colunas fechado para a S8.
 
 ---
 
-## S8, 26/09/2026: Pipeline integrado
+## S8, 26/09/2026: Prototipagem e pipeline integrado
 
-**Ementa:** UC2, Aula 4. Modelo, API generativa e interface no mesmo fluxo.
+**Ementa:** UC2, Aulas 3 e 4, no mesmo dia. A Aula 3 chega aqui por causa da
+semana sem encontro em 19/09.
+
+**Manhã, UC2 Aula 3:** frameworks de prototipagem de aplicações analíticas. Do
+notebook ao aplicativo em Streamlit. A tela que o Account Manager abriria, com a
+lista priorizada por valor em risco e a explicação que permite justificar a
+priorização internamente.
+
+**Tarde, UC2 Aula 4:** modelo, API generativa e interface no mesmo fluxo.
 
 O aplicativo consome a API generativa e produz o roteiro de intervenção por
 conta. Engenharia de prompt com CREATE. Guardrail: o texto gerado não cita

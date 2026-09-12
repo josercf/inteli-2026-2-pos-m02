@@ -53,6 +53,7 @@ ARQUIVOS = [
     ("assets/img/aula03-dispersao.png", "assets/img/aula03-dispersao.png"),
     ("assets/img/aula03-forma.png", "assets/img/aula03-forma.png"),
     ("aulas/aula04.html", "aulas/aula04.html"),
+    ("aulas/aula06.html", "aulas/aula06.html"),
     ("materiais/aula04-material-de-apoio.html", "materiais/aula04-material-de-apoio.html"),
     ("materiais/skill-perfil-por-segmento.md", "materiais/skill-perfil-por-segmento.md"),
     ("materiais/skill-figura-que-decide.md", "materiais/skill-figura-que-decide.md"),

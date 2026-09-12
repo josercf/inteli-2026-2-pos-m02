@@ -63,6 +63,17 @@ def test_as_duas_janelas_cobrem_o_painel_sem_buraco_nem_sobreposicao(a):
     assert a.INICIO_DO_ROTULO == "2025-03"
 
 
+def test_os_tres_graos_que_a_tabela_atravessa(a):
+    """A abertura da aula contrasta o grão do dado bruto com o grão da decisão.
+    Somar linhas de aba à mão já errou por 20 na Aula 03."""
+    g = a.do_evento_a_conta()
+    assert g["itens_de_pedido"] == 207826
+    assert g["linhas_de_painel"] == 24071
+    assert g["contas_na_carteira"] == 8282
+    assert g["contas_elegiveis"] == 3748
+    assert g["colunas_de_entrada"] == 7
+
+
 def test_a_populacao_elegivel_tem_3748_contas_e_1593_perdidas(a):
     p = a.particao_temporal()
     assert p["contas"] == 3748
@@ -242,7 +253,7 @@ def test_nenhuma_feature_honesta_muda_quando_o_painel_e_truncado(a, monkeypatch)
 # ---------------------------------------------------------------------------
 
 NUMEROS_NO_DECK = [
-    "3.748", "1.593", "42,5%", "2025-02", "2024-04", "2026-03", "2025-03",
+    "207.826", "3.748", "1.593", "42,5%", "2025-02", "2024-04", "2026-03", "2025-03",
     "0,994", "0,885", "0,752", "0,772", "0,693", "0,680", "0,618", "0,608",
     "0,567", "0,540", "89,8%", "3.366", "0,794", "0,995", "0,201",
     "+0,804", "2,234", "33,1%", "-0,588", "0,555", "24,2%",

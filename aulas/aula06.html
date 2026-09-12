@@ -79,8 +79,164 @@
         </div>
       </section>
 
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O ambiente da prática é o Vertex AI Search com Gemini Pro</h2>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Item</th><th>O que usar hoje</th></tr></thead>
+          <tbody>
+            <tr><td>Acesso</td><td>Conta institucional da turma, pelo endereço abaixo. O mesmo link está no portal do módulo.</td></tr>
+            <tr><td>Modelo</td><td>Gemini Pro, para geração de código e auditoria da própria resposta.</td></tr>
+            <tr><td>Uso na aula</td><td>As duas práticas rodam ali, com os prompts literais que aparecem nos slides.</td></tr>
+            <tr><td>Regra</td><td>Todo código gerado passa pelas três perguntas antes de virar coluna da tabela.</td></tr>
+          </tbody>
+        </table>
+        <p class="code-compact"><a href="https://vertexaisearch.cloud.google.com/global/home/cid/168348ee-a260-40fe-b2d0-7dae648342db/r/image-and-video?utm_source=gemini-standard-plus&amp;utm_medium=email&amp;utm_campaign=end-user-welcome&amp;utm_content=get-started">vertexaisearch.cloud.google.com/global/home/cid/168348ee-a260-40fe-b2d0-7dae648342db/r/image-and-video</a></p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>O modelo escreve o código, e a auditoria de vazamento continua sendo trabalho de quem assina a tabela.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">4</p>
+        </div>
+      </section>
+
       <section class="section-slide">
         <p class="secao-numero">01</p>
+        <div class="accent-bar"></div>
+        <h2>Engenharia de feature</h2>
+        <h3>Do evento cru à coluna que o modelo lê</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>O dado chega em evento</div>
+          <div><span class="num">02</span>O modelo exige matriz</div>
+          <div><span class="num">03</span>A ponte é agregação com data</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>De 207.826 itens de pedido para 3.748 linhas de 7 colunas</h2>
+          <p class="linha-contexto">Engenharia de feature é o trabalho de converter o registro de um evento em uma medida por unidade de decisão, dentro de uma janela de tempo declarada.</p>
+        </div>
+        <div class="processo-fases">
+          <div class="processo-fase fragment"><h4>01. Evento</h4><p>Um item de pedido, com data, conta, marca e valor. 207.826 linhas.</p></div>
+          <div class="processo-fase fragment"><h4>02. Corte</h4><p>Fica só o que aconteceu até a data da previsão.</p></div>
+          <div class="processo-fase fragment"><h4>03. Agregação</h4><p>Contar, somar, comparar e datar, sempre por conta.</p></div>
+          <div class="processo-fase fragment"><h4>04. Coluna</h4><p>Cada agregação vira uma coluna com nome e fórmula.</p></div>
+          <div class="processo-fase fragment"><h4>05. Matriz</h4><p>Uma linha por conta elegível. 3.748 por 7.</p></div>
+          <div class="processo-fase fragment ativa"><h4>06. Escore</h4><p>O modelo lê a linha e devolve uma probabilidade.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>A unidade de decisão da Kovan é a conta. Todo dado do case precisa chegar a esse grão antes de virar entrada.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06.py, do_evento_a_conta.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">5</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Prever exige fixar cinco coisas antes de escrever código</h2>
+          <p class="linha-contexto">Sem esses cinco itens fixados, duas pessoas constroem tabelas diferentes a partir do mesmo dataset e nenhuma das duas está errada.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>O que fixar</th><th>Na Kovan</th></tr></thead>
+          <tbody>
+            <tr><td>Unidade de decisão</td><td>a conta, porque é sobre a conta que o Account Manager age</td></tr>
+            <tr><td>Instante da previsão</td><td>2025-02, a data de corte</td></tr>
+            <tr><td>Horizonte</td><td>os 13 meses seguintes, que é o que o rótulo cobre</td></tr>
+            <tr><td>População</td><td>as 3.748 contas que o rótulo consegue marcar</td></tr>
+            <tr><td>Uso da saída</td><td>uma lista de 138 contas por ciclo, o limite operacional</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Os cinco itens vieram das Aulas 03 e 04. A manhã de hoje só constrói as colunas em cima deles.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">6</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Dificuldades da tabela de features</h2>
+        </div>
+        <div class="concept-cards quatro">
+          <div class="concept-card"><h3>Tempo</h3><p>A coluna pode ler informação que ainda não existia no instante da previsão. É o vazamento, e é a dificuldade que domina a manhã.</p></div>
+          <div class="concept-card"><h3>Grão</h3><p>O dado chega por item de pedido, por mês e por conta. Agregar do grão errado inventa ou apaga comportamento.</p></div>
+          <div class="concept-card"><h3>Ausência</h3><p>Conta que não comprou não gera linha nenhuma. O silêncio precisa virar número de forma explícita, e é isso que a recência faz.</p></div>
+          <div class="concept-card"><h3>Escala</h3><p>Receita em dólar e contagem de marcas convivem na mesma linha. Comparar peso entre elas exige padronizar antes.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>As quatro reaparecem em cada seção de hoje, e a de tempo é a única que estraga o modelo sem dar sinal na métrica.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">7</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Técnicas de construção de coluna</h2>
+          <p class="linha-contexto">Codificação de categoria e discretização entram na tarde, quando segmento e setor virarem entrada.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Técnica</th><th>O que ela produz</th><th>Coluna desta aula</th></tr></thead>
+          <tbody>
+            <tr><td>Agregação</td><td>soma, média ou contagem por conta na janela</td><td><code>valor_obs</code></td></tr>
+            <tr><td>Contagem distinta</td><td>variedade de um atributo dentro da conta</td><td><code>marcas_obs</code>, <code>freq_dias</code></td></tr>
+            <tr><td>Recência</td><td>distância em tempo até a data de referência</td><td><code>recencia_corte</code></td></tr>
+            <tr><td>Janela móvel</td><td>a mesma agregação em recortes de tempo</td><td><code>receita_3m</code></td></tr>
+            <tr><td>Razão entre janelas</td><td>tendência, sem depender do tamanho da conta</td><td><code>razao_3m</code></td></tr>
+            <tr><td>Padronização</td><td>escalas diferentes na mesma régua</td><td>entrada da regressão</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Toda técnica desta lista precisa da data de corte no argumento. Sem ela, qualquer uma delas vaza.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">8</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">02</p>
         <div class="accent-bar"></div>
         <h2>O corte temporal</h2>
         <h3>A data que separa o que se observa do que se prevê</h3>
@@ -113,7 +269,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">4</p>
+          <p class="footer-page">9</p>
         </div>
       </section>
 
@@ -146,7 +302,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">5</p>
+          <p class="footer-page">10</p>
         </div>
       </section>
 
@@ -171,7 +327,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">6</p>
+          <p class="footer-page">11</p>
         </div>
       </section>
 
@@ -222,12 +378,12 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">7</p>
+          <p class="footer-page">12</p>
         </div>
       </section>
 
       <section class="section-slide">
-        <p class="secao-numero">02</p>
+        <p class="secao-numero">03</p>
         <div class="accent-bar"></div>
         <h2>Recência, frequência e valor</h2>
         <h3>Três famílias de variável sobre a janela de observação</h3>
@@ -264,7 +420,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">8</p>
+          <p class="footer-page">13</p>
         </div>
       </section>
 
@@ -295,7 +451,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">9</p>
+          <p class="footer-page">14</p>
         </div>
       </section>
 
@@ -342,12 +498,12 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">10</p>
+          <p class="footer-page">15</p>
         </div>
       </section>
 
       <section class="section-slide">
-        <p class="secao-numero">03</p>
+        <p class="secao-numero">04</p>
         <div class="accent-bar"></div>
         <h2>O peso de cada variável</h2>
         <h3>Quanto cada coluna move a chance de perda</h3>
@@ -383,7 +539,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">11</p>
+          <p class="footer-page">16</p>
         </div>
       </section>
 
@@ -414,7 +570,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">12</p>
+          <p class="footer-page">17</p>
         </div>
       </section>
 
@@ -443,7 +599,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">13</p>
+          <p class="footer-page">18</p>
         </div>
       </section>
 
@@ -500,7 +656,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">14</p>
+          <p class="footer-page">19</p>
         </div>
       </section>
 
@@ -526,7 +682,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">15</p>
+          <p class="footer-page">20</p>
         </div>
       </section>
 
@@ -582,7 +738,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">16</p>
+          <p class="footer-page">21</p>
         </div>
       </section>
 
@@ -607,7 +763,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">17</p>
+          <p class="footer-page">22</p>
         </div>
       </section>
 
@@ -631,7 +787,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">18</p>
+          <p class="footer-page">23</p>
         </div>
       </section>
 

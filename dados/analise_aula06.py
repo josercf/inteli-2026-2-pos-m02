@@ -139,6 +139,28 @@ def painel_de_features() -> pd.DataFrame:
 # Tabelas da aula
 # ---------------------------------------------------------------------------
 
+def formato_das_fontes() -> dict[str, tuple[int, int]]:
+    """Linhas e colunas de cada aba, no grão em que ela chega.
+
+    A abertura da aula precisa do contraste entre o grão do dado bruto (uma
+    linha por item de pedido) e o grão que o modelo exige (uma linha por conta).
+    Somar essas linhas à mão errou por 20 na Aula 03, então o número sai daqui.
+    """
+    return {nome: df.shape for nome, df in carregar().items()}
+
+
+def do_evento_a_conta() -> dict[str, int]:
+    """Os três grãos que a tabela de features atravessa."""
+    d = carregar()
+    return {
+        "itens_de_pedido": len(d["pedidos"]),
+        "linhas_de_painel": len(d["painel"]),
+        "contas_na_carteira": int(d["painel"].account_id.nunique()),
+        "contas_elegiveis": len(painel_de_features()),
+        "colunas_de_entrada": len(FEATURES_HONESTAS),
+    }
+
+
 def particao_temporal() -> dict[str, int | str]:
     e = painel_de_features()
     return {

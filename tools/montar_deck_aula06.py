@@ -84,9 +84,115 @@ SLIDES.append(conteudo(
 ))
 
 # ---------------------------------------------------------------------------
-# 4. Divisor 01
+# 3b. O ambiente: Vertex AI Search com Gemini Pro
 # ---------------------------------------------------------------------------
-SLIDES.append(secao("01", "O corte temporal", "A data que separa o que se observa do que se prevê",
+SLIDES.append(conteudo(
+    "O ambiente da prática é o Vertex AI Search com Gemini Pro",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Item</th><th>O que usar hoje</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Acesso</td><td>Conta institucional da turma, pelo endereço abaixo. O mesmo link está no portal do módulo.</td></tr>\n"
+    "            <tr><td>Modelo</td><td>Gemini Pro, para geração de código e auditoria da própria resposta.</td></tr>\n"
+    "            <tr><td>Uso na aula</td><td>As duas práticas rodam ali, com os prompts literais que aparecem nos slides.</td></tr>\n"
+    "            <tr><td>Regra</td><td>Todo código gerado passa pelas três perguntas antes de virar coluna da tabela.</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n"
+    '        <p class="code-compact"><a href="https://vertexaisearch.cloud.google.com/global/home/cid/168348ee-a260-40fe-b2d0-7dae648342db/r/image-and-video?utm_source=gemini-standard-plus&amp;utm_medium=email&amp;utm_campaign=end-user-welcome&amp;utm_content=get-started">vertexaisearch.cloud.google.com/global/home/cid/168348ee-a260-40fe-b2d0-7dae648342db/r/image-and-video</a></p>\n',
+    conclusao="O modelo escreve o código, e a auditoria de vazamento continua sendo trabalho de quem assina a tabela.",
+))
+
+# ---------------------------------------------------------------------------
+# 4. Divisor: engenharia de feature
+# ---------------------------------------------------------------------------
+SLIDES.append(secao("01", "Engenharia de feature", "Do evento cru à coluna que o modelo lê",
+                    ["O dado chega em evento", "O modelo exige matriz", "A ponte é agregação com data"]))
+
+# ---------------------------------------------------------------------------
+# 4b. A definição, em forma de esteira
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "De 207.826 itens de pedido para 3.748 linhas de 7 colunas",
+    '        <div class="processo-fases">\n'
+    '          <div class="processo-fase fragment"><h4>01. Evento</h4>'
+    "<p>Um item de pedido, com data, conta, marca e valor. 207.826 linhas.</p></div>\n"
+    '          <div class="processo-fase fragment"><h4>02. Corte</h4>'
+    "<p>Fica só o que aconteceu até a data da previsão.</p></div>\n"
+    '          <div class="processo-fase fragment"><h4>03. Agregação</h4>'
+    "<p>Contar, somar, comparar e datar, sempre por conta.</p></div>\n"
+    '          <div class="processo-fase fragment"><h4>04. Coluna</h4>'
+    "<p>Cada agregação vira uma coluna com nome e fórmula.</p></div>\n"
+    '          <div class="processo-fase fragment"><h4>05. Matriz</h4>'
+    "<p>Uma linha por conta elegível. 3.748 por 7.</p></div>\n"
+    '          <div class="processo-fase fragment ativa"><h4>06. Escore</h4>'
+    "<p>O modelo lê a linha e devolve uma probabilidade.</p></div>\n"
+    "        </div>\n",
+    contexto="Engenharia de feature é o trabalho de converter o registro de um evento em uma medida por unidade de decisão, dentro de uma janela de tempo declarada.",
+    conclusao="A unidade de decisão da Kovan é a conta. Todo dado do case precisa chegar a esse grão antes de virar entrada.",
+    fonte="Fonte: dados/analise_aula06.py, do_evento_a_conta.",
+    por_passos=True,
+))
+
+# ---------------------------------------------------------------------------
+# 4c. O que define um problema de previsão
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "Prever exige fixar cinco coisas antes de escrever código",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>O que fixar</th><th>Na Kovan</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Unidade de decisão</td><td>a conta, porque é sobre a conta que o Account Manager age</td></tr>\n"
+    "            <tr><td>Instante da previsão</td><td>2025-02, a data de corte</td></tr>\n"
+    "            <tr><td>Horizonte</td><td>os 13 meses seguintes, que é o que o rótulo cobre</td></tr>\n"
+    "            <tr><td>População</td><td>as 3.748 contas que o rótulo consegue marcar</td></tr>\n"
+    "            <tr><td>Uso da saída</td><td>uma lista de 138 contas por ciclo, o limite operacional</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="Sem esses cinco itens fixados, duas pessoas constroem tabelas diferentes a partir do mesmo dataset e nenhuma das duas está errada.",
+    conclusao="Os cinco itens vieram das Aulas 03 e 04. A manhã de hoje só constrói as colunas em cima deles.",
+))
+
+# ---------------------------------------------------------------------------
+# 4d. Dificuldades
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "Dificuldades da tabela de features",
+    '        <div class="concept-cards quatro">\n'
+    '          <div class="concept-card"><h3>Tempo</h3>'
+    "<p>A coluna pode ler informação que ainda não existia no instante da previsão. É o vazamento, e é a dificuldade que domina a manhã.</p></div>\n"
+    '          <div class="concept-card"><h3>Grão</h3>'
+    "<p>O dado chega por item de pedido, por mês e por conta. Agregar do grão errado inventa ou apaga comportamento.</p></div>\n"
+    '          <div class="concept-card"><h3>Ausência</h3>'
+    "<p>Conta que não comprou não gera linha nenhuma. O silêncio precisa virar número de forma explícita, e é isso que a recência faz.</p></div>\n"
+    '          <div class="concept-card"><h3>Escala</h3>'
+    "<p>Receita em dólar e contagem de marcas convivem na mesma linha. Comparar peso entre elas exige padronizar antes.</p></div>\n"
+    "        </div>\n",
+    conclusao="As quatro reaparecem em cada seção de hoje, e a de tempo é a única que estraga o modelo sem dar sinal na métrica.",
+))
+
+# ---------------------------------------------------------------------------
+# 4e. Técnicas
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "Técnicas de construção de coluna",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Técnica</th><th>O que ela produz</th><th>Coluna desta aula</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Agregação</td><td>soma, média ou contagem por conta na janela</td><td><code>valor_obs</code></td></tr>\n"
+    "            <tr><td>Contagem distinta</td><td>variedade de um atributo dentro da conta</td><td><code>marcas_obs</code>, <code>freq_dias</code></td></tr>\n"
+    "            <tr><td>Recência</td><td>distância em tempo até a data de referência</td><td><code>recencia_corte</code></td></tr>\n"
+    "            <tr><td>Janela móvel</td><td>a mesma agregação em recortes de tempo</td><td><code>receita_3m</code></td></tr>\n"
+    "            <tr><td>Razão entre janelas</td><td>tendência, sem depender do tamanho da conta</td><td><code>razao_3m</code></td></tr>\n"
+    "            <tr><td>Padronização</td><td>escalas diferentes na mesma régua</td><td>entrada da regressão</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="Codificação de categoria e discretização entram na tarde, quando segmento e setor virarem entrada.",
+    conclusao="Toda técnica desta lista precisa da data de corte no argumento. Sem ela, qualquer uma delas vaza.",
+))
+
+# ---------------------------------------------------------------------------
+# 5. Divisor 02
+# ---------------------------------------------------------------------------
+SLIDES.append(secao("02", "O corte temporal", "A data que separa o que se observa do que se prevê",
                     ["Janela de observação", "Janela do rótulo", "Nada atravessa o corte"]))
 
 # ---------------------------------------------------------------------------
@@ -174,7 +280,7 @@ SLIDES.append(pratica(
 # ---------------------------------------------------------------------------
 # 9. Divisor 02
 # ---------------------------------------------------------------------------
-SLIDES.append(secao("02", "Recência, frequência e valor", "Três famílias de variável sobre a janela de observação",
+SLIDES.append(secao("03", "Recência, frequência e valor", "Três famílias de variável sobre a janela de observação",
                     ["Há quanto tempo não compra", "Com que regularidade comprava", "Quanto trazia"]))
 
 # ---------------------------------------------------------------------------
@@ -241,7 +347,7 @@ SLIDES.append(quiz(
 # ---------------------------------------------------------------------------
 # 13. Divisor 03
 # ---------------------------------------------------------------------------
-SLIDES.append(secao("03", "O peso de cada variável", "Quanto cada coluna move a chance de perda",
+SLIDES.append(secao("04", "O peso de cada variável", "Quanto cada coluna move a chance de perda",
                     ["Coeficiente padronizado", "Razão de chances", "AUC do conjunto"]))
 
 # ---------------------------------------------------------------------------

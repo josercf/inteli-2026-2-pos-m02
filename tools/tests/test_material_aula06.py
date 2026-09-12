@@ -195,6 +195,35 @@ def test_a_concordancia_do_vazamento_bate(html, analise):
 
 
 @pytestmark_dataset
+def test_a_matriz_de_confusao_dos_dois_cortes_bate(html, analise):
+    """A seção do limiar compara o corte por capacidade com o 0,5 padrão."""
+    fila = analise.lista_priorizada()
+    padrao = analise.limiar_padrao()
+    for valor in (fila["precisao"], fila["revocacao"], fila["acuracia"],
+                  padrao["precisao"], padrao["revocacao"], padrao["acuracia"]):
+        assert f"{valor * 100:.1f}%".replace(".", ",") in html, valor
+    assert f"{padrao['marcadas']:,}".replace(",", ".") in html
+    assert str(fila["verdadeiros_positivos"]) in html
+    assert str(fila["falsos_positivos"]) in html
+    assert f"{fila['limiar']:.3f}".replace(".", ",") in html
+
+
+@pytestmark_dataset
+def test_a_linha_de_base_de_marcar_ninguem_aparece(html, analise):
+    p = analise.particao_temporal()
+    base = (1 - p["perdidas"] / p["contas"]) * 100
+    assert f"{base:.1f}%".replace(".", ",") in html
+    assert f"{138 / p['perdidas'] * 100:.1f}%".replace(".", ",") in html
+
+
+@pytestmark_dataset
+def test_os_tres_graos_da_abertura_aparecem(html, analise):
+    g = analise.do_evento_a_conta()
+    for chave in ("itens_de_pedido", "linhas_de_painel"):
+        assert f"{g[chave]:,}".replace(",", ".") in html, chave
+
+
+@pytestmark_dataset
 def test_as_duas_auc_do_escore_batem(html, analise):
     honesto = analise.qualidade_do_modelo()
     vazado = analise.qualidade_do_modelo(analise.FEATURES_HONESTAS + ["recencia_fim"])

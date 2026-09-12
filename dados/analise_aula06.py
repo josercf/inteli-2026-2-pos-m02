@@ -286,6 +286,63 @@ def pesos_do_modelo(features: list[str] | None = None) -> pd.DataFrame:
     return t.sort_values("peso_relativo", ascending=False)
 
 
+CAPACIDADE_OPERACIONAL = 138
+
+
+def escore(features: list[str] | None = None) -> pd.Series:
+    """Probabilidade prevista por conta, pela logística sobre as padronizadas."""
+    e = painel_de_features()
+    colunas = features or FEATURES_HONESTAS
+    bruto = e[colunas].to_numpy(dtype=float)
+    z = (bruto - bruto.mean(axis=0)) / bruto.std(axis=0)
+    X = np.column_stack([np.ones(len(z)), z])
+    beta = _logistica(X, e.churn.to_numpy(dtype=float))
+    return pd.Series(1 / (1 + np.exp(-np.clip(X @ beta, -500, 500))), index=e.index)
+
+
+def lista_priorizada(n: int = CAPACIDADE_OPERACIONAL) -> dict[str, float | int]:
+    """A matriz de confusão no ponto que a operação consegue atender.
+
+    O limiar de 0,5 que vem por padrão em qualquer biblioteca não tem relação
+    com a capacidade do time. Aqui o corte é o n-ésimo maior escore, e as
+    métricas saem desse ponto.
+    """
+    e = painel_de_features()
+    s = escore()
+    ordem = s.sort_values(ascending=False)
+    marcadas = set(ordem.index[:n])
+    previsto = e.index.isin(marcadas).astype(int)
+    real = e.churn.to_numpy(dtype=int)
+    vp = int(((previsto == 1) & (real == 1)).sum())
+    fp = int(((previsto == 1) & (real == 0)).sum())
+    fn = int(((previsto == 0) & (real == 1)).sum())
+    vn = int(((previsto == 0) & (real == 0)).sum())
+    return {
+        "n": n, "limiar": float(ordem.iloc[n - 1]),
+        "verdadeiros_positivos": vp, "falsos_positivos": fp,
+        "falsos_negativos": fn, "verdadeiros_negativos": vn,
+        "precisao": vp / (vp + fp), "revocacao": vp / (vp + fn),
+        "acuracia": (vp + vn) / len(e),
+        "prevalencia": real.mean(),
+    }
+
+
+def limiar_padrao() -> dict[str, float | int]:
+    """As mesmas métricas no limiar de 0,5, para comparar com o corte por
+    capacidade. É o número que uma biblioteca entrega sem ninguém pedir."""
+    e = painel_de_features()
+    previsto = (escore() >= 0.5).astype(int).to_numpy()
+    real = e.churn.to_numpy(dtype=int)
+    vp = int(((previsto == 1) & (real == 1)).sum())
+    fp = int(((previsto == 1) & (real == 0)).sum())
+    fn = int(((previsto == 0) & (real == 1)).sum())
+    vn = int(((previsto == 0) & (real == 0)).sum())
+    return {"marcadas": vp + fp, "verdadeiros_positivos": vp,
+            "falsos_positivos": fp, "falsos_negativos": fn,
+            "precisao": vp / (vp + fp), "revocacao": vp / (vp + fn),
+            "acuracia": (vp + vn) / len(e)}
+
+
 def qualidade_do_modelo(features: list[str] | None = None) -> dict[str, float]:
     """AUC do escore conjunto e a matriz que a capacidade operacional recorta.
 

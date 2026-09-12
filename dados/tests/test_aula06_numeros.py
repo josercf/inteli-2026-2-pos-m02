@@ -180,6 +180,47 @@ def test_a_recencia_e_a_unica_coluna_que_empurra_para_a_perda(a):
 
 
 # ---------------------------------------------------------------------------
+# O limiar de decisão
+# ---------------------------------------------------------------------------
+
+def test_a_lista_de_138_contas_acerta_105(a):
+    """O corte por capacidade operacional, medido na Aula 04."""
+    r = a.lista_priorizada()
+    assert r["n"] == 138
+    assert round(r["limiar"], 3) == 0.873
+    assert r["verdadeiros_positivos"] == 105
+    assert r["falsos_positivos"] == 33
+    assert r["falsos_negativos"] == 1488
+    assert r["verdadeiros_negativos"] == 2122
+    assert round(r["precisao"] * 100, 1) == 76.1
+    assert round(r["revocacao"] * 100, 1) == 6.6
+    assert round(r["acuracia"] * 100, 1) == 59.4
+
+
+def test_o_limiar_padrao_de_05_marca_1295_contas(a):
+    r = a.limiar_padrao()
+    assert r["marcadas"] == 1295
+    assert r["verdadeiros_positivos"] == 889
+    assert r["falsos_positivos"] == 406
+    assert round(r["precisao"] * 100, 1) == 68.6
+    assert round(r["revocacao"] * 100, 1) == 55.8
+    assert round(r["acuracia"] * 100, 1) == 70.4
+
+
+def test_marcar_conta_nenhuma_ja_entrega_575_de_acuracia(a):
+    """A linha de base que torna a acurácia inútil nesta população."""
+    p = a.particao_temporal()
+    assert round((1 - p["perdidas"] / p["contas"]) * 100, 1) == 57.5
+
+
+def test_a_fila_de_138_nao_alcanca_mais_que_87_por_cento_das_perdas(a):
+    """Mesmo um modelo perfeito bate no teto da capacidade. A revocação baixa
+    mede a fila, e não a qualidade do escore."""
+    p = a.particao_temporal()
+    assert round(138 / p["perdidas"] * 100, 1) == 8.7
+
+
+# ---------------------------------------------------------------------------
 # A variável de sequência
 # ---------------------------------------------------------------------------
 

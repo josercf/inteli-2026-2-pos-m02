@@ -30,26 +30,149 @@
     <nav class="doc-toc" aria-label="Sumário">
       <h2>Nesta página</h2>
       <ol>
-        <li><a href="#corte">1. Por que o corte cai em 2025-02</a></li>
-        <li><a href="#rfv">2. Recência, frequência e valor</a></li>
-        <li><a href="#sequencia">3. A variável de sequência</a></li>
-        <li><a href="#auc">4. Medir o que uma coluna vale sozinha</a></li>
-        <li><a href="#vazamento">5. O vazamento temporal, medido</a></li>
-        <li><a href="#perguntas">6. As três perguntas que reprovam uma coluna</a></li>
-        <li><a href="#peso">7. O peso de cada variável no modelo</a></li>
-        <li><a href="#qualidade">8. O que a AUC não diz</a></li>
-        <li><a href="#realimentacao">9. A realimentação do score</a></li>
-        <li><a href="#prompts">10. Os prompts das duas práticas</a></li>
-        <li><a href="#base-longa">11. O que muda com a base de cinco anos</a></li>
-        <li><a href="#leitura">12. Leitura complementar e referências</a></li>
+        <li><a href="#engenharia">1. O que é engenharia de feature</a></li>
+        <li><a href="#corte">2. Por que o corte cai em 2025-02</a></li>
+        <li><a href="#rfv">3. Recência, frequência e valor</a></li>
+        <li><a href="#sequencia">4. A variável de sequência</a></li>
+        <li><a href="#auc">5. Medir o que uma coluna vale sozinha</a></li>
+        <li><a href="#vazamento">6. O vazamento temporal, medido</a></li>
+        <li><a href="#perguntas">7. As três perguntas que reprovam uma coluna</a></li>
+        <li><a href="#peso">8. O peso de cada variável no modelo</a></li>
+        <li><a href="#qualidade">9. Medidas de qualidade, uma a uma</a></li>
+        <li><a href="#limiar">10. O limiar de decisão e a lista de trabalho</a></li>
+        <li><a href="#realimentacao">11. A realimentação do score</a></li>
+        <li><a href="#prompts">12. Os prompts das duas práticas</a></li>
+        <li><a href="#base-longa">13. O que muda com a base de cinco anos</a></li>
+        <li><a href="#leitura">14. Leitura complementar e referências</a></li>
       </ol>
     </nav>
 
     <main class="doc-conteudo">
 
       <!-- ================================================================= -->
+      <section class="doc-secao" id="engenharia">
+        <h2>1. O que é engenharia de feature</h2>
+
+        <p>Engenharia de feature é o trabalho de converter o registro de eventos em medidas por
+        unidade de decisão, dentro de uma janela de tempo declarada. As três partes dessa frase
+        carregam peso igual, e vale destrinchar cada uma antes de escrever qualquer linha de
+        código.</p>
+
+        <p><strong>Registro de eventos</strong> é o formato em que o dado nasce. A base da Kovan
+        <a href="#r2">[2]</a> traz 207.826 itens de pedido, cada um com data, conta, marca e valor,
+        mais um painel mensal com 24.071 linhas. Nenhum dos dois formatos serve de entrada para um
+        classificador, porque a mesma conta aparece em dezenas de linhas.</p>
+
+        <p><strong>Unidade de decisão</strong> é o grão em que alguém age. Na Kovan é a conta,
+        porque é sobre a conta que o Account Manager abre uma conversa. Se a decisão fosse sobre
+        qual linha de produto empurrar, a unidade seria o par conta e marca, e a tabela inteira
+        mudaria de forma. A unidade de decisão vem do problema de negócio, e não do dado
+        disponível.</p>
+
+        <p><strong>Janela de tempo declarada</strong> é o que separa esta aula de um exercício de
+        agregação. Toda medida precisa dizer de qual período ela fala, e esse período precisa
+        terminar antes do que se quer prever. A seção 2 mostra de onde sai a data, e a seção 6
+        mede o que acontece quando ela é ignorada.</p>
+
+        <h3>A esteira, em seis passos</h3>
+
+        <p>O caminho que o dado percorre é sempre o mesmo, e conhecê-lo ajuda a localizar onde um
+        erro entrou.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Passo</th><th>O que acontece</th><th>Na Kovan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1. Evento</td><td>o registro cru, uma linha por acontecimento</td><td>207.826 itens de pedido</td></tr>
+              <tr><td>2. Corte</td><td>descarta o que é posterior ao instante da previsão</td><td>tudo até 2025-02</td></tr>
+              <tr><td>3. Agregação</td><td>contar, somar, comparar e datar por unidade</td><td>por <code>account_id</code></td></tr>
+              <tr><td>4. Coluna</td><td>cada agregação vira uma medida com nome e fórmula</td><td>as sete da seção 3</td></tr>
+              <tr><td>5. Matriz</td><td>uma linha por unidade, uma coluna por medida</td><td>3.748 por 7</td></tr>
+              <tr><td>6. Escore</td><td>o modelo lê a linha e devolve uma probabilidade</td><td>assunto da tarde</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>O que precisa estar fixado antes de começar</h3>
+
+        <p>Duas pessoas podem construir tabelas completamente diferentes a partir do mesmo dataset,
+        e nenhuma das duas estar errada, porque estão respondendo a perguntas diferentes sem ter
+        percebido. Cinco itens eliminam essa ambiguidade.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Item</th><th>Pergunta que ele responde</th><th>Na Kovan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Unidade de decisão</td><td>uma linha da tabela é o quê?</td><td>a conta</td></tr>
+              <tr><td>Instante da previsão</td><td>o que já se sabia quando a decisão foi tomada?</td><td>2025-02</td></tr>
+              <tr><td>Horizonte</td><td>prever o quê, em quanto tempo?</td><td>os 13 meses seguintes</td></tr>
+              <tr><td>População</td><td>quem entra na conta e quem fica fora?</td><td>3.748 elegíveis</td></tr>
+              <tr><td>Uso da saída</td><td>o que alguém faz com o número?</td><td>uma lista de 138 por ciclo</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Os cinco vieram das Aulas 03 e 04 e do business case <a href="#r1">[1]</a>. Nenhum deles
+        é escolha da manhã de hoje. O que a manhã faz é construir colunas em cima deles.</p>
+
+        <h3>As quatro dificuldades</h3>
+
+        <p><strong>Tempo.</strong> A coluna pode ler informação que ainda não existia no instante
+        da previsão. Esta é a dificuldade que domina a aula, porque ela melhora a métrica e piora o
+        modelo ao mesmo tempo, o que a torna invisível para quem só olha o resultado.</p>
+
+        <p><strong>Grão.</strong> O dado chega em três grãos diferentes na base da Kovan: item de
+        pedido, mês por conta e conta. Agregar a partir do grão errado inventa ou apaga
+        comportamento. Contar pedidos a partir do painel mensal, por exemplo, perde a informação de
+        quantos dias distintos a conta comprou dentro do mês.</p>
+
+        <p><strong>Ausência.</strong> Conta que não comprou não gera linha nenhuma em lugar nenhum.
+        O silêncio precisa virar número de forma explícita, e é exatamente isso que a recência faz.
+        Este é o ponto que a Aula 01 já havia levantado, quando o case observa que a ausência de
+        compra é a falta de um registro, e não um registro de valor zero.</p>
+
+        <p><strong>Escala.</strong> Receita em dólar, contagem de marcas e meses de recência
+        convivem na mesma linha, com ordens de grandeza que diferem por milhares. Comparar peso
+        entre colunas exige padronizar antes, como a seção 8 detalha.</p>
+
+        <h3>O catálogo de técnicas</h3>
+
+        <p>Seis técnicas cobrem as sete colunas desta aula. Elas se repetem em praticamente
+        qualquer problema de propensão sobre base transacional.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Técnica</th><th>O que produz</th><th>Cuidado principal</th><th>Coluna</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Agregação</td><td>soma, média ou contagem por unidade</td><td>escala varia com o tamanho da conta</td><td><code>valor_obs</code></td></tr>
+              <tr><td>Contagem distinta</td><td>variedade de um atributo dentro da unidade</td><td>cresce com o tempo de relacionamento</td><td><code>marcas_obs</code>, <code>freq_dias</code></td></tr>
+              <tr><td>Recência</td><td>distância em tempo até a referência</td><td>a data de referência decide se ela vaza</td><td><code>recencia_corte</code></td></tr>
+              <tr><td>Janela móvel</td><td>a mesma agregação em recortes de tempo</td><td>janela curta demais vira ruído</td><td><code>receita_3m</code></td></tr>
+              <tr><td>Razão entre janelas</td><td>tendência independente do tamanho</td><td>denominador zero e valores extremos</td><td><code>razao_3m</code></td></tr>
+              <tr><td>Padronização</td><td>escalas diferentes na mesma régua</td><td>média e desvio saem do treino, nunca do teste</td><td>entrada da regressão</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Duas técnicas ficam de fora hoje e entram na tarde, quando segmento, setor e região
+        virarem entrada: a codificação de variável categórica em colunas numéricas e a
+        discretização de variável contínua em faixas. As duas trazem armadilhas próprias, e a
+        principal delas é que ambas podem carregar o rótulo para dentro da coluna quando a
+        codificação é calculada usando a média do alvo por categoria.</p>
+
+        <p>Toda técnica desta lista precisa receber a data de corte como argumento. Sem esse
+        parâmetro, qualquer uma delas vaza, e a próxima seção explica por quê.</p>
+      </section>
+
+      <!-- ================================================================= -->
       <section class="doc-secao" id="corte">
-        <h2>1. Por que o corte cai em 2025-02</h2>
+        <h2>2. Por que o corte cai em 2025-02</h2>
 
         <p>A Aula 03 recuperou da base oficial <a href="#r2">[2]</a> o critério do
         <code>churn_label</code>: a conta cuja última compra aconteceu até 08/02/2025 está marcada
@@ -92,7 +215,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="rfv">
-        <h2>2. Recência, frequência e valor</h2>
+        <h2>3. Recência, frequência e valor</h2>
 
         <p>As três famílias vêm da tradição de análise de carteira que Hughes <a href="#r6">[6]</a>
         popularizou sob a sigla RFM, em 1994, para segmentação de base de clientes em marketing
@@ -104,7 +227,7 @@
         de referência. É a única das três que depende inteiramente de qual data de referência se
         escolhe, e é por isso que ela é ao mesmo tempo a coluna mais forte da tabela e a mais
         perigosa. Calculada com referência em 2025-02, ela é uma coluna de entrada legítima.
-        Calculada com referência em 2026-03, ela reconstrói o rótulo, como a seção 5 mede.</p>
+        Calculada com referência em 2026-03, ela reconstrói o rótulo, como a seção 6 mede.</p>
 
         <p><strong>Frequência</strong> aparece em duas versões, porque elas respondem a perguntas
         diferentes. <code>freq_meses</code> conta quantos meses distintos da janela tiveram
@@ -123,7 +246,7 @@
         numérica.</p>
 
         <p>A tabela abaixo reúne as sete colunas com a fórmula de cada uma e o que ela vale
-        sozinha, medido como descrito na seção 4.</p>
+        sozinha, medido como descrito na seção 5.</p>
 
         <div class="doc-tabela-rolagem">
           <table class="doc-tabela">
@@ -152,7 +275,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="sequencia">
-        <h2>3. A variável de sequência</h2>
+        <h2>4. A variável de sequência</h2>
 
         <p>Recência, frequência e valor descrevem o estado da conta ao fim da janela. Nenhuma das
         três descreve o caminho até esse estado. Duas contas podem chegar a 2025-02 com a mesma
@@ -203,7 +326,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="auc">
-        <h2>4. Medir o que uma coluna vale sozinha</h2>
+        <h2>5. Medir o que uma coluna vale sozinha</h2>
 
         <p>Antes de treinar qualquer modelo, é útil saber o que cada coluna candidata vale por
         conta própria. A medida usada aqui é a AUC, a área sob a curva ROC, que responde a uma
@@ -230,7 +353,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="vazamento">
-        <h2>5. O vazamento temporal, medido</h2>
+        <h2>6. O vazamento temporal, medido</h2>
 
         <p>Kaufman e colegas <a href="#r3">[3]</a> formalizaram, em 2012, o vocabulário de
         vazamento em mineração de dados. A forma que interessa nesta aula é a temporal: usar, como
@@ -274,7 +397,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="perguntas">
-        <h2>6. As três perguntas que reprovam uma coluna</h2>
+        <h2>7. As três perguntas que reprovam uma coluna</h2>
 
         <p>Medir a AUC dos dois lados do corte funciona quando alguém já desconfia da coluna. Para
         o trabalho de rotina, o que serve é uma checagem barata aplicada a toda candidata, antes de
@@ -304,7 +427,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="peso">
-        <h2>7. O peso de cada variável no modelo</h2>
+        <h2>8. O peso de cada variável no modelo</h2>
 
         <p>Saber o que cada coluna vale sozinha não diz quanto ela contribui quando todas entram
         juntas. Para isso, as sete colunas foram padronizadas, subtraindo a média e dividindo pelo
@@ -361,11 +484,114 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="qualidade">
-        <h2>8. O que a AUC não diz</h2>
+        <h2>9. Medidas de qualidade, uma a uma</h2>
 
-        <p>O escore combinado das sete colunas honestas atinge AUC de 0,794 sobre as 3.748 contas.
-        Acrescentando a recência do fim do painel como oitava coluna, o mesmo procedimento chega a
-        0,995, uma subida de 0,201.</p>
+        <p>Um classificador devolve uma probabilidade por conta. Para virar decisão, essa
+        probabilidade precisa de um ponto de corte, e a partir dele cada conta cai em uma de quatro
+        caixas. Essas quatro caixas formam a matriz de confusão, e toda medida de qualidade desta
+        seção sai delas.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th></th><th>Realmente perdida</th><th>Realmente mantida</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Marcada pelo modelo</strong></td><td>verdadeiro positivo (VP)</td><td>falso positivo (FP)</td></tr>
+              <tr><td><strong>Não marcada</strong></td><td>falso negativo (FN)</td><td>verdadeiro negativo (VN)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Na Kovan, o custo das duas caixas de erro é assimétrico e conhecido. Um falso positivo
+        gasta uma hora de Account Manager com uma conta que ficaria de qualquer jeito. Um falso
+        negativo deixa passar uma conta que a empresa vai perder. O business case
+        <a href="#r1">[1]</a> descreve os dois custos, e é essa assimetria que decide qual das
+        medidas abaixo importa mais.</p>
+
+        <h3>Acurácia</h3>
+
+        <p>Proporção de acertos sobre o total, ou seja, VP mais VN dividido por tudo. Responde à
+        pergunta mais óbvia e é a medida que mais engana em problema desbalanceado.</p>
+
+        <p>A demonstração é direta. A prevalência de perda na população elegível é de 42,5%. Um
+        modelo que não marque conta nenhuma acerta todas as mantidas e erra todas as perdidas,
+        chegando a 57,5% de acurácia sem fazer nada. Qualquer acurácia próxima disso está
+        empatando com um modelo que devolve sempre a mesma resposta.</p>
+
+        <h3>Precisão</h3>
+
+        <p>Entre as contas que o modelo marcou, quantas eram de fato perdidas, ou seja, VP dividido
+        por VP mais FP. É a medida que o time comercial sente na pele, porque ela descreve quanto
+        do esforço da semana foi gasto em conta que não precisava de intervenção.</p>
+
+        <h3>Revocação</h3>
+
+        <p>Entre as contas realmente perdidas, quantas o modelo conseguiu marcar, ou seja, VP
+        dividido por VP mais FN. Também chamada de sensibilidade. É a medida que o Comitê de
+        Receita sente, porque ela descreve quanto da perda o processo consegue enxergar a tempo.</p>
+
+        <p>Precisão e revocação se movem em direções opostas conforme o ponto de corte anda. Baixar
+        o corte marca mais contas, o que sobe a revocação e derruba a precisão. A seção 10 mostra
+        esse efeito com os números desta carteira.</p>
+
+        <h3>Especificidade e F1</h3>
+
+        <p>Especificidade é a revocação vista pelo outro lado: entre as contas realmente mantidas,
+        quantas o modelo deixou em paz. F1 é a média harmônica entre precisão e revocação, e serve
+        para resumir as duas em um número quando não há razão para preferir uma delas. Na Kovan há
+        razão para preferir, porque a capacidade de atendimento é fixa, então F1 tem menos utilidade
+        aqui do que a precisão medida no ponto que a operação consegue atender.</p>
+
+        <h3>AUC-ROC</h3>
+
+        <p>A curva ROC percorre todos os pontos de corte possíveis e desenha, para cada um, a
+        revocação contra a taxa de falso positivo. A área sob essa curva resume o quanto o escore
+        ordena a carteira, sem depender de nenhum corte específico. É a medida usada nas seções 5 e
+        6 desta página, e Hanley e McNeil <a href="#r8">[8]</a> são a referência clássica dela.</p>
+
+        <p>A leitura prática da AUC é a mais útil: tomando uma conta perdida e uma mantida ao
+        acaso, é a chance de a perdida receber o escore maior. Uma AUC de 0,794, que é a do escore
+        honesto desta aula, quer dizer que em quase 8 de cada 10 pares o modelo coloca a conta certa
+        na frente.</p>
+
+        <h3>AUC-PR</h3>
+
+        <p>A curva de precisão contra revocação resume a mesma informação de outro jeito, e
+        Saito e Rehmsmeier <a href="#r9">[9]</a> mostraram que ela é mais informativa que a ROC
+        quando a classe de interesse é rara, porque a taxa de falso positivo da ROC tem um
+        denominador grande que esconde erro. Na população elegível, com 42,5% de prevalência, as
+        duas contam histórias parecidas. Na carteira inteira, com 19,2%, a diferença já aparece, e
+        num alvo mais raro ela seria decisiva.</p>
+
+        <h3>Resumo</h3>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Medida</th><th>Pergunta que responde</th><th>Quando engana</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Acurácia</td><td>que fração do total eu acertei?</td><td>sempre que uma classe é bem maior que a outra</td></tr>
+              <tr><td>Precisão</td><td>do que marquei, quanto valeu a pena?</td><td>sobe artificialmente quando se marca pouquíssima coisa</td></tr>
+              <tr><td>Revocação</td><td>do que existia, quanto eu peguei?</td><td>chega a 100% marcando a carteira inteira</td></tr>
+              <tr><td>F1</td><td>como equilibrar as duas anteriores?</td><td>quando há motivo claro para preferir uma delas</td></tr>
+              <tr><td>AUC-ROC</td><td>o escore ordena bem a carteira?</td><td>não diz nada sobre o ponto de corte nem sobre calibração</td></tr>
+              <tr><td>AUC-PR</td><td>o mesmo, com foco na classe rara</td><td>mais difícil de comparar entre populações de prevalência diferente</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>O que estes números não são</h3>
+
+        <p>Todos eles foram medidos sobre a mesma população usada para ajustar o modelo, sem
+        separação entre treino e teste, e portanto são otimistas. A avaliação honesta, com partição
+        de dados e intervalo de confiança da métrica, é o assunto da tarde. O que estes valores
+        estabelecem aqui é uma régua para comparar duas listas de features entre si.</p>
+
+        <p>A comparação que interessa é esta. O escore das sete colunas honestas atinge AUC de
+        0,794 sobre as 3.748 contas. Acrescentando a recência do fim do painel como oitava coluna,
+        o mesmo procedimento chega a 0,995, uma subida de 0,201.</p>
 
         <div class="doc-tabela-rolagem">
           <table class="doc-tabela">
@@ -383,22 +609,57 @@
         vale zero, porque no instante em que o Account Manager precisa da lista a recência do fim do
         painel ainda não existe. A pergunta que separa as duas linhas é se a coluna está disponível
         no momento da previsão, e o ganho de métrica não tem peso nenhum nessa decisão.</p>
+      </section>
 
-        <p>Vale registrar o que estes números não são. Eles foram medidos sobre a mesma população
-        usada no ajuste, sem separação entre treino e teste, e portanto são otimistas. A avaliação
-        honesta, com partição de dados, matriz de confusão e intervalo de confiança da métrica, é o
-        assunto da tarde. O que a AUC de 0,794 estabelece aqui é uma régua para comparar duas listas
-        de features entre si, e é só para isso que ela é usada nesta seção.</p>
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="limiar">
+        <h2>10. O limiar de decisão e a lista de trabalho</h2>
 
-        <p>A AUC também não diz nada sobre o limiar de decisão. Ela resume o quanto o escore ordena
-        a carteira, e uma carteira bem ordenada ainda precisa de um ponto de corte para virar lista
-        de trabalho. Na Kovan esse ponto sai da capacidade operacional de 138 contas por ciclo
-        medida na Aula 04, e não do 0,5 que vem por padrão em qualquer biblioteca.</p>
+        <p>Nenhuma das medidas da seção anterior existe sem um ponto de corte, e o corte que vem
+        por padrão em qualquer biblioteca é 0,5. Esse número não tem relação nenhuma com a operação
+        da Kovan. A Aula 04 mediu a capacidade do time em 138 contas por ciclo, e é dela que o
+        corte precisa sair.</p>
+
+        <p>A tabela abaixo aplica o mesmo escore de sete colunas nos dois cortes.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Corte</th><th>Contas marcadas</th><th>Precisão</th><th>Revocação</th><th>Acurácia</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Limiar de 0,5</td><td>1.295</td><td>68,6%</td><td>55,8%</td><td>70,4%</td></tr>
+              <tr><td>Capacidade de 138 contas</td><td>138</td><td>76,1%</td><td>6,6%</td><td>59,4%</td></tr>
+              <tr><td>Marcar conta nenhuma</td><td>0</td><td>indefinida</td><td>0,0%</td><td>57,5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>O corte por capacidade cai em um escore de 0,873, e produz 105 verdadeiros positivos
+        contra 33 falsos positivos. Três leituras saem daí.</p>
+
+        <p>A primeira é que a precisão sobe quando o corte fica mais exigente. Das 138 contas que a
+        semana comporta, 105 estavam de fato a caminho da perda, uma precisão de 76,1%. O time gasta
+        três em cada quatro conversas com quem precisava mesmo da conversa.</p>
+
+        <p>A segunda é que a revocação de 6,6% parece um desastre e não é resultado de modelo
+        fraco. Existem 1.593 contas perdidas e cabem 138 na fila. Mesmo um modelo perfeito
+        alcançaria no máximo 8,7% delas nesse ciclo. O gargalo está na capacidade, e o número que o
+        Comitê precisa ver é justamente esse.</p>
+
+        <p>A terceira é sobre acurácia. O corte por capacidade entrega 59,4%, quase empatado com os
+        57,5% de marcar conta nenhuma, e mesmo assim é a configuração mais útil das três. Uma
+        medida que classifica como quase equivalentes a melhor e a pior política não serve para
+        escolher entre elas.</p>
+
+        <p>O limiar é decisão de negócio, e a forma correta de apresentá-lo ao Comitê é como uma
+        curva: para cada tamanho de fila, quantas perdas o processo alcança e quanto esforço é
+        gasto com quem ficaria de qualquer jeito. A construção dessa curva é trabalho da tarde.</p>
       </section>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="realimentacao">
-        <h2>9. A realimentação do score</h2>
+        <h2>11. A realimentação do score</h2>
 
         <p>Há um tipo de vazamento que nenhuma das três perguntas pega na primeira rodada, porque
         ele só nasce depois que o modelo entra em operação.</p>
@@ -423,7 +684,7 @@
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="prompts">
-        <h2>10. Os prompts das duas práticas</h2>
+        <h2>12. Os prompts das duas práticas</h2>
 
         <p>As duas práticas rodam no Gemini sobre a pasta clonada do repositório de trabalho da
         turma <a href="#r7">[7]</a>. Os prompts abaixo são os mesmos que aparecem no deck, e estão
@@ -467,12 +728,12 @@ oitava coluna que respeite o corte e calcule a AUC dela.</code></pre>
         painel mensal pelo corte e esquecer de aplicar o mesmo filtro na tabela de pedidos.</p>
 
         <p>Se a oitava coluna proposta pelo modelo passar de 0,90 de AUC, ela está vazando. Volte
-        às três perguntas da seção 6 antes de aceitá-la.</p>
+        às três perguntas da seção 7 antes de aceitá-la.</p>
       </section>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="base-longa">
-        <h2>11. O que muda com a base de cinco anos</h2>
+        <h2>13. O que muda com a base de cinco anos</h2>
 
         <p>Uma base mais longa da carteira, com 65 meses de painel em vez de 24, chegou ao curso em
         12/09/2026. Todo número desta página vem da base de 24 meses <a href="#r2">[2]</a>, e a
@@ -495,7 +756,7 @@ oitava coluna que respeite o corte e calcule a AUC dela.</code></pre>
 
       <!-- ================================================================= -->
       <section class="doc-secao" id="leitura">
-        <h2>12. Leitura complementar e referências</h2>
+        <h2>14. Leitura complementar e referências</h2>
 
         <p>Hughes <a href="#r6">[6]</a> é a origem prática da tríade recência, frequência e valor,
         e vale a leitura para entender que ela nasceu como ferramenta de segmentação manual, antes
@@ -503,8 +764,8 @@ oitava coluna que respeite o corte e calcule a AUC dela.</code></pre>
         referência mais completa sobre vazamento, com um catálogo de casos reais em competições
         públicas que é útil como lista de verificação. Hosmer e Lemeshow <a href="#r4">[4]</a>
         cobrem a interpretação de coeficiente e de razão de chances em regressão logística, que é o
-        conteúdo da seção 7 em profundidade. Hanley e McNeil <a href="#r8">[8]</a> e Mann e Whitney
-        <a href="#r5">[5]</a> sustentam o método de medição da seção 4.</p>
+        conteúdo da seção 8 em profundidade. Hanley e McNeil <a href="#r8">[8]</a> e Mann e Whitney
+        <a href="#r5">[5]</a> sustentam o método de medição da seção 5. Saito e Rehmsmeier <a href="#r9">[9]</a> explicam quando a curva de precisão contra revocação diz mais que a ROC.</p>
 
         <p>Sobre o que é citável e o que é construção deste módulo: o corte em 2025-02, as três
         perguntas de vazamento e a tabela de sete colunas foram organizados para esta trilha. Os
@@ -523,7 +784,7 @@ oitava coluna que respeite o corte e calcule a AUC dela.</code></pre>
           Data</em>, v. 6, n. 4, 2012. O vocabulário de vazamento usado nas seções 5 e 6.</li>
           <li id="r4">Hosmer, D. W.; Lemeshow, S.; Sturdivant, R. X. <em>Applied Logistic
           Regression</em>. 3. ed. Wiley, 2013. A interpretação de coeficiente e de razão de
-          chances da seção 7.</li>
+          chances da seção 8.</li>
           <li id="r5">Mann, H. B.; Whitney, D. R. On a Test of Whether One of Two Random Variables
           is Stochastically Larger than the Other. <em>Annals of Mathematical Statistics</em>,
           v. 18, n. 1, p. 50-60, 1947. A estatística usada para calcular a AUC isolada.</li>
@@ -535,6 +796,10 @@ oitava coluna que respeite o corte e calcule a AUC dela.</code></pre>
           <li id="r8">Hanley, J. A.; McNeil, B. J. The Meaning and Use of the Area under a Receiver
           Operating Characteristic (ROC) Curve. <em>Radiology</em>, v. 143, n. 1, p. 29-36, 1982. A
           equivalência entre a área sob a curva ROC e a estatística de Mann-Whitney.</li>
+          <li id="r9">Saito, T.; Rehmsmeier, M. The Precision-Recall Plot Is More Informative
+          than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets.
+          <em>PLoS ONE</em>, v. 10, n. 3, 2015. A comparação entre as duas curvas usada na
+          seção 9.</li>
         </ol>
       </section>
 

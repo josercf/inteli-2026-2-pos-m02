@@ -657,7 +657,7 @@
           <p class="linha-contexto">Números redondos: dez iam cancelar, o modelo alertou vinte e acertou oito.</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-             class="matriz-confusao" role="img" aria-label="Exemplo de 100 clientes: acurácia 86,0%, precisão 40,0% e recall 80,0%">
+             class="diagrama-aula06" role="img" aria-label="Exemplo de 100 clientes: acurácia 86,0%, precisão 40,0% e recall 80,0%">
           <text class="eixo" x="200" y="26">O QUE ACONTECEU COM OS 100 CLIENTES</text>
           <text class="cabecalho" x="302" y="60" text-anchor="middle">Cancelaram (10)</text>
           <text class="cabecalho" x="520" y="60" text-anchor="middle">Continuaram (90)</text>
@@ -741,7 +741,7 @@
           <p class="linha-contexto">Pergunta que ela responde: que fração de todas as contas eu classifiquei bem?</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-             class="matriz-confusao" role="img" aria-label="Acurácia: as duas caixas de acerto sobre as quatro, 77,0%">
+             class="diagrama-aula06" role="img" aria-label="Acurácia: as duas caixas de acerto sobre as quatro, 77,0%">
           <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
           <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
           <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>
@@ -817,7 +817,7 @@
           <p class="linha-contexto">Pergunta que ela responde: do esforço que o time vai gastar, quanto vale a pena?</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-             class="matriz-confusao" role="img" aria-label="Precisão: acertos sobre tudo que o modelo marcou, 75,8%">
+             class="diagrama-aula06" role="img" aria-label="Precisão: acertos sobre tudo que o modelo marcou, 75,8%">
           <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
           <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
           <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>
@@ -890,7 +890,7 @@
           <p class="linha-contexto">Também chamada de recall ou sensibilidade. Pergunta que ela responde: da perda que existiu, quanto o processo conseguiu enxergar?</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-             class="matriz-confusao" role="img" aria-label="Revocação: acertos sobre todas as perdas reais, 82,2%">
+             class="diagrama-aula06" role="img" aria-label="Revocação: acertos sobre todas as perdas reais, 82,2%">
           <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
           <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
           <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>
@@ -963,7 +963,7 @@
           <p class="linha-contexto">F1 é a média harmônica entre precisão e revocação, e ela pune desequilíbrio.</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-             class="matriz-confusao" role="img" aria-label="F1: 78,9% no limiar de 0,5 e 8,8% na fila de 138">
+             class="diagrama-aula06" role="img" aria-label="F1: 78,9% no limiar de 0,5 e 8,8% na fila de 138">
           <text class="eixo" x="16" y="24">LIMIAR DE 0,5</text>
           <g class="fragment">
             <text class="barra-rotulo" x="290" y="54" text-anchor="end">Precisão</text>
@@ -1156,6 +1156,342 @@
         </div>
       </section>
 
+      <section class="section-slide">
+        <p class="secao-numero">06</p>
+        <div class="accent-bar"></div>
+        <h2>Hiperparâmetros</h2>
+        <h3>O que você escolhe antes de o ajuste começar</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Entra antes do dado</div>
+          <div><span class="num">02</span>A validação corrige</div>
+          <div><span class="num">03</span>Vale menos que a tabela</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O hiperparâmetro entra antes do ajuste, e a validação o corrige</h2>
+          <p class="linha-contexto">Os 8 coeficientes da tabela de pesos saíram do ajuste. A força da regularização entrou antes dele, escolhida à mão.</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="diagrama-aula06" role="img" aria-label="Onde o hiperparâmetro entra: ele é escolhido antes do ajuste, e a validação diz se a escolha foi boa">
+          <defs>
+            <marker id="ponta-hiper" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path class="ponta" d="M 0 0 L 10 5 L 0 10 z"/>
+            </marker>
+          </defs>
+          <g class="fluxo fragment" data-fragment-index="1">
+            <rect x="0" y="30" width="236" height="84" rx="10"/>
+            <text class="fluxo-marca" x="14" y="52">VEM DO DADO</text>
+            <text class="fluxo-titulo" x="14" y="76">Tabela de treino</text>
+            <text class="fluxo-apoio" x="14" y="98">3.295 contas</text>
+            <text class="fluxo-apoio" x="14" y="116">8 colunas fechadas em 2024-03</text>
+          </g>
+          <g class="fluxo fragment escolhido" data-fragment-index="2">
+            <rect x="0" y="150" width="236" height="84" rx="10"/>
+            <text class="fluxo-marca" x="14" y="172">VOCÊ ESCOLHE</text>
+            <text class="fluxo-titulo" x="14" y="196">Hiperparâmetros</text>
+            <text class="fluxo-apoio" x="14" y="218">força da regularização,</text>
+            <text class="fluxo-apoio" x="14" y="236">profundidade da árvore</text>
+          </g>
+          <path class="seta fragment" data-fragment-index="3" d="M 240 72 L 316 110" marker-end="url(#ponta-hiper)"/>
+          <path class="seta fragment" data-fragment-index="3" d="M 240 192 L 316 154" marker-end="url(#ponta-hiper)"/>
+          <g class="fluxo fragment" data-fragment-index="3">
+            <rect x="320" y="92" width="168" height="84" rx="10"/>
+            <text class="fluxo-titulo" x="334" y="124">Ajuste</text>
+            <text class="fluxo-apoio" x="334" y="146">o algoritmo roda</text>
+          </g>
+          <path class="seta fragment" data-fragment-index="4" d="M 492 134 L 556 134" marker-end="url(#ponta-hiper)"/>
+          <g class="fluxo fragment" data-fragment-index="4">
+            <rect x="560" y="92" width="236" height="84" rx="10"/>
+            <text class="fluxo-marca" x="574" y="114">O MODELO APRENDE</text>
+            <text class="fluxo-titulo" x="574" y="138">Parâmetros</text>
+            <text class="fluxo-apoio" x="574" y="160">8 coeficientes e o intercepto</text>
+            <text class="fluxo-apoio" x="574" y="178">saem do ajuste</text>
+          </g>
+          <path class="seta fragment" data-fragment-index="5" d="M 800 134 L 864 134" marker-end="url(#ponta-hiper)"/>
+          <g class="fluxo fragment" data-fragment-index="5">
+            <rect x="868" y="92" width="236" height="84" rx="10"/>
+            <text class="fluxo-titulo" x="882" y="124">Escore por conta</text>
+            <text class="fluxo-apoio" x="882" y="146">probabilidade entre 0 e 1</text>
+          </g>
+          <g class="fluxo fragment" data-fragment-index="6">
+            <rect x="868" y="206" width="236" height="62" rx="10"/>
+            <text class="fluxo-titulo" x="882" y="238">Validação</text>
+            <text class="fluxo-apoio" x="882" y="260">1.413 contas separadas</text>
+          </g>
+          <path class="seta fragment" data-fragment-index="6" d="M 986 180 L 986 202" marker-end="url(#ponta-hiper)"/>
+          <path class="seta retorno fragment" data-fragment-index="7" d="M 866 240 C 866 300 240 260 240 200" marker-end="url(#ponta-hiper)"/>
+          <text class="fluxo-apoio fragment" data-fragment-index="7" x="553" y="292" text-anchor="middle">a validação diz qual botão girar, e o ciclo recomeça</text>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Nenhum hiperparâmetro é lido do dado. Cada um é uma decisão sua, e a validação é o único juiz dela.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">29</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O piloto automático dirige, e você regula antes de ligar</h2>
+          <p class="linha-contexto">Ninguém digita o ângulo do volante a cada instante. Você regula o comportamento e o piloto executa.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>No carro</th><th>No modelo</th><th>Quem define</th></tr></thead>
+          <tbody>
+            <tr><td>Velocidade de cruzeiro e distância do carro da frente</td><td>hiperparâmetro</td><td>você, antes de ligar</td></tr>
+            <tr><td>Cada micro-correção de volante durante a viagem</td><td>parâmetro</td><td>o algoritmo, durante o ajuste</td></tr>
+            <tr><td>Rodar num trecho que você não usou para regular</td><td>validação</td><td>a régua que aprova a regulagem</td></tr>
+            <tr><td>Regular para uma pista e ir mal em qualquer outra</td><td>sobreajuste</td><td>o que a validação denuncia</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Regular e aprovar no mesmo trecho de estrada é a versão automotiva do vazamento.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">30</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Os hiperparâmetros do XGBoost, um a um</h2>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Hiperparâmetro</th><th>O que controla</th><th>No carro</th><th>Se exagerar</th></tr></thead>
+          <tbody>
+            <tr class="destaque"><td><code>learning_rate</code></td><td>tamanho de cada correção</td><td>quanto o volante gira por vez</td><td>alto serpenteia</td></tr>
+            <tr><td><code>n_estimators</code></td><td>quantas árvores somam</td><td>quantas correções na viagem</td><td>poucas não chegam</td></tr>
+            <tr><td><code>max_depth</code></td><td>perguntas encadeadas</td><td>sensores olhados antes de agir</td><td>funda decora conta a conta</td></tr>
+            <tr><td><code>min_child_weight</code></td><td>menor grupo que vira regra</td><td>ignorar caso isolado</td><td>baixo vira regra de uma conta</td></tr>
+            <tr><td><code>subsample</code> e <code>colsample</code></td><td>fração de linhas e colunas</td><td>não olhar sempre o mesmo sensor</td><td>baixo joga sinal fora</td></tr>
+            <tr><td><code>reg_lambda</code></td><td>quanto os pesos crescem</td><td>limite de esterço</td><td>alto achata tudo</td></tr>
+            <tr><td><code>scale_pos_weight</code></td><td>custo de errar a classe rara</td><td>frear ao menor sinal</td><td>alto marca a carteira</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Passo menor exige mais árvores. Use early stopping em vez de fixar as duas no olho.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">31</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Subajuste e sobreajuste</h2>
+          <p class="linha-contexto">O botão do hiperparâmetro anda no eixo horizontal deste esquema.</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="diagrama-aula06" role="img" aria-label="Esquema de subajuste e sobreajuste: o erro de treino cai sempre e o de validação volta a subir">
+          <path class="eixo-linha" d="M 150 46 L 150 244 L 794 244"/>
+          <text class="eixo" x="138" y="56" text-anchor="end">ERRO</text>
+          <text class="eixo" x="150" y="268">MODELO MAIS SIMPLES</text>
+          <text class="eixo" x="794" y="268" text-anchor="end">MODELO MAIS COMPLEXO</text>
+          <g class="fragment" data-fragment-index="1">
+            <path class="curva treino" d="M 150.0 73.6 L 165.8 80.9 L 181.5 86.3 L 197.2 91.2 L 213.0 95.7 L 228.8 100.0 L 244.5 104.2 L 260.2 108.2 L 276.0 112.1 L 291.8 115.9 L 307.5 119.6 L 323.2 123.2 L 339.0 126.8 L 354.8 130.3 L 370.5 133.8 L 386.2 137.2 L 402.0 140.6 L 417.8 143.9 L 433.5 147.2 L 449.2 150.4 L 465.0 153.7 L 480.8 156.9 L 496.5 160.0 L 512.2 163.1 L 528.0 166.2 L 543.8 169.3 L 559.5 172.4 L 575.2 175.4 L 591.0 178.4 L 606.8 181.4 L 622.5 184.3 L 638.2 187.3 L 654.0 190.2 L 669.8 193.1 L 685.5 196.0 L 701.2 198.9 L 717.0 201.7 L 732.8 204.6 L 748.5 207.4 L 764.2 210.2 L 780.0 213.0"/>
+            <text class="fluxo-apoio" x="800" y="217.99999999999997">erro no treino</text>
+          </g>
+          <g class="fragment" data-fragment-index="2">
+            <path class="curva validacao" d="M 150.0 73.6 L 165.8 80.0 L 181.5 86.0 L 197.2 91.7 L 213.0 97.0 L 228.8 101.9 L 244.5 106.4 L 260.2 110.6 L 276.0 114.4 L 291.8 117.8 L 307.5 120.9 L 323.2 123.6 L 339.0 125.9 L 354.8 127.8 L 370.5 129.4 L 386.2 130.6 L 402.0 131.4 L 417.8 131.9 L 433.5 131.9 L 449.2 131.6 L 465.0 131.0 L 480.8 129.9 L 496.5 128.5 L 512.2 126.8 L 528.0 124.6 L 543.8 122.1 L 559.5 119.2 L 575.2 115.9 L 591.0 112.3 L 606.8 108.3 L 622.5 103.9 L 638.2 99.1 L 654.0 94.0 L 669.8 88.5 L 685.5 82.6 L 701.2 76.4 L 717.0 69.8 L 732.8 62.8 L 748.5 55.4 L 764.2 47.7 L 780.0 39.6"/>
+            <text class="fluxo-titulo" x="800" y="44.59999999999998">erro na validação</text>
+          </g>
+          <g class="fragment" data-fragment-index="3">
+            <path class="marca-otimo" d="M 415 46 L 415 244"/>
+            <text class="zona-titulo" x="415" y="38" text-anchor="middle">onde o botão deve parar</text>
+          </g>
+          <g class="painel fragment" data-fragment-index="3">
+            <rect x="836" y="46" width="316" height="208" rx="10"/>
+            <text class="zona-titulo" x="856" y="76">À esquerda: subajuste</text>
+            <text class="zona-apoio" x="856" y="98">O modelo é simples demais e erra</text>
+            <text class="zona-apoio" x="856" y="116">nos dois conjuntos.</text>
+            <text class="zona-titulo" x="856" y="150">À direita: sobreajuste</text>
+            <text class="zona-apoio" x="856" y="172">Ele decora o treino e piora na</text>
+            <text class="zona-apoio" x="856" y="190">validação. A distância entre as</text>
+            <text class="zona-apoio" x="856" y="208">duas curvas é o sintoma.</text>
+            <text class="fluxo-marca" x="856" y="238">ESQUEMA, SEM ESCALA NUMÉRICA</text>
+          </g>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>A distância entre as duas curvas é o sintoma de sobreajuste, e ela só aparece se houver um conjunto de validação separado.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">32</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A regularização não move a validação de 0,831</h2>
+          <p class="linha-contexto">3.295 contas em treino e 1.413 em validação, por conta e com semente fixa.</p>
+        </div>
+        <table class="tabela-criterios compacta numerica">
+          <thead><tr><th>Força da regularização</th><th>AUC no treino</th><th>AUC na validação</th><th>Soma dos pesos</th></tr></thead>
+          <tbody>
+            <tr class="destaque"><td>0 (sem regularizar)</td><td>0,8339</td><td>0,8312</td><td>3,35</td></tr>
+            <tr><td>10</td><td>0,8338</td><td>0,8312</td><td>2,76</td></tr>
+            <tr><td>100</td><td>0,8322</td><td>0,8294</td><td>2,28</td></tr>
+            <tr><td>1.000</td><td>0,8287</td><td>0,8256</td><td>1,20</td></tr>
+            <tr><td>10.000</td><td>0,8263</td><td>0,8230</td><td>0,28</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A distância entre treino e validação é de 0,0027 sem regularizar. Girar este botão devolve zero aqui.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py, curva_de_regularizacao.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">33</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>200 colunas de ruído derrubam a validação para 0,808</h2>
+          <p class="linha-contexto">Duzentas colunas sorteadas, sem relação nenhuma com a conta. Serve para mostrar para que o botão existe.</p>
+        </div>
+        <table class="tabela-criterios compacta numerica">
+          <thead><tr><th>Tabela</th><th>Colunas</th><th>Regularização</th><th>Treino</th><th>Validação</th><th>Distância</th></tr></thead>
+          <tbody>
+            <tr><td>As oito honestas</td><td>8</td><td>0</td><td>0,8339</td><td>0,8312</td><td>0,0027</td></tr>
+            <tr class="destaque"><td>Mais 200 de ruído puro</td><td>208</td><td>0</td><td>0,8568</td><td>0,8084</td><td>0,0484</td></tr>
+            <tr><td>Mais 200 de ruído puro</td><td>208</td><td>1.000</td><td>0,8486</td><td>0,8110</td><td>0,0376</td></tr>
+          </tbody>
+        </table>
+        <p class="linha-contexto">O ruído sobe o treino em 0,0229 e derruba a validação em 0,0228. A regularização devolve 0,0026 dos 0,0228 perdidos.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Regularizar remedia excesso de liberdade. Ela não recupera o que uma tabela ruim jogou fora.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py, curva_com_ruido.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">34</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; 20 minutos &middot; Gemini Enterprise</p>
+          <div class="accent-bar"></div>
+          <h2>Desenhar a busca de hiperparâmetro no Gemini Enterprise</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">20</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Em grupo, na pasta clonada</dd>
+              <dt>Entrega</dt><dd>busca.md com a grade e a justificativa de cada faixa</dd>
+              <dt>Checkpoint</dt><dd>Cada mesa diz quantas combinações vai testar e por que parou aí</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Peça o mapa dos hiperparâmetros, sem código.</p>
+            <p class="detalhe">Peça o padrão junto: metade das buscas nem inclui o padrão na faixa.</p>
+            <code class="prompt-literal">Tabela de 4.708 contas, 8 colunas numéricas, rótulo binário com prevalência de 52%. Vou usar XGBoost. Liste os hiperparâmetros que importam, o que cada um controla, o valor padrão da biblioteca e uma faixa razoável para este tamanho de dado. Sem código.</code>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A mesa tem faixa e valor padrão de cada hiperparâmetro do XGBoost</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">35</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; continuação &middot; Gemini Enterprise</p>
+          <div class="accent-bar"></div>
+          <h2>A grade e a auditoria da busca</h2>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Desenhe a grade com teto de 24 combinações.</p>
+            <p class="detalhe">Grade grande escolhe o vencedor pelo acaso da validação.</p>
+            <code class="prompt-literal">Monte uma busca de no máximo 24 combinações para o XGBoost, com early stopping na validação em vez de fixar n_estimators. A divisão é por conta e nada pode usar dado posterior a 2024-03. Diga qual métrica decide o vencedor.</code>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Mande auditar o próprio código de busca.</p>
+            <p class="detalhe">Padronizar antes de dividir é o vazamento mais comum, e passa despercebido.</p>
+            <code class="prompt-literal">Revise este código de busca e aponte todo ponto em que a validação influencia o treino: padronização, imputação, seleção de colunas e o próprio early stopping. Escreva a correção de cada um.</code>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A grade cabe em 24 combinações e a métrica que decide está escrita</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">36</p>
+        </div>
+      </section>
+
       <section class="content-slide">
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
@@ -1178,7 +1514,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">29</p>
+          <p class="footer-page">37</p>
         </div>
       </section>
 
@@ -1186,7 +1522,7 @@
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
-          <p class="sobrelinha">Prática 3 &middot; 30 minutos &middot; Gemini</p>
+          <p class="sobrelinha">Prática 4 &middot; 30 minutos &middot; Gemini</p>
           <div class="accent-bar"></div>
           <h2>Oficina: a tabela de features do grupo</h2>
         </div>
@@ -1234,7 +1570,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">30</p>
+          <p class="footer-page">38</p>
         </div>
       </section>
 
@@ -1259,7 +1595,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">31</p>
+          <p class="footer-page">39</p>
         </div>
       </section>
 
@@ -1283,7 +1619,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">32</p>
+          <p class="footer-page">40</p>
         </div>
       </section>
 

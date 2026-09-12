@@ -1310,7 +1310,7 @@
 .diagrama-ciclo .centro-apoio { font-size: 18px; fill: var(--seg-texto); }
 
 /* ---------------------------------------------------------------------------
-   Matriz de confusao embutida (Aula 06)
+   Diagramas embutidos da Aula 06: matriz de confusao e hiperparametro
 
    Embutida e nao <img> pelo mesmo motivo do diagrama de ciclo: o fragment do
    Reveal precisa alcancar cada grupo de dentro da figura, para o professor
@@ -1319,60 +1319,96 @@
    Nenhuma cor literal aqui: tudo sai dos tokens de segmento, para o
    check_brand.py continuar valendo depois que o SVG entra no HTML.
    --------------------------------------------------------------------------- */
-.matriz-confusao { display: block; width: 100%; height: auto; }
+.diagrama-aula06 { display: block; width: 100%; height: auto; }
 
-.matriz-confusao .celula rect {
+.diagrama-aula06 .celula rect {
   fill: var(--seg-base);
   stroke: var(--seg-borda);
   stroke-width: 1.6;
 }
 
-.matriz-confusao .celula.acerto rect { fill: var(--seg-superficie); }
+.diagrama-aula06 .celula.acerto rect { fill: var(--seg-superficie); }
 
-.matriz-confusao .sigla { font-size: 15px; fill: var(--seg-texto); letter-spacing: 0.06em; }
-.matriz-confusao .valor { font-size: 30px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-aula06 .sigla { font-size: 15px; fill: var(--seg-texto); letter-spacing: 0.06em; }
+.diagrama-aula06 .valor { font-size: 30px; font-weight: 600; fill: var(--seg-texto); }
 /* A unidade fica colada ao numero, num tspan: sem ela o executivo le "2.018"
    e nao sabe se sao contas, pedidos ou dolares. */
-.matriz-confusao .unidade { font-size: 14px; font-weight: 400; fill: var(--seg-texto); }
+.diagrama-aula06 .unidade { font-size: 14px; font-weight: 400; fill: var(--seg-texto); }
 /* 13px porque a frase da caixa passou a dizer a unidade: "contas nao
    marcadas que se perderam" tem 35 caracteres e a caixa tem 208px uteis. */
-.matriz-confusao .legenda { font-size: 13px; fill: var(--seg-texto); }
-.matriz-confusao .cabecalho { font-size: 16px; font-weight: 600; fill: var(--seg-texto); }
-.matriz-confusao .eixo { font-size: 14px; fill: var(--seg-texto); letter-spacing: 0.08em; }
+.diagrama-aula06 .legenda { font-size: 13px; fill: var(--seg-texto); }
+.diagrama-aula06 .cabecalho { font-size: 16px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-aula06 .eixo { font-size: 14px; fill: var(--seg-texto); letter-spacing: 0.08em; }
 
 /* O numerador e filete grosso; o denominador e tracejado fino. Duas
    codificacoes diferentes para dois papeis diferentes: preencher as duas
    faixas apagaria a distincao, porque o numerador e subconjunto do
    denominador e a segunda pintura cobriria a primeira. */
-.matriz-confusao .realce-num {
+.diagrama-aula06 .realce-num {
   fill: none;
   stroke: var(--seg-destaque);
   stroke-width: 5;
 }
 
-.matriz-confusao .realce-den {
+.diagrama-aula06 .realce-den {
   fill: none;
   stroke: var(--seg-primaria);
   stroke-width: 2.5;
   stroke-dasharray: 8 5;
 }
 
-.matriz-confusao .rotulo-num { font-size: 15px; font-weight: 600; fill: var(--seg-destaque); }
-.matriz-confusao .rotulo-den { font-size: 15px; font-weight: 600; fill: var(--seg-primaria); }
+.diagrama-aula06 .rotulo-num { font-size: 15px; font-weight: 600; fill: var(--seg-destaque); }
+.diagrama-aula06 .rotulo-den { font-size: 15px; font-weight: 600; fill: var(--seg-primaria); }
 
-.matriz-confusao .painel rect {
+.diagrama-aula06 .painel rect {
   fill: var(--seg-superficie);
   stroke: var(--seg-borda);
   stroke-width: 1.6;
 }
 
-.matriz-confusao .formula { font-size: 17px; fill: var(--seg-texto); }
-.matriz-confusao .conta { font-size: 17px; fill: var(--seg-texto); }
-.matriz-confusao .resultado { font-size: 38px; font-weight: 600; fill: var(--seg-texto); }
-.matriz-confusao .resultado-rotulo { font-size: 14px; fill: var(--seg-texto); letter-spacing: 0.08em; }
+.diagrama-aula06 .formula { font-size: 17px; fill: var(--seg-texto); }
+.diagrama-aula06 .conta { font-size: 17px; fill: var(--seg-texto); }
+.diagrama-aula06 .resultado { font-size: 38px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-aula06 .resultado-rotulo { font-size: 14px; fill: var(--seg-texto); letter-spacing: 0.08em; }
 
-.matriz-confusao .barra-fundo { fill: var(--seg-superficie); stroke: var(--seg-borda); stroke-width: 1.2; }
-.matriz-confusao .barra { fill: var(--seg-secundaria); }
-.matriz-confusao .barra.baixa { fill: var(--seg-destaque); }
-.matriz-confusao .barra-rotulo { font-size: 15px; fill: var(--seg-texto); }
-.matriz-confusao .barra-valor { font-size: 17px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-aula06 .barra-fundo { fill: var(--seg-superficie); stroke: var(--seg-borda); stroke-width: 1.2; }
+.diagrama-aula06 .barra { fill: var(--seg-secundaria); }
+.diagrama-aula06 .barra.baixa { fill: var(--seg-destaque); }
+.diagrama-aula06 .barra-rotulo { font-size: 15px; fill: var(--seg-texto); }
+.diagrama-aula06 .barra-valor { font-size: 17px; font-weight: 600; fill: var(--seg-texto); }
+
+/* Fluxo do treino e curva de ajuste (Aula 06, hiperparametros) */
+.diagrama-aula06 .fluxo rect {
+  fill: var(--seg-base);
+  stroke: var(--seg-primaria);
+  stroke-width: 1.6;
+}
+
+.diagrama-aula06 .fluxo.escolhido rect {
+  fill: var(--seg-secundaria);
+  stroke: var(--seg-secundaria);
+}
+
+.diagrama-aula06 .fluxo.escolhido text { fill: var(--seg-texto-sobre-secundaria); }
+
+.diagrama-aula06 .fluxo-titulo { font-size: 16px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-aula06 .fluxo-apoio { font-size: 13px; fill: var(--seg-texto); }
+.diagrama-aula06 .fluxo-marca { font-size: 12px; fill: var(--seg-texto); letter-spacing: 0.08em; }
+
+.diagrama-aula06 .seta {
+  fill: none;
+  stroke: var(--seg-primaria);
+  stroke-width: 2;
+}
+
+.diagrama-aula06 .seta.retorno { stroke-dasharray: 7 5; }
+.diagrama-aula06 .ponta { fill: var(--seg-primaria); }
+
+.diagrama-aula06 .eixo-linha { stroke: var(--seg-borda); stroke-width: 1.6; fill: none; }
+.diagrama-aula06 .curva { fill: none; stroke-width: 3; }
+.diagrama-aula06 .curva.treino { stroke: var(--seg-borda); }
+.diagrama-aula06 .curva.validacao { stroke: var(--seg-primaria); }
+.diagrama-aula06 .marca-otimo { stroke: var(--seg-destaque); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.diagrama-aula06 .zona rect { fill: var(--seg-superficie); stroke: none; }
+.diagrama-aula06 .zona-titulo { font-size: 14px; font-weight: 600; fill: var(--seg-texto); }
+.diagrama-aula06 .zona-apoio { font-size: 13px; fill: var(--seg-texto); }

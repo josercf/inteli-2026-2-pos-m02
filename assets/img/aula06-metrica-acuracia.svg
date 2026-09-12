@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-     class="matriz-confusao" role="img" aria-label="Acurácia: as duas caixas de acerto sobre as quatro, 77,0%">
+     class="diagrama-aula06" role="img" aria-label="Acurácia: as duas caixas de acerto sobre as quatro, 77,0%">
   <text class="eixo" x="250" y="26">O QUE ACONTECEU DE VERDADE</text>
   <text class="cabecalho" x="370" y="60" text-anchor="middle">Perdeu a conta</text>
   <text class="cabecalho" x="622" y="60" text-anchor="middle">Seguiu comprando</text>

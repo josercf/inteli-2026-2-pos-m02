@@ -253,6 +253,88 @@ def test_marcar_conta_nenhuma_ja_entrega_478_de_acuracia(a):
 
 
 # ---------------------------------------------------------------------------
+# Hiperparâmetro: a varredura de regularização
+# ---------------------------------------------------------------------------
+
+def test_a_particao_de_treino_e_validacao(a):
+    t = a.tamanho_da_particao()
+    assert t["treino"] == 3295
+    assert t["validacao"] == 1413
+    assert t["treino"] + t["validacao"] == 4708
+
+
+CURVA_ESPERADA = {
+    0.0: (0.8339, 0.8312, 3.35),
+    10.0: (0.8338, 0.8312, 2.76),
+    100.0: (0.8322, 0.8294, 2.28),
+    1000.0: (0.8287, 0.8256, 1.20),
+    10000.0: (0.8263, 0.8230, 0.28),
+}
+
+
+@pytest.mark.parametrize("lam,esperado", sorted(CURVA_ESPERADA.items()))
+def test_a_curva_de_regularizacao(a, lam, esperado):
+    treino, validacao, pesos = esperado
+    t = a.curva_de_regularizacao()
+    assert round(float(t.loc[lam, "auc_treino"]), 4) == treino
+    assert round(float(t.loc[lam, "auc_validacao"]), 4) == validacao
+    assert round(float(t.loc[lam, "soma_dos_pesos"]), 2) == pesos
+
+
+def test_regularizar_a_tabela_real_nao_ajuda(a):
+    """O achado do slide. Se um dia isto deixar de valer, o slide vira mentira:
+    a validação precisa parar de melhorar conforme a penalidade sobe."""
+    t = a.curva_de_regularizacao()
+    melhor = t.auc_validacao.idxmax()
+    assert melhor <= 10.0, melhor
+    assert round(float(t.loc[0.0, "auc_validacao"]), 4) == 0.8312
+
+
+def test_a_distancia_entre_treino_e_validacao_e_de_00027(a):
+    """Sem essa distância não existe sobreajuste para o botão corrigir."""
+    t = a.curva_de_regularizacao()
+    gap = t.loc[0.0, "auc_treino"] - t.loc[0.0, "auc_validacao"]
+    assert round(float(gap), 4) == 0.0027
+
+
+RUIDO_ESPERADO = {
+    0.0: (0.8568, 0.8084),
+    1000.0: (0.8486, 0.8110),
+}
+
+
+@pytest.mark.parametrize("lam,esperado", sorted(RUIDO_ESPERADO.items()))
+def test_a_curva_com_ruido(a, lam, esperado):
+    treino, validacao = esperado
+    t = a.curva_com_ruido()
+    assert int(t.loc[lam, "colunas"]) == 208
+    assert round(float(t.loc[lam, "auc_treino"]), 4) == treino
+    assert round(float(t.loc[lam, "auc_validacao"]), 4) == validacao
+
+
+def test_o_ruido_abre_a_distancia_em_dezoito_vezes(a):
+    """É o contraste que dá sentido ao slide: na tabela real a distância é de
+    0,0027 e com ruído ela vai a 0,0484."""
+    limpa = a.curva_de_regularizacao()
+    suja = a.curva_com_ruido()
+    gap_limpo = float(limpa.loc[0.0, "auc_treino"] - limpa.loc[0.0, "auc_validacao"])
+    gap_sujo = float(suja.loc[0.0, "auc_treino"] - suja.loc[0.0, "auc_validacao"])
+    assert round(gap_sujo, 4) == 0.0484
+    assert gap_sujo > gap_limpo * 15
+
+
+def test_a_regularizacao_devolve_pouco_do_que_o_ruido_tirou(a):
+    """0,0026 recuperados de 0,0228 perdidos. O botão remedia, não conserta."""
+    limpa = a.curva_de_regularizacao()
+    suja = a.curva_com_ruido()
+    perdido = float(limpa.loc[0.0, "auc_validacao"] - suja.loc[0.0, "auc_validacao"])
+    devolvido = float(suja.loc[1000.0, "auc_validacao"] - suja.loc[0.0, "auc_validacao"])
+    assert round(perdido, 4) == 0.0228
+    assert round(devolvido, 4) == 0.0026
+    assert devolvido < perdido / 5
+
+
+# ---------------------------------------------------------------------------
 # Faixas da razão de 3 meses
 # ---------------------------------------------------------------------------
 
@@ -289,6 +371,10 @@ NUMEROS_NO_DECK = [
     "-0,202", "0,817", "6,1%", "77,9%", "51,8%", "7,7%", "0,3%",
     "606", "257", "42,4%", "278", "3.485", "2.166", "62,2%", "339", "4,7%",
     "138", "114", "82,6%", "4,6%", "49,7%", "2.661", "75,8%", "82,2%",
+    "3.295", "1.413", "0,8339", "0,8312", "0,8338", "0,8322", "0,8294",
+    "0,8287", "0,8256", "0,8263", "0,8230", "3,35", "2,76", "2,28",
+    "1,20", "0,28", "0,8568", "0,8084", "0,8486", "0,8110",
+    "0,0027", "0,0484", "0,0376", "0,0228", "0,0026", "0,0229", "208",
     "77,0%", "47,8%", "5,6%",
 ]
 

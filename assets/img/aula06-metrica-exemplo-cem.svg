@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-     class="matriz-confusao" role="img" aria-label="Exemplo de 100 clientes: acurácia 86,0%, precisão 40,0% e recall 80,0%">
+     class="diagrama-aula06" role="img" aria-label="Exemplo de 100 clientes: acurácia 86,0%, precisão 40,0% e recall 80,0%">
   <text class="eixo" x="200" y="26">O QUE ACONTECEU COM OS 100 CLIENTES</text>
   <text class="cabecalho" x="302" y="60" text-anchor="middle">Cancelaram (10)</text>
   <text class="cabecalho" x="520" y="60" text-anchor="middle">Continuaram (90)</text>

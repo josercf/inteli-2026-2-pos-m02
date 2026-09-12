@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
-     class="matriz-confusao" role="img" aria-label="F1: 78,9% no limiar de 0,5 e 8,8% na fila de 138">
+     class="diagrama-aula06" role="img" aria-label="F1: 78,9% no limiar de 0,5 e 8,8% na fila de 138">
   <text class="eixo" x="16" y="24">LIMIAR DE 0,5</text>
   <g class="fragment">
     <text class="barra-rotulo" x="290" y="54" text-anchor="end">Precisão</text>

@@ -60,7 +60,7 @@ def _viewbox(svg: str) -> tuple[float, float]:
 def test_o_arquivo_existe_e_e_svg(nome):
     svg = _svg(nome)
     assert svg.startswith("<svg"), nome
-    assert 'class="matriz-confusao"' in svg
+    assert 'class="diagrama-aula06"' in svg
     assert svg.rstrip().endswith("</svg>")
 
 

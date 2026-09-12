@@ -129,7 +129,7 @@ def _painel(formula: str, conta: str, conta_legenda: str, resultado: str, rotulo
 def _svg(rotulo_aria: str, corpo: str) -> str:
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {LARGURA} {ALTURA}"\n'
-        f'     class="matriz-confusao" role="img" aria-label="{rotulo_aria}">\n'
+        f'     class="diagrama-aula06" role="img" aria-label="{rotulo_aria}">\n'
         f"{corpo}\n"
         "</svg>\n"
     )

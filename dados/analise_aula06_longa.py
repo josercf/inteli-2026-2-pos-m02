@@ -299,6 +299,110 @@ def lista_priorizada(n: int) -> dict:
             "acuracia": (vp + vn) / len(e)}
 
 
+# ---------------------------------------------------------------------------
+# Hiperparâmetro: a força da regularização
+# ---------------------------------------------------------------------------
+
+SEMENTE = 20260912
+FRACAO_TREINO = 0.7
+LAMBDAS = (0.0, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0)
+
+
+def _logistica_l2(X, y, lam, iteracoes=80):
+    """Newton-Raphson com penalidade L2 de força `lam`.
+
+    O intercepto fica de fora da penalidade. Penalizar o intercepto empurra a
+    probabilidade média para 0,5 e mistura duas coisas: o quanto o modelo é
+    complexo e onde ele está centrado.
+    """
+    beta = np.zeros(X.shape[1])
+    P = np.eye(X.shape[1]) * lam
+    P[0, 0] = 0.0
+    for _ in range(iteracoes):
+        p = 1 / (1 + np.exp(-np.clip(X @ beta, -500, 500)))
+        w = np.clip(p * (1 - p), 1e-9, None)
+        H = X.T @ (X * w[:, None]) + P + 1e-9 * np.eye(X.shape[1])
+        passo = np.linalg.solve(H, X.T @ (y - p) - P @ beta)
+        beta = beta + passo
+        if np.max(np.abs(passo)) < 1e-9:
+            break
+    return beta
+
+
+def particao_treino_validacao():
+    """Divide as contas elegíveis em treino e validação, por conta e com
+    semente fixa. A padronização usa média e desvio do treino apenas: usar os
+    do conjunto inteiro deixa a validação influenciar o preparo do dado, que é
+    a forma mais discreta de vazamento em pipeline."""
+    e = painel_de_features()
+    rng = np.random.default_rng(SEMENTE)
+    embaralhado = rng.permutation(len(e))
+    corte = int(len(e) * FRACAO_TREINO)
+    treino, validacao = embaralhado[:corte], embaralhado[corte:]
+    bruto = e[FEATURES_HONESTAS].to_numpy(dtype=float)
+    media, desvio = bruto[treino].mean(axis=0), bruto[treino].std(axis=0)
+    z = (bruto - media) / desvio
+    X = np.column_stack([np.ones(len(z)), z])
+    y = e.churn.to_numpy(dtype=float)
+    return X, y, treino, validacao
+
+
+def curva_de_regularizacao() -> pd.DataFrame:
+    """AUC de treino e de validação para cada força de regularização."""
+    X, y, treino, validacao = particao_treino_validacao()
+    linhas = []
+    for lam in LAMBDAS:
+        beta = _logistica_l2(X[treino], y[treino], lam)
+        escores = X @ beta
+        a_treino = auc(pd.Series(escores[treino]), pd.Series(y[treino]).astype(int))
+        a_val = auc(pd.Series(escores[validacao]), pd.Series(y[validacao]).astype(int))
+        linhas.append({"lambda": lam,
+                       "auc_treino": max(a_treino, 1 - a_treino),
+                       "auc_validacao": max(a_val, 1 - a_val),
+                       "soma_dos_pesos": float(np.abs(beta[1:]).sum())})
+    return pd.DataFrame(linhas).set_index("lambda")
+
+
+COLUNAS_DE_RUIDO = 200
+
+
+def curva_com_ruido(k: int = COLUNAS_DE_RUIDO) -> pd.DataFrame:
+    """A mesma varredura, com k colunas de ruído puro somadas à tabela.
+
+    Serve para mostrar para que o botão existe. Na tabela real, de oito
+    colunas escolhidas a dedo, mexer na regularização não muda quase nada. Com
+    ruído suficiente a distância entre treino e validação abre, e aí a
+    regularização recupera parte do que foi perdido.
+    """
+    e = painel_de_features()
+    y = e.churn.to_numpy(dtype=float)
+    base = e[FEATURES_HONESTAS].to_numpy(dtype=float)
+    rng = np.random.default_rng(SEMENTE)
+    perm = rng.permutation(len(e))
+    corte = int(len(e) * FRACAO_TREINO)
+    treino, validacao = perm[:corte], perm[corte:]
+    bruto = np.hstack([base, rng.normal(size=(len(e), k))])
+    media, desvio = bruto[treino].mean(axis=0), bruto[treino].std(axis=0)
+    desvio[desvio == 0] = 1.0
+    z = (bruto - media) / desvio
+    X = np.column_stack([np.ones(len(z)), z])
+    linhas = []
+    for lam in (0.0, 1.0, 10.0, 100.0, 1000.0):
+        beta = _logistica_l2(X[treino], y[treino], lam)
+        s = X @ beta
+        at = auc(pd.Series(s[treino]), pd.Series(y[treino]).astype(int))
+        av = auc(pd.Series(s[validacao]), pd.Series(y[validacao]).astype(int))
+        linhas.append({"lambda": lam, "colunas": k + len(FEATURES_HONESTAS),
+                       "auc_treino": max(at, 1 - at),
+                       "auc_validacao": max(av, 1 - av)})
+    return pd.DataFrame(linhas).set_index("lambda")
+
+
+def tamanho_da_particao() -> dict[str, int]:
+    _, _, treino, validacao = particao_treino_validacao()
+    return {"treino": len(treino), "validacao": len(validacao)}
+
+
 def main() -> None:
     p = particao_temporal()
     print(f"Painel {p['inicio_painel']} a {p['fim_painel']}, {p['carteira']} contas")

@@ -545,6 +545,120 @@ SLIDES.append(pratica(
 ))
 
 # ---------------------------------------------------------------------------
+# 17b. Hiperparâmetros
+# ---------------------------------------------------------------------------
+SLIDES.append(secao("06", "Hiperparâmetros", "O que você escolhe antes de o ajuste começar",
+                    ["Entra antes do dado", "A validação corrige", "Vale menos que a tabela"]))
+
+SLIDES.append(figura_embutida(
+    "O hiperparâmetro entra antes do ajuste, e a validação o corrige",
+    "aula06-hiper-fluxo.svg",
+    contexto="Os 8 coeficientes da tabela de pesos saíram do ajuste. A força da regularização entrou antes dele, escolhida à mão.",
+    conclusao="Nenhum hiperparâmetro é lido do dado. Cada um é uma decisão sua, e a validação é o único juiz dela.",
+))
+
+SLIDES.append(conteudo(
+    "O piloto automático dirige, e você regula antes de ligar",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>No carro</th><th>No modelo</th><th>Quem define</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Velocidade de cruzeiro e distância do carro da frente</td><td>hiperparâmetro</td><td>você, antes de ligar</td></tr>\n"
+    "            <tr><td>Cada micro-correção de volante durante a viagem</td><td>parâmetro</td><td>o algoritmo, durante o ajuste</td></tr>\n"
+    "            <tr><td>Rodar num trecho que você não usou para regular</td><td>validação</td><td>a régua que aprova a regulagem</td></tr>\n"
+    "            <tr><td>Regular para uma pista e ir mal em qualquer outra</td><td>sobreajuste</td><td>o que a validação denuncia</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="Ninguém digita o ângulo do volante a cada instante. Você regula o comportamento e o piloto executa.",
+    conclusao="Regular e aprovar no mesmo trecho de estrada é a versão automotiva do vazamento.",
+))
+
+SLIDES.append(conteudo(
+    "Os hiperparâmetros do XGBoost, um a um",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Hiperparâmetro</th><th>O que controla</th><th>No carro</th><th>Se exagerar</th></tr></thead>\n"
+    "          <tbody>\n"
+    '            <tr class="destaque"><td><code>learning_rate</code></td><td>tamanho de cada correção</td><td>quanto o volante gira por vez</td><td>alto serpenteia</td></tr>\n'
+    "            <tr><td><code>n_estimators</code></td><td>quantas árvores somam</td><td>quantas correções na viagem</td><td>poucas não chegam</td></tr>\n"
+    "            <tr><td><code>max_depth</code></td><td>perguntas encadeadas</td><td>sensores olhados antes de agir</td><td>funda decora conta a conta</td></tr>\n"
+    "            <tr><td><code>min_child_weight</code></td><td>menor grupo que vira regra</td><td>ignorar caso isolado</td><td>baixo vira regra de uma conta</td></tr>\n"
+    "            <tr><td><code>subsample</code> e <code>colsample</code></td><td>fração de linhas e colunas</td><td>não olhar sempre o mesmo sensor</td><td>baixo joga sinal fora</td></tr>\n"
+    "            <tr><td><code>reg_lambda</code></td><td>quanto os pesos crescem</td><td>limite de esterço</td><td>alto achata tudo</td></tr>\n"
+    "            <tr><td><code>scale_pos_weight</code></td><td>custo de errar a classe rara</td><td>frear ao menor sinal</td><td>alto marca a carteira</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    conclusao="Passo menor exige mais árvores. Use early stopping em vez de fixar as duas no olho.",
+))
+
+SLIDES.append(figura_embutida(
+    "Subajuste e sobreajuste",
+    "aula06-hiper-curva.svg",
+    contexto="O botão do hiperparâmetro anda no eixo horizontal deste esquema.",
+    conclusao="A distância entre as duas curvas é o sintoma de sobreajuste, e ela só aparece se houver um conjunto de validação separado.",
+))
+
+SLIDES.append(conteudo(
+    "A regularização não move a validação de 0,831",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th>Força da regularização</th><th>AUC no treino</th><th>AUC na validação</th><th>Soma dos pesos</th></tr></thead>\n"
+    "          <tbody>\n"
+    '            <tr class="destaque"><td>0 (sem regularizar)</td><td>0,8339</td><td>0,8312</td><td>3,35</td></tr>\n'
+    "            <tr><td>10</td><td>0,8338</td><td>0,8312</td><td>2,76</td></tr>\n"
+    "            <tr><td>100</td><td>0,8322</td><td>0,8294</td><td>2,28</td></tr>\n"
+    "            <tr><td>1.000</td><td>0,8287</td><td>0,8256</td><td>1,20</td></tr>\n"
+    "            <tr><td>10.000</td><td>0,8263</td><td>0,8230</td><td>0,28</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="3.295 contas em treino e 1.413 em validação, por conta e com semente fixa.",
+    conclusao="A distância entre treino e validação é de 0,0027 sem regularizar. Girar este botão devolve zero aqui.",
+    fonte="Fonte: dados/analise_aula06_longa.py, curva_de_regularizacao.",
+))
+
+SLIDES.append(conteudo(
+    "200 colunas de ruído derrubam a validação para 0,808",
+    '        <table class="tabela-criterios compacta numerica">\n'
+    "          <thead><tr><th>Tabela</th><th>Colunas</th><th>Regularização</th><th>Treino</th><th>Validação</th><th>Distância</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>As oito honestas</td><td>8</td><td>0</td><td>0,8339</td><td>0,8312</td><td>0,0027</td></tr>\n"
+    '            <tr class="destaque"><td>Mais 200 de ruído puro</td><td>208</td><td>0</td><td>0,8568</td><td>0,8084</td><td>0,0484</td></tr>\n'
+    "            <tr><td>Mais 200 de ruído puro</td><td>208</td><td>1.000</td><td>0,8486</td><td>0,8110</td><td>0,0376</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n"
+    '        <p class="linha-contexto">O ruído sobe o treino em 0,0229 e derruba a validação em 0,0228. A regularização devolve 0,0026 dos 0,0228 perdidos.</p>\n',
+    contexto="Duzentas colunas sorteadas, sem relação nenhuma com a conta. Serve para mostrar para que o botão existe.",
+    conclusao="Regularizar remedia excesso de liberdade. Ela não recupera o que uma tabela ruim jogou fora.",
+    fonte="Fonte: dados/analise_aula06_longa.py, curva_com_ruido.",
+))
+
+SLIDES.append(pratica(
+    3, "Desenhar a busca de hiperparâmetro no Gemini Enterprise", 20,
+    "Em grupo, na pasta clonada", "busca.md com a grade e a justificativa de cada faixa",
+    "Cada mesa diz quantas combinações vai testar e por que parou aí",
+    [
+        {"acao": "Peça o mapa dos hiperparâmetros, sem código.",
+         "prompt": "Tabela de 4.708 contas, 8 colunas numéricas, rótulo binário com prevalência de 52%. Vou usar XGBoost. Liste os hiperparâmetros que importam, o que cada um controla, o valor padrão da biblioteca e uma faixa razoável para este tamanho de dado. Sem código.",
+         "detalhe": "Peça o padrão junto: metade das buscas nem inclui o padrão na faixa."},
+    ],
+    "A mesa tem faixa e valor padrão de cada hiperparâmetro do XGBoost",
+    ambiente="Gemini Enterprise",
+))
+
+SLIDES.append(pratica(
+    3, "A grade e a auditoria da busca", 20,
+    "", "", "",
+    [
+        {"acao": "Desenhe a grade com teto de 24 combinações.",
+         "prompt": "Monte uma busca de no máximo 24 combinações para o XGBoost, com early stopping na validação em vez de fixar n_estimators. A divisão é por conta e nada pode usar dado posterior a 2024-03. Diga qual métrica decide o vencedor.",
+         "detalhe": "Grade grande escolhe o vencedor pelo acaso da validação."},
+        {"acao": "Mande auditar o próprio código de busca.",
+         "prompt": "Revise este código de busca e aponte todo ponto em que a validação influencia o treino: padronização, imputação, seleção de colunas e o próprio early stopping. Escreva a correção de cada um.",
+         "detalhe": "Padronizar antes de dividir é o vazamento mais comum, e passa despercebido."},
+    ],
+    "A grade cabe em 24 combinações e a métrica que decide está escrita",
+    ambiente="Gemini Enterprise", trilho=False,
+    sobrelinha="Prática 3 &middot; continuação &middot; Gemini Enterprise",
+))
+
+# ---------------------------------------------------------------------------
 # 18. Realimentação
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
@@ -568,7 +682,7 @@ SLIDES.append(conteudo(
 # 19. Oficina
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
-    3, "Oficina: a tabela de features do grupo", 30,
+    4, "Oficina: a tabela de features do grupo", 30,
     "Em grupo, três estações de tempo marcado", "A pasta do grupo com features.csv e dicionario.md",
     "Checkpoint às 11h40: cada mesa mostra a coluna de maior peso e a data que ela usa",
     [

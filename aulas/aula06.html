@@ -653,6 +653,90 @@
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
           <div class="accent-bar"></div>
+          <h2>Com 100 clientes, as três métricas dão 86%, 40% e 80%</h2>
+          <p class="linha-contexto">Números redondos: dez iam cancelar, o modelo alertou vinte e acertou oito.</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1168 300"
+             class="matriz-confusao" role="img" aria-label="Exemplo de 100 clientes: acurácia 86,0%, precisão 40,0% e recall 80,0%">
+          <text class="eixo" x="200" y="26">O QUE ACONTECEU COM OS 100 CLIENTES</text>
+          <text class="cabecalho" x="302" y="60" text-anchor="middle">Cancelaram (10)</text>
+          <text class="cabecalho" x="520" y="60" text-anchor="middle">Continuaram (90)</text>
+          <text class="eixo" x="16" y="26">O MODELO</text>
+          <text class="cabecalho" x="186" y="118" text-anchor="end">Alertou (20)</text>
+          <text class="cabecalho" x="186" y="206" text-anchor="end">Não alertou (80)</text>
+          <g class="celula">
+            <rect x="200" y="74" width="205" height="76" rx="10"/>
+            <text class="sigla" x="214" y="96">VP · Verdadeiro positivo</text>
+            <text class="valor" x="214" y="124">8<tspan class="unidade" dx="8">clientes</tspan></text>
+            <text class="legenda" x="214" y="142">alertados que cancelaram</text>
+          </g>
+          <g class="celula">
+            <rect x="417" y="74" width="205" height="76" rx="10"/>
+            <text class="sigla" x="431" y="96">FP · Falso positivo</text>
+            <text class="valor" x="431" y="124">12<tspan class="unidade" dx="8">clientes</tspan></text>
+            <text class="legenda" x="431" y="142">alertados que continuaram</text>
+          </g>
+          <g class="celula">
+            <rect x="200" y="162" width="205" height="76" rx="10"/>
+            <text class="sigla" x="214" y="184">FN · Falso negativo</text>
+            <text class="valor" x="214" y="212">2<tspan class="unidade" dx="8">clientes</tspan></text>
+            <text class="legenda" x="214" y="230">não alertados que cancelaram</text>
+          </g>
+          <g class="celula">
+            <rect x="417" y="162" width="205" height="76" rx="10"/>
+            <text class="sigla" x="431" y="184">VN · Verdadeiro negativo</text>
+            <text class="valor" x="431" y="212">78<tspan class="unidade" dx="8">clientes</tspan></text>
+            <text class="legenda" x="431" y="230">não alertados que continuaram</text>
+          </g>
+          <g class="fragment fade-in-then-out" data-fragment-index="1">
+            <rect class="realce-num" x="197" y="71" width="211" height="82" rx="12"/>
+            <rect class="realce-num" x="414" y="159" width="211" height="82" rx="12"/>
+          </g>
+          <g class="painel fragment" data-fragment-index="1">
+            <rect x="660" y="74" width="490" height="62" rx="10"/>
+            <text class="formula" x="678" y="100">Acurácia</text>
+            <text class="legenda" x="678" y="122">(8 + 78) acertos / 100 clientes</text>
+            <text class="resultado" x="1132" y="118" text-anchor="end">86,0%</text>
+          </g>
+          <g class="fragment fade-in-then-out" data-fragment-index="2">
+            <rect class="realce-num" x="197" y="71" width="211" height="82" rx="12"/>
+            <rect class="realce-num" x="414" y="71" width="211" height="82" rx="12"/>
+          </g>
+          <g class="painel fragment" data-fragment-index="2">
+            <rect x="660" y="146" width="490" height="62" rx="10"/>
+            <text class="formula" x="678" y="172">Precisão</text>
+            <text class="legenda" x="678" y="194">8 acertos / 20 alertas disparados</text>
+            <text class="resultado" x="1132" y="190" text-anchor="end">40,0%</text>
+          </g>
+          <g class="fragment fade-in-then-out" data-fragment-index="3">
+            <rect class="realce-num" x="197" y="71" width="211" height="82" rx="12"/>
+            <rect class="realce-num" x="197" y="159" width="211" height="82" rx="12"/>
+          </g>
+          <g class="painel fragment" data-fragment-index="3">
+            <rect x="660" y="218" width="490" height="62" rx="10"/>
+            <text class="formula" x="678" y="244">Recall</text>
+            <text class="legenda" x="678" y="266">8 achados / 10 que iam cancelar</text>
+            <text class="resultado" x="1132" y="262" text-anchor="end">80,0%</text>
+          </g>
+        </svg>
+        <div class="fecho">
+        <div class="faixa-conclusao clara fragment">
+          <span class="rotulo">Implicação</span>
+          <p>Dizer que ninguém cancela daria 90% de acurácia, acima dos 86% do modelo.</p>
+        </div>
+        <p class="fonte-nota">Exemplo construído para esta aula, fora da carteira da Kovan.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">20</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
           <h2>A acurácia de 77,0% divide os acertos pela carteira inteira</h2>
           <p class="linha-contexto">Pergunta que ela responde: que fração de todas as contas eu classifiquei bem?</p>
         </div>
@@ -720,7 +804,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">20</p>
+          <p class="footer-page">21</p>
         </div>
       </section>
 
@@ -793,7 +877,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">21</p>
+          <p class="footer-page">22</p>
         </div>
       </section>
 
@@ -866,7 +950,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">22</p>
+          <p class="footer-page">23</p>
         </div>
       </section>
 
@@ -924,7 +1008,36 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">23</p>
+          <p class="footer-page">24</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A métrica que manda é a do erro que custa mais caro</h2>
+          <p class="linha-contexto">A escolha vem do custo do erro, e é decisão de negócio.</p>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Quando o erro caro é</th><th>A métrica que manda</th><th>Exemplo fora do case</th></tr></thead>
+          <tbody>
+            <tr><td>Incomodar quem estava bem (FP)</td><td>Precisão</td><td>bloquear cartão legítimo por suspeita de fraude</td></tr>
+            <tr><td>Deixar passar quem precisava (FN)</td><td>Recall</td><td>exame que não detecta a doença de quem está doente</td></tr>
+            <tr><td>Os dois pesam parecido</td><td>F1</td><td>triagem de chamados de suporte</td></tr>
+            <tr><td>Nenhum, as classes são equilibradas</td><td>Acurácia</td><td>raro em problema de churn, comum em teste A/B</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Na Kovan a fila é fixa em 138, então sobra a precisão: 24 das 138 conversas seriam com quem ficaria.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
+          <p class="footer-page">25</p>
         </div>
       </section>
 
@@ -953,7 +1066,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">24</p>
+          <p class="footer-page">26</p>
         </div>
       </section>
 
@@ -983,7 +1096,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">25</p>
+          <p class="footer-page">27</p>
         </div>
       </section>
 
@@ -1039,7 +1152,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">26</p>
+          <p class="footer-page">28</p>
         </div>
       </section>
 
@@ -1065,7 +1178,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">27</p>
+          <p class="footer-page">29</p>
         </div>
       </section>
 
@@ -1121,7 +1234,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">28</p>
+          <p class="footer-page">30</p>
         </div>
       </section>
 
@@ -1146,7 +1259,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">29</p>
+          <p class="footer-page">31</p>
         </div>
       </section>
 
@@ -1170,7 +1283,7 @@
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 06</p>
-          <p class="footer-page">30</p>
+          <p class="footer-page">32</p>
         </div>
       </section>
 

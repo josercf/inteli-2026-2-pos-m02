@@ -260,8 +260,104 @@ def f1() -> tuple[str, str]:
         f"F1: {_pct(f)} no limiar de 0,5 e {_pct(f138)} na fila de 138", corpo)
 
 
+# ---------------------------------------------------------------------------
+# O exemplo de 100 clientes
+#
+# Antes do dado real vem um caso de números redondos, para a conta ser feita de
+# cabeça. Os três resultados divergem bastante entre si (86%, 40% e 80%), que é
+# exatamente o que precisa ficar claro antes de olhar a carteira de verdade.
+# ---------------------------------------------------------------------------
+
+EX_VP, EX_FP, EX_FN, EX_VN = 8, 12, 2, 78
+EX_TOTAL = EX_VP + EX_FP + EX_FN + EX_VN
+EX_ALERTADOS = EX_VP + EX_FP
+EX_CANCELARAM = EX_VP + EX_FN
+
+EX_X0, EX_Y0 = 200, 74
+EX_CEL_L, EX_CEL_A = 205, 76
+EX_GAP = 12
+EX_PAINEL_X = 660
+EX_PAINEL_L = 490
+
+
+def _ex_celula(col, lin, sigla, valor, frase) -> str:
+    x = EX_X0 + col * (EX_CEL_L + EX_GAP)
+    y = EX_Y0 + lin * (EX_CEL_A + EX_GAP)
+    return (
+        f'  <g class="celula">\n'
+        f'    <rect x="{x}" y="{y}" width="{EX_CEL_L}" height="{EX_CEL_A}" rx="10"/>\n'
+        f'    <text class="sigla" x="{x + 14}" y="{y + 22}">{sigla}</text>\n'
+        f'    <text class="valor" x="{x + 14}" y="{y + 50}">{valor}'
+        f'<tspan class="unidade" dx="8">clientes</tspan></text>\n'
+        f'    <text class="legenda" x="{x + 14}" y="{y + 68}">{frase}</text>\n'
+        "  </g>"
+    )
+
+
+def _ex_realce(celulas, indice) -> str:
+    partes = [f'  <g class="fragment fade-in-then-out" data-fragment-index="{indice}">']
+    for col, lin in celulas:
+        x = EX_X0 + col * (EX_CEL_L + EX_GAP) - 3
+        y = EX_Y0 + lin * (EX_CEL_A + EX_GAP) - 3
+        partes.append(
+            f'    <rect class="realce-num" x="{x}" y="{y}" '
+            f'width="{EX_CEL_L + 6}" height="{EX_CEL_A + 6}" rx="12"/>')
+    partes.append("  </g>")
+    return "\n".join(partes)
+
+
+def _ex_linha(indice, y, nome, conta, resultado) -> str:
+    return "\n".join([
+        f'  <g class="painel fragment" data-fragment-index="{indice}">',
+        f'    <rect x="{EX_PAINEL_X}" y="{y}" width="{EX_PAINEL_L}" height="62" rx="10"/>',
+        f'    <text class="formula" x="{EX_PAINEL_X + 18}" y="{y + 26}">{nome}</text>',
+        f'    <text class="legenda" x="{EX_PAINEL_X + 18}" y="{y + 48}">{conta}</text>',
+        f'    <text class="resultado" x="{EX_PAINEL_X + EX_PAINEL_L - 18}" y="{y + 44}" '
+        f'text-anchor="end">{resultado}</text>',
+        "  </g>",
+    ])
+
+
+def exemplo_cem() -> tuple[str, str]:
+    acuracia_ex = (EX_VP + EX_VN) / EX_TOTAL
+    precisao_ex = EX_VP / EX_ALERTADOS
+    recall_ex = EX_VP / EX_CANCELARAM
+    c0 = EX_X0 + EX_CEL_L / 2
+    c1 = EX_X0 + EX_CEL_L + EX_GAP + EX_CEL_L / 2
+    l0 = EX_Y0 + EX_CEL_A / 2
+    l1 = EX_Y0 + EX_CEL_A + EX_GAP + EX_CEL_A / 2
+    corpo = "\n".join([
+        f'  <text class="eixo" x="{EX_X0}" y="26">O QUE ACONTECEU COM OS 100 CLIENTES</text>',
+        f'  <text class="cabecalho" x="{c0:.0f}" y="60" text-anchor="middle">'
+        f'Cancelaram ({EX_CANCELARAM})</text>',
+        f'  <text class="cabecalho" x="{c1:.0f}" y="60" text-anchor="middle">'
+        f'Continuaram ({EX_VN + EX_FP})</text>',
+        '  <text class="eixo" x="16" y="26">O MODELO</text>',
+        f'  <text class="cabecalho" x="{EX_X0 - 14}" y="{l0 + 6:.0f}" text-anchor="end">'
+        f'Alertou ({EX_ALERTADOS})</text>',
+        f'  <text class="cabecalho" x="{EX_X0 - 14}" y="{l1 + 6:.0f}" text-anchor="end">'
+        f'Não alertou ({EX_FN + EX_VN})</text>',
+        _ex_celula(0, 0, "VP · Verdadeiro positivo", EX_VP, "alertados que cancelaram"),
+        _ex_celula(1, 0, "FP · Falso positivo", EX_FP, "alertados que continuaram"),
+        _ex_celula(0, 1, "FN · Falso negativo", EX_FN, "não alertados que cancelaram"),
+        _ex_celula(1, 1, "VN · Verdadeiro negativo", EX_VN, "não alertados que continuaram"),
+        _ex_realce([(0, 0), (1, 1)], 1),
+        _ex_linha(1, 74, "Acurácia", f"({EX_VP} + {EX_VN}) acertos / {EX_TOTAL} clientes",
+                  _pct(acuracia_ex)),
+        _ex_realce([(0, 0), (1, 0)], 2),
+        _ex_linha(2, 146, "Precisão", f"{EX_VP} acertos / {EX_ALERTADOS} alertas disparados",
+                  _pct(precisao_ex)),
+        _ex_realce([(0, 0), (0, 1)], 3),
+        _ex_linha(3, 218, "Recall", f"{EX_VP} achados / {EX_CANCELARAM} que iam cancelar",
+                  _pct(recall_ex)),
+    ])
+    return "aula06-metrica-exemplo-cem.svg", _svg(
+        f"Exemplo de 100 clientes: acurácia {_pct(acuracia_ex)}, "
+        f"precisão {_pct(precisao_ex)} e recall {_pct(recall_ex)}", corpo)
+
+
 def main() -> None:
-    for gerar in (acuracia, precisao, revocacao, f1):
+    for gerar in (exemplo_cem, acuracia, precisao, revocacao, f1):
         nome, svg = gerar()
         (SAIDA / nome).write_text(svg, encoding="utf-8")
         print(f"{nome}: {len(svg)} bytes")

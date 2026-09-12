@@ -30,8 +30,9 @@ DECK = RAIZ / "aulas" / "aula06.html"
 XLSX = RAIZ / "dados" / "datasets_case_modulo2_5yrs.xlsx"
 CACHE = RAIZ / "dados" / ".cache_5yrs"
 
-ARQUIVOS = ["aula06-metrica-acuracia.svg", "aula06-metrica-precisao.svg",
-            "aula06-metrica-revocacao.svg", "aula06-metrica-f1.svg"]
+ARQUIVOS = ["aula06-metrica-exemplo-cem.svg", "aula06-metrica-acuracia.svg",
+            "aula06-metrica-precisao.svg", "aula06-metrica-revocacao.svg",
+            "aula06-metrica-f1.svg"]
 
 
 @pytest.fixture(scope="module")
@@ -185,7 +186,54 @@ def test_as_porcentagens_desenhadas(gerador):
 
 
 # ---------------------------------------------------------------------------
-# O deck embute os quatro
+# O exemplo de 100 clientes
+# ---------------------------------------------------------------------------
+
+def test_o_exemplo_de_cem_fecha_a_aritmetica(gerador):
+    """O exemplo é didático e os números são redondos de propósito, mas eles
+    precisam fechar: quatro caixas somando 100, e as três razões coerentes."""
+    g = gerador
+    assert g.EX_VP + g.EX_FP + g.EX_FN + g.EX_VN == 100 == g.EX_TOTAL
+    assert g.EX_ALERTADOS == 20
+    assert g.EX_CANCELARAM == 10
+    assert (g.EX_VP + g.EX_VN) / g.EX_TOTAL == 0.86
+    assert g.EX_VP / g.EX_ALERTADOS == 0.40
+    assert g.EX_VP / g.EX_CANCELARAM == 0.80
+
+
+def test_o_exemplo_mostra_a_armadilha_da_acuracia(gerador):
+    """Dizer que ninguém cancela precisa dar acurácia maior que a do modelo,
+    senão o slide não tem argumento."""
+    g = gerador
+    modelo = (g.EX_VP + g.EX_VN) / g.EX_TOTAL
+    ninguem = (g.EX_FP + g.EX_VN) / g.EX_TOTAL
+    assert ninguem > modelo
+    assert ninguem == 0.90
+
+
+def test_o_exemplo_desenha_as_tres_metricas(gerador):
+    svg = _svg("aula06-metrica-exemplo-cem.svg")
+    for valor in ("86,0%", "40,0%", "80,0%"):
+        assert valor in svg, valor
+    for nome in ("Acurácia", "Precisão", "Recall"):
+        assert nome in svg, nome
+    # Cada métrica acende as próprias caixas e apaga na seguinte, senão os três
+    # realces se acumulam e o terceiro passo fica ilegível.
+    assert svg.count("fade-in-then-out") == 3
+    for indice in ("1", "2", "3"):
+        assert f'data-fragment-index="{indice}"' in svg
+
+
+def test_o_exemplo_nao_se_confunde_com_a_carteira_real(gerador):
+    """Número do exemplo em slide de dado real seria pior que nenhum exemplo."""
+    from tools import montar_deck_aula06  # noqa: F401
+
+    deck = DECK.read_text(encoding="utf-8")
+    assert "fora da carteira da Kovan" in deck
+
+
+# ---------------------------------------------------------------------------
+# O deck embute os cinco
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("nome", ARQUIVOS)

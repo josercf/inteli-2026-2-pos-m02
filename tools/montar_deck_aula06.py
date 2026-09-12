@@ -433,6 +433,14 @@ SLIDES.append(conteudo(
 ))
 
 SLIDES.append(figura_embutida(
+    "Com 100 clientes, as três métricas dão 86%, 40% e 80%",
+    "aula06-metrica-exemplo-cem.svg",
+    contexto="Números redondos: dez iam cancelar, o modelo alertou vinte e acertou oito.",
+    conclusao="Dizer que ninguém cancela daria 90% de acurácia, acima dos 86% do modelo.",
+    fonte="Exemplo construído para esta aula, fora da carteira da Kovan.",
+))
+
+SLIDES.append(figura_embutida(
     "A acurácia de 77,0% divide os acertos pela carteira inteira",
     "aula06-metrica-acuracia.svg",
     contexto="Pergunta que ela responde: que fração de todas as contas eu classifiquei bem?",
@@ -462,6 +470,21 @@ SLIDES.append(figura_embutida(
     contexto="F1 é a média harmônica entre precisão e revocação, e ela pune desequilíbrio.",
     conclusao="Na fila de 138 a média simples daria 43,6% e o F1 dá 8,8%. É a diferença que faz o F1 útil.",
     fonte="Fonte: dados/analise_aula06_longa.py.",
+))
+
+SLIDES.append(conteudo(
+    "A métrica que manda é a do erro que custa mais caro",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Quando o erro caro é</th><th>A métrica que manda</th><th>Exemplo fora do case</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Incomodar quem estava bem (FP)</td><td>Precisão</td><td>bloquear cartão legítimo por suspeita de fraude</td></tr>\n"
+    "            <tr><td>Deixar passar quem precisava (FN)</td><td>Recall</td><td>exame que não detecta a doença de quem está doente</td></tr>\n"
+    "            <tr><td>Os dois pesam parecido</td><td>F1</td><td>triagem de chamados de suporte</td></tr>\n"
+    "            <tr><td>Nenhum, as classes são equilibradas</td><td>Acurácia</td><td>raro em problema de churn, comum em teste A/B</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    contexto="A escolha vem do custo do erro, e é decisão de negócio.",
+    conclusao="Na Kovan a fila é fixa em 138, então sobra a precisão: 24 das 138 conversas seriam com quem ficaria.",
 ))
 
 # ---------------------------------------------------------------------------

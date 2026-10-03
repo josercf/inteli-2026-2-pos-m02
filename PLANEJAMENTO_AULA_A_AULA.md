@@ -537,6 +537,28 @@ acima se sustenta.
 
 ---
 
+## Aula 08: UC2 Aula 4, do modelo ao agente
+
+**Decisão sobre a pendência da S8:** a UC2 Aula 4 vira aula própria, a
+penúltima do módulo. A chave de API deixou de ser pendência: o workspace do n8n
+do Inteli (inteli.app.n8n.cloud) já tem credencial OpenRouter, e a turma recebeu
+o convite do n8n.
+
+Construída em `aulas/aula08.html`, com a fila publicada por `app/publicar.py` no
+repositório de prática e os números travados em
+`dados/tests/test_aula08_numeros.py`. Decisão de arquitetura em ADR-010.
+
+O grupo publica a fila do ciclo (138 contas, por valor esperado) como Webhook no
+n8n, e um AI Agent com modelo do OpenRouter consulta essa URL como ferramenta,
+atrás de um chat público. O prompt do sistema traz seis regras, a primeira
+delas: todo número da resposta sai da ferramenta. A oficina é uma bateria de
+quatro perguntas de teste.
+
+**Pendência:** data e horário do encontro não constam deste documento. O deck
+sai sem data na capa até a confirmação.
+
+---
+
 ## S9, 03/10/2026: Entrega 2 e banca
 
 Cada grupo defende o projeto no papel do Comitê de Receita da Kovan LATAM.

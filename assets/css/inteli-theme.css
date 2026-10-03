@@ -1412,3 +1412,27 @@
 .diagrama-aula06 .zona rect { fill: var(--seg-superficie); stroke: none; }
 .diagrama-aula06 .zona-titulo { font-size: 14px; font-weight: 600; fill: var(--seg-texto); }
 .diagrama-aula06 .zona-apoio { font-size: 13px; fill: var(--seg-texto); }
+
+/* Captura de tela de interface (Aula 08, n8n). Diferente da figura desenhada
+   em 1168px, a captura e governada pela altura: o objetivo e reconhecer a
+   tela, e a proporcao dela nao e controlada por nos. A borda separa o branco
+   da interface do branco do slide. */
+.figura.captura {
+  width: auto;
+  max-width: 100%;
+  max-height: 296px;
+  border: 1px solid var(--seg-borda);
+}
+
+/* Captura vertical (o canvas do n8n) ao lado de uma tabela. Empilhada, ela
+   renderizava com 220px de largura e ninguem lia o nome de um no. */
+.captura-lado {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.figura.captura.alta {
+  max-height: 340px;
+  margin: 0;
+}

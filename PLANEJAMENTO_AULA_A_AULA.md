@@ -540,9 +540,10 @@ acima se sustenta.
 ## Aula 08: UC2 Aula 4, do modelo ao agente
 
 **Decisão sobre a pendência da S8:** a UC2 Aula 4 vira aula própria, a
-penúltima do módulo. A chave de API deixou de ser pendência: o workspace do n8n
-do Inteli (inteli.app.n8n.cloud) já tem credencial OpenRouter, e a turma recebeu
-o convite do n8n.
+penúltima do módulo. A chave de API deixou de ser pendência: cada aluno cria uma
+chave gratuita no OpenRouter e a guarda numa credencial do n8n do Inteli
+(inteli.app.n8n.cloud), onde a turma já tem convite. O modelo padrão é gratuito
+(sufixo `:free`), com limite de 50 requisições por dia por conta.
 
 Construída em `aulas/aula08.html`, com a fila publicada por `app/publicar.py` no
 repositório de prática e os números travados em

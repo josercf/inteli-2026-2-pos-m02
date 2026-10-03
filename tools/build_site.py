@@ -58,6 +58,7 @@ ARQUIVOS = [
     ("aulas/aula08.html", "aulas/aula08.html"),
     ("painel/index.html", "painel/index.html"),
     ("assets/img/aula08-painel.png", "assets/img/aula08-painel.png"),
+    ("assets/img/aula08-n8n-credencial.png", "assets/img/aula08-n8n-credencial.png"),
     ("assets/img/aula08-n8n-workflow.png", "assets/img/aula08-n8n-workflow.png"),
     ("assets/img/aula08-n8n-openrouter.png", "assets/img/aula08-n8n-openrouter.png"),
     ("assets/img/aula08-n8n-chat.png", "assets/img/aula08-n8n-chat.png"),

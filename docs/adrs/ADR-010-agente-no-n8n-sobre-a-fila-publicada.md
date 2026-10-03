@@ -8,8 +8,8 @@
 
 A UC2 Aula 4 pede o pipeline integrado: modelo, API generativa e interface. A
 pendência registrada na S8 era a chave de API para uso em sala. A turma tem
-acesso ao n8n do Inteli (inteli.app.n8n.cloud), e o workspace já tem uma
-credencial OpenRouter.
+acesso ao n8n do Inteli (inteli.app.n8n.cloud), e cada aluno pode criar uma
+chave gratuita no OpenRouter.
 
 O modelo da Aula 07 é scikit-learn, treinado na máquina do grupo. O n8n não
 executa Python com scikit-learn.
@@ -36,8 +36,11 @@ cópia.
   de duas horas consumiria o tempo da bateria de teste.
 - O agente consulta a mesma URL que qualquer outro sistema usaria, então o
   número que ele cita é auditável contra a API.
-- A credencial OpenRouter do workspace resolve a pendência da chave sem que a
-  chave passe por arquivo, prompt ou repositório.
+- A chave gratuita do OpenRouter resolve a pendência sem custo: cada aluno cria
+  a sua e a guarda numa credencial do n8n, e a chave não passa por arquivo,
+  prompt ou repositório. O modelo padrão do arquivo é
+  `nvidia/nemotron-3-super-120b-a12b:free`, testado em 03/10/2026 com a
+  ferramenta da fila e com o painel.
 
 ## Riscos conhecidos
 
@@ -52,6 +55,10 @@ cópia.
 - **Versão de nó.** O arquivo declara `typeVersion` dos nós de IA. Uma
   atualização do n8n pode pedir revisão; o script de captura importa o arquivo
   real e falha se o n8n recusar.
+- **Limite do plano gratuito.** 20 requisições por minuto e 50 por dia por
+  conta sem crédito, e cada pergunta ao agente da fila gasta duas ou mais.
+  Mitigação: uma chave por aluno. Modelo gratuito pode sair do catálogo; o
+  deck ensina a reconhecer o sufixo `:free` e trocar o campo do nó.
 - **A planilha inteira vai no prompt.** O painel limita a 300 linhas por
   pergunta. A fila do ciclo tem 138.
 - **A mesma pergunta pode indicar áreas diferentes** quando duas se aplicam.

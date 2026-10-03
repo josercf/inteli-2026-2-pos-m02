@@ -8,7 +8,9 @@ Pré-requisitos:
 - um perfil de navegador com sessão aberta em inteli.app.n8n.cloud (o login é
   feito à mão, uma vez, numa janela visível; a senha nunca passa por aqui).
 
-Uso: python tools/capturar_n8n_aula08.py <pasta-do-perfil>
+Uso: python tools/capturar_n8n_aula08.py <pasta-do-perfil> [id-do-workflow]
+
+Com o id, atualiza o workflow existente em vez de criar outro.
 
 As capturas vão para assets/img/aula08-n8n-*.png. A credencial OpenRouter é a
 que já existe no workspace: o script procura pelo tipo, nunca recebe a chave.
@@ -48,6 +50,24 @@ def api(page, metodo, caminho, corpo=None):
     if isinstance(dados, dict) and "data" in dados:
         dados = dados["data"]
     return r["status"], dados
+
+
+# Recortes em pixels da captura em 1600x900 com escala 2. Tiram a barra lateral
+# do n8n (que mostra os workflows pessoais de quem captura) e as bordas vazias.
+RECORTES = {
+    "aula08-n8n-workflow.png": (1280, 200, 2400, 1700),
+    "aula08-n8n-openrouter.png": (48, 48, 2040, 800),
+    "aula08-n8n-chat.png": (0, 860, 3200, 1650),
+}
+
+
+def recortar() -> None:
+    from PIL import Image
+
+    for nome, caixa in RECORTES.items():
+        im = Image.open(IMG / nome).convert("RGB").crop(caixa)
+        im = im.resize((1600, round(im.height * 1600 / im.width)), Image.LANCZOS)
+        im.save(IMG / nome, optimize=True)
 
 
 def main(perfil: str) -> None:
@@ -133,6 +153,7 @@ def main(perfil: str) -> None:
         print("RESPOSTA:", c.locator("body").inner_text()[-1500:])
         print("WORKFLOW_ID:", wid)
         ctx.close()
+    recortar()
 
 
 if __name__ == "__main__":

@@ -69,9 +69,9 @@
             <tr><td>Contrato</td><td>O agente só cita número que a API devolveu. Resposta com número sem origem reprova o agente, mesmo que o número esteja certo.</td></tr>
             <tr><td>Ambiente</td><td><a href="https://inteli.app.n8n.cloud/">inteli.app.n8n.cloud</a>, com o convite que a turma já recebeu, e o repositório de prática para gerar o arquivo de importação.</td></tr>
             <tr><td>Bloco 01</td><td>Publicar a fila como API. 35 minutos, com a Prática 1.</td></tr>
-            <tr><td>Bloco 02</td><td>O agente e o chat público. 35 minutos, com a Prática 2.</td></tr>
-            <tr><td>Bloco 03</td><td>O painel web com os planos de ação de cada área. 30 minutos, com a Prática 3.</td></tr>
-            <tr><td>Bloco 04</td><td>Testar o agente contra pergunta difícil. 35 minutos, com o quiz e a oficina.</td></tr>
+            <tr><td>Bloco 02</td><td>A chave gratuita, o agente e o chat público. 45 minutos, com as Práticas 2 e 3.</td></tr>
+            <tr><td>Bloco 03</td><td>O painel web com os planos de ação de cada área. 25 minutos, com a Prática 4.</td></tr>
+            <tr><td>Bloco 04</td><td>Testar o agente contra pergunta difícil. 30 minutos, com o quiz e a oficina.</td></tr>
           </tbody>
         </table>
         <div class="slide-footer">
@@ -340,7 +340,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>O modelo do OpenRouter é um campo do nó, e trocá-lo não mexe no workflow</h2>
-          <p class="linha-contexto">Uma credencial do OpenRouter dá acesso a modelos de vários fornecedores.</p>
+          <p class="linha-contexto">O arquivo vem com um modelo gratuito, testado com a ferramenta da fila em 03/10/2026.</p>
         </div>
         <img class="figura captura" src="../assets/img/aula08-n8n-openrouter.png" alt="Nó OpenRouter Chat Model aberto, com a credencial e o campo do modelo">
         <div class="fecho">
@@ -355,18 +355,124 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
       </section>
 
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A chave gratuita do OpenRouter libera 50 requisições por dia por conta</h2>
+        </div>
+        <table class="tabela-criterios compacta">
+          <thead><tr><th>Item</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Modelos gratuitos</td><td>identificador terminado em <code>:free</code></td></tr>
+            <tr><td>Limite por conta</td><td>20 por minuto; 50 por dia sem crédito, 1.000 com USD 10 comprados</td></tr>
+            <tr class="destaque"><td>Modelo padrão do arquivo</td><td><code>nvidia/nemotron-3-super-120b-a12b:free</code></td></tr>
+            <tr><td>Custo de uma pergunta</td><td>agente da fila, duas ou mais (escolher a ferramenta e redigir); painel, uma</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Cada pessoa do grupo cria a própria chave, e o limite diário de 50 vale para cada uma.</p>
+        </div>
+        <p class="fonte-nota">Fonte: openrouter.ai/docs, página de limites, consultada em 03/10/2026.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
+          <p class="footer-page">12</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A credencial do n8n guarda a chave, e o workflow guarda só o nome dela</h2>
+          <p class="linha-contexto">Credentials, Create credential, OpenRouter. A chave é colada uma vez no campo API Key.</p>
+        </div>
+        <img class="figura captura" src="../assets/img/aula08-n8n-credencial.png" alt="Diálogo de nova credencial OpenRouter no n8n, com o campo API Key vazio">
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Implicação</span>
+          <p>O arquivo exportado do workflow não carrega a chave. Ele pode ir para o repositório sem expor nada.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
+          <p class="footer-page">13</p>
+        </div>
+      </section>
+
       <section class="exercise-slide">
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
-          <p class="sobrelinha">Prática 2 &middot; 25 minutos &middot; n8n</p>
+          <p class="sobrelinha">Prática 2 &middot; 10 minutos &middot; n8n</p>
+          <div class="accent-bar"></div>
+          <h2>Criar a chave gratuita e a credencial no n8n</h2>
+        </div>
+        <div class="pratica">
+          <div class="pratica-trilho">
+            <div class="pratica-tempo">
+              <p class="tempo">10</p>
+              <p class="tempo-unidade">minutos</p>
+            </div>
+            <dl>
+              <dt>Formato</dt><dd>Cada pessoa, na própria conta</dd>
+              <dt>Entrega</dt><dd>A credencial OpenRouter salva no n8n</dd>
+              <dt>Checkpoint</dt><dd>O nó OpenRouter do workflow mostra a credencial sem alerta vermelho</dd>
+            </dl>
+          </div>
+          <div class="pratica-passos">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Entre em openrouter.ai com a conta Google ou GitHub.</p>
+            <p class="detalhe">Não é preciso cadastrar cartão para usar os modelos <code>:free</code>.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Em openrouter.ai/settings/keys, crie a chave com o nome kovan-NOME_DO_GRUPO.</p>
+            <p class="detalhe">A chave aparece uma vez só. Copie direto para o n8n, sem passar por chat, e-mail ou arquivo.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">No n8n, Credentials, Create credential, OpenRouter, cole em API Key e salve.</p>
+            <p class="detalhe">Depois escolha essa credencial nos dois nós OpenRouter do workflow importado.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>A credencial salva, e nenhuma chave escrita fora do n8n</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
+          <p class="footer-page">14</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Prática 3 &middot; 20 minutos &middot; n8n</p>
           <div class="accent-bar"></div>
           <h2>Ligar o agente e abrir o chat público</h2>
         </div>
         <div class="pratica">
           <div class="pratica-trilho">
             <div class="pratica-tempo">
-              <p class="tempo">25</p>
+              <p class="tempo">20</p>
               <p class="tempo-unidade">minutos</p>
             </div>
             <dl>
@@ -379,8 +485,8 @@ valor esperado somado: USD 23.120.906</code></pre>
           <div class="pratica-passo">
             <span class="num">01</span>
             <div>
-              <p class="acao">Escolha a credencial nos dois nós OpenRouter.</p>
-            <p class="detalhe">Use a credencial OpenRouter indicada pelo professor. Não cole chave em nó, em prompt nem em arquivo do repositório.</p>
+              <p class="acao">Confira o modelo e a credencial nos dois nós OpenRouter.</p>
+            <p class="detalhe">O modelo termina em :free. Modelo sem esse sufixo cobra por requisição e falha numa conta sem crédito.</p>
             </div>
           </div>
           <div class="pratica-passo">
@@ -408,7 +514,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">12</p>
+          <p class="footer-page">15</p>
         </div>
       </section>
 
@@ -429,7 +535,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">13</p>
+          <p class="footer-page">16</p>
         </div>
       </section>
 
@@ -462,7 +568,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">14</p>
+          <p class="footer-page">17</p>
         </div>
       </section>
 
@@ -491,7 +597,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">15</p>
+          <p class="footer-page">18</p>
         </div>
       </section>
 
@@ -499,7 +605,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
-          <p class="sobrelinha">Prática 3 &middot; 20 minutos &middot; n8n</p>
+          <p class="sobrelinha">Prática 4 &middot; 20 minutos &middot; n8n</p>
           <div class="accent-bar"></div>
           <h2>Usar o painel pronto e depois criar o do grupo</h2>
         </div>
@@ -541,7 +647,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">16</p>
+          <p class="footer-page">19</p>
         </div>
       </section>
 
@@ -581,7 +687,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">17</p>
+          <p class="footer-page">20</p>
         </div>
       </section>
 
@@ -591,7 +697,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         <div class="slide-title-area">
           <div class="accent-bar"></div>
           <h2>O agente leu 0,63 do pico como queda de 63%, e a queda é de 37%</h2>
-          <p class="linha-contexto">Conta D, pergunta da Prática 2, modelo openai/gpt-4o-mini.</p>
+          <p class="linha-contexto">Conta D, pergunta da Prática 3. Erraram o gpt-4o-mini e o qwen3.8-27b:free; o Nemotron citou 0,63 sem converter.</p>
         </div>
         <table class="tabela-criterios compacta">
           <thead><tr><th>Etapa</th><th>Na execução de demonstração</th></tr></thead>
@@ -610,7 +716,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">18</p>
+          <p class="footer-page">21</p>
         </div>
       </section>
 
@@ -638,7 +744,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">19</p>
+          <p class="footer-page">22</p>
         </div>
       </section>
 
@@ -685,7 +791,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">20</p>
+          <p class="footer-page">23</p>
         </div>
       </section>
 
@@ -693,14 +799,14 @@ valor esperado somado: USD 23.120.906</code></pre>
         <div class="top-bar"></div>
         <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
         <div class="slide-title-area">
-          <p class="sobrelinha">Prática 3 &middot; 30 minutos &middot; n8n</p>
+          <p class="sobrelinha">Prática 5 &middot; 25 minutos &middot; n8n</p>
           <div class="accent-bar"></div>
           <h2>Oficina: a bateria de teste do agente do grupo</h2>
         </div>
         <div class="pratica">
           <div class="pratica-trilho">
             <div class="pratica-tempo">
-              <p class="tempo">30</p>
+              <p class="tempo">25</p>
               <p class="tempo-unidade">minutos</p>
             </div>
             <dl>
@@ -741,7 +847,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">21</p>
+          <p class="footer-page">24</p>
         </div>
       </section>
 
@@ -769,7 +875,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">22</p>
+          <p class="footer-page">25</p>
         </div>
       </section>
 
@@ -793,7 +899,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">23</p>
+          <p class="footer-page">26</p>
         </div>
       </section>
 
@@ -806,7 +912,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="concept-cards">
           <div class="concept-card"><h3>Caso e dados</h3><p>1. Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão v2.</p><p>2. Repositório de prática, <code>app/publicar.py</code> e <code>app/workflow_n8n.py</code>.</p></div>
-          <div class="concept-card"><h3>Ferramentas</h3><p>3. n8n. Documentação do AI Agent, do Chat Trigger e do HTTP Request Tool. docs.n8n.io.</p><p>4. OpenRouter. Documentação de modelos e credenciais. openrouter.ai/docs.</p></div>
+          <div class="concept-card"><h3>Ferramentas</h3><p>3. n8n. Documentação do AI Agent, do Chat Trigger e do HTTP Request Tool. docs.n8n.io.</p><p>4. OpenRouter. Documentação de modelos, chaves e limites. openrouter.ai/docs.</p></div>
           <div class="concept-card"><h3>Métodos citáveis</h3><p>5. Yao, S. et al. ReAct: Synergizing Reasoning and Acting in Language Models. ICLR, 2023.</p><p>6. Sculley, D. et al. Hidden Technical Debt in Machine Learning Systems. NeurIPS, 2015.</p></div>
         </div>
         <div class="fecho">
@@ -817,7 +923,7 @@ valor esperado somado: USD 23.120.906</code></pre>
         </div>
         <div class="slide-footer">
           <p class="footer-bar">Módulo 2 &middot; Aula 08</p>
-          <p class="footer-page">24</p>
+          <p class="footer-page">27</p>
         </div>
       </section>
 

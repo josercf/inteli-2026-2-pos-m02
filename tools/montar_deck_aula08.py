@@ -96,9 +96,9 @@ SLIDES.append(conteudo(
     "            <tr><td>Contrato</td><td>O agente só cita número que a API devolveu. Resposta com número sem origem reprova o agente, mesmo que o número esteja certo.</td></tr>\n"
     f"            <tr><td>Ambiente</td><td>{N8N}, com o convite que a turma já recebeu, e o repositório de prática para gerar o arquivo de importação.</td></tr>\n"
     "            <tr><td>Bloco 01</td><td>Publicar a fila como API. 35 minutos, com a Prática 1.</td></tr>\n"
-    "            <tr><td>Bloco 02</td><td>O agente e o chat público. 35 minutos, com a Prática 2.</td></tr>\n"
-    "            <tr><td>Bloco 03</td><td>O painel web com os planos de ação de cada área. 30 minutos, com a Prática 3.</td></tr>\n"
-    "            <tr><td>Bloco 04</td><td>Testar o agente contra pergunta difícil. 35 minutos, com o quiz e a oficina.</td></tr>\n"
+    "            <tr><td>Bloco 02</td><td>A chave gratuita, o agente e o chat público. 45 minutos, com as Práticas 2 e 3.</td></tr>\n"
+    "            <tr><td>Bloco 03</td><td>O painel web com os planos de ação de cada área. 25 minutos, com a Prática 4.</td></tr>\n"
+    "            <tr><td>Bloco 04</td><td>Testar o agente contra pergunta difícil. 30 minutos, com o quiz e a oficina.</td></tr>\n"
     "          </tbody>\n"
     "        </table>\n",
 ))
@@ -250,20 +250,62 @@ SLIDES.append(captura(
     "O modelo do OpenRouter é um campo do nó, e trocá-lo não mexe no workflow",
     "aula08-n8n-openrouter.png",
     "Nó OpenRouter Chat Model aberto, com a credencial e o campo do modelo",
-    contexto="Uma credencial do OpenRouter dá acesso a modelos de vários fornecedores.",
+    contexto="O arquivo vem com um modelo gratuito, testado com a ferramenta da fila em 03/10/2026.",
     conclusao="Trocar de modelo é teste A/B barato. A bateria de perguntas da oficina é o que decide qual fica.",
 ))
 
 # ---------------------------------------------------------------------------
-# 14. Prática 2
+# A chave gratuita
+# ---------------------------------------------------------------------------
+SLIDES.append(conteudo(
+    "A chave gratuita do OpenRouter libera 50 requisições por dia por conta",
+    '        <table class="tabela-criterios compacta">\n'
+    "          <thead><tr><th>Item</th><th>Valor</th></tr></thead>\n"
+    "          <tbody>\n"
+    "            <tr><td>Modelos gratuitos</td><td>identificador terminado em <code>:free</code></td></tr>\n"
+    "            <tr><td>Limite por conta</td><td>20 por minuto; 50 por dia sem crédito, 1.000 com USD 10 comprados</td></tr>\n"
+    '            <tr class="destaque"><td>Modelo padrão do arquivo</td><td><code>nvidia/nemotron-3-super-120b-a12b:free</code></td></tr>\n'
+    "            <tr><td>Custo de uma pergunta</td><td>agente da fila, duas ou mais (escolher a ferramenta e redigir); painel, uma</td></tr>\n"
+    "          </tbody>\n"
+    "        </table>\n",
+    conclusao="Cada pessoa do grupo cria a própria chave, e o limite diário de 50 vale para cada uma.",
+    fonte="Fonte: openrouter.ai/docs, página de limites, consultada em 03/10/2026.",
+))
+
+SLIDES.append(captura(
+    "A credencial do n8n guarda a chave, e o workflow guarda só o nome dela",
+    "aula08-n8n-credencial.png",
+    "Diálogo de nova credencial OpenRouter no n8n, com o campo API Key vazio",
+    contexto="Credentials, Create credential, OpenRouter. A chave é colada uma vez no campo API Key.",
+    conclusao="O arquivo exportado do workflow não carrega a chave. Ele pode ir para o repositório sem expor nada.",
+))
+
+SLIDES.append(pratica(
+    2, "Criar a chave gratuita e a credencial no n8n", 10,
+    "Cada pessoa, na própria conta", "A credencial OpenRouter salva no n8n",
+    "O nó OpenRouter do workflow mostra a credencial sem alerta vermelho",
+    [
+        {"acao": "Entre em openrouter.ai com a conta Google ou GitHub.",
+         "detalhe": "Não é preciso cadastrar cartão para usar os modelos <code>:free</code>."},
+        {"acao": "Em openrouter.ai/settings/keys, crie a chave com o nome kovan-NOME_DO_GRUPO.",
+         "detalhe": "A chave aparece uma vez só. Copie direto para o n8n, sem passar por chat, e-mail ou arquivo."},
+        {"acao": "No n8n, Credentials, Create credential, OpenRouter, cole em API Key e salve.",
+         "detalhe": "Depois escolha essa credencial nos dois nós OpenRouter do workflow importado."},
+    ],
+    "A credencial salva, e nenhuma chave escrita fora do n8n",
+    ambiente=AMBIENTE,
+))
+
+# ---------------------------------------------------------------------------
+# 14. Prática 3
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
-    2, "Ligar o agente e abrir o chat público", 25,
+    3, "Ligar o agente e abrir o chat público", 20,
     "Em grupo, no workflow importado", "A URL do chat do grupo respondendo sobre a Conta D",
     "Cada mesa pergunta pela Conta D e confere os números contra a API",
     [
-        {"acao": "Escolha a credencial nos dois nós OpenRouter.",
-         "detalhe": "Use a credencial OpenRouter indicada pelo professor. Não cole chave em nó, em prompt nem em arquivo do repositório."},
+        {"acao": "Confira o modelo e a credencial nos dois nós OpenRouter.",
+         "detalhe": "O modelo termina em :free. Modelo sem esse sufixo cobra por requisição e falha numa conta sem crédito."},
         {"acao": "Abra o Chat Trigger e copie a Chat URL.",
          "detalhe": "Make Chat Publicly Available já vem ligado no arquivo. O workflow precisa estar ativo para a URL responder."},
         {"acao": "Faça a primeira pergunta no chat público.",
@@ -315,7 +357,7 @@ SLIDES.append(conteudo(
 ))
 
 SLIDES.append(pratica(
-    3, "Usar o painel pronto e depois criar o do grupo", 20,
+    4, "Usar o painel pronto e depois criar o do grupo", 20,
     "Em grupo", "O painel do grupo respondendo, com os planos de ação do grupo",
     "Cada mesa mostra uma mudança que fez no próprio painel",
     [
@@ -366,7 +408,7 @@ SLIDES.append(conteudo(
     "          </tbody>\n"
     "        </table>\n"
     '        <p class="linha-contexto">O número veio da ferramenta e a regra 1 foi cumprida. O erro está no nome do campo, que diz queda e guarda uma razão.</p>\n',
-    contexto="Conta D, pergunta da Prática 2, modelo openai/gpt-4o-mini.",
+    contexto="Conta D, pergunta da Prática 3. Erraram o gpt-4o-mini e o qwen3.8-27b:free; o Nemotron citou 0,63 sem converter.",
     conclusao="A correção é no contrato da API: renomear o campo ou descrevê-lo na ferramenta.",
 ))
 
@@ -410,7 +452,7 @@ SLIDES.append(quiz(
 # 19. Oficina
 # ---------------------------------------------------------------------------
 SLIDES.append(pratica(
-    3, "Oficina: a bateria de teste do agente do grupo", 30,
+    5, "Oficina: a bateria de teste do agente do grupo", 25,
     "Em grupo, três estações de tempo marcado", "teste_agente.md com as quatro perguntas, a resposta e o veredito",
     "Cada mesa mostra uma reprovação e o que mudou para virar aprovação",
     [
@@ -470,7 +512,7 @@ SLIDES.append(conteudo(
     "<p>2. Repositório de prática, <code>app/publicar.py</code> e <code>app/workflow_n8n.py</code>.</p></div>\n"
     '          <div class="concept-card"><h3>Ferramentas</h3>'
     "<p>3. n8n. Documentação do AI Agent, do Chat Trigger e do HTTP Request Tool. docs.n8n.io.</p>"
-    "<p>4. OpenRouter. Documentação de modelos e credenciais. openrouter.ai/docs.</p></div>\n"
+    "<p>4. OpenRouter. Documentação de modelos, chaves e limites. openrouter.ai/docs.</p></div>\n"
     '          <div class="concept-card"><h3>Métodos citáveis</h3>'
     "<p>5. Yao, S. et al. ReAct: Synergizing Reasoning and Acting in Language Models. ICLR, 2023.</p>"
     "<p>6. Sculley, D. et al. Hidden Technical Debt in Machine Learning Systems. NeurIPS, 2015.</p></div>\n"

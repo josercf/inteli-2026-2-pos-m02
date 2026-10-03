@@ -537,23 +537,21 @@ acima se sustenta.
 
 ---
 
-## Aula 08: UC2 Aula 4, do modelo ao agente
+## Aula 08: UC2 Aula 4, do modelo à equipe de agentes
 
 **Decisão sobre a pendência da S8:** a UC2 Aula 4 vira aula própria, a
-penúltima do módulo. A chave de API deixou de ser pendência: cada aluno cria uma
-chave gratuita no OpenRouter e a guarda numa credencial do n8n do Inteli
-(inteli.app.n8n.cloud), onde a turma já tem convite. O modelo padrão é gratuito
-(sufixo `:free`), com limite de 50 requisições por dia por conta.
+penúltima do módulo, em formato invertido. A chave de API deixou de ser
+pendência: cada aluno cria uma chave gratuita no OpenRouter e a guarda numa
+credencial do n8n do Inteli (inteli.app.n8n.cloud), onde a turma já tem
+convite.
 
-Construída em `aulas/aula08.html`, com a fila publicada por `app/publicar.py` no
-repositório de prática e os números travados em
-`dados/tests/test_aula08_numeros.py`. Decisão de arquitetura em ADR-010.
-
-O grupo publica a fila do ciclo (138 contas, por valor esperado) como Webhook no
-n8n, e um AI Agent com modelo do OpenRouter consulta essa URL como ferramenta,
-atrás de um chat público. O prompt do sistema traz seis regras, a primeira
-delas: todo número da resposta sai da ferramenta. A oficina é uma bateria de
-quatro perguntas de teste.
+Construída em `aulas/aula08.html`, com o guia passo a passo em
+`materiais/aula08-guia.html` e o laboratório em `laboratorio/`. O painel
+(`painel/`) lê a planilha original, treina uma regressão logística no
+navegador (4.593 contas elegíveis, AUC 0,814 fora da amostra) e envia a fila de
+138 contas a três agentes no n8n: Atlas, Vera e Ciro. O Jev Router, da
+TypeSafe, entra como comparação. Os números estão em `dados/analise_aula08.py`
+e travados em `dados/tests/test_aula08_numeros.py`. Decisão em ADR-010.
 
 **Pendência:** data e horário do encontro não constam deste documento. O deck
 sai sem data na capa até a confirmação.

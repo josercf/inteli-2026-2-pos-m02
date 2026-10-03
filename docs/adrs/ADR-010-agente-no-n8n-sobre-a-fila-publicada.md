@@ -1,78 +1,83 @@
-# ADR-010: o agente da Aula 08 roda no n8n e consulta a fila publicada em lote
+# ADR-010: o modelo roda no navegador e uma equipe de três agentes no n8n responde sobre a fila
 
 - **Data:** 03/10/2026
-- **Status:** aceita
+- **Status:** aceita (revisada no mesmo dia; ver Histórico)
 - **Decisores:** Prof. José Romualdo da Costa Filho
 
 ## Contexto
 
 A UC2 Aula 4 pede o pipeline integrado: modelo, API generativa e interface. A
 pendência registrada na S8 era a chave de API para uso em sala. A turma tem
-acesso ao n8n do Inteli (inteli.app.n8n.cloud), e cada aluno pode criar uma
-chave gratuita no OpenRouter.
+acesso ao n8n do Inteli (inteli.app.n8n.cloud) e pode criar chave gratuita no
+OpenRouter.
 
-O modelo da Aula 07 é scikit-learn, treinado na máquina do grupo. O n8n não
-executa Python com scikit-learn.
+A Aula 08 é invertida: os alunos trabalham a partir de um guia e o professor
+circula. Isso exige um caminho sem instalação e sem passo que dependa do
+ambiente Python de cada máquina.
 
 ## Decisão
 
-O grupo publica o resultado do modelo, e não o modelo: `python -m app.publicar`
-grava a fila do ciclo (138 contas, por valor esperado) e um workflow do n8n com
-essa fila embutida num nó Code. O mesmo workflow expõe a fila por Webhook e liga
-um AI Agent, com modelo do OpenRouter, a essa URL como ferramenta.
-
-Um terceiro gatilho, `POST /webhook/kovan-chat-<grupo>`, atende o painel web
-(`painel/index.html` no acervo, copiado em `frontend/` no repositório de
-prática). O painel envia a pergunta, as linhas da planilha e os planos de ação
-de Comercial, Atendimento e Pós-vendas, e o agente responde apoiado só nesse
-material. A turma usa o painel publicado primeiro e depois adapta a própria
-cópia.
+O painel (`painel/index.html` e `painel/modelo.js`) lê a planilha original do
+case no navegador, monta seis colunas por conta com histórico até 2024-02,
+treina uma regressão logística com escore fora da amostra e ordena a fila por
+valor esperado. A fila segue, a cada pergunta, para um workflow fixo do n8n
+(`painel/workflow_n8n.json`) com três agentes em sequência: Atlas (analista),
+Vera (estrategista, aplica os planos de ação das áreas) e Ciro (revisor). O
+modelo de linguagem é escolhido no painel, com um modelo `:free` do OpenRouter
+como padrão e o Jev Router da TypeSafe como opção.
 
 ## Motivações
 
-- O escore só muda quando a base muda, uma vez por ciclo. Inferência em lote
-  atende o caso sem servidor de modelo.
-- Um arquivo de importação elimina a montagem do workflow à mão, que numa aula
-  de duas horas consumiria o tempo da bateria de teste.
-- O agente consulta a mesma URL que qualquer outro sistema usaria, então o
-  número que ele cita é auditável contra a API.
-- A chave gratuita do OpenRouter resolve a pendência sem custo: cada aluno cria
-  a sua e a guarda numa credencial do n8n, e a chave não passa por arquivo,
-  prompt ou repositório. O modelo padrão do arquivo é
-  `nvidia/nemotron-3-super-120b-a12b:free`, testado em 03/10/2026 com a
-  ferramenta da fila e com o painel.
+- Nenhuma instalação: a planilha entra como chegou e o arquivo do workflow não
+  carrega dado, então serve a todos os grupos.
+- A planilha não sai do navegador. Ao n8n vão só as 138 contas da fila, com
+  identificador anonimizado e as colunas que a tela mostra.
+- A divisão em três agentes torna visível onde a resposta errou: no número
+  (Atlas), na ação (Vera) ou na conferência (Ciro).
+- O mesmo cálculo existe em Python (`dados/analise_aula08.py`), e
+  `tools/tests/test_painel_modelo.py` compara os dois conta a conta.
+- A chave gratuita resolve a pendência sem custo e sem a chave passar por
+  arquivo ou repositório: ela fica numa credencial do n8n de cada aluno.
 
 ## Riscos conhecidos
 
-- **URL pública.** O Webhook e o chat ficam abertos para quem tiver o link.
-  Mitigação: só saem identificador anonimizado e os campos que a tela da Aula 07
-  já mostrava, com a lista travada em `app/tests/test_publicar.py`. O deck
-  declara que um uso real pediria autenticação.
-- **Dado real em serviço externo.** A fila é derivada da base real. Mitigação:
-  nenhum pedido, nome ou cadastro sai; o n8n é o tenant do Inteli.
-- **Colisão de URL entre grupos.** O caminho do webhook leva o nome do grupo,
-  passado em `--grupo`.
-- **Versão de nó.** O arquivo declara `typeVersion` dos nós de IA. Uma
-  atualização do n8n pode pedir revisão; o script de captura importa o arquivo
-  real e falha se o n8n recusar.
+- **URL pública do webhook.** Quem tem o endereço consulta a equipe do grupo.
+  Mitigação: o endpoint não entra no repositório publicado; cada pessoa cola no
+  painel e ele fica no navegador dela.
 - **Limite do plano gratuito.** 20 requisições por minuto e 50 por dia por
-  conta sem crédito, e cada pergunta ao agente da fila gasta duas ou mais.
-  Mitigação: uma chave por aluno. Modelo gratuito pode sair do catálogo; o
-  deck ensina a reconhecer o sufixo `:free` e trocar o campo do nó.
-- **A planilha inteira vai no prompt.** O painel limita a 300 linhas por
-  pergunta. A fila do ciclo tem 138.
-- **A mesma pergunta pode indicar áreas diferentes** quando duas se aplicam.
-  Observado na demonstração com a Conta D; o deck ensina a ordenar as áreas no
-  plano.
+  conta, e cada pergunta usa três. Mitigação: uma chave por aluno e a bateria
+  dimensionada em 12 requisições.
+- **O Jev cobra por uso.** Com chave sem crédito ele devolve erro. Mitigação:
+  o padrão é gratuito, e a comparação com o Jev é demonstrada pelo professor.
+- **Modelo gratuito sai do catálogo.** Mitigação: o identificador é um campo do
+  painel, e o guia ensina a reconhecer o sufixo `:free`.
+- **A base curta de 24 meses não tem histórico antes do corte.** Mitigação:
+  `modelo.js` reconhece a base pela primeira data e devolve mensagem que
+  explica qual arquivo usar.
+- **Fila inteira no prompt de três agentes.** São cerca de 17 mil tokens por
+  chamada. Aceito para 138 contas; uma fila maior pediria ferramenta de
+  consulta em vez de contexto.
 
 ## Consequências
 
-Positivas: a camada generativa do Artefato 2 sai pronta para teste, e a regra
-"todo número sai da ferramenta" é verificável na aba Executions.
+Positivas: o aluno vai do arquivo original ao painel publicado no GitHub Pages
+sem instalar nada, e o grupo modifica a cópia em `frontend/` do repositório de
+prática. O nome de coluna que dois modelos leram errado
+(`queda_contra_pico`) virou `receita_12m_como_fracao_do_pico_anual`.
 
-Negativas: a fila no n8n envelhece até alguém rodar `app.publicar` de novo, e a
-reimportação substitui o workflow do grupo.
+Negativas: o modelo do navegador é uma regressão logística de seis colunas, mais
+simples que o pacote da Aula 07 (AUC 0,814 contra 0,825). A Aula 07 continua
+sendo a referência de engenharia.
+
+## Histórico
+
+A primeira versão desta ADR, no mesmo dia, publicava a fila calculada em Python
+(`app.publicar`) embutida num nó Code do n8n, com um único agente. Ela foi
+substituída porque exigia rodar o modelo localmente antes de cada uso, o que
+não se sustenta numa aula invertida.
 
 ## ADRs relacionadas
 
-- ADR-009: o aplicativo vive no repositório de prática.
+- ADR-005: o dataset oficial e a base que não é versionada.
+- ADR-008: a regressão logística por IRLS, que o painel reproduz em JavaScript.
+- ADR-009: o aplicativo da Aula 07 no repositório de prática.

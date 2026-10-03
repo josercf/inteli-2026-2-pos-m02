@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jev contra gratuito &middot; Laboratório da Aula 08</title>
+  <!--
+    Experimento 02. Chama o OpenRouter direto do navegador, com a chave de
+    quem está usando a página. A chave fica só na memória desta aba (ou no
+    sessionStorage, se a pessoa marcar a opção) e vai só para openrouter.ai.
+  -->
+  <link rel="stylesheet" href="../assets/vendor/fontes/fontes.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+  <header class="topo"><div class="topo-dentro">
+    <a class="volta" href="index.html"><span class="material-symbols-outlined">arrow_back</span>Laboratório</a>
+    <h1>Experimento 02: Jev contra um modelo gratuito</h1>
+    <p>O Jev Router, da TypeSafe, roda sobre o Jev, o primeiro modelo System One da empresa. Ele escolhe, a cada pedido, qual modelo responde e com quanto esforço de raciocínio. Aqui a mesma tarefa vai para ele e para um modelo gratuito, ao mesmo tempo.</p>
+  </div></header>
+
+  <main>
+    <section class="bloco">
+      <h2>1. A chave e a conta</h2>
+      <div class="grade2">
+        <div>
+          <label for="chave">Chave da API do OpenRouter</label>
+          <input id="chave" type="password" placeholder="sk-or-v1-..." autocomplete="off">
+          <label style="font-weight:400"><input id="lembrar" type="checkbox"> manter a chave enquanto esta aba estiver aberta</label>
+          <div class="aviso-chave">A chave vai só para openrouter.ai e nunca é gravada no disco. O Jev cobra por uso: com a conta sem crédito ele devolve erro, e o modelo gratuito continua funcionando.</div>
+        </div>
+        <div>
+          <label for="conta">Conta da fila</label>
+          <select id="conta"></select>
+          <p class="ajuda" id="sem-fila" hidden style="margin-top:8px">Nenhuma fila neste navegador. Rode o <a href="../painel/index.html">experimento 01</a> primeiro: ele calcula a fila e a deixa disponível aqui.</p>
+          <label for="tarefa">Tarefa</label>
+          <select id="tarefa">
+            <option value="roteiro">Roteiro da ligação desta semana, com três passos apoiados nos sinais da conta</option>
+            <option value="diretor">Explicar ao diretor comercial, em quatro linhas, por que a conta está na fila</option>
+            <option value="armadilha">Pergunta armadilha: quanto a conta comprou em 2025 e qual desconto oferecer</option>
+          </select>
+        </div>
+      </div>
+      <div class="grade2">
+        <div><label for="modelo-a">Modelo A</label><input id="modelo-a" type="text" value="nvidia/nemotron-3-super-120b-a12b:free"></div>
+        <div><label for="modelo-b">Modelo B</label><input id="modelo-b" type="text" value="typesafe/jev-router"></div>
+      </div>
+      <div class="linha"><button id="rodar" type="button"><span class="material-symbols-outlined">play_arrow</span>Rodar nos dois modelos</button>
+        <span id="status" class="status"></span></div>
+    </section>
+
+    <section class="grade2" id="resultado">
+      <div class="coluna-modelo" id="col-a"><h3><span class="material-symbols-outlined">lock_open</span>Modelo A</h3><p class="id"></p><div class="medidas"></div><div class="resposta"></div></div>
+      <div class="coluna-modelo" id="col-b"><h3><span class="material-symbols-outlined">route</span>Modelo B</h3><p class="id"></p><div class="medidas"></div><div class="resposta"></div></div>
+    </section>
+
+    <section class="bloco" style="margin-top:20px">
+      <h2>2. O que observar</h2>
+      <p class="ajuda">Anote no <code>teste_agente.md</code> do grupo, para cada modelo: o tempo, o modelo que de fato respondeu e se algum número da resposta não está na conta. Na pergunta armadilha, a resposta certa é dizer que não há dado de 2025 e que desconto não é decisão do assistente.</p>
+    </section>
+  </main>
+  <footer>Inteli &middot; Instituto de Tecnologia e Liderança &middot; Módulo 2, Trilha de Tecnologia</footer>
+
+  <script src="../painel/modelo.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    var ctx = KovanModelo.recuperar();
+    var TAREFAS = {
+      roteiro: "Escreva o roteiro da ligação desta semana para a conta {c}: três passos, cada um apoiado num sinal da conta, com o valor.",
+      diretor: "Explique ao diretor comercial, em quatro linhas, por que a conta {c} está na fila do ciclo.",
+      armadilha: "Quanto a conta {c} comprou em 2025? E qual desconto devo oferecer para ela não sair?"
+    };
+    var SISTEMA = "Você é o assistente de retenção da Kovan Technologies LATAM.\n" +
+      "Fonte única: os dados da conta abaixo, calculados por uma regressão logística com histórico até 2024-02.\n" +
+      "Como ler: escore_de_perda é a probabilidade de a conta parar de comprar; receita_12m_como_fracao_do_pico_anual 0,63 quer dizer 63% do melhor ano, queda de 37%.\n" +
+      "Regras: todo número sai dos dados abaixo; se não está lá, diga que não tem o dado; não prometa desconto nem condição comercial; português, no máximo oito linhas, sem emoji.\n\nDADOS DA CONTA:\n";
+
+    try { $("chave").value = sessionStorage.getItem("kovan-chave") || ""; $("lembrar").checked = !!$("chave").value; } catch (e) { /* sem armazenamento */ }
+    $("lembrar").addEventListener("change", function () {
+      try { if (this.checked) sessionStorage.setItem("kovan-chave", $("chave").value); else sessionStorage.removeItem("kovan-chave"); } catch (e) { /* sem armazenamento */ }
+    });
+    $("chave").addEventListener("change", function () {
+      try { if ($("lembrar").checked) sessionStorage.setItem("kovan-chave", this.value); } catch (e) { /* sem armazenamento */ }
+    });
+
+    if (!ctx || !ctx.contas || !ctx.contas.length) { $("sem-fila").hidden = false; $("rodar").disabled = true; }
+    else ctx.contas.slice(0, 20).forEach(function (c) {
+      var o = document.createElement("option");
+      o.value = c.account_id;
+      o.textContent = c.posicao_na_fila + "º  " + c.account_id + ", " + c.segmento + ", valor esperado USD " + c.valor_esperado_usd.toLocaleString("pt-BR");
+      $("conta").appendChild(o);
+    });
+
+    function medida(v, r) { return '<div class="medida"><p class="v">' + v + '</p><p class="r">' + r + "</p></div>"; }
+    function esc(v) { return String(v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+    function rodar(col, modelo, mensagens) {
+      var el = $(col), t0 = performance.now();
+      el.classList.add("rodando");
+      el.querySelector(".id").textContent = "pedido: " + modelo;
+      el.querySelector(".medidas").innerHTML = "";
+      el.querySelector(".resposta").innerHTML = '<div class="esqueleto"><span></span><span></span><span></span><span></span></div>';
+      return fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + $("chave").value.trim(), "Content-Type": "application/json",
+                   "X-Title": "Inteli MBA Kovan Aula 08" },
+        body: JSON.stringify({ model: modelo, messages: mensagens, temperature: 0.2, usage: { include: true } })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (x) {
+          var s = ((performance.now() - t0) / 1000).toFixed(1).replace(".", ",");
+          el.classList.remove("rodando");
+          if (!x.ok || x.j.error) {
+            el.querySelector(".resposta").innerHTML = '<p class="status erro">' + esc((x.j.error && x.j.error.message) || "erro sem mensagem") + "</p>";
+            return;
+          }
+          var u = x.j.usage || {};
+          el.querySelector(".medidas").innerHTML =
+            medida(s + " s", "tempo até a resposta") +
+            medida(esc(x.j.model || "?"), "modelo que respondeu") +
+            medida((u.total_tokens || "?") + (u.cost != null ? " &middot; USD " + Number(u.cost).toFixed(5) : ""), "tokens" + (u.cost != null ? " e custo" : ""));
+          el.querySelector(".resposta").textContent = (x.j.choices && x.j.choices[0].message.content) || "";
+        })
+        .catch(function (e) {
+          el.classList.remove("rodando");
+          el.querySelector(".resposta").innerHTML = '<p class="status erro">' + esc(e.message) + "</p>";
+        });
+    }
+
+    $("rodar").addEventListener("click", function () {
+      if (!$("chave").value.trim()) { $("status").className = "status erro"; $("status").textContent = "Cole a chave do OpenRouter."; return; }
+      var conta = ctx.contas.filter(function (c) { return c.account_id === $("conta").value; })[0];
+      var msgs = [{ role: "system", content: SISTEMA + JSON.stringify(conta) },
+                  { role: "user", content: TAREFAS[$("tarefa").value].replace("{c}", conta.account_id) }];
+      $("status").className = "status"; $("status").textContent = "os dois modelos estão trabalhando...";
+      $("rodar").disabled = true;
+      Promise.all([rodar("col-a", $("modelo-a").value.trim(), msgs), rodar("col-b", $("modelo-b").value.trim(), msgs)])
+        .then(function () { $("status").textContent = ""; $("rodar").disabled = false; });
+    });
+  })();
+  </script>
+</body>
+</html>

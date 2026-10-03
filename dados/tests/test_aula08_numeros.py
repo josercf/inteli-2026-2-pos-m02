@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Trava os números da Aula 08 contra a fila que `app.publicar` grava.
+"""Trava os números da Aula 08 contra a base longa do case.
 
-Valores transcritos de forma literal, sem importar constante do gerador: teste
-que lê o mesmo número que o deck usa concorda consigo mesmo.
+Os valores esperados estão transcritos de forma literal, sem importar constante
+do gerador: teste que lê o mesmo número que o deck usa concorda consigo mesmo.
+A referência é dados/analise_aula08.py, que tools/tests/test_painel_modelo.py
+compara com o modelo que roda no painel.
 
-Pula quando o repositório de prática ou a base longa não estão presentes, que
-é o caso do CI (ADR-009).
+Pula quando a base longa não está presente, que é o caso do CI (ADR-005).
 
 Rodar: .venv/bin/python -m pytest dados/tests/test_aula08_numeros.py -q
 """
@@ -18,56 +19,46 @@ from pathlib import Path
 import pytest
 
 RAIZ = Path(__file__).resolve().parents[2]
-PRATICA = RAIZ.parent / "inteli-pos-2026-2a-eda"
-CACHE = PRATICA / "dados" / ".cache"
+sys.path.insert(0, str(RAIZ))
+
+from dados import analise_aula08 as a  # noqa: E402
+
 DECK = RAIZ / "aulas" / "aula08.html"
+GUIA = RAIZ / "materiais" / "aula08-guia.html"
 
-pytestmark = pytest.mark.skipif(
-    not (PRATICA / "app" / "publicar.py").exists() or not CACHE.exists(),
-    reason="a fila publicada sai do repositório de prática (ADR-009)")
-
-
-@pytest.fixture(scope="module")
-def fila():
-    if str(PRATICA) not in sys.path:
-        sys.path.insert(0, str(PRATICA))
-    from app import publicar
-    from app.churn import lista, modelo
-    from app.treinar import preparar
-
-    X, y = preparar()
-    escore = modelo.escore_fora_da_amostra(X, y)
-    t = lista.priorizar(escore, valor_em_risco=X.receita_12m)
-    return publicar.registros(t, X)
+pytestmark = pytest.mark.skipif(not a.PLANILHA.exists(),
+                                reason="a base longa do case não é versionada (ADR-005)")
 
 
 @pytest.fixture(scope="module")
-def deck() -> str:
-    return DECK.read_text(encoding="utf-8")
+def r():
+    return a.rodar(a.carregar())
 
 
-def test_a_fila_tem_138_contas(fila, deck):
-    assert len(fila) == 138
-    assert "138 contas gravadas" in deck
+@pytest.fixture(scope="module")
+def textos() -> str:
+    return DECK.read_text(encoding="utf-8") + GUIA.read_text(encoding="utf-8")
 
 
-def test_o_valor_esperado_somado(fila, deck):
-    assert sum(r["valor_esperado_usd"] for r in fila) == 23_120_906
-    assert "USD 23.120.906" in deck
+def test_contas_elegiveis_e_perdidas(r, textos):
+    assert len(r["tabela"]) == 4593
+    assert int(r["tabela"].churn.sum()) == 2446
+    assert "4.593" in textos
 
 
-def test_a_conta_d_abre_a_fila(fila, deck):
-    d = fila[0]
-    assert d["account_id"] == "CLI052938"
-    assert d["posicao_por_probabilidade"] == 3024
-    assert d["escore"] == 0.448
-    assert d["valor_em_risco_usd"] == 4_642_422
-    assert d["valor_esperado_usd"] == 2_082_084
-    for trecho in ('"posicao_por_probabilidade": 3024', '"escore": 0.448',
-                   '"valor_em_risco_usd": 4642422', '"valor_esperado_usd": 2082084'):
-        assert trecho in deck
+def test_auc_fora_da_amostra(r, textos):
+    assert round(r["auc"], 4) == 0.8138
+    assert "0,814" in textos
 
 
-def test_a_conta_usada_como_fora_da_fila_esta_mesmo_fora(fila, deck):
-    assert "CLI000001" not in {r["account_id"] for r in fila}
-    assert "CLI000001" in deck
+def test_a_fila_de_138(r, textos):
+    assert len(r["fila"]) == 138
+    assert r["acertos_fila"] == 35
+    assert round(r["valor_esperado_fila"]) == 26_601_312
+    assert "35 das 138" in textos and "26,6 milhões" in textos
+
+
+def test_a_primeira_conta_da_fila(r):
+    primeira = r["fila"].iloc[0]
+    assert primeira.account_id == "CLI001165"
+    assert round(primeira.escore, 3) == 0.347

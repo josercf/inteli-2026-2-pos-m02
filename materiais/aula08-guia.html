@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia da Aula 08 &middot; Do modelo à equipe de agentes</title>
+  <meta name="description" content="Guia passo a passo da Aula 08 do Módulo 2 do MBA Inteli x Lenovo: painel sobre a planilha original, chave gratuita do OpenRouter, equipe de três agentes no n8n, Jev, interface do grupo no Antigravity e publicação no GitHub Pages.">
+  <!-- Aula invertida: este guia é o roteiro do aluno. Cada passo diz onde
+       clicar, o que colar e como saber que deu certo. Os números citados
+       saem de dados/analise_aula08.py e estão travados em
+       tools/tests/test_painel_modelo.py. -->
+  <link rel="stylesheet" href="../assets/vendor/fontes/fontes.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-material.css">
+  <style>
+    .passo-cabeca { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: start; margin-bottom: 8px; }
+    .passo-cabeca .n { font-size: 44px; font-weight: 700; line-height: 1; color: var(--seg-destaque); }
+    .passo-cabeca h2 { margin: 0; }
+    .passo-cabeca .meta { font-size: 14px; margin: 4px 0 0; display: flex; gap: 14px; flex-wrap: wrap; }
+    ol.cliques { counter-reset: c; list-style: none; padding-left: 0; }
+    ol.cliques > li { counter-increment: c; position: relative; padding-left: 40px; margin: 10px 0; }
+    ol.cliques > li::before { content: counter(c); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--seg-primaria); color: var(--inteli-branco); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+    .prompt { position: relative; background: var(--seg-primaria); color: var(--inteli-branco); padding: 16px 18px 16px; margin: 12px 0 16px; }
+    .prompt .rotulo { display: flex; gap: 6px; align-items: center; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+    .prompt pre { margin: 0; white-space: pre-wrap; font-size: 14px; line-height: 1.5; color: var(--inteli-branco); background: transparent; border: 0; padding: 0; }
+    .prompt button { position: absolute; top: 10px; right: 10px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+      background: var(--inteli-branco); color: var(--seg-primaria); border: 0; padding: 6px 12px; display: inline-flex; gap: 6px; align-items: center; }
+    .prompt button.copiado { background: var(--seg-secundaria); color: var(--inteli-branco); }
+    .confere { border-left: 4px solid var(--seg-secundaria); background: var(--seg-superficie); padding: 10px 14px; margin: 12px 0; }
+    .confere strong { display: inline-flex; gap: 6px; align-items: center; }
+    .cuidado { border-left: 4px solid var(--seg-destaque); background: var(--seg-superficie); padding: 10px 14px; margin: 12px 0; }
+    .captura { display: block; max-width: 100%; border: 1px solid var(--seg-borda); margin: 12px 0 4px; }
+    .captura.estreita { max-width: min(460px, 100%); }
+    .legenda-captura { font-size: 13px; margin: 0 0 14px; }
+    .material-symbols-outlined { font-size: 20px; vertical-align: -4px; }
+    kbd { border: 1px solid var(--seg-borda); padding: 1px 6px; font-size: 13px; background: var(--seg-base); }
+    /* Os passos têm número próprio (0 a 13): o contador da lista duplicava. */
+    .doc-toc ol { list-style: none; padding-left: 0; }
+    /* Nome de arquivo e URL longos quebram em vez de alargar a página no celular. */
+    .doc-secao code, .prompt pre, .doc-tabela td { overflow-wrap: anywhere; }
+    .botao-lab { display: inline-flex; gap: 8px; align-items: center; background: var(--seg-primaria); color: var(--inteli-branco) !important;
+      text-decoration: none; padding: 10px 18px; font-weight: 600; margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <div class="doc">
+
+    <header class="doc-header">
+      <p class="doc-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo &middot; Módulo 2 &middot; Aula 08</p>
+      <h1>Guia da Aula 08: do modelo à equipe de agentes</h1>
+      <p class="doc-subtitulo">A aula é invertida: você trabalha, e o professor circula. Este guia leva do arquivo
+      original do case até um painel publicado no GitHub Pages do grupo, conectado a uma equipe de três agentes no
+      n8n. Cada passo diz onde clicar, o que colar e como saber que deu certo.</p>
+    </header>
+
+    <nav class="doc-toc" aria-label="Sumário">
+      <h2>Passos</h2>
+      <ol>
+        <li><a href="#antes">0. Antes de começar</a></li>
+        <li><a href="#painel">1. Rodar o painel pronto</a></li>
+        <li><a href="#chave">2. Criar a chave gratuita do OpenRouter</a></li>
+        <li><a href="#credencial">3. Guardar a chave no n8n</a></li>
+        <li><a href="#equipe">4. Importar a equipe de agentes</a></li>
+        <li><a href="#conversa">5. Conectar o painel e escrever os planos</a></li>
+        <li><a href="#bateria">6. Rodar a bateria de teste</a></li>
+        <li><a href="#jev">7. Comparar com o Jev</a></li>
+        <li><a href="#clonar">8. Clonar o repositório no Antigravity</a></li>
+        <li><a href="#modificar">9. Criar a interface do grupo</a></li>
+        <li><a href="#pages">10. Publicar no GitHub Pages</a></li>
+        <li><a href="#entrega">11. O que mostrar no checkpoint</a></li>
+        <li><a href="#problemas">12. Quando algo dá errado</a></li>
+        <li><a href="#como">13. Como o painel calcula a fila</a></li>
+      </ol>
+    </nav>
+
+    <main class="doc-conteudo">
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="antes">
+        <div class="passo-cabeca"><span class="n">00</span><div><h2>Antes de começar</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 5 minutos</span></p></div></div>
+
+        <p>Confira os cinco itens abaixo. Sem qualquer um deles, algum passo adiante trava.</p>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Item</th><th>Como conferir</th></tr></thead>
+          <tbody>
+            <tr><td>A planilha do case</td><td><code>datasets_case_modulo2.xlsx</code>, com cerca de 68 MB e dados de 2021-04 a 2026-08. A versão curta, de 24 MB, não serve: ela começa depois do corte do modelo.</td></tr>
+            <tr><td>Acesso ao n8n do Inteli</td><td>Abra <a href="https://inteli.app.n8n.cloud/">inteli.app.n8n.cloud</a> e entre com o convite que chegou por e-mail.</td></tr>
+            <tr><td>Conta no GitHub</td><td>Abra <a href="https://github.com">github.com</a> e confira que você está logado.</td></tr>
+            <tr><td>Antigravity instalado</td><td>O mesmo das aulas anteriores, com a conta Google do Inteli.</td></tr>
+            <tr><td>Um grupo com nome curto</td><td>Sem espaço e sem acento, por exemplo <code>g3</code> ou <code>atlas-sul</code>. Ele vai para a URL do n8n e para o nome do repositório.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cuidado"><strong>A planilha nunca vai para o GitHub nem para o n8n.</strong> Ela é dado real de carteira. O painel lê o arquivo dentro do seu navegador e envia ao n8n só a fila de 138 contas, com identificador anonimizado.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="painel">
+        <div class="passo-cabeca"><span class="n">01</span><div><h2>Rodar o painel pronto</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 10 minutos</span><span><span class="material-symbols-outlined">person</span> cada pessoa</span></p></div></div>
+
+        <p>O painel faz, dentro do navegador, o que a Aula 07 fazia em Python: monta as colunas de cada conta, treina o modelo e ordena a fila. Ninguém precisa instalar nada neste passo.</p>
+        <ol class="cliques">
+          <li>Abra o <a href="../laboratorio/index.html">laboratório da aula</a> e clique em <strong>Abrir o painel</strong>.</li>
+          <li>Arraste <code>datasets_case_modulo2.xlsx</code> para a área tracejada do bloco 01, ou clique nela e escolha o arquivo.</li>
+          <li>Acompanhe as quatro etapas acenderem: leitura da aba Dataset 1, montagem das colunas, treino em 5 dobras e ordenação da fila.</li>
+          <li>Abra <strong>Peso de cada coluna no modelo</strong> e veja quais colunas empurram o escore para cima.</li>
+        </ol>
+        <img class="captura" src="../assets/img/aula08-painel.png" alt="Painel com a planilha carregada, os indicadores do modelo, a fila e a conversa com a equipe">
+        <p class="legenda-captura">O painel com a planilha carregada. À direita, a equipe já respondeu uma pergunta.</p>
+        <div class="confere"><strong><span class="material-symbols-outlined">check_circle</span> Deu certo quando</strong> os indicadores mostram 4.593 contas elegíveis, AUC de 0,814 fora da amostra e 35 perdidas entre as 138 da fila.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="chave">
+        <div class="passo-cabeca"><span class="n">02</span><div><h2>Criar a chave gratuita do OpenRouter</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 5 minutos</span><span><span class="material-symbols-outlined">person</span> cada pessoa</span></p></div></div>
+
+        <p>O OpenRouter dá acesso a modelos de vários fornecedores com uma única chave. Os modelos com identificador terminado em <code>:free</code> não cobram nada.</p>
+        <ol class="cliques">
+          <li>Abra <a href="https://openrouter.ai">openrouter.ai</a> e clique em <strong>Sign in</strong>. Entre com a conta Google ou GitHub. Não é preciso cartão.</li>
+          <li>Abra <a href="https://openrouter.ai/settings/keys">openrouter.ai/settings/keys</a> e clique em <strong>Create API Key</strong>.</li>
+          <li>No nome, escreva <code>kovan-NOME_DO_GRUPO</code>. Deixe o limite de crédito em branco e clique em <strong>Create</strong>.</li>
+          <li>Copie a chave, que começa com <code>sk-or-v1-</code>. Ela aparece uma vez só.</li>
+        </ol>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Limite do plano gratuito</th><th>Valor</th><th>O que consome</th></tr></thead>
+          <tbody>
+            <tr><td>Por minuto</td><td>20 requisições</td><td>-</td></tr>
+            <tr><td>Por dia, sem crédito comprado</td><td>50 requisições</td><td>cada pergunta à equipe usa 3, uma por agente</td></tr>
+            <tr><td>Por dia, com USD 10 em crédito</td><td>1.000 requisições</td><td>-</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cuidado"><strong>A chave é senha.</strong> Cole direto no n8n, no passo 3. Não mande por chat, e-mail ou mensagem, e não escreva em arquivo do repositório. Chave que vaza vira cobrança na conta de quem a criou.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="credencial">
+        <div class="passo-cabeca"><span class="n">03</span><div><h2>Guardar a chave no n8n</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 3 minutos</span><span><span class="material-symbols-outlined">person</span> cada pessoa</span></p></div></div>
+        <ol class="cliques">
+          <li>Em <a href="https://inteli.app.n8n.cloud/">inteli.app.n8n.cloud</a>, abra <strong>Overview</strong> na barra lateral e depois a aba <strong>Credentials</strong>.</li>
+          <li>Clique em <strong>Create credential</strong>, digite <code>OpenRouter</code>, escolha <strong>OpenRouter</strong> e clique em <strong>Continue</strong>.</li>
+          <li>Cole a chave no campo <strong>API Key</strong> e clique em <strong>Save</strong>.</li>
+        </ol>
+        <img class="captura" src="../assets/img/aula08-n8n-credencial.png" alt="Diálogo de nova credencial OpenRouter no n8n, com o campo API Key">
+        <p class="legenda-captura">A credencial guarda a chave. O workflow guarda só o nome dela, então o arquivo do workflow pode circular sem expor nada.</p>
+        <div class="confere"><strong><span class="material-symbols-outlined">check_circle</span> Deu certo quando</strong> a credencial aparece na aba Credentials com o nome que o n8n deu a ela, que você pode trocar por <code>OpenRouter NOME</code>.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="equipe">
+        <div class="passo-cabeca"><span class="n">04</span><div><h2>Importar a equipe de agentes</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 10 minutos</span><span><span class="material-symbols-outlined">group</span> uma pessoa por grupo</span></p></div></div>
+
+        <p>A equipe tem três agentes em sequência. Cada um é um nó <em>AI Agent</em> do n8n, com o próprio modelo de linguagem.</p>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Agente</th><th>Papel</th><th>O que recebe</th><th>O que entrega</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Atlas</strong></td><td>analista da fila</td><td>a pergunta e a fila</td><td>os fatos e números da conta, sem recomendar</td></tr>
+            <tr><td><strong>Vera</strong></td><td>estrategista</td><td>a resposta do Atlas e os planos das áreas</td><td>a ação, a área e a coluna que aciona cada item</td></tr>
+            <tr><td><strong>Ciro</strong></td><td>revisor</td><td>as duas respostas, a fila e os planos</td><td>o veredito e a resposta final ao Account Manager</td></tr>
+          </tbody>
+        </table></div>
+        <ol class="cliques">
+          <li>No painel, bloco 03, clique em <strong>Baixar workflow do n8n</strong>. O arquivo é <code>kovan-equipe-de-agentes.json</code>.</li>
+          <li>No n8n, clique em <strong>Create workflow</strong>. No editor vazio, abra o menu <kbd>...</kbd> no canto superior direito e escolha <strong>Import from File</strong>. Selecione o arquivo baixado.</li>
+          <li>Clique duas vezes no nó <strong>API do painel</strong>. No campo <strong>Path</strong>, troque <code>NOME_DO_GRUPO</code> pelo nome do grupo. Feche o nó.</li>
+          <li>Clique duas vezes em <strong>Modelo do Atlas</strong> e, em <strong>Credential</strong>, escolha a credencial do passo 3. Repita em <strong>Modelo da Vera</strong> e <strong>Modelo do Ciro</strong>.</li>
+          <li>Salve com <kbd>Ctrl</kbd> + <kbd>S</kbd> e clique em <strong>Publish</strong> no canto superior direito. Em versões anteriores do n8n, o botão é a chave <strong>Active</strong>.</li>
+          <li>Abra de novo o nó <strong>API do painel</strong>, escolha a aba <strong>Production URL</strong> e copie o endereço.</li>
+        </ol>
+        <img class="captura" src="../assets/img/aula08-n8n-equipe.png" alt="Canvas do n8n com o webhook, os três agentes em sequência e os nós de modelo">
+        <p class="legenda-captura">O workflow importado: o webhook recebe a pergunta, Atlas, Vera e Ciro trabalham em sequência e o último nó devolve as três respostas ao painel.</p>
+        <img class="captura estreita" src="../assets/img/aula08-n8n-atlas.png" alt="Nó Atlas aberto, com a pergunta e o prompt de sistema">
+        <p class="legenda-captura">Dentro do nó Atlas: a pergunta vem do painel e o <em>System Message</em> traz o papel, as regras e a fila. Leia os três prompts antes de mudar qualquer um.</p>
+        <div class="confere"><strong><span class="material-symbols-outlined">check_circle</span> Deu certo quando</strong> nenhum nó mostra alerta vermelho, o workflow aparece como publicado e a URL copiada termina em <code>/webhook/kovan-chat-NOME_DO_GRUPO</code>.</div>
+        <div class="cuidado"><strong>Production URL, e não Test URL.</strong> A URL de teste só responde enquanto o editor está esperando um evento, e o painel recebe erro 404 no resto do tempo.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="conversa">
+        <div class="passo-cabeca"><span class="n">05</span><div><h2>Conectar o painel e escrever os planos</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 15 minutos</span><span><span class="material-symbols-outlined">group</span> o grupo inteiro</span></p></div></div>
+        <ol class="cliques">
+          <li>No painel, bloco 03, cole a Production URL no campo <strong>Endpoint</strong> e clique em <strong>Testar conexão</strong>. A equipe leva alguns segundos.</li>
+          <li>No bloco 02, escreva o plano de cada área. Os textos que vêm na tela são exemplos.</li>
+          <li>No bloco 04, mantenha o modelo <strong>Nemotron 3 Super, gratuito</strong> e clique na sugestão <em>Qual área deve atuar na primeira conta da fila</em>.</li>
+          <li>Clique numa linha da tabela da fila para perguntar sobre aquela conta.</li>
+        </ol>
+        <p>A Vera só recomenda o que está escrito no plano. Um plano escrito como intenção, por exemplo "dar atenção às contas grandes", vira paráfrase. Um plano com o limiar numérico da coluna vira regra verificável:</p>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Área</th><th>Item escrito com limiar</th><th>Coluna da fila que aciona</th></tr></thead>
+          <tbody>
+            <tr><td>Comercial</td><td>valor esperado acima de USD 500 mil: ligação do Account Manager em até 5 dias úteis</td><td><code>valor_esperado_usd</code></td></tr>
+            <tr><td>Atendimento</td><td>4 meses ou mais desde a última compra: contato para verificar chamados</td><td><code>meses_desde_ultima_compra</code></td></tr>
+            <tr><td>Pós-vendas</td><td>3 meses ou menos com compra nos últimos 12: revisão técnica do parque</td><td><code>meses_com_compra_nos_ultimos_12</code></td></tr>
+          </tbody>
+        </table></div>
+        <div class="confere"><strong><span class="material-symbols-outlined">check_circle</span> Deu certo quando</strong> os três agentes respondem em sequência, o Ciro mostra o selo de veredito e cada ação cita a área, o item e a coluna com o valor.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="bateria">
+        <div class="passo-cabeca"><span class="n">06</span><div><h2>Rodar a bateria de teste</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 10 minutos</span><span><span class="material-symbols-outlined">group</span> o grupo inteiro</span></p></div></div>
+        <p>Quatro perguntas que costumam derrubar um agente vão para a equipe do grupo, uma a uma, e cada resposta final passa por uma conferência automática contra a fila.</p>
+        <ol class="cliques">
+          <li>Abra o <a href="../laboratorio/bateria.html">experimento 03 do laboratório</a>. O endpoint vem preenchido do painel.</li>
+          <li>Clique em <strong>Rodar as quatro perguntas</strong> e acompanhe o placar.</li>
+          <li>Leia cada resposta reprovada e anote no <code>teste_agente.md</code> do grupo o que falhou e o que vocês mudaram, no prompt de um agente ou no modelo.</li>
+        </ol>
+        <img class="captura" src="../assets/img/aula08-bateria.png" alt="Bateria de teste com quatro perguntas aprovadas">
+        <p class="legenda-captura">Execução de demonstração com o Nemotron gratuito: 4 de 4. A conferência automática aponta onde olhar, e a leitura do grupo continua sendo o veredito.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="jev">
+        <div class="passo-cabeca"><span class="n">07</span><div><h2>Comparar com o Jev</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 10 minutos</span><span><span class="material-symbols-outlined">payments</span> o Jev cobra por uso</span></p></div></div>
+        <p>O <strong>Jev Router</strong>, da TypeSafe, roda sobre o Jev, o primeiro modelo System One da empresa. No OpenRouter o identificador é <code>typesafe/jev-router</code>. Ele escolhe, a cada pedido, qual modelo responde e com quanto esforço de raciocínio. Na demonstração do professor, para a pergunta sobre a primeira conta, o Jev mandou os três agentes para <code>deepseek/deepseek-v4.1-flash</code>.</p>
+        <p>Há duas formas de usar o Jev na aula:</p>
+        <ol class="cliques">
+          <li><strong>Na equipe do n8n.</strong> No bloco 04 do painel, escolha <em>Jev Router</em> no seletor de modelo. Os três agentes passam a usar o Jev, sem mudar nada no workflow.</li>
+          <li><strong>Lado a lado com um modelo gratuito.</strong> Abra o <a href="../laboratorio/jev.html">experimento 02</a>, cole a chave do OpenRouter, escolha uma conta e uma tarefa e clique em <strong>Rodar nos dois modelos</strong>. A página mostra o tempo, os tokens e o modelo que de fato respondeu.</li>
+        </ol>
+        <img class="captura" src="../assets/img/aula08-jev.png" alt="Experimento 02 com a chave, a conta, a tarefa e os dois modelos">
+        <p class="legenda-captura">O experimento 02 antes de rodar: modelo A gratuito, modelo B o Jev Router, a mesma conta e a mesma tarefa para os dois.</p>
+        <div class="cuidado"><strong>O Jev precisa de crédito na conta do OpenRouter.</strong> Com a chave gratuita sem crédito, ele devolve erro e o modelo gratuito continua funcionando. Nesse caso, acompanhe a demonstração do professor.</div>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Medido na demonstração, Conta D</th><th>Nemotron 3 Super, gratuito</th><th>Jev Router</th></tr></thead>
+          <tbody>
+            <tr><td>Tempo da equipe, três agentes</td><td>16 s</td><td>12 s</td></tr>
+            <tr><td>Atlas trouxe os números da conta</td><td>não, respondeu que não havia área na fila</td><td>sim, posição, escore, receita e sinais</td></tr>
+            <tr><td>Áreas que a Vera aplicou</td><td>as três</td><td>as três</td></tr>
+            <tr><td>Veredito do Ciro</td><td>"corrigido", com motivo que aprova</td><td>"aprovado", com a queda de 37% contra o pico explicada</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="clonar">
+        <div class="passo-cabeca"><span class="n">08</span><div><h2>Clonar o repositório no Antigravity</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 5 minutos</span><span><span class="material-symbols-outlined">group</span> uma pessoa por grupo</span></p></div></div>
+        <p>A pasta <code>frontend/</code> do repositório de prática tem o mesmo painel, pronto para modificar: <code>index.html</code> (a tela), <code>modelo.js</code> (o modelo), <code>inteli-brand.css</code> (as cores e fontes) e <code>workflow_n8n.json</code> (a equipe). Abra o Antigravity numa pasta vazia e cole os dois prompts abaixo, um de cada vez.</p>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">terminal</span> Prompt 1: clonar</p><pre>Clone o repositório https://github.com/josercf/inteli-pos-2026-2a-eda nesta pasta. Se ele já estiver clonado, rode git pull. Depois abra a pasta frontend, liste os arquivos e explique em uma linha o papel de cada um. Não altere nada ainda.</pre></div>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">terminal</span> Prompt 2: rodar na sua máquina</p><pre>Dentro da pasta frontend, suba um servidor local com python3 -m http.server 8000 e me diga o endereço para abrir no navegador. Deixe o servidor rodando.</pre></div>
+        <div class="confere"><strong><span class="material-symbols-outlined">check_circle</span> Deu certo quando</strong> <code>http://localhost:8000</code> abre o painel e ele aceita a planilha, como no passo 1.</div>
+        <div class="cuidado"><strong>Por que um servidor, e não clicar duas vezes no arquivo.</strong> Aberto como arquivo, o navegador bloqueia parte do que a página faz. O servidor local reproduz o que o GitHub Pages vai fazer.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="modificar">
+        <div class="passo-cabeca"><span class="n">09</span><div><h2>Criar a interface do grupo</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 30 minutos</span><span><span class="material-symbols-outlined">group</span> o grupo inteiro</span></p></div></div>
+        <p>Cada prompt abaixo é uma mudança independente. Faça a primeira, confira no navegador e só então passe para a seguinte. Todos repetem a mesma regra: <code>modelo.js</code> e o JSON enviado ao n8n não mudam, porque a equipe de agentes depende deles.</p>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">edit</span> Prompt 3: identidade do grupo</p><pre>Em frontend/index.html, troque o título do cabeçalho para "Painel de retenção Kovan, grupo NOME_DO_GRUPO" e coloque o nome dos integrantes no rodapé. Não mexa em modelo.js nem no JSON enviado ao n8n. Mostre o diff antes de salvar.</pre></div>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">bar_chart</span> Prompt 4: gráfico das dez maiores</p><pre>Em frontend/index.html, acrescente abaixo dos indicadores um gráfico de barras horizontais, em SVG desenhado sem biblioteca, com as dez contas de maior valor esperado da fila (resultado.fila). Use só as variáveis de cor de inteli-brand.css. Não mexa em modelo.js nem no JSON enviado ao n8n.</pre></div>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">filter_alt</span> Prompt 5: filtro por segmento</p><pre>Acrescente acima da tabela da fila um seletor de segmento que filtra as linhas exibidas. O filtro muda só a tabela: a fila enviada ao n8n continua completa. Não mexa em modelo.js.</pre></div>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">download</span> Prompt 6: exportar a fila</p><pre>Acrescente um botão "Baixar fila em CSV" que gera o arquivo no navegador a partir de resultado.fila, com as mesmas colunas da tabela. Nada é enviado para fora do navegador.</pre></div>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">shield</span> Prompt 7: revisão antes de publicar</p><pre>Revise a pasta frontend procurando três coisas: chave de API escrita no código, arquivo de planilha (.xlsx ou .csv) dentro da pasta e qualquer trecho que mande a planilha inteira para fora do navegador. Liste o que encontrar, com o arquivo e a linha. Não corrija ainda.</pre></div>
+        <h3>Desafio para quem terminar: um quarto agente</h3>
+        <p>No n8n, selecione o nó <strong>Vera</strong> e o <strong>Modelo da Vera</strong>, copie com <kbd>Ctrl</kbd> + <kbd>C</kbd> e cole com <kbd>Ctrl</kbd> + <kbd>V</kbd>. Renomeie para um agente de outra área, por exemplo um analista financeiro, reescreva o <em>System Message</em> e ligue-o entre a Vera e o Ciro. Depois, no nó <strong>Responder ao painel</strong>, acrescente o novo agente à lista <code>agentes</code>. O painel mostra a mensagem dele sem nenhuma mudança na tela.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="pages">
+        <div class="passo-cabeca"><span class="n">10</span><div><h2>Publicar no GitHub Pages</h2>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 15 minutos</span><span><span class="material-symbols-outlined">group</span> uma pessoa por grupo</span></p></div></div>
+        <p>O GitHub Pages serve uma pasta de arquivos estáticos num endereço público, sem servidor e sem custo. O painel é só HTML, JavaScript e CSS, então ele roda ali do mesmo jeito que roda no seu <code>localhost</code>. Há dois caminhos: o primeiro só usa o navegador, o segundo deixa o Antigravity fazer pelo terminal.</p>
+
+        <h3>Caminho A: pelo navegador, sem terminal</h3>
+        <ol class="cliques">
+          <li>Abra <a href="https://github.com/new">github.com/new</a>. Em <strong>Repository name</strong>, escreva <code>kovan-painel-NOME_DO_GRUPO</code>. Marque <strong>Public</strong>. Não marque README nem .gitignore. Clique em <strong>Create repository</strong>.</li>
+          <li>Na página do repositório vazio, clique no link <strong>uploading an existing file</strong>.</li>
+          <li>Arraste os quatro arquivos da pasta <code>frontend</code>: <code>index.html</code>, <code>modelo.js</code>, <code>inteli-brand.css</code> e <code>workflow_n8n.json</code>. Os arquivos precisam ficar na raiz, e não dentro de uma pasta.</li>
+          <li>Em <strong>Commit changes</strong>, escreva <code>painel do grupo</code> e clique no botão verde <strong>Commit changes</strong>.</li>
+          <li>Abra <strong>Settings</strong>, no menu do repositório, e depois <strong>Pages</strong>, na barra lateral.</li>
+          <li>Em <strong>Build and deployment</strong>, deixe <strong>Source</strong> em <strong>Deploy from a branch</strong>. Em <strong>Branch</strong>, escolha <code>main</code> e a pasta <code>/ (root)</code>. Clique em <strong>Save</strong>.</li>
+          <li>Espere de um a dois minutos e recarregue a página. No topo aparece <strong>Your site is live at</strong>, com o endereço <code>https://SEU_USUARIO.github.io/kovan-painel-NOME_DO_GRUPO/</code>.</li>
+        </ol>
+        <p>Para atualizar depois de uma mudança, abra o repositório, clique em <strong>Add file</strong>, <strong>Upload files</strong>, arraste o arquivo novo e faça o commit. A aba <strong>Actions</strong> mostra a publicação em andamento, com o nome <em>pages build and deployment</em>.</p>
+
+        <h3>Caminho B: pelo Antigravity</h3>
+        <p>O Antigravity usa o GitHub CLI (<code>gh</code>). Na primeira vez, ele vai pedir para você rodar <code>gh auth login</code> e confirmar no navegador.</p>
+        <div class="prompt"><p class="rotulo"><span class="material-symbols-outlined">rocket_launch</span> Prompt 8: publicar</p><pre>Quero publicar a pasta frontend no GitHub Pages. Faça nesta ordem e me mostre cada comando antes de rodar:
+1. Confira com gh auth status que estou logado no GitHub. Se não estiver, me peça para rodar gh auth login.
+2. Crie uma pasta nova, fora do repositório clonado, chamada kovan-painel-NOME_DO_GRUPO, e copie para ela só index.html, modelo.js, inteli-brand.css e workflow_n8n.json.
+3. Confira que não há nenhum arquivo .xlsx, .csv ou chave de API na pasta nova.
+4. Inicie um repositório git nela, faça o commit e crie o repositório público com gh repo create kovan-painel-NOME_DO_GRUPO --public --source . --push.
+5. Ative o GitHub Pages pela branch main, pasta raiz, com gh api -X POST repos/{owner}/kovan-painel-NOME_DO_GRUPO/pages -f "source[branch]=main" -f "source[path]=/".
+6. Me dê a URL do site e espere dois minutos antes de abrir.</pre></div>
+        <div class="confere"><strong><span class="material-symbols-outlined">check_circle</span> Deu certo quando</strong> a URL do Pages abre o painel do grupo em outro computador, aceita a planilha, conversa com a equipe e mostra as mudanças do passo 9.</div>
+        <div class="cuidado"><strong>O repositório é público.</strong> Tudo que entrar nele qualquer pessoa lê. A planilha, a chave do OpenRouter e notas de avaliação nunca entram. O endpoint do n8n também não precisa entrar: cada pessoa cola no painel, e ele fica salvo só no navegador dela.</div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="entrega">
+        <div class="passo-cabeca"><span class="n">11</span><div><h2>O que mostrar no checkpoint</h2></div></div>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Item</th><th>Prova</th></tr></thead>
+          <tbody>
+            <tr><td>Painel publicado</td><td>a URL do GitHub Pages aberta no projetor</td></tr>
+            <tr><td>Equipe no n8n do grupo</td><td>uma pergunta respondida pelos três agentes, com o selo do Ciro</td></tr>
+            <tr><td>Planos de ação do grupo</td><td>os três planos com limiar numérico em cada item</td></tr>
+            <tr><td>Bateria</td><td>o placar e o <code>teste_agente.md</code> com uma reprovação e o que mudou</td></tr>
+            <tr><td>Interface própria</td><td>pelo menos uma mudança do passo 9 funcionando</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="problemas">
+        <div class="passo-cabeca"><span class="n">12</span><div><h2>Quando algo dá errado</h2></div></div>
+        <div class="doc-tabela-rolagem"><table class="doc-tabela">
+          <thead><tr><th>Sintoma</th><th>Causa mais comum</th><th>O que fazer</th></tr></thead>
+          <tbody>
+            <tr><td>O painel diz que a planilha começa em 2024-04</td><td>é a base curta, de 24 MB</td><td>use <code>datasets_case_modulo2.xlsx</code> de cerca de 68 MB</td></tr>
+            <tr><td>"O n8n respondeu 404"</td><td>workflow não publicado, Test URL no lugar da Production URL ou nome do grupo diferente no Path</td><td>refaça os itens 3, 5 e 6 do passo 4</td></tr>
+            <tr><td>"O n8n respondeu 500"</td><td>credencial não escolhida num dos três nós de modelo, ou limite diário do plano gratuito atingido</td><td>abra <strong>Executions</strong> no n8n e leia a mensagem do nó que ficou vermelho</td></tr>
+            <tr><td>Erro "No endpoints found matching your data policy"</td><td>a política de privacidade da conta OpenRouter bloqueia os modelos gratuitos</td><td>em <a href="https://openrouter.ai/settings/privacy">openrouter.ai/settings/privacy</a>, libere os endpoints gratuitos</td></tr>
+            <tr><td>O Jev devolve erro de crédito</td><td>o Jev cobra por uso</td><td>use um modelo <code>:free</code> ou acompanhe a demonstração</td></tr>
+            <tr><td>A equipe demora mais de um minuto</td><td>o modelo gratuito está congestionado</td><td>troque para o Qwen 3.8 gratuito no seletor e pergunte de novo</td></tr>
+            <tr><td>O GitHub Pages mostra 404</td><td>a publicação ainda não terminou, ou <code>index.html</code> ficou dentro de uma pasta</td><td>espere dois minutos e confira que <code>index.html</code> está na raiz</td></tr>
+            <tr><td>O painel publicado abre sem cor e sem fonte</td><td><code>inteli-brand.css</code> não foi enviado</td><td>envie o arquivo para a raiz do repositório</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="como">
+        <div class="passo-cabeca"><span class="n">13</span><div><h2>Como o painel calcula a fila</h2></div></div>
+        <p>O cálculo inteiro está em <code>modelo.js</code>, em cerca de 200 linhas, e segue cinco regras.</p>
+        <ol>
+          <li><strong>O histórico para em 2024-02.</strong> O <code>churn_label</code> do case marca a conta cuja última compra é até 07/03/2024. Uma compra depois do dia 7 de março só existe em conta que não foi perdida, então usar março inteiro vazaria o rótulo para dentro das colunas.</li>
+          <li><strong>Seis colunas por conta</strong>, todas com dados até 2024-02: meses desde a última compra, meses com compra nos últimos 12, logaritmo da receita dos 12 meses, receita dos 12 meses dividida pela dos 12 anteriores, receita dos 12 meses como fração do melhor ano e meses de casa.</li>
+          <li><strong>Regressão logística</strong> sobre as colunas padronizadas, ajustada pelo mesmo método da Aula 06.</li>
+          <li><strong>Escore fora da amostra.</strong> As 4.593 contas elegíveis são divididas em 5 dobras, e o escore de cada conta vem de um modelo que não a viu no treino. Por isso a AUC de 0,814 não está inflada.</li>
+          <li><strong>Fila por valor esperado</strong>, que é o escore vezes a receita dos 12 meses, como a Aula 07 mostrou que precisa ser.</li>
+        </ol>
+        <p>O mesmo cálculo existe em Python, em <code>dados/analise_aula08.py</code> do acervo, e um teste compara os dois conta a conta. A diferença máxima de escore entre os dois é da ordem de 10<sup>-15</sup>.</p>
+        <p>Um detalhe de nome mostra por que o contrato entre o modelo e o agente importa. A coluna de queda chamava <code>queda_contra_pico</code> e guardava 0,63 para uma conta que comprou 63% do melhor ano. Dois modelos de linguagem leram isso como "queda de 63%", quando a queda era de 37%. O nome mudou para <code>receita_12m_como_fracao_do_pico_anual</code>, e o prompt de cada agente explica a leitura.</p>
+      </section>
+
+    </main>
+
+    <footer class="doc-rodape">
+      <p>Inteli &middot; Instituto de Tecnologia e Liderança &middot; Módulo 2, Trilha de Tecnologia &middot; <a href="../laboratorio/index.html">Laboratório da aula</a> &middot; <a href="../index.html">Portal</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Botão de copiar em cada prompt.
+    document.querySelectorAll(".prompt").forEach(function (caixa) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">content_copy</span>Copiar';
+      b.addEventListener("click", function () {
+        var texto = caixa.querySelector("pre").textContent;
+        (navigator.clipboard ? navigator.clipboard.writeText(texto) : Promise.reject()).then(function () {
+          b.classList.add("copiado"); b.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">check</span>Copiado';
+          setTimeout(function () { b.classList.remove("copiado"); b.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">content_copy</span>Copiar'; }, 1800);
+        }).catch(function () { b.textContent = "Selecione e copie"; });
+      });
+      caixa.appendChild(b);
+    });
+  </script>
+</body>
+</html>

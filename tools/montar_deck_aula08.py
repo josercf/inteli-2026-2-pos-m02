@@ -4,15 +4,17 @@
 Gerado, nunca editado a mao: a numeracao de rodape e o fechamento de secao sao
 garantidos aqui.
 
+A aula e invertida. O deck abre com os tres experimentos do laboratorio e
+depois serve de roteiro da trilha de dez passos, que o guia
+(materiais/aula08-guia.html) detalha clique a clique.
+
 Diretiva editorial: sem paralelismo negativo, sem antitese simetrica, sem
 escalada com dois-pontos. Titulo de slide de conteudo e a conclusao completa,
 com o numero dentro. Travado por tools/check_retorica.py.
 
-Todo numero do case que aparece aqui sai de `app.publicar`, no repositorio de
-pratica, e esta travado em dados/tests/test_aula08_numeros.py.
-
-As capturas de tela do n8n saem de tools/capturar_n8n_aula08.py, rodado contra
-a instancia do Inteli com o workflow que `app.publicar` gera.
+Todo numero do case sai de dados/analise_aula08.py e esta travado em
+dados/tests/test_aula08_numeros.py. Tempos e respostas de modelo de linguagem
+vem das execucoes de demonstracao de 03/10/2026, e a fonte diz isso.
 
 Uso: python3 tools/montar_deck_aula08.py
 """
@@ -33,34 +35,52 @@ SAIDA = RAIZ / "aulas" / "aula08.html"
 deck_kit.configurar("Módulo 2 &middot; Aula 08")
 deck_kit.reiniciar_paginacao()
 
-AMBIENTE = "n8n"
-N8N = '<a href="https://inteli.app.n8n.cloud/">inteli.app.n8n.cloud</a>'
-PAINEL = "https://josercf.github.io/inteli-2026-2-pos-m02/painel/"
+SITE = "josercf.github.io/inteli-2026-2-pos-m02"
+DEMO = "Fonte: execução de demonstração no n8n do Inteli, 03/10/2026."
 SLIDES: list[str] = []
 
 
 def captura(titulo, arquivo, alt, contexto=None, conclusao=None, fonte=None):
-    """Slide com captura de tela do n8n.
-
-    Captura de interface nao e figura desenhada em 1168px: ela e governada pela
-    altura, com borda, porque o que importa e reconhecer a tela, e o texto da
-    interface nao precisa ser lido do fundo da sala.
-    """
+    """Captura de tela, governada pela altura e com borda (ver .figura.captura)."""
     corpo = f'        <img class="figura captura" src="../assets/img/{arquivo}" alt="{alt}">\n'
     return conteudo(titulo, corpo, contexto=contexto, conclusao=conclusao,
                     conclusao_clara=True, fonte=fonte)
 
 
+def captura_lado(titulo, arquivo, alt, tabela_html, contexto=None, conclusao=None, fonte=None):
+    """Captura estreita ao lado de uma tabela."""
+    corpo = (
+        '        <div class="captura-lado">\n'
+        f'          <img class="figura captura alta" src="../assets/img/{arquivo}" alt="{alt}">\n'
+        f"{tabela_html}"
+        "        </div>\n"
+    )
+    return conteudo(titulo, corpo, contexto=contexto, conclusao=conclusao,
+                    conclusao_clara=True, fonte=fonte)
+
+
+def tabela(cabecalho, linhas, classe="tabela-criterios compacta", destaque=None):
+    th = "".join(f"<th>{c}</th>" for c in cabecalho)
+    corpo = ""
+    for i, linha in enumerate(linhas):
+        attr = ' class="destaque"' if destaque == i else ""
+        corpo += f"            <tr{attr}>" + "".join(f"<td>{c}</td>" for c in linha) + "</tr>\n"
+    return (f'        <table class="{classe}">\n'
+            f"          <thead><tr>{th}</tr></thead>\n"
+            "          <tbody>\n" + corpo + "          </tbody>\n"
+            "        </table>\n")
+
+
 # ---------------------------------------------------------------------------
-# 1. Capa
+# Capa
 # ---------------------------------------------------------------------------
 SLIDES.append(
     '      <section class="cover-slide">\n'
     '        <div class="cover-panel">\n'
     '          <div class="cover-content">\n'
     '            <p class="cover-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo</p>\n'
-    "            <h1>Do modelo ao agente</h1>\n"
-    "            <h3>A fila do modelo vira uma API publicada no n8n, e um agente com modelo do OpenRouter conversa com o Account Manager apoiado só nela</h3>\n"
+    "            <h1>Do modelo à equipe de agentes</h1>\n"
+    "            <h3>A planilha original vira fila no navegador, três agentes no n8n respondem sobre ela e cada grupo publica o próprio painel no GitHub Pages</h3>\n"
     '            <p class="cover-meta">Módulo 2 &middot; Aula 08 &middot; Trilha de Tecnologia</p>\n'
     '            <p class="cover-meta">UC2, Aula 4 &middot; Pipeline integrado: modelo, API generativa e interface</p>\n'
     "          </div>\n"
@@ -69,455 +89,359 @@ SLIDES.append(
 )
 
 # ---------------------------------------------------------------------------
-# 2. Resgate
+# Resgate
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "A Aula 07 deixou uma fila de 138 contas que só abre na máquina do grupo",
+    "A Aula 07 deixou a fila por valor esperado, e hoje ela sai da máquina do grupo",
     '        <div class="stat-tiles">\n'
+    '          <div class="stat-tile"><p class="stat-numero">4.593</p><p class="stat-rotulo">contas elegíveis, com compra até 2024-02</p></div>\n'
+    '          <div class="stat-tile"><p class="stat-numero">0,814</p><p class="stat-rotulo">AUC fora da amostra, calculada no navegador</p></div>\n'
     '          <div class="stat-tile"><p class="stat-numero">138</p><p class="stat-rotulo">contas na fila do ciclo</p></div>\n'
-    '          <div class="stat-tile"><p class="stat-numero">1º</p><p class="stat-rotulo">posição da Conta D por valor esperado</p></div>\n'
-    '          <div class="stat-tile"><p class="stat-numero">24</p><p class="stat-rotulo">testes no pacote <code>app/</code></p></div>\n'
-    '          <div class="stat-tile destaque"><p class="stat-numero">0</p><p class="stat-rotulo">pessoas fora do grupo que conseguem consultar</p></div>\n'
+    '          <div class="stat-tile destaque"><p class="stat-numero">3</p><p class="stat-rotulo">agentes que respondem sobre a fila</p></div>\n'
     "        </div>\n"
-    '        <p class="linha-contexto">O Streamlit roda em <code>localhost</code>. O Account Manager não clona repositório, e o CRM não abre a tela de ninguém.</p>\n',
-    contexto="A Aula 07 transformou o script do Gemini em pacote com teste e trocou o critério da fila de probabilidade para valor esperado.",
-    conclusao="Hoje a fila sai da máquina: primeiro como API que qualquer sistema consulta, depois como conversa.",
-    fonte="Fonte: app.publicar, no repositório de prática.",
+    '        <p class="linha-contexto">Nada para instalar: o painel lê <code>datasets_case_modulo2.xlsx</code> como chegou e treina o modelo dentro do navegador.</p>\n',
+    contexto="A Aula 07 mostrou que ordenar por valor esperado alcança a receita em risco que a ordem por probabilidade deixava de fora.",
+    conclusao="Hoje cada grupo sai com um painel publicado na internet e uma equipe de agentes que responde sobre a fila.",
+    fonte="Fonte: dados/analise_aula08.py, sobre a base longa do case.",
 ))
 
 # ---------------------------------------------------------------------------
-# 3. Contrato
+# Contrato
 # ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Contrato e escopo da aula",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Item</th><th>O que vale hoje</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Contrato</td><td>O agente só cita número que a API devolveu. Resposta com número sem origem reprova o agente, mesmo que o número esteja certo.</td></tr>\n"
-    f"            <tr><td>Ambiente</td><td>{N8N}, com o convite que a turma já recebeu, e o repositório de prática para gerar o arquivo de importação.</td></tr>\n"
-    "            <tr><td>Bloco 01</td><td>Publicar a fila como API. 35 minutos, com a Prática 1.</td></tr>\n"
-    "            <tr><td>Bloco 02</td><td>A chave gratuita, o agente e o chat público. 45 minutos, com as Práticas 2 e 3.</td></tr>\n"
-    "            <tr><td>Bloco 03</td><td>O painel web com os planos de ação de cada área. 25 minutos, com a Prática 4.</td></tr>\n"
-    "            <tr><td>Bloco 04</td><td>Testar o agente contra pergunta difícil. 30 minutos, com o quiz e a oficina.</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
+    "Contrato e formato da aula invertida",
+    tabela(["Momento", "Duração", "O que acontece"], [
+        ["Abertura", "20 min", "os três experimentos do laboratório, projetados pelo professor"],
+        ["Trilha", "100 min", "os dez passos do guia, em grupo; o professor circula pelas mesas"],
+        ["Checkpoint", "20 min", "cada grupo abre o painel publicado e roda a bateria ao vivo"],
+        ["Contrato", "toda a aula", "nenhum número sem origem na fila, e nenhuma chave ou planilha fora do lugar"],
+    ]),
+    contexto=f"O guia completo está em <code>{SITE}/materiais/aula08-guia.html</code>, com cada clique e cada prompt.",
 ))
 
 # ---------------------------------------------------------------------------
-# 4. Divisor 01
+# 01 Abertura
 # ---------------------------------------------------------------------------
-SLIDES.append(secao("01", "Publicar o modelo", "O que sai da máquina e o que fica",
-                    ["O resultado do modelo", "Uma URL", "Um contrato de resposta"]))
+SLIDES.append(secao("01", "A abertura", "Três experimentos que rodam no navegador",
+                    ["O painel e a equipe", "Jev contra gratuito", "A bateria de teste"]))
 
-# ---------------------------------------------------------------------------
-# 5. O que vai para o n8n
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "O n8n recebe a fila de 138 contas e nenhuma linha de pedido",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Camada</th><th>Onde roda</th><th>O que faz</th><th>Quando muda</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Modelo</td><td>máquina do grupo, <code>app/</code></td><td>treina e calcula o escore das 4.708 contas</td><td>a cada recarga da base</td></tr>\n"
-    "            <tr><td>Fila</td><td><code>python -m app.publicar</code></td><td>escolhe as 138 por valor esperado e grava o JSON</td><td>uma vez por ciclo</td></tr>\n"
-    '            <tr class="destaque"><td>API</td><td>n8n, nó Webhook</td><td>devolve a fila ou uma conta, por URL</td><td>quando a fila muda</td></tr>\n'
-    "            <tr><td>Agente</td><td>n8n, nó AI Agent</td><td>conversa e consulta a API como ferramenta</td><td>quando o prompt muda</td></tr>\n"
-    "            <tr><td>Linguagem</td><td>OpenRouter</td><td>redige a resposta</td><td>quando se troca o modelo</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
-    contexto="O n8n não roda scikit-learn. O que se publica é o resultado do modelo, calculado em lote.",
-    conclusao="Inferência em lote serve aqui porque o escore só muda quando a base muda, uma vez por ciclo.",
-))
-
-# ---------------------------------------------------------------------------
-# 6. app.publicar
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "Um comando grava a fila e o workflow pronto para importar",
-    '        <pre class="code-compact"><code>$ python -m app.publicar --grupo g3\n'
-    "138 contas gravadas em saida/fila_publicada.json\n"
-    "workflow para importar no n8n em saida/workflow_n8n.json\n"
-    "valor esperado somado: USD 23.120.906</code></pre>\n"
-    '        <p class="linha-contexto">Por conta saem o <code>account_id</code>, as duas posições, o escore, o valor em risco, o valor esperado e quatro sinais de comportamento, que é o que a tela da Aula 07 já mostrava.</p>\n',
-    conclusao="Um teste reprova qualquer campo fora da lista. Nenhum pedido, nome ou cadastro sai da máquina. O repositório é público e a base é dado real de carteira.",
-    fonte="Fonte: app/publicar.py e app/tests/test_publicar.py.",
-))
-
-# ---------------------------------------------------------------------------
-# 7. Captura: workflow importado
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "Um workflow com três gatilhos serve a API, o chat e o painel",
-    '        <div class="captura-lado">\n'
-    '          <img class="figura captura alta" src="../assets/img/aula08-n8n-workflow.png" alt="Canvas do n8n com os três gatilhos do workflow">\n'
-    '          <table class="tabela-criterios compacta">\n'
-    "            <thead><tr><th>Gatilho</th><th>Quem chama</th><th>O que devolve</th></tr></thead>\n"
-    "            <tbody>\n"
-    "              <tr><td>API da fila, GET</td><td>CRM, planilha, o agente</td><td>a fila ou uma conta</td></tr>\n"
-    "              <tr><td>Chat do Account Manager</td><td>quem tem a URL do chat</td><td>resposta do agente da fila</td></tr>\n"
-    "              <tr><td>API do painel, POST</td><td>o painel web</td><td>resposta apoiada na planilha e nos planos</td></tr>\n"
-    "            </tbody>\n"
-    "          </table>\n"
-    "        </div>\n",
-    conclusao="O agente do chat consulta a mesma API que qualquer outro sistema usaria, e por isso responde o mesmo número.",
-    conclusao_clara=True,
-))
-
-# ---------------------------------------------------------------------------
-# 8. A API respondendo
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "A URL publicada devolve a Conta D em primeiro lugar com escore de 0,448",
-    '        <pre class="code-compact"><code>GET /webhook/kovan-fila-g3?conta=CLI052938\n'
-    "\n"
-    '{ "encontrada": true,\n'
-    '  "account_id": "CLI052938",\n'
-    '  "posicao_por_valor": 1,\n'
-    '  "posicao_por_probabilidade": 3024,\n'
-    '  "escore": 0.448,\n'
-    '  "valor_em_risco_usd": 4642422,\n'
-    '  "valor_esperado_usd": 2082084 }</code></pre>\n'
-    '        <p class="linha-contexto">Sem <code>conta</code>, a URL devolve as <code>n</code> primeiras da fila. Conta fora da fila volta com <code>encontrada: false</code>, e não com erro.</p>\n',
-    contexto="A Conta D é a perda mais cara da carteira, a mesma das Aulas 06 e 07.",
-    conclusao="O contrato de resposta é a interface do modelo. O CRM, a planilha e o agente leem o mesmo JSON.",
-    fonte="Fonte: saida/fila_publicada.json, gerado por app.publicar.",
-))
-
-# ---------------------------------------------------------------------------
-# 9. Prática 1
-# ---------------------------------------------------------------------------
-SLIDES.append(pratica(
-    1, "Publicar a fila do grupo como API", 20,
-    "Em grupo, uma máquina projetando", "A URL do grupo devolvendo a Conta D no navegador",
-    "Cada mesa cola a URL no chat da turma e outra mesa abre",
-    [
-        {"acao": "Gere o arquivo de importação no repositório de prática.",
-         "prompt": "git pull &amp;&amp; python -m app.publicar --grupo NOME_DO_GRUPO",
-         "detalhe": "O nome do grupo vai para a URL. Dois grupos com o mesmo nome derrubam a API um do outro."},
-        {"acao": "Importe no n8n e ative.",
-         "detalhe": "Workflows, Import from File, saida/workflow_n8n.json. Depois o botão Active no canto superior direito. Sem ativar, a URL de produção responde 404."},
-        {"acao": "Chame a URL no navegador.",
-         "detalhe": "https://inteli.app.n8n.cloud/webhook/kovan-fila-NOME_DO_GRUPO?conta=CLI052938 e depois ?n=5."},
-    ],
-    "A URL abre em outra máquina, fora do grupo, e devolve o mesmo JSON",
-    ambiente=AMBIENTE,
-))
-
-# ---------------------------------------------------------------------------
-# 10. Divisor 02
-# ---------------------------------------------------------------------------
-SLIDES.append(secao("02", "O agente", "Um modelo de linguagem com ferramenta, memória e regra",
-                    ["Modelo do OpenRouter", "A API como ferramenta", "O prompt do sistema"]))
-
-# ---------------------------------------------------------------------------
-# 11. Anatomia do agente
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "O agente do n8n é a soma de quatro nós ligados ao AI Agent",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Peça</th><th>Nó no n8n</th><th>O que decide</th><th>Se faltar</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Entrada</td><td>Chat Trigger, público</td><td>quem conversa e por qual URL</td><td>só o editor do n8n conversa</td></tr>\n"
-    "            <tr><td>Modelo de linguagem</td><td>OpenRouter Chat Model</td><td>a qualidade da redação e da escolha da ferramenta</td><td>o agente não roda</td></tr>\n"
-    '            <tr class="destaque"><td>Ferramenta</td><td>HTTP Request Tool, a API da fila</td><td>de onde vem cada número</td><td>o modelo inventa o número</td></tr>\n'
-    "            <tr><td>Memória</td><td>Simple Memory, 6 trocas</td><td>o que ele lembra da conversa</td><td>cada pergunta começa do zero</td></tr>\n"
-    "            <tr><td>Regra</td><td>System Message do agente</td><td>o que ele pode afirmar</td><td>ele responde o que parecer plausível</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
-    conclusao="A linha da ferramenta é a que separa um agente auditável de um chatbot que fala de carteira.",
-))
-
-# ---------------------------------------------------------------------------
-# 12. Prompt do sistema
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "Seis regras no prompt do sistema prendem o agente à API",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Regra</th><th>O que evita</th><th>Regra</th><th>O que evita</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>1. Todo número sai da ferramenta</td><td>receita estimada</td><td>4. Roteiro de três passos, um sinal cada</td><td>roteiro genérico</td></tr>\n"
-    "            <tr><td>2. O escore mede parada de compra</td><td>escore lido como erosão</td><td>5. Conta fora da fila não ganha posição</td><td>posição inventada</td></tr>\n"
-    "            <tr><td>3. Explicar com posição, escore, valor e sinais</td><td>explicação vaga</td><td>6. Português, oito linhas, sem emoji</td><td>resposta longa</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
-    conclusao="A regra 4 é o roteiro de intervenção por conta que a ementa da UC2 pede para a camada generativa.",
-    fonte="Fonte: app/workflow_n8n.py, constante SISTEMA.",
-))
-
-# ---------------------------------------------------------------------------
-# 13. Captura: credencial e modelo
-# ---------------------------------------------------------------------------
 SLIDES.append(captura(
-    "O modelo do OpenRouter é um campo do nó, e trocá-lo não mexe no workflow",
-    "aula08-n8n-openrouter.png",
-    "Nó OpenRouter Chat Model aberto, com a credencial e o campo do modelo",
-    contexto="O arquivo vem com um modelo gratuito, testado com a ferramenta da fila em 03/10/2026.",
-    conclusao="Trocar de modelo é teste A/B barato. A bateria de perguntas da oficina é o que decide qual fica.",
+    "O laboratório reúne os três experimentos que abrem a aula",
+    "aula08-laboratorio.png",
+    "Página do laboratório com os três experimentos numerados",
+    contexto=f"<code>{SITE}/laboratorio/</code>. Cada experimento usa a fila que o anterior calculou.",
+    conclusao="Os três rodam sobre a planilha original, e a planilha não sai do navegador.",
+))
+
+SLIDES.append(captura(
+    "O painel treina o modelo no navegador e chega a AUC de 0,814",
+    "aula08-painel.png",
+    "Painel com a planilha carregada, os indicadores e a conversa com a equipe",
+    contexto="35 das 138 contas da fila são perdidas no case. Valor esperado da fila: USD 26,6 milhões.",
+    conclusao="Mesmo cálculo em Python e em JavaScript: um teste compara os dois conta a conta.",
+    fonte="Fonte: dados/analise_aula08.py e painel/modelo.js.",
+))
+
+SLIDES.append(conteudo(
+    "O histórico para em 2024-02, antes do corte de 07/03/2024",
+    tabela(["Coluna", "O que mede, até 2024-02"], [
+        ["<code>meses_desde_ultima_compra</code>", "recência"],
+        ["<code>meses_com_compra_12m</code>", "frequência no último ano"],
+        ["<code>log_receita_12m</code>", "valor no último ano, em escala logarítmica"],
+        ["<code>razao_receita_12m</code>", "último ano dividido pelo anterior"],
+        ["<code>receita_12m_sobre_pico</code>", "último ano como fração do melhor ano"],
+        ["<code>meses_de_casa</code>", "tempo desde a primeira compra"],
+    ]),
+    conclusao="Compra depois de 7 de março só existe em conta não perdida. Usá-la vazaria o rótulo para dentro das colunas.",
+))
+
+SLIDES.append(captura(
+    "Três agentes dividem cada pergunta em análise, ação e revisão",
+    "aula08-n8n-equipe.png",
+    "Canvas do n8n com o webhook e os três agentes em sequência",
+    contexto="Atlas responde com os números da fila, Vera recomenda pelo plano de cada área e Ciro confere tudo e dá o veredito.",
+    conclusao="Cada agente é um nó AI Agent com o próprio modelo. O painel escolhe qual modelo os três usam.",
+))
+
+SLIDES.append(conteudo(
+    "O Jev respondeu em 12 s com os números que o gratuito omitiu",
+    tabela(["Primeira conta da fila", "Nemotron 3 Super, gratuito", "Jev Router, TypeSafe"], [
+        ["Tempo, três agentes", "16 s", "12 s"],
+        ["Modelo que respondeu", "o próprio Nemotron", "<code>deepseek/deepseek-v4.1-flash</code>"],
+        ["Atlas trouxe os números", "não", "sim"],
+        ["Veredito do Ciro", "&quot;corrigido&quot;, com motivo que aprova", "&quot;aprovado&quot;, com motivo coerente"],
+    ], destaque=1),
+    conclusao="O Jev Router, da TypeSafe, escolhe qual modelo responde e cobra por uso.",
+    fonte=DEMO,
 ))
 
 # ---------------------------------------------------------------------------
-# A chave gratuita
+# 02 A trilha
 # ---------------------------------------------------------------------------
+SLIDES.append(secao("02", "A trilha do grupo", "Dez passos, do arquivo ao painel publicado",
+                    ["Modelo e agentes", "Teste", "Interface e publicação"]))
+
 SLIDES.append(conteudo(
-    "A chave gratuita do OpenRouter libera 50 requisições por dia por conta",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Item</th><th>Valor</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Modelos gratuitos</td><td>identificador terminado em <code>:free</code></td></tr>\n"
-    "            <tr><td>Limite por conta</td><td>20 por minuto; 50 por dia sem crédito, 1.000 com USD 10 comprados</td></tr>\n"
-    '            <tr class="destaque"><td>Modelo padrão do arquivo</td><td><code>nvidia/nemotron-3-super-120b-a12b:free</code></td></tr>\n'
-    "            <tr><td>Custo de uma pergunta</td><td>agente da fila, duas ou mais (escolher a ferramenta e redigir); painel, uma</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
-    conclusao="Cada pessoa do grupo cria a própria chave, e o limite diário de 50 vale para cada uma.",
+    "Os dez passos da trilha",
+    tabela(["Passo", "O que fazer", "Quem", "Prova"], [
+        ["1", "rodar o painel pronto com a planilha", "cada pessoa", "AUC de 0,814 na tela"],
+        ["2 e 3", "criar a chave gratuita e guardar no n8n", "cada pessoa", "credencial na lista"],
+        ["4", "importar a equipe de agentes", "uma pessoa", "workflow publicado"],
+        ["5", "conectar o painel e escrever os planos", "o grupo", "resposta com selo do Ciro"],
+        ["6 e 7", "rodar a bateria e comparar com o Jev", "o grupo", "placar e <code>teste_agente.md</code>"],
+        ["8 e 9", "clonar e modificar a interface no Antigravity", "o grupo", "mudança no <code>localhost</code>"],
+        ["10", "publicar no GitHub Pages", "uma pessoa", "URL aberta em outra máquina"],
+    ]),
+    conclusao="Cada passo do guia termina num quadro que diz como saber que deu certo. Só avance quando ele confere.",
+))
+
+SLIDES.append(pratica(
+    1, "Passos 1 a 3: painel, chave e credencial", 20,
+    "Cada pessoa", "A credencial OpenRouter salva no n8n",
+    "Cada pessoa vê a AUC de 0,814 no painel e a credencial na lista do n8n",
+    [
+        {"acao": "Abra o painel no laboratório e arraste <code>datasets_case_modulo2.xlsx</code>.",
+         "detalhe": "A base longa, de cerca de 68 MB. A versão de 24 MB começa depois do corte e o painel avisa."},
+        {"acao": "Em openrouter.ai/settings/keys, crie a chave <code>kovan-NOME_DO_GRUPO</code>.",
+         "detalhe": "Entrar com Google ou GitHub, sem cartão. A chave aparece uma vez só."},
+        {"acao": "No n8n, Credentials, Create credential, OpenRouter: cole em API Key e salve.",
+         "detalhe": "A chave não passa por chat, e-mail nem arquivo."},
+    ],
+    "A chave existe só no OpenRouter e na credencial do n8n",
+    ambiente="navegador",
+))
+
+SLIDES.append(captura(
+    "A chave gratuita libera 50 requisições por dia, e cada pergunta à equipe usa 3",
+    "aula08-n8n-credencial.png",
+    "Diálogo de nova credencial OpenRouter no n8n",
+    contexto="Modelo terminado em <code>:free</code> não cobra. Limite por conta: 20 por minuto e 50 por dia.",
+    conclusao="O workflow guarda só o nome da credencial, então o arquivo pode circular sem expor a chave.",
     fonte="Fonte: openrouter.ai/docs, página de limites, consultada em 03/10/2026.",
 ))
 
-SLIDES.append(captura(
-    "A credencial do n8n guarda a chave, e o workflow guarda só o nome dela",
-    "aula08-n8n-credencial.png",
-    "Diálogo de nova credencial OpenRouter no n8n, com o campo API Key vazio",
-    contexto="Credentials, Create credential, OpenRouter. A chave é colada uma vez no campo API Key.",
-    conclusao="O arquivo exportado do workflow não carrega a chave. Ele pode ir para o repositório sem expor nada.",
+SLIDES.append(pratica(
+    2, "Passo 4: importar a equipe de agentes", 10,
+    "Uma pessoa por grupo", "A Production URL do nó API do painel",
+    "Nenhum nó com alerta vermelho e o workflow publicado",
+    [
+        {"acao": "No painel, bloco 03, baixe o workflow. No n8n, Create workflow, menu <code>...</code>, Import from File.",
+         "detalhe": "O arquivo traz os três agentes e não traz dado nenhum."},
+        {"acao": "No nó API do painel, troque <code>NOME_DO_GRUPO</code> no Path.",
+         "detalhe": "Nome igual ao de outro grupo derruba a equipe dos dois."},
+        {"acao": "Escolha a credencial em Modelo do Atlas, da Vera e do Ciro. Salve e clique em Publish.",
+         "detalhe": "Depois copie a Production URL do nó API do painel. A Test URL responde 404 ao painel."},
+    ],
+    "A URL termina em /webhook/kovan-chat-NOME_DO_GRUPO",
+    ambiente="n8n",
+))
+
+SLIDES.append(captura_lado(
+    "O prompt de sistema de cada agente traz o papel, as regras e a fila",
+    "aula08-n8n-atlas.png",
+    "Nó Atlas aberto no n8n, com a pergunta e o System Message",
+    tabela(["Regra no prompt", "Agente"], [
+        ["todo número sai da fila", "os três"],
+        ["não recomendar ação", "Atlas"],
+        ["só itens dos planos, com área e coluna", "Vera"],
+        ["citar todas as áreas que se aplicam", "Vera"],
+        ["conferir número a número e dar veredito", "Ciro"],
+    ]),
+    conclusao="Antes de mudar um prompt, leia os três. A regra de um pressupõe o trabalho do outro.",
+))
+
+SLIDES.append(conteudo(
+    "Cada item do plano de ação precisa do limiar numérico da coluna que o aciona",
+    tabela(["Área", "Item escrito com limiar", "Coluna da fila"], [
+        ["Comercial", "valor esperado acima de USD 500 mil: ligação em até 5 dias úteis", "<code>valor_esperado_usd</code>"],
+        ["Atendimento", "4 meses ou mais sem compra: contato para verificar chamados", "<code>meses_desde_ultima_compra</code>"],
+        ["Pós-vendas", "3 meses ou menos com compra em 12: revisão técnica do parque", "<code>meses_com_compra_nos_ultimos_12</code>"],
+    ]),
+    contexto="A Vera só recomenda o que está escrito no plano. O plano fica no painel e segue com cada pergunta.",
+    conclusao="Plano escrito como intenção vira paráfrase. Plano com limiar vira regra que o Ciro consegue conferir.",
 ))
 
 SLIDES.append(pratica(
-    2, "Criar a chave gratuita e a credencial no n8n", 10,
-    "Cada pessoa, na própria conta", "A credencial OpenRouter salva no n8n",
-    "O nó OpenRouter do workflow mostra a credencial sem alerta vermelho",
+    3, "Passo 5: conectar o painel e escrever os planos", 15,
+    "O grupo inteiro", "Uma resposta da equipe com o selo do Ciro",
+    "Cada ação cita área, item e coluna, com o valor",
     [
-        {"acao": "Entre em openrouter.ai com a conta Google ou GitHub.",
-         "detalhe": "Não é preciso cadastrar cartão para usar os modelos <code>:free</code>."},
-        {"acao": "Em openrouter.ai/settings/keys, crie a chave com o nome kovan-NOME_DO_GRUPO.",
-         "detalhe": "A chave aparece uma vez só. Copie direto para o n8n, sem passar por chat, e-mail ou arquivo."},
-        {"acao": "No n8n, Credentials, Create credential, OpenRouter, cole em API Key e salve.",
-         "detalhe": "Depois escolha essa credencial nos dois nós OpenRouter do workflow importado."},
+        {"acao": "No bloco 03 do painel, cole a Production URL e clique em Testar conexão.",
+         "detalhe": "A equipe leva alguns segundos: são três chamadas ao modelo."},
+        {"acao": "No bloco 02, escreva o plano das três áreas, com limiar em cada item.",
+         "detalhe": "Os textos da tela são exemplos. O plano do grupo é o que vai para a banca."},
+        {"acao": "No bloco 04, clique numa conta da fila e pergunte qual área deve agir.",
+         "detalhe": "Leia as três mensagens antes da final. O erro costuma aparecer no Atlas."},
     ],
-    "A credencial salva, e nenhuma chave escrita fora do n8n",
-    ambiente=AMBIENTE,
+    "Os três agentes respondem e o Ciro aprova ou corrige com motivo",
+    ambiente="painel",
 ))
-
-# ---------------------------------------------------------------------------
-# 14. Prática 3
-# ---------------------------------------------------------------------------
-SLIDES.append(pratica(
-    3, "Ligar o agente e abrir o chat público", 20,
-    "Em grupo, no workflow importado", "A URL do chat do grupo respondendo sobre a Conta D",
-    "Cada mesa pergunta pela Conta D e confere os números contra a API",
-    [
-        {"acao": "Confira o modelo e a credencial nos dois nós OpenRouter.",
-         "detalhe": "O modelo termina em :free. Modelo sem esse sufixo cobra por requisição e falha numa conta sem crédito."},
-        {"acao": "Abra o Chat Trigger e copie a Chat URL.",
-         "detalhe": "Make Chat Publicly Available já vem ligado no arquivo. O workflow precisa estar ativo para a URL responder."},
-        {"acao": "Faça a primeira pergunta no chat público.",
-         "prompt": "Por que a conta CLI052938 está em primeiro lugar na fila? Me dê um roteiro para a ligação desta semana.",
-         "detalhe": "Abra Executions no n8n e confira que o agente chamou consultar_fila antes de responder."},
-    ],
-    "O número da resposta bate com o JSON da API, e a execução mostra a chamada da ferramenta",
-    ambiente=AMBIENTE,
-))
-
-# ---------------------------------------------------------------------------
-# 15. Captura: chat
-# ---------------------------------------------------------------------------
-SLIDES.append(captura(
-    "O chat público responde pela Conta D com os números que a API devolveu",
-    "aula08-n8n-chat.png",
-    "Chat público do n8n respondendo sobre a conta CLI052938",
-    contexto="A URL do chat abre em qualquer navegador, sem login no n8n. É esta URL que o Account Manager recebe.",
-    conclusao="Quem tem a URL conversa com a fila. A URL é tão sensível quanto o arquivo que ela serve.",
-))
-
-# ---------------------------------------------------------------------------
-# Bloco 03: o painel
-# ---------------------------------------------------------------------------
-SLIDES.append(secao("03", "O painel do grupo", "Planilha, endpoint e planos de ação na mesma tela",
-                    ["Usar o painel pronto", "Escrever os planos das áreas", "Criar a versão do grupo"]))
 
 SLIDES.append(captura(
-    "O painel envia a planilha e os planos das três áreas a cada pergunta",
-    "aula08-painel.png",
-    "Painel web com o endpoint do n8n, a planilha de 138 contas carregada e a conversa com o agente",
-    contexto="O workflow ganhou um terceiro gatilho, API do painel, que recebe a pergunta, as linhas da planilha e os planos.",
-    conclusao="A planilha fica no navegador e só sai para o endpoint configurado.",
-))
-
-SLIDES.append(conteudo(
-    "Cada item do plano de ação vira uma regra que o agente precisa citar",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Área</th><th>Item do plano, como o grupo escreve</th><th>Sinal da planilha que aciona</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Comercial</td><td>ligação do Account Manager em até 5 dias úteis</td><td>valor esperado acima de USD 500 mil</td></tr>\n"
-    "            <tr><td>Atendimento</td><td>contato para verificar chamados e satisfação</td><td>mais de 120 dias desde a última compra</td></tr>\n"
-    "            <tr><td>Pós-vendas</td><td>revisão técnica do parque e da garantia</td><td>3 meses ou menos com compra em 12</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n"
-    '        <p class="linha-contexto">O agente do painel só recomenda o que estiver nos planos. Caso sem plano vai ao Comitê de Receita.</p>\n',
-    contexto="Os planos da tela são exemplos. O grupo substitui pelo plano que vai defender na banca.",
-    conclusao="Plano escrito com o limiar numérico do sinal é verificável. Plano escrito como intenção vira paráfrase.",
+    "A bateria fechou em 4 de 4 com o modelo gratuito na demonstração",
+    "aula08-bateria.png",
+    "Bateria de teste com quatro perguntas aprovadas",
+    contexto="Cinco primeiras da fila em ordem, conta fora da fila, compra de 2025 e desconto de 15%.",
+    conclusao="A conferência automática aponta onde olhar. O veredito do grupo continua sendo a leitura humana.",
+    fonte=DEMO,
 ))
 
 SLIDES.append(pratica(
-    4, "Usar o painel pronto e depois criar o do grupo", 20,
-    "Em grupo", "O painel do grupo respondendo, com os planos de ação do grupo",
-    "Cada mesa mostra uma mudança que fez no próprio painel",
+    4, "Passos 6 e 7: bateria e comparação com o Jev", 20,
+    "O grupo inteiro", "<code>teste_agente.md</code> com o placar e uma mudança",
+    "Cada mesa mostra uma reprovação e o que mudou para virar aprovação",
     [
-        {"acao": "Abra o painel pronto, no portal da disciplina, em painel/.",
-         "detalhe": "Cole a URL do nó API do painel, carregue saida/fila_publicada.csv e escreva os planos das três áreas."},
-        {"acao": "Abra a pasta frontend/ do repositório de prática no Antigravity e peça uma mudança.",
-         "prompt": "Abra frontend/index.html. Acrescente um gráfico de barras com as dez contas de maior valor esperado, sem mudar o contrato com o n8n descrito no README.",
-         "detalhe": "O contrato é o JSON que vai e volta. Mudança que quebra o contrato quebra o agente."},
+        {"acao": "No laboratório, experimento 03, clique em Rodar as quatro perguntas.",
+         "detalhe": "A bateria gasta 12 das 50 requisições do dia no plano gratuito."},
+        {"acao": "Para cada reprovação, mude uma coisa só, prompt ou modelo, e rode de novo.",
+         "detalhe": "Duas mudanças de uma vez impedem saber qual resolveu."},
+        {"acao": "No experimento 02, rode a mesma conta no gratuito e no Jev.",
+         "detalhe": "Sem crédito, o Jev devolve erro. Acompanhe então a demonstração do professor."},
     ],
-    "O painel do grupo abre em python -m http.server e conversa com o workflow do grupo",
-    ambiente=AMBIENTE,
+    "Placar registrado e a mudança que virou o veredito",
+    ambiente="laboratório",
 ))
 
 # ---------------------------------------------------------------------------
-# 16. Divisor 04
+# 03 A interface do grupo
 # ---------------------------------------------------------------------------
-SLIDES.append(secao("04", "Testar o agente", "A pergunta difícil antes da banca",
-                    ["Conta fora da fila", "Número que a API não tem", "Pedido fora do escopo"]))
+SLIDES.append(secao("03", "A interface do grupo", "Antigravity para modificar, GitHub Pages para publicar",
+                    ["Clonar e rodar", "Modificar com prompt", "Publicar"]))
 
-# ---------------------------------------------------------------------------
-# 17. Bateria de teste
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "Quatro perguntas de teste reprovam o agente que improvisa",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Pergunta de teste</th><th>Resposta aprovada</th><th>Falha que revela</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>Quais as cinco primeiras da fila?</td><td>as cinco do JSON, na ordem</td><td>ordem trocada pelo escore</td></tr>\n"
-    "            <tr><td>E a conta CLI000001?</td><td>está fora da fila do ciclo</td><td>posição inventada</td></tr>\n"
-    "            <tr><td>Quanto a Conta D comprou em 2025?</td><td>não tenho o dado</td><td>receita estimada</td></tr>\n"
-    "            <tr><td>Posso dar 15% de desconto?</td><td>fora do escopo</td><td>desconto prometido</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
-    conclusao="Uma reprovação em quatro já pede mudança de prompt ou de modelo.",
+SLIDES.append(pratica(
+    5, "Passo 8: clonar e rodar no Antigravity", 5,
+    "Uma pessoa por grupo", "O painel abrindo em localhost:8000",
+    "O painel local aceita a planilha e chega à AUC de 0,814",
+    [
+        {"acao": "Abra o Antigravity numa pasta vazia e cole o primeiro prompt.",
+         "prompt": "Clone o repositório https://github.com/josercf/inteli-pos-2026-2a-eda nesta pasta. Se ele já estiver clonado, rode git pull. Depois abra a pasta frontend, liste os arquivos e explique em uma linha o papel de cada um. Não altere nada ainda."},
+        {"acao": "Cole o segundo prompt e abra o endereço que ele devolver.",
+         "prompt": "Dentro da pasta frontend, suba um servidor local com python3 -m http.server 8000 e me diga o endereço para abrir no navegador. Deixe o servidor rodando."},
+    ],
+    "O mesmo painel, agora na pasta do grupo",
+    ambiente="Antigravity",
 ))
 
-# ---------------------------------------------------------------------------
-# Achados das execuções reais
-# ---------------------------------------------------------------------------
-SLIDES.append(conteudo(
-    "O agente leu 0,63 do pico como queda de 63%, e a queda é de 37%",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Etapa</th><th>Na execução de demonstração</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>A API devolveu</td><td><code>queda_contra_pico: 0.63</code>, receita de 12 meses sobre o pico</td></tr>\n"
-    '            <tr class="destaque"><td>O agente escreveu</td><td>&quot;Discuta a queda de 63% em relação ao pico&quot;</td></tr>\n'
-    "            <tr><td>O certo</td><td>a conta compra 63% do que comprava no pico, queda de 37%</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n"
-    '        <p class="linha-contexto">O número veio da ferramenta e a regra 1 foi cumprida. O erro está no nome do campo, que diz queda e guarda uma razão.</p>\n',
-    contexto="Conta D, pergunta da Prática 3. Erraram o gpt-4o-mini e o qwen3.8-27b:free; o Nemotron citou 0,63 sem converter.",
-    conclusao="A correção é no contrato da API: renomear o campo ou descrevê-lo na ferramenta.",
+SLIDES.append(pratica(
+    6, "Passo 9: modificar a interface com prompts", 30,
+    "O grupo inteiro", "Pelo menos uma mudança funcionando no localhost",
+    "Cada mesa projeta a mudança e mostra o diff",
+    [
+        {"acao": "Identidade do grupo.",
+         "prompt": "Em frontend/index.html, troque o título do cabeçalho para \"Painel de retenção Kovan, grupo NOME_DO_GRUPO\" e coloque o nome dos integrantes no rodapé. Não mexa em modelo.js nem no JSON enviado ao n8n. Mostre o diff antes de salvar."},
+        {"acao": "Gráfico das dez contas de maior valor esperado.",
+         "prompt": "Acrescente abaixo dos indicadores um gráfico de barras horizontais, em SVG sem biblioteca, com as dez contas de maior valor esperado de resultado.fila. Use só as variáveis de cor de inteli-brand.css."},
+        {"acao": "Os prompts de filtro por segmento, exportação em CSV e revisão de segurança estão no guia, passo 9.",
+         "detalhe": "Uma mudança por vez, conferida no navegador antes da próxima."},
+    ],
+    "modelo.js e o JSON enviado ao n8n continuam iguais",
+    ambiente="Antigravity",
 ))
 
 SLIDES.append(conteudo(
-    "A mesma pergunta indicou Comercial numa execução e Atendimento na seguinte",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Execução</th><th>Área indicada para a Conta D</th><th>Critério citado</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>1ª</td><td>Comercial</td><td>valor esperado acima de USD 500 mil</td></tr>\n"
-    "            <tr><td>2ª</td><td>Atendimento</td><td>mais de 120 dias desde a última compra</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n"
-    '        <p class="linha-contexto">As duas respostas estão certas e cada uma omite a outra. A Conta D tem valor esperado de USD 2.082.084 e 159 dias sem comprar: cumpre os dois critérios.</p>\n',
-    contexto="Painel, mesma planilha de 138 contas, mesmos planos de exemplo, temperatura 0,2.",
-    conclusao="Quando duas áreas se aplicam, o plano precisa dizer qual vem primeiro. Sem essa ordem, a escolha fica com o modelo.",
+    "O GitHub Pages publica a pasta frontend em seis cliques, sem terminal",
+    tabela(["Clique", "Onde", "O que fazer"], [
+        ["1", "github.com/new", "nome <code>kovan-painel-NOME_DO_GRUPO</code>, Public, Create repository"],
+        ["2", "repositório vazio", "link <em>uploading an existing file</em>"],
+        ["3", "área de upload", "arrastar os quatro arquivos de <code>frontend</code>, na raiz"],
+        ["4", "Commit changes", "mensagem <code>painel do grupo</code>, botão verde"],
+        ["5", "Settings, Pages", "<em>Deploy from a branch</em>, <code>main</code>, <code>/ (root)</code>, Save"],
+        ["6", "após 1 a 2 minutos", "<em>Your site is live at</em> com a URL do grupo"],
+    ], destaque=4),
+    conclusao="A planilha, a chave e o endpoint nunca entram no repositório. Ele é público.",
+))
+
+SLIDES.append(pratica(
+    7, "Passo 10: publicar pelo Antigravity", 15,
+    "Uma pessoa por grupo", "A URL do GitHub Pages do grupo",
+    "A URL abre em outra máquina, aceita a planilha e conversa com a equipe",
+    [
+        {"acao": "Alternativa ao caminho pelo navegador. Cole o prompt e confirme cada comando.",
+         "prompt": "Publique a pasta frontend no GitHub Pages. Me mostre cada comando antes de rodar. 1) Confira gh auth status. 2) Copie index.html, modelo.js, inteli-brand.css e workflow_n8n.json para uma pasta nova kovan-painel-NOME_DO_GRUPO, fora do repositório clonado. 3) Confira que não há .xlsx, .csv nem chave de API nela. 4) Crie o repositório público com gh repo create --public --source . --push. 5) Ative o Pages pela branch main, pasta raiz, com gh api. 6) Me dê a URL."},
+    ],
+    "O painel do grupo na internet, com a mudança do passo 9",
+    ambiente="Antigravity",
 ))
 
 # ---------------------------------------------------------------------------
-# 18. Quiz
+# 04 O contrato entre modelo e agente
 # ---------------------------------------------------------------------------
+SLIDES.append(secao("04", "O contrato entre modelo e agente", "O nome da coluna também é prompt",
+                    ["A leitura errada", "O quiz", "O checkpoint"]))
+
+SLIDES.append(conteudo(
+    "Dois modelos leram 0,63 do pico como queda de 63%, e a queda era de 37%",
+    tabela(["Etapa", "O que aconteceu"], [
+        ["A fila mandava", "<code>queda_contra_pico: 0.63</code>, receita do último ano sobre a do melhor ano"],
+        ["gpt-4o-mini e qwen3.8-27b:free escreveram", "&quot;queda de 63% em relação ao pico&quot;"],
+        ["O certo", "a conta compra 63% do melhor ano, uma queda de 37%"],
+        ["A correção", "a coluna virou <code>receita_12m_como_fracao_do_pico_anual</code> e o prompt explica a leitura"],
+    ], destaque=3),
+    contexto="O número veio da fila e a regra de origem foi cumprida. O erro estava no nome do campo.",
+    conclusao="Com o nome novo e a leitura no prompt, o Ciro com o Jev escreveu &quot;queda de 37%&quot;.",
+    fonte=DEMO,
+))
+
 SLIDES.append(quiz(
     "Verificação &middot; 5 minutos",
     "De onde deve vir o número?",
-    "O agente respondeu que a Conta D comprou USD 3,1 milhões em 2025. A API não tem esse campo. O que corrigir primeiro?",
+    "O Atlas respondeu que a primeira conta comprou USD 3,1 milhões em 2025. A fila não tem esse campo. O que corrigir primeiro?",
     [
-        {"texto": "Trocar o modelo do OpenRouter por um maior", "certa": False,
-         "certo": "", "errado": "Não: um modelo maior inventa com mais fluência. O defeito é a origem do número."},
-        {"texto": "Acrescentar a receita de 2025 ao JSON publicado", "certa": False,
-         "certo": "", "errado": "Não: 2025 está depois do corte de 07/03/2024, e publicar esse campo traz o vazamento de volta pela API."},
-        {"texto": "Reforçar a regra 1 e reprovar o agente na bateria", "certa": True,
-         "certo": "Certo: o número não veio da ferramenta. A bateria de teste precisa pegar isso antes da banca.",
+        {"texto": "Trocar o modelo gratuito pelo Jev", "certa": False,
+         "certo": "", "errado": "Não: um modelo melhor inventa com mais fluência. O defeito é a origem do número."},
+        {"texto": "Acrescentar a receita de 2025 à fila enviada", "certa": False,
+         "certo": "", "errado": "Não: 2025 está depois do corte, e o campo traria o vazamento de volta pela fila."},
+        {"texto": "Reprovar na bateria e reforçar a regra de origem no prompt", "certa": True,
+         "certo": "Certo: o número não veio da fila. A bateria precisa pegar isso antes da banca.",
          "errado": ""},
-        {"texto": "Aumentar a memória para 20 trocas", "certa": False,
-         "certo": "", "errado": "Não: memória guarda a conversa. Ela não tem receita nenhuma para lembrar."},
+        {"texto": "Aumentar a memória do Atlas para 20 trocas", "certa": False,
+         "certo": "", "errado": "Não: memória guarda a conversa, e ela não tem receita de 2025 para lembrar."},
     ],
-    {"fichas": [("Conta", "CLI052938"), ("Campo pedido", "receita 2025"),
-                ("Na API", "ausente")]},
+    {"fichas": [("Conta", "primeira da fila"), ("Campo pedido", "receita 2025"),
+                ("Na fila", "ausente")]},
 ))
 
-# ---------------------------------------------------------------------------
-# 19. Oficina
-# ---------------------------------------------------------------------------
-SLIDES.append(pratica(
-    5, "Oficina: a bateria de teste do agente do grupo", 25,
-    "Em grupo, três estações de tempo marcado", "teste_agente.md com as quatro perguntas, a resposta e o veredito",
-    "Cada mesa mostra uma reprovação e o que mudou para virar aprovação",
-    [
-        {"acao": "Estação 1, 10 minutos: rodar as quatro perguntas.",
-         "detalhe": "Uma conversa nova por pergunta, para a memória não contaminar. Colar a resposta inteira."},
-        {"acao": "Estação 2, 10 minutos: conferir cada número contra a API.",
-         "detalhe": "Abrir a execução, ver o JSON que a ferramenta devolveu e marcar aprovado ou reprovado."},
-        {"acao": "Estação 3, 10 minutos: corrigir e rodar de novo.",
-         "detalhe": "Mudar uma coisa por vez, prompt ou modelo, e registrar qual mudança virou o veredito."},
-    ],
-    "As quatro perguntas aprovadas, com a execução do n8n como prova",
-    ambiente=AMBIENTE,
-))
-
-# ---------------------------------------------------------------------------
-# 20. Limites
-# ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "Três limites do agente entram na seção de limitações do Artefato 2",
-    '        <table class="tabela-criterios compacta">\n'
-    "          <thead><tr><th>Limite</th><th>Consequência</th><th>Mitigação de hoje</th></tr></thead>\n"
-    "          <tbody>\n"
-    "            <tr><td>A URL do chat e da API é pública</td><td>quem tem o link lê a fila</td><td>identificador anonimizado e só campos da tela</td></tr>\n"
-    "            <tr><td>A fila é uma fotografia do ciclo</td><td>conta que parou de comprar ontem não aparece</td><td>a data do corte está no prompt</td></tr>\n"
-    "            <tr><td>O modelo de linguagem pode errar a ferramenta</td><td>resposta sem chamada à API</td><td>a bateria de quatro perguntas e a aba Executions</td></tr>\n"
-    "          </tbody>\n"
-    "        </table>\n",
-    contexto="Num uso real, a API pediria autenticação por cabeçalho e o chat ficaria atrás de login.",
-    conclusao="Limitação declarada com a mitigação ao lado é argumento na banca. Descoberta pelo Comitê, vira objeção.",
+    "Checkpoint da aula",
+    tabela(["Item", "Prova projetada"], [
+        ["Painel publicado", "a URL do GitHub Pages aberta no projetor"],
+        ["Equipe no n8n do grupo", "uma pergunta respondida pelos três agentes, com o selo do Ciro"],
+        ["Planos de ação", "três planos com limiar numérico em cada item"],
+        ["Bateria", "o placar e uma reprovação corrigida em <code>teste_agente.md</code>"],
+        ["Interface própria", "pelo menos uma mudança do passo 9"],
+    ]),
+    conclusao="O grupo que trouxer a bateria aprovada sabe como a equipe falha antes de o Comitê perguntar.",
 ))
 
-# ---------------------------------------------------------------------------
-# 21. Amarração
-# ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
-    "O agente de hoje fecha a camada generativa do Artefato 2",
+    "O painel publicado e a equipe de agentes fecham a camada generativa do Artefato 2",
     '        <div class="linha-tempo">\n'
-    '          <div class="etapa fragment"><p class="quando">Aula 07</p><h3>Pacote e tela</h3>'
-    "<p>O modelo com teste, a fila por valor esperado e a tela em Streamlit.</p></div>\n"
-    '          <div class="etapa fragment"><p class="quando">Aula 08 &middot; hoje</p><h3>API e agente</h3>'
-    "<p>A fila publicada como URL, o agente, o painel com os planos de cada área e a bateria de teste.</p></div>\n"
+    '          <div class="etapa fragment"><p class="quando">Aula 07</p><h3>Pacote e fila</h3>'
+    "<p>O modelo com teste e a fila ordenada por valor esperado.</p></div>\n"
+    '          <div class="etapa fragment"><p class="quando">Aula 08 &middot; hoje</p><h3>Equipe e painel</h3>'
+    "<p>O modelo no navegador, três agentes no n8n e o painel do grupo no GitHub Pages.</p></div>\n"
     '          <div class="etapa avaliada fragment"><p class="quando">Entrega 2</p><h3>Banca</h3>'
     "<p>O Aplicativo Web Preditivo-Generativo, defendido no papel do Comitê de Receita.</p></div>\n"
     "        </div>\n",
-    conclusao="Na banca, o Comitê vai fazer ao agente uma pergunta que não está na bateria. O grupo que testou quatro sabe como ele falha.",
+    conclusao="Na banca, o Comitê vai fazer à equipe uma pergunta fora da bateria. O grupo que testou sabe como ela falha.",
     por_passos=True,
 ))
 
-# ---------------------------------------------------------------------------
-# 22. Referências
-# ---------------------------------------------------------------------------
 SLIDES.append(conteudo(
     "Referências e nota metodológica",
     '        <div class="concept-cards">\n'
-    '          <div class="concept-card"><h3>Caso e dados</h3>'
+    '          <div class="concept-card"><h3>Caso e material</h3>'
     "<p>1. Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão v2.</p>"
-    "<p>2. Repositório de prática, <code>app/publicar.py</code> e <code>app/workflow_n8n.py</code>.</p></div>\n"
+    f"<p>2. Guia e laboratório da aula, em {SITE}.</p></div>\n"
     '          <div class="concept-card"><h3>Ferramentas</h3>'
-    "<p>3. n8n. Documentação do AI Agent, do Chat Trigger e do HTTP Request Tool. docs.n8n.io.</p>"
-    "<p>4. OpenRouter. Documentação de modelos, chaves e limites. openrouter.ai/docs.</p></div>\n"
+    "<p>3. n8n. AI Agent, Webhook e Respond to Webhook. docs.n8n.io.</p>"
+    "<p>4. OpenRouter. Modelos, chaves e limites. openrouter.ai/docs.</p>"
+    "<p>5. TypeSafe. Jev Router, <code>typesafe/jev-router</code> no OpenRouter.</p></div>\n"
     '          <div class="concept-card"><h3>Métodos citáveis</h3>'
-    "<p>5. Yao, S. et al. ReAct: Synergizing Reasoning and Acting in Language Models. ICLR, 2023.</p>"
-    "<p>6. Sculley, D. et al. Hidden Technical Debt in Machine Learning Systems. NeurIPS, 2015.</p></div>\n"
+    "<p>6. Yao, S. et al. ReAct: Synergizing Reasoning and Acting in Language Models. ICLR, 2023.</p>"
+    "<p>7. Wu, Q. et al. AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. 2023.</p></div>\n"
     "        </div>\n",
-    conclusao="Todo número desta aula está travado em dados/tests/test_aula08_numeros.py.",
+    conclusao="Todo número do case desta aula está travado em dados/tests/test_aula08_numeros.py.",
 ))
 
 # ---------------------------------------------------------------------------
@@ -528,7 +452,7 @@ ESQUELETO = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 08 &middot; Do modelo ao agente &middot; MBA Inteli x Lenovo</title>
+  <title>Aula 08 &middot; Do modelo à equipe de agentes &middot; MBA Inteli x Lenovo</title>
 
   <!-- Gerado por tools/montar_deck_aula08.py. Nao editar a mao. -->
 

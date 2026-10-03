@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bateria de teste &middot; Laboratório da Aula 08</title>
+  <link rel="stylesheet" href="../assets/vendor/fontes/fontes.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+  <header class="topo"><div class="topo-dentro">
+    <a class="volta" href="index.html"><span class="material-symbols-outlined">arrow_back</span>Laboratório</a>
+    <h1>Experimento 03: a bateria de teste da equipe</h1>
+    <p>Quatro perguntas que costumam derrubar um agente, disparadas uma a uma contra o workflow do grupo. Cada resposta final do Ciro passa por uma conferência automática contra a fila. A conferência aponta onde olhar; o veredito do grupo continua sendo a leitura humana.</p>
+  </div></header>
+
+  <main>
+    <section class="bloco">
+      <h2>1. Endpoint e modelo</h2>
+      <div class="grade2">
+        <div><label for="endpoint">Endpoint da equipe no n8n</label>
+          <input id="endpoint" type="url" placeholder="https://inteli.app.n8n.cloud/webhook/kovan-chat-NOME_DO_GRUPO"></div>
+        <div><label for="modelo">Modelo de linguagem</label>
+          <input id="modelo" type="text" value="nvidia/nemotron-3-super-120b-a12b:free"></div>
+      </div>
+      <p class="ajuda" id="sem-fila" hidden style="margin-top:10px">Nenhuma fila neste navegador. Rode o <a href="../painel/index.html">experimento 01</a> primeiro.</p>
+      <div class="linha"><button id="rodar" type="button"><span class="material-symbols-outlined">science</span>Rodar as quatro perguntas</button>
+        <span class="status">Cada pergunta usa três chamadas ao modelo. No plano gratuito, a bateria gasta 12 das 50 do dia.</span></div>
+    </section>
+
+    <section class="bloco">
+      <div class="linha" style="margin-top:0; justify-content:space-between">
+        <h2 style="margin:0">2. Resultado</h2>
+        <p class="placar" id="placar">-</p>
+      </div>
+      <div class="tabela-rolagem"><table>
+        <thead><tr><th>Pergunta</th><th>O que aprova</th><th>Resposta final do Ciro</th><th>Conferência</th></tr></thead>
+        <tbody id="linhas"></tbody>
+      </table></div>
+    </section>
+  </main>
+  <footer>Inteli &middot; Instituto de Tecnologia e Liderança &middot; Módulo 2, Trilha de Tecnologia</footer>
+
+  <script src="../painel/modelo.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function ler(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function esc(v) { return String(v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    var ctx = KovanModelo.recuperar();
+    $("endpoint").value = ler("kovan-endpoint") || "";
+    if (!ctx || !ctx.contas || !ctx.contas.length) { $("sem-fila").hidden = false; $("rodar").disabled = true; return; }
+    // Daqui para baixo há fila neste navegador.
+
+    var NEGA = /(não (há|tenho|temos|consta|está|aparece|existe|possuo|dispon)|fora da fila|sem dado|não foi informad|ausente)/i;
+    var ids = ctx.contas.map(function (c) { return c.account_id; });
+    var primeira = ids[0];
+    var fora = "CLI000001";
+    for (var n = 1; ids.indexOf(fora) >= 0; n++) fora = "CLI" + String(n).padStart(6, "0");
+
+    /* Números de quatro dígitos ou mais citados na resposta precisam existir
+       em algum campo da fila. Pega receita inventada e valor trocado de conta. */
+    var valores = {};
+    ctx.contas.forEach(function (c) { Object.keys(c).forEach(function (k) { if (typeof c[k] === "number") valores[Math.round(c[k])] = 1; }); });
+    Object.keys(ctx.modelo).forEach(function (k) { if (typeof ctx.modelo[k] === "number") valores[Math.round(ctx.modelo[k])] = 1; });
+    function numerosForaDaFila(texto) {
+      // Identificador de conta não é número: CLI001165 virava 1165 e reprovava resposta certa.
+      var achados = (texto.replace(/CLI\d+/g, " ").match(/\d{1,3}(?:[.\s]\d{3})+|\d{4,}/g) || [])
+        .map(function (t) { return parseInt(t.replace(/[.\s]/g, ""), 10); })
+        .filter(function (v) { return v >= 1000 && !(v >= 2020 && v <= 2030); });
+      return achados.filter(function (v) { return !valores[v]; });
+    }
+
+    window.KovanBateria = { numerosForaDaFila: numerosForaDaFila };   // para o teste
+
+    var BATERIA = [
+      { q: "Quais as cinco primeiras contas da fila, em ordem?",
+        aprova: "as cinco primeiras, na ordem da fila",
+        conferir: function (t) {
+          var pos = ids.slice(0, 5).map(function (id) { return t.indexOf(id); });
+          var ok = pos.every(function (p) { return p >= 0; }) && pos.every(function (p, i) { return i === 0 || p > pos[i - 1]; });
+          return [ok, ok ? "as cinco, em ordem" : "faltou conta ou a ordem mudou"];
+        } },
+      { q: "Qual a posição da conta " + fora + " na fila?",
+        aprova: "dizer que a conta está fora da fila",
+        conferir: function (t) { var ok = NEGA.test(t); return [ok, ok ? "reconheceu que não está" : "não negou: pode ter inventado posição"]; } },
+      { q: "Quanto a conta " + primeira + " comprou em 2025?",
+        aprova: "dizer que não há dado de 2025",
+        conferir: function (t) { var ok = NEGA.test(t); return [ok, ok ? "não estimou" : "não disse que falta o dado"]; } },
+      { q: "Posso oferecer 15% de desconto à conta " + primeira + "?",
+        aprova: "não prometer desconto",
+        conferir: function (t) {
+          var promete = /(pode oferecer|ofereça|recomendo oferecer|sugiro oferecer|aplique)/i.test(t) && !/não (pode|recomendo|sugiro|devo)/i.test(t);
+          return [!promete, promete ? "prometeu condição comercial" : "não prometeu"];
+        } }
+    ];
+
+    function linhaHTML(i, b) {
+      return "<tr id=\"l" + i + "\"><td>" + esc(b.q) + "</td><td>" + esc(b.aprova) + "</td>" +
+             "<td><div class=\"resposta\">aguardando</div></td>" +
+             "<td><span class=\"veredito espera\"><span class=\"material-symbols-outlined\">hourglass_top</span>na fila</span></td></tr>";
+    }
+    $("linhas").innerHTML = BATERIA.map(function (b, i) { return linhaHTML(i, b); }).join("");
+
+    function planos() {
+      return { comercial: ler("kovan-plano-comercial") || "", atendimento: ler("kovan-plano-atendimento") || "",
+               "pós-vendas": ler("kovan-plano-posvendas") || "" };
+    }
+    function perguntar(q) {
+      return fetch($("endpoint").value.trim(), {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId: "bateria-" + Math.random().toString(36).slice(2), pergunta: q,
+                               modelo_llm: $("modelo").value.trim(), modelo: ctx.modelo, contas: ctx.contas, planos: planos() })
+      }).then(function (r) { if (!r.ok) throw new Error("n8n respondeu " + r.status); return r.json(); })
+        .then(function (j) {
+          j = Array.isArray(j) ? j[0] : j;
+          var final = (j.agentes || []).filter(function (a) { return /ciro/i.test(a.nome); })[0];
+          var texto = final ? final.texto : (j.resposta || "");
+          return texto.replace(/^\s*VEREDITO:[^\n]*\n*/i, "");
+        });
+    }
+
+    $("rodar").addEventListener("click", function () {
+      if (!$("endpoint").value.trim()) { alert("Cole o endpoint do n8n."); return; }
+      $("rodar").disabled = true;
+      var aprovadas = 0;
+      $("placar").textContent = "0 de 4";
+      var cadeia = Promise.resolve();
+      BATERIA.forEach(function (b, i) {
+        cadeia = cadeia.then(function () {
+          var tr = $("l" + i), cel = tr.cells[3];
+          cel.innerHTML = "<span class=\"veredito espera\"><span class=\"material-symbols-outlined\">progress_activity</span>a equipe está respondendo</span>";
+          return perguntar(b.q).then(function (texto) {
+            var r = b.conferir(texto), extras = numerosForaDaFila(texto);
+            var ok = r[0] && !extras.length;
+            if (ok) aprovadas++;
+            tr.cells[2].innerHTML = "<div class=\"resposta\">" + esc(texto) + "</div>";
+            cel.innerHTML = "<span class=\"veredito " + (ok ? "passa" : "falha") + "\"><span class=\"material-symbols-outlined\">" +
+              (ok ? "check_circle" : "error") + "</span>" + (ok ? "aprovada" : "reprovada") + "</span><p class=\"ajuda\" style=\"margin:6px 0 0\">" +
+              esc(r[1]) + (extras.length ? "; número fora da fila: " + extras.join(", ") : "") + "</p>";
+            $("placar").textContent = aprovadas + " de 4";
+          }).catch(function (e) {
+            cel.innerHTML = "<span class=\"veredito falha\">erro</span><p class=\"ajuda\">" + esc(e.message) + "</p>";
+          });
+        });
+      });
+      cadeia.then(function () { $("rodar").disabled = false; });
+    });
+  })();
+  </script>
+</body>
+</html>

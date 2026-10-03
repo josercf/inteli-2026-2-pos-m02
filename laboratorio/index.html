@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratório da Aula 08 &middot; MBA Inteli x Lenovo</title>
+  <link rel="stylesheet" href="../assets/vendor/fontes/fontes.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+  <header class="topo"><div class="topo-dentro">
+    <a class="volta" href="../index.html"><span class="material-symbols-outlined">arrow_back</span>Portal da disciplina</a>
+    <h1>Laboratório da Aula 08: do modelo à equipe de agentes</h1>
+    <p>Três experimentos que rodam no navegador, sobre a planilha original do case. Eles abrem a aula: rode na ordem, porque cada um usa a fila que o anterior calculou.</p>
+  </div></header>
+
+  <main>
+    <section class="bloco" id="estado">
+      <h2><span class="material-symbols-outlined">inventory_2</span> Fila neste navegador</h2>
+      <p class="ajuda" id="estado-texto">Nenhuma fila calculada ainda. Comece pelo experimento 01.</p>
+    </section>
+
+    <ol class="experimentos">
+      <li>
+        <div>
+          <h3>A equipe de agentes sobre a planilha original</h3>
+          <p>O painel lê <code>datasets_case_modulo2.xlsx</code>, treina uma regressão logística no navegador, monta a fila de 138 contas e conversa com três agentes no n8n: Atlas analisa, Vera recomenda pelo plano de cada área, Ciro revisa cada número.</p>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 15 minutos</span><span><span class="material-symbols-outlined">key</span> precisa do workflow no n8n e de uma chave OpenRouter</span></p>
+        </div>
+        <a class="botao" href="../painel/index.html"><span class="material-symbols-outlined">play_arrow</span>Abrir o painel</a>
+      </li>
+      <li>
+        <div>
+          <h3>Jev, o System One da TypeSafe, contra um modelo gratuito</h3>
+          <p>A mesma tarefa, sobre a mesma conta da fila, em dois modelos ao mesmo tempo. A página mostra o tempo, os tokens e qual modelo o roteador do Jev escolheu para responder.</p>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 10 minutos</span><span><span class="material-symbols-outlined">key</span> chave OpenRouter; o Jev cobra por uso</span></p>
+        </div>
+        <a class="botao" href="jev.html"><span class="material-symbols-outlined">compare_arrows</span>Comparar modelos</a>
+      </li>
+      <li>
+        <div>
+          <h3>A bateria de teste do agente</h3>
+          <p>Quatro perguntas difíceis disparadas contra a equipe do grupo, com o veredito automático de cada resposta: número que não está na fila, dado inventado, desconto prometido.</p>
+          <p class="meta"><span><span class="material-symbols-outlined">schedule</span> 10 minutos</span><span><span class="material-symbols-outlined">key</span> precisa do endpoint do n8n do experimento 01</span></p>
+        </div>
+        <a class="botao" href="bateria.html"><span class="material-symbols-outlined">science</span>Rodar a bateria</a>
+      </li>
+    </ol>
+
+    <section class="bloco">
+      <h2><span class="material-symbols-outlined">menu_book</span> Guia passo a passo</h2>
+      <p class="ajuda">Todo o caminho da aula, com os prompts do Antigravity para copiar: clonar o repositório, rodar o painel, criar a chave, montar a equipe no n8n, modificar a interface do grupo e publicar no GitHub Pages.</p>
+      <a class="botao secundario" href="../materiais/aula08-guia.html"><span class="material-symbols-outlined">arrow_forward</span>Abrir o guia</a>
+    </section>
+  </main>
+  <footer>Inteli &middot; Instituto de Tecnologia e Liderança &middot; Módulo 2, Trilha de Tecnologia</footer>
+
+  <script src="../painel/modelo.js"></script>
+  <script>
+    (function () {
+      var c = KovanModelo.recuperar();
+      if (c && c.modelo) {
+        var el = document.getElementById("estado-texto");
+        el.className = "ajuda status ok";
+        el.textContent = "Fila de " + c.contas.length + " contas calculada sobre " +
+          c.modelo.contas_elegiveis.toLocaleString("pt-BR") + " contas elegíveis, AUC " +
+          c.modelo.auc_fora_da_amostra.toLocaleString("pt-BR") + ". Os experimentos 02 e 03 já podem usar.";
+      }
+    })();
+  </script>
+</body>
+</html>

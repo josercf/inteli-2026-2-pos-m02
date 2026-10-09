@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 09 &middot; Fechamento do Módulo 2 &middot; MBA Inteli x Lenovo</title>
+
+  <!-- Gerado por tools/montar_deck_aula09.py. Nao editar a mao. -->
+
+  <link rel="stylesheet" href="../assets/vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-theme.css">
+  <link rel="stylesheet" href="../assets/css/inteli-print.css" media="print">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="cover-slide">
+        <div class="cover-panel">
+          <div class="cover-content">
+            <p class="cover-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo</p>
+            <h1>Fechamento do módulo</h1>
+            <h3>Recap das duas trilhas, tira-dúvidas, finalização e apresentação do Artefato 2 ao Comitê de Receita da Kovan</h3>
+            <p class="cover-meta">Módulo 2 &middot; Aula 09 &middot; Aula conjunta, Negócios e Tecnologia</p>
+            <p class="cover-meta">Prof. Rafael Donaire e Prof. José Romualdo da Costa Filho</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Programação do encontro</h2>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Bloco</th><th>O que acontece</th><th>Quem conduz</th><th>O que sai</th></tr></thead>
+          <tbody>
+            <tr><td>a) Recap</td><td>as duas trilhas, aula a aula, e o que cada uma entrega ao Artefato 2</td><td>os dois professores</td><td>o mapa do que já está pronto</td></tr>
+            <tr><td>b) Tira-dúvidas</td><td>dúvidas de negócio e de tecnologia, triadas por trilha</td><td>os dois professores</td><td>a lista do que falta, por grupo</td></tr>
+            <tr><td>c) Finalização</td><td>os grupos fecham o deck executivo e o aplicativo</td><td>os grupos, com os professores nas mesas</td><td>os dois artefatos prontos</td></tr>
+            <tr><td>d) Apresentação</td><td>cada grupo defende o projeto no papel do Comitê de Receita</td><td>os grupos, com os dois professores na banca</td><td>feedback das duas trilhas</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Cada bloco usa o produto do anterior: a lista do tira-dúvidas organiza a finalização, e a finalização vira a apresentação.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">2</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A Aula 08 deixou a fila de 138 contas no painel publicado, e hoje ela entra no plano de retenção</h2>
+          <p class="linha-contexto">O painel lê a planilha original, treina a regressão logística e envia a fila aos três agentes no n8n.</p>
+        </div>
+        <div class="stat-tiles">
+          <div class="stat-tile"><p class="stat-numero">4.593</p><p class="stat-rotulo">contas elegíveis no modelo do painel</p></div>
+          <div class="stat-tile"><p class="stat-numero">0,814</p><p class="stat-rotulo">AUC fora da amostra, calculada no navegador</p></div>
+          <div class="stat-tile"><p class="stat-numero">138</p><p class="stat-rotulo">contas na fila, o teto de planos do ciclo</p></div>
+          <div class="stat-tile destaque"><p class="stat-numero">USD 26,6 mi</p><p class="stat-rotulo">valor esperado da fila</p></div>
+        </div>
+        <p class="linha-contexto">Na trilha de Negócios, a última aula discutiu agentes de IA em vendas B2B a partir da pesquisa da BCG, com a mesma restrição de 138 planos.</p>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>O Artefato 2 junta o plano de retenção da Negócios ao aplicativo da Tecnologia, com os mesmos números nos dois.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula08.py, travado em dados/tests/test_aula08_numeros.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">3</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Mapa do módulo nas duas trilhas</h2>
+        </div>
+        <table class="tabela-criterios enxuta mapa">
+          <thead><tr><th>Encontro</th><th class="negocios">Negócios</th><th class="tecnologia">Tecnologia</th></tr></thead>
+          <tbody>
+            <tr><td>08/08</td><td>Do problema à hipótese</td><td>Da hipótese à evidência</td></tr>
+            <tr><td>15/08</td><td>Segmentação de contas B2B</td><td>O dado sujo é o case</td></tr>
+            <tr><td>22/08</td><td>Personas como arquétipo de conta</td><td>O corte que define o rótulo</td></tr>
+            <tr><td>29/08</td><td>Valor contra risco na priorização</td><td>A figura que decide</td></tr>
+            <tr class="entrega"><td>05/09</td><td><span class="material-symbols-outlined">flag</span>Entrega 1: Customer Segmentation Analysis Report</td><td><span class="material-symbols-outlined">flag</span>Entrega 1: Análise Exploratória de Dados</td></tr>
+            <tr><td>12/09</td><td>manhã conduzida pela trilha de Tecnologia</td><td>As variáveis de entrada, treino e avaliação</td></tr>
+            <tr><td>Aulas 6 e 7</td><td>Intervenção a partir do caso HubSpot</td><td>Do script à tela</td></tr>
+            <tr><td>Aula 08</td><td>Agentes de IA em vendas B2B</td><td>Do modelo à equipe de agentes</td></tr>
+            <tr class="entrega"><td>Hoje</td><td><span class="material-symbols-outlined">flag</span>Entrega 2: Plano de Inteligência de Retenção</td><td><span class="material-symbols-outlined">flag</span>Entrega 2: Aplicativo Web Preditivo-Generativo</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>As duas entregas do módulo caíram no mesmo encontro nas duas trilhas, e a de hoje é apresentada aos dois professores.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">4</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">01</p>
+        <div class="accent-bar"></div>
+        <h2>Recap da trilha de Negócios</h2>
+        <h3>Prof. Rafael Donaire: da hipótese aos agentes de IA em vendas</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Hipótese e segmentação</div>
+          <div><span class="num">02</span>Valor, risco e intervenção</div>
+          <div><span class="num">03</span>Agentes em vendas B2B</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Uma hipótese só entra no modelo quando é clara, mensurável e falseável</h2>
+          <p class="linha-contexto">O HIPPO, a opinião de quem ganha mais na sala, decide sem dado. A hipótese falseável tira a decisão dele.</p>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Forma</th><th>Exemplo da aula</th><th>O que permite</th></tr></thead>
+          <tbody>
+            <tr><td>Vaga</td><td>&quot;O preço deve estar alto, é por isso que cancelam.&quot;</td><td>nada: não tem variável nem prazo, e nenhum dado a refuta</td></tr>
+            <tr><td>Específica</td><td>&quot;Plano mensal cancela 5x mais que plano anual nos primeiros 30 dias.&quot;</td><td>teste direto, com variável e janela declaradas</td></tr>
+            <tr class="destaque"><td>Condicional</td><td>&quot;SE o preço for a causa, ENTÃO reduzir 15% corta o churn em 3 pp ou mais em 60 dias.&quot;</td><td>plano de ação com gatilho de abandono</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Na Kovan, a hipótese declara o alvo (Caminho A ou B), o sinal na base e a restrição de 138 planos por trimestre.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aula 1 de Negócios; Popper (1934); Courtney, Kirkland e Viguerie, HBR (1997).</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">5</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Um segmento que falha em dois dos cinco critérios de Kotler sai da proposta</h2>
+          <p class="linha-contexto">No B2B a unidade de análise é a conta, descrita por firmografia e por comportamento de compra.</p>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Critério</th><th>Pergunta que o segmento precisa responder</th></tr></thead>
+          <tbody>
+            <tr><td>Mensurável</td><td>dá para saber o tamanho do grupo?</td></tr>
+            <tr><td>Acessível</td><td>dá para chegar até ele pelos canais da Kovan?</td></tr>
+            <tr><td>Substancial</td><td>o grupo é grande o bastante para ser lucrativo?</td></tr>
+            <tr><td>Diferenciável</td><td>ele reage de forma distinta aos estímulos?</td></tr>
+            <tr><td>Acionável</td><td>dá para formular um programa efetivo para ele?</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Contas-chave atípicas saem antes da segmentação, pelo critério de Spoor, para não distorcer o resto da carteira.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aula 2 de Negócios; Kotler; Spoor, Journal of Marketing Analytics (2022).</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">6</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A persona da Kovan é um arquétipo de conta, e cada atributo dela precisa de uma variável na EDA</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Campo da persona</th><th>O que contém</th></tr></thead>
+          <tbody>
+            <tr><td>Nome</td><td>curto e memorável, pelo padrão de comportamento, nunca nome de pessoa</td></tr>
+            <tr><td>Tamanho</td><td>quantas contas o segmento tem, contadas na base</td></tr>
+            <tr><td>Perfil de compra</td><td>faixas reais de receita, linhas ativas, recência e pedidos</td></tr>
+            <tr><td>Dor inferida</td><td>hipótese justificada pelo padrão observado</td></tr>
+            <tr><td>Valor estratégico</td><td>por que o segmento importa para a receita da Kovan</td></tr>
+            <tr><td>Driver e prioridade</td><td>intervenção imediata ou monitoramento, pelo valor do segmento contra o risco do sinal</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Persona sem âncora em dado é o primeiro erro da lista de erros comuns da trilha de Negócios.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aulas 1, 3 e 4 de Negócios.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">7</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Importância e dificuldade de gerir são eixos separados, e cada quadrante pede um tratamento</h2>
+          <p class="linha-contexto">A reversibilidade da decisão define quanta deliberação ela merece antes de agir sobre o quadrante.</p>
+        </div>
+        <div class="matriz">
+          <div></div>
+          <div class="eixo">Baixa dificuldade de gerir</div>
+          <div class="eixo">Alta dificuldade de gerir</div>
+          <div class="eixo linha">Alta importância</div>
+          <div class="quadrante forte"><h3>Parceria</h3><p>cooperação extrema e desenvolvimento conjunto de produto</p></div>
+          <div class="quadrante medio"><h3>Investir com cautela</h3><p>importância alta numa relação custosa de manter</p></div>
+          <div class="eixo linha">Baixa importância</div>
+          <div class="quadrante"><h3>Manter</h3><p>atendimento padronizado, com custo mínimo de gestão</p></div>
+          <div class="quadrante saida"><h3>Desinvestir</h3><p>migrar para atendimento automatizado ou sair</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Best Buy, Netflix, State Farm e Microsoft mostraram que a decisão sobre o quadrante de saída tem custo além do financeiro.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aula 4 de Negócios.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">8</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>No caso HubSpot, a prioridade de atendimento pesa risco, valor, resposta e esforço</h2>
+          <p class="linha-contexto">O CHI, índice de saúde do cliente, localiza o risco e, quando vira meta da equipe, sobe sem o cliente ganhar valor.</p>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Critério</th><th>Pergunta para o público escolhido</th></tr></thead>
+          <tbody>
+            <tr><td>Risco</td><td>qual perda pode ocorrer, e em que horizonte?</td></tr>
+            <tr><td>Valor</td><td>qual contribuição econômica está em jogo?</td></tr>
+            <tr class="destaque"><td>Resposta</td><td>por que a ação pode fazer diferença neste cliente?</td></tr>
+            <tr><td>Esforço</td><td>qual custo e qual capacidade a intervenção exige?</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Na Kovan, a resposta à intervenção é o critério que um modelo de churn não mede, e por isso Cláudia Meireles exige grupo de controle.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Martínez-Jerez, Steenburgh, Avery e Brem, caso HubSpot, Harvard Business School; Donaire, aulas 6 e 7.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">9</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Os sinais da Kovan vêm da compra, e a intervenção passa pelo Account Manager</h2>
+        </div>
+        <table class="tabela-criterios pares">
+          <thead><tr><th>Dimensão</th><th>HubSpot</th><th>Kovan</th></tr></thead>
+          <tbody>
+            <tr><td>Relação comercial</td><td>assinatura com avaliação recorrente de valor</td><td>compras corporativas em ciclos longos</td></tr>
+            <tr><td>Sinais</td><td>uso e resultados observáveis do software</td><td>cadência, receita e amplitude de mix</td></tr>
+            <tr><td>Perda</td><td>cancelamento da assinatura</td><td>ruptura e erosão de compras</td></tr>
+            <tr><td>Intervenção</td><td>atendimento, adoção, produto e aquisição</td><td>diagnóstico e atuação do Account Manager</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Com ciclo longo de renovação, parte das quedas de compra é calendário, e o plano precisa separar esse caso do risco real.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aulas 6 e 7 de Negócios.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">10</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A BCG põe 70% do esforço de uma transformação com IA em pessoas e processos</h2>
+        </div>
+        <div class="processo-fases quatro degraus">
+          <div class="processo-fase"><p class="nivel">Nível 1</p><h4>Tradicional</h4><p>intuição e experiência do vendedor</p></div>
+          <div class="processo-fase"><p class="nivel">Nível 2</p><h4>Aumentada</h4><p>a IA sugere próximas ações e materiais</p></div>
+          <div class="processo-fase ativa"><p class="nivel">Nível 3</p><h4>Assistida</h4><p>a IA acompanha a chamada e atualiza o CRM</p></div>
+          <div class="processo-fase"><p class="nivel">Nível 4</p><h4>Autônoma</h4><p>o agente engaja o cliente e aciona um humano quando precisa</p></div>
+        </div>
+        <div class="stat-tiles tres">
+          <div class="stat-tile"><p class="stat-numero">10%</p><p class="stat-rotulo">do esforço em algoritmos</p></div>
+          <div class="stat-tile"><p class="stat-numero">20%</p><p class="stat-rotulo">em tecnologia e dados</p></div>
+          <div class="stat-tile destaque"><p class="stat-numero">70%</p><p class="stat-rotulo">em pessoas e processos</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Na Kovan, a BCG indica autonomia maior do agente na cauda longa, que hoje só recebe contato reativo.</p>
+        </div>
+        <p class="fonte-nota">Fonte: BCG, How AI Agents Will Transform B2B Sales (2025); Donaire, aula de agentes de IA em vendas B2B.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">11</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">02</p>
+        <div class="accent-bar"></div>
+        <h2>Recap da trilha de Tecnologia</h2>
+        <h3>Prof. José Romualdo da Costa Filho: da base oficial ao painel com três agentes</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>EDA e rótulo</div>
+          <div><span class="num">02</span>Modelo e fila</div>
+          <div><span class="num">03</span>Agentes e painel</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>A EDA fixou o rótulo em 08/02/2025 e a perda entre 25,4% e 58,1% por segmento</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Aula</th><th>Achado</th><th>Número</th></tr></thead>
+          <tbody>
+            <tr><td>01</td><td>hipótese testável declara variável, operação, janela e critério de refutação</td><td>caderno de hipóteses</td></tr>
+            <tr><td>02</td><td>o sinal das devoluções muda a receita líquida</td><td>R$ 217,4 milhões</td></tr>
+            <tr><td>03</td><td>o rótulo marca quem parou de comprar até 08/02/2025</td><td>19,2% de 8.282 contas</td></tr>
+            <tr><td>03</td><td>a receita se concentra no topo da carteira</td><td>1% das contas, 65,1% da receita</td></tr>
+            <tr><td>04</td><td>conta com primeira compra depois de 2025-02 não pode ser marcada</td><td>4.534 contas</td></tr>
+            <tr class="destaque"><td>04</td><td>a perda entre elegíveis varia com o segmento</td><td>de 25,4% a 58,1%</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>O Artefato 1 entregou esses números, e o diagnóstico do deck executivo parte deles.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula03.py e dados/analise_aula04.py, travados em dados/tests.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">12</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Retirar a coluna vazada leva a AUC de 0,9999 para 0,834</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Aula</th><th>Decisão</th><th>Número</th></tr></thead>
+          <tbody>
+            <tr><td>06</td><td>o corte temporal separa observação de rótulo na base longa</td><td>36 meses de observação e 29 de rótulo</td></tr>
+            <tr><td>06</td><td>a recência no corte lidera as colunas honestas</td><td>AUC isolada de 0,818</td></tr>
+            <tr><td>06</td><td>a fila de 138 é medida pelo erro que custa mais caro</td><td>precisão de 75,8% e revocação de 82,2%</td></tr>
+            <tr><td>07</td><td>o critério de ordenação decide a receita alcançada</td><td>68,4% da receita em risco</td></tr>
+            <tr><td>08</td><td>o modelo roda no navegador, sobre a planilha original</td><td>AUC de 0,814 em 4.593 contas</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Uma AUC perto de 1 é sinal de vazamento antes de ser sinal de modelo bom.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula06_longa.py, analise_aula07.py e analise_aula08.py, travados em dados/tests.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">13</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Ordenar a fila por valor esperado leva a receita alcançada de 0,01% para 68,4%</h2>
+          <p class="linha-contexto">Mesmo modelo e mesmas 138 vagas. Só o critério de ordenação muda entre as duas colunas.</p>
+        </div>
+        <table class="tabela-duelo">
+          <thead><tr><th>Fila de 138 contas</th><th>Por probabilidade</th><th>Por valor esperado</th></tr></thead>
+          <tbody>
+            <tr><td>Precisão: perdas reais entre as sinalizadas</td><td class="num vence">85,5%</td><td class="num">29,7%</td></tr>
+            <tr><td>Receita em risco que a fila alcança</td><td class="num">0,01%</td><td class="num vence">68,4%</td></tr>
+            <tr><td>Posição da Conta D, a maior da carteira</td><td class="num">3.024º</td><td class="num vence">1º</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A escolha do critério é a decisão que o Comitê vai cobrar, porque cada coluna atende uma voz diferente da mesa.</p>
+        </div>
+        <p class="fonte-nota">Fonte: dados/analise_aula07.py, travado em dados/tests/test_aula07_numeros.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">14</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O Artefato 2 encadeia seis etapas, da planilha original ao painel publicado</h2>
+          <p class="linha-contexto">Cada etapa da cadeia foi construída numa aula e reaproveitada pela seguinte, sem reimplementar a conta.</p>
+        </div>
+        <div class="cadeia">
+          <div class="elo"><span class="material-symbols-outlined">table_view</span><h4>Planilha</h4><p>a base longa do case, lida no navegador</p><p class="metrica">65 meses</p></div>
+          <span class="seta material-symbols-outlined">arrow_forward</span>
+          <div class="elo"><span class="material-symbols-outlined">event</span><h4>Corte</h4><p>histórico antes do corte, sem compra posterior</p><p class="metrica">07/03/2024</p></div>
+          <span class="seta material-symbols-outlined">arrow_forward</span>
+          <div class="elo"><span class="material-symbols-outlined">model_training</span><h4>Modelo</h4><p>regressão logística treinada no próprio painel</p><p class="metrica">AUC 0,814</p></div>
+          <span class="seta material-symbols-outlined">arrow_forward</span>
+          <div class="elo"><span class="material-symbols-outlined">format_list_numbered</span><h4>Fila</h4><p>ordenada pelo critério do grupo</p><p class="metrica">138 contas</p></div>
+          <span class="seta material-symbols-outlined">arrow_forward</span>
+          <div class="elo"><span class="material-symbols-outlined">groups</span><h4>Agentes</h4><p>Atlas analisa, Vera recomenda e Ciro revisa</p><p class="metrica">3 agentes</p></div>
+          <span class="seta material-symbols-outlined">arrow_forward</span>
+          <div class="elo destaque"><span class="material-symbols-outlined">public</span><h4>Painel</h4><p>publicado no GitHub Pages pelo grupo</p><p class="metrica">URL do grupo</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Na apresentação, cada etapa precisa de uma prova na tela, e o número da fila precisa ser o mesmo do deck executivo.</p>
+        </div>
+        <p class="fonte-nota">Fonte: painel/modelo.js e dados/analise_aula08.py; corte temporal em dados/tests/test_aula06_longa.py.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">15</p>
+        </div>
+      </section>
+
+      <section class="quiz-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Verificação &middot; integração das trilhas</p>
+          <div class="accent-bar"></div>
+          <h2>Qual voz do Comitê essa fila atende?</h2>
+        </div>
+        <div class="quiz-container">
+          <div class="quiz-grade">
+            <div>
+              <p class="quiz-question">A fila de 138 contas ordenada por probabilidade acerta 85,5% e alcança 0,01% da receita em risco. Qual voz da mesa ela atende?</p>
+              <ul class="quiz-options">
+              <li data-letra="A"
+                  data-correct="true"
+                  data-correct-msg="Certo: Bruno pede um modelo que fale pouco e erre pouco, e 85,5% de precisão atende esse pedido. Priscila recusaria a mesma fila pela receita alcançada."
+                  data-incorrect-msg="">Bruno, Diretor Comercial</li>
+              <li data-letra="B"
+                  data-correct="false"
+                  data-correct-msg=""
+                  data-incorrect-msg="Não: Priscila quer proteger a receita, e a fila alcança só 0,01% da receita em risco.">Priscila Nakamura, Head de Analytics e CS</li>
+              <li data-letra="C"
+                  data-correct="false"
+                  data-correct-msg=""
+                  data-incorrect-msg="Não: Cláudia cobra grupo de controle, e nenhuma ordenação da fila responde a isso sozinha.">Cláudia Meireles, VP Financeira</li>
+              <li data-letra="D"
+                  data-correct="false"
+                  data-correct-msg=""
+                  data-incorrect-msg="Não: a fila atende a precisão que Bruno pede e falha na receita que Priscila cobra.">As três ao mesmo tempo</li>
+              </ul>
+            </div>
+            <div>
+              <dl class="quiz-cenario">
+              <dt>Critério</dt><dd>probabilidade</dd>
+              <dt>Precisão</dt><dd>85,5%</dd>
+              <dt>Receita alcançada</dt><dd>0,01%</dd>
+              </dl>
+              <p class="quiz-feedback"></p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">16</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">03</p>
+        <div class="accent-bar"></div>
+        <h2>Sessão de tira-dúvidas</h2>
+        <h3>Cada dúvida vai para a trilha que a responde</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Triagem</div>
+          <div><span class="num">02</span>Erros recorrentes</div>
+          <div><span class="num">03</span>Lista do grupo</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Triagem das dúvidas por trilha</h2>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Tipo de dúvida</th><th>Exemplos</th><th>Quem responde</th><th>Onde consultar</th></tr></thead>
+          <tbody>
+            <tr><td>Negócio</td><td>persona, priorização, plano de 10 semanas, ROI</td><td>Prof. Rafael Donaire</td><td>checklist de Negócios, neste deck</td></tr>
+            <tr><td>Dado e modelo</td><td>rótulo, corte temporal, métrica, critério da fila</td><td>Prof. José Romualdo da Costa Filho</td><td>materiais das Aulas 03, 04 e 06</td></tr>
+            <tr><td>Aplicativo</td><td>painel, n8n, chave, bateria, publicação</td><td>Prof. José Romualdo da Costa Filho</td><td>guia passo a passo da Aula 08</td></tr>
+            <tr class="destaque"><td>Integração</td><td>número do aplicativo que entra no deck executivo</td><td>os dois professores</td><td>slide Do aplicativo ao deck executivo</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Dúvida que não fecha na sessão vira item da lista do grupo para a finalização.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">17</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Erros recorrentes que a banca procura</h2>
+        </div>
+        <table class="tabela-criterios enxuta rotulo-largo">
+          <thead><tr><th>Erro</th><th>Trilha</th><th>Correção</th></tr></thead>
+          <tbody>
+            <tr><td>Persona sem âncora em dado</td><td>Negócios</td><td>todo atributo com variável correspondente na EDA</td></tr>
+            <tr><td>Segmento genérico demais</td><td>Negócios</td><td>nome com intenção estratégica e os cinco critérios de Kotler</td></tr>
+            <tr><td>Valor financeiro ausente</td><td>Negócios</td><td>receita em risco declarada no documento final</td></tr>
+            <tr><td>AUC perto de 1</td><td>Tecnologia</td><td>procurar a coluna que repete o rótulo</td></tr>
+            <tr><td>Número fora da fila na resposta do agente</td><td>Tecnologia</td><td>reprovar na bateria e reforçar a regra de origem no prompt</td></tr>
+            <tr><td>0,63 do pico lido como queda de 63%</td><td>Tecnologia</td><td>nome de coluna explícito e leitura explicada no prompt</td></tr>
+            <tr><td>Test URL do n8n colada no painel</td><td>Tecnologia</td><td>Production URL, com o workflow publicado</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Conferir esta lista antes da apresentação custa menos que ouvir o item pela primeira vez na banca.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aula 1 de Negócios (erros comuns); demonstrações das Aulas 06 a 08 de Tecnologia.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">18</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">04</p>
+        <div class="accent-bar"></div>
+        <h2>Sessão de finalização</h2>
+        <h3>Deck executivo e aplicativo, com os mesmos números</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Checklist de Negócios</div>
+          <div><span class="num">02</span>Checklist de Tecnologia</div>
+          <div><span class="num">03</span>Do aplicativo ao deck</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Checklist do Artefato 2 de Negócios: Plano de Inteligência de Retenção</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Seção</th><th>O que precisa conter</th></tr></thead>
+          <tbody>
+            <tr><td>Diagnóstico</td><td>o churn da Kovan em linguagem de negócio, com a receita em risco</td></tr>
+            <tr><td>Segmentos</td><td>os segmentos de cancelamento identificados ao longo do módulo</td></tr>
+            <tr><td>Caminhos A e B</td><td>comparação em impacto financeiro, prazo, risco e posicionamento competitivo</td></tr>
+            <tr><td>Recomendação</td><td>o caminho escolhido, a oferta por persona e o papel da IA generativa</td></tr>
+            <tr><td>Plano de ação</td><td>milestones das primeiras 10 semanas</td></tr>
+            <tr><td>Grupo de controle</td><td>contas sinalizadas fora da intervenção, para provar o ROI</td></tr>
+            <tr><td>Riscos</td><td>riscos e contingências de cada um</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>O deck é lido como num Conselho de Administração: cada seção abre pelo número e fecha pela decisão pedida.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Donaire, aulas 1, 2, 6 e 7 de Negócios.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">19</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Checklist do Artefato 2 de Tecnologia: Aplicativo Web Preditivo-Generativo</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Item</th><th>Prova na apresentação</th></tr></thead>
+          <tbody>
+            <tr><td>Modelo treinado</td><td>AUC fora da amostra na tela, sem coluna posterior ao corte</td></tr>
+            <tr><td>Fila priorizada</td><td>o critério de ordenação declarado e as 138 contas</td></tr>
+            <tr><td>Camada generativa</td><td>texto de retenção por conta, escrito pela equipe de agentes</td></tr>
+            <tr><td>Planos de ação</td><td>três planos com limiar numérico em cada item</td></tr>
+            <tr><td>Bateria de teste</td><td>o placar e uma reprovação corrigida em <code>teste_agente.md</code></td></tr>
+            <tr><td>Interface publicada</td><td>a URL do GitHub Pages aberta em outra máquina</td></tr>
+            <tr><td>Limitações</td><td>o que o modelo não sabe, escrito na própria tela</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A planilha, a chave de API e o endpoint do n8n ficam fora do repositório público do grupo.</p>
+        </div>
+        <p class="fonte-nota">Fonte: PLANO_DE_ENSINO.md, seção 4; checkpoints das Aulas 07 e 08.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">20</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Do aplicativo ao deck executivo</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Seção do deck</th><th>Número que vem do aplicativo</th><th>Origem</th></tr></thead>
+          <tbody>
+            <tr><td>Diagnóstico</td><td>prevalência de 19,2% e perda de 25,4% a 58,1% por segmento</td><td>Artefato 1</td></tr>
+            <tr><td>Caminhos A e B</td><td>precisão da fila contra receita em risco alcançada</td><td>Aula 07</td></tr>
+            <tr><td>Plano de ação</td><td>138 contas por ciclo, na ordem do critério do grupo</td><td>painel</td></tr>
+            <tr class="destaque"><td>Business case de ROI</td><td>valor esperado da fila, USD 26,6 milhões</td><td>painel</td></tr>
+            <tr><td>Grupo de controle</td><td>a parte da fila que fica fora da intervenção</td><td>decisão do grupo</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>Número diferente entre o deck e o aplicativo é a primeira pergunta da banca.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">21</p>
+        </div>
+      </section>
+
+      <section class="exercise-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <p class="sobrelinha">Sessão de finalização &middot; em grupo &middot; deck executivo e aplicativo</p>
+          <div class="accent-bar"></div>
+          <h2>Fechar os dois artefatos com os mesmos números</h2>
+        </div>
+        <div class="exercise-steps">
+          <div class="pratica-passo">
+            <span class="num">01</span>
+            <div>
+              <p class="acao">Abra os dois checklists e marque o que já tem prova.</p>
+            <p class="detalhe">Item sem prova na tela ou no deck conta como pendente.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">02</span>
+            <div>
+              <p class="acao">Confira que cada número do aplicativo é o mesmo no deck executivo.</p>
+            <p class="detalhe">Prevalência, tamanho da fila, precisão, receita alcançada e valor esperado.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">03</span>
+            <div>
+              <p class="acao">Rode a bateria uma última vez e registre o placar.</p>
+            <p class="detalhe">Faça também uma pergunta fora da bateria, como a banca fará.</p>
+            </div>
+          </div>
+          <div class="pratica-passo">
+            <span class="num">04</span>
+            <div>
+              <p class="acao">Ensaie a apresentação com a demonstração ao vivo do painel.</p>
+            <p class="detalhe">Deixe a planilha local e a URL publicada abertas antes de começar.</p>
+            </div>
+          </div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao clara">
+          <span class="rotulo">Critério de conclusão</span>
+          <p>Os dois checklists sem item pendente e a URL do painel aberta</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">22</p>
+        </div>
+      </section>
+
+      <section class="section-slide">
+        <p class="secao-numero">05</p>
+        <div class="accent-bar"></div>
+        <h2>Sessão de apresentação</h2>
+        <h3>O grupo defende o projeto no papel do Comitê de Receita da Kovan</h3>
+        <div class="secao-condicoes">
+          <div><span class="num">01</span>Roteiro</div>
+          <div><span class="num">02</span>As perguntas da mesa</div>
+          <div><span class="num">03</span>Feedback das duas trilhas</div>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Roteiro da apresentação ao Comitê</h2>
+        </div>
+        <table class="tabela-criterios enxuta">
+          <thead><tr><th>Ordem</th><th>Momento</th><th>O que mostrar</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Diagnóstico</td><td>o churn da Kovan e a receita em risco</td></tr>
+            <tr><td>2</td><td>Segmentos e personas</td><td>quem perde, com o número de cada segmento</td></tr>
+            <tr><td>3</td><td>Caminhos A e B</td><td>a comparação nas quatro dimensões e o caminho escolhido</td></tr>
+            <tr class="destaque"><td>4</td><td>Aplicativo ao vivo</td><td>a fila, uma conta aberta e a resposta da equipe de agentes</td></tr>
+            <tr><td>5</td><td>Plano e ROI</td><td>as primeiras 10 semanas, o grupo de controle e o retorno esperado</td></tr>
+            <tr><td>6</td><td>Riscos</td><td>o que pode falhar e a contingência de cada risco</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A demonstração entra no meio do argumento, como prova da recomendação.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">23</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Bruno, Priscila e Cláudia cobram precisão, receita alcançada e grupo de controle</h2>
+        </div>
+        <table class="tabela-criterios">
+          <thead><tr><th>Voz</th><th>Posição no case</th><th>Pergunta provável</th><th>Evidência do grupo</th></tr></thead>
+          <tbody>
+            <tr><td>Bruno, Diretor Comercial</td><td>um modelo que fale pouco e erre pouco</td><td>quantas contas sinalizadas são perda real?</td><td>precisão da fila</td></tr>
+            <tr><td>Priscila Nakamura, Head de Analytics e CS</td><td>o modelo precisa proteger a receita</td><td>quanto da receita em risco a fila alcança?</td><td>receita alcançada</td></tr>
+            <tr><td>Cláudia Meireles, VP Financeira</td><td>exige grupo de controle</td><td>como o ROI será provado no fim do ano?</td><td>desenho do grupo de controle</td></tr>
+          </tbody>
+        </table>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A banca também faz uma pergunta ao vivo para a equipe de agentes, fora da bateria do grupo.</p>
+        </div>
+        <p class="fonte-nota">Fonte: Kovan Technologies LATAM, business case PL-02-2026; Donaire, aula 1 de Negócios.</p>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">24</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>O módulo começou num backlog de hipóteses e fecha com um aplicativo defendido em banca</h2>
+        </div>
+        <div class="linha-tempo">
+          <div class="etapa fragment"><p class="quando">Aula 01</p><h3>Hipóteses</h3><p>O backlog do grupo e um rótulo que não existia no painel.</p></div>
+          <div class="etapa fragment"><p class="quando">Entrega 1</p><h3>Diagnóstico</h3><p>A EDA e a segmentação com personas ancoradas em dado.</p></div>
+          <div class="etapa fragment"><p class="quando">Aulas 06 a 08</p><h3>Modelo e agentes</h3><p>As colunas sem vazamento, a fila por valor esperado e a equipe no n8n.</p></div>
+          <div class="etapa avaliada fragment"><p class="quando">Hoje &middot; Entrega 2</p><h3>Banca</h3><p>O plano de retenção e o aplicativo, apresentados aos dois professores.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao fragment">
+          <span class="rotulo">Implicação</span>
+          <p>O método atravessa as duas trilhas: hipótese falseável, número com origem e decisão declarada.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">25</p>
+        </div>
+      </section>
+
+      <section class="content-slide">
+        <div class="top-bar"></div>
+        <img class="inteli-logo-header" src="../assets/img/inteli-exec-logo-positiva.png" alt="Logo Inteli">
+        <div class="slide-title-area">
+          <div class="accent-bar"></div>
+          <h2>Referências e nota metodológica</h2>
+        </div>
+        <div class="concept-cards">
+          <div class="concept-card"><h3>Caso e material</h3><p>1. Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026, versão v2.</p><p>2. Donaire, R. Inteligência de Mercado e Modelagem Preditiva. Aulas da trilha de Negócios, 2026.</p><p>3. Decks e materiais das Aulas 01 a 08 da trilha de Tecnologia.</p></div>
+          <div class="concept-card"><h3>Negócios</h3><p>4. Courtney, H.; Kirkland, J.; Viguerie, P. Strategy Under Uncertainty. HBR, 1997.</p><p>5. Spoor, J. M. Improving customer segmentation via classification of key accounts as outliers. JMA, 2022.</p><p>6. BCG. How AI Agents Will Transform B2B Sales. 2025.</p></div>
+          <div class="concept-card"><h3>Tecnologia</h3><p>7. Kaufman, S. et al. Leakage in Data Mining. ACM TKDD, 2012.</p><p>8. Martínez-Jerez, F. A. et al. Caso HubSpot. Harvard Business School.</p><p>9. Yao, S. et al. ReAct. ICLR, 2023.</p></div>
+        </div>
+        <div class="fecho">
+        <div class="faixa-conclusao">
+          <span class="rotulo">Implicação</span>
+          <p>A Aula 09 não introduz número novo do case: cada número vem de uma aula anterior e está travado em dados/tests.</p>
+        </div>
+        </div>
+        <div class="slide-footer">
+          <p class="footer-bar">Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+          <p class="footer-page">26</p>
+        </div>
+      </section>
+
+      <section class="end-slide">
+        <h1>Obrigado</h1>
+        <h3>Módulo 2 &middot; Inteligência de Mercado e Modelagem Preditiva</h3>
+        <div class="assinaturas">
+          <div><p class="papel">Negócios</p><p>Prof. Rafael Donaire</p></div>
+          <div><p class="papel">Tecnologia</p><p>Prof. José Romualdo da Costa Filho</p></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../assets/vendor/reveal/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, center: false, margin: 0,
+      hash: true, slideNumber: false, transition: 'fade'
+    });
+  </script>
+  <script src="../assets/js/inteli-quiz.js"></script>
+  <script src="../assets/js/inteli-zoom.js"></script>
+  <script src="../assets/js/inteli-print.js"></script>
+</body>
+</html>

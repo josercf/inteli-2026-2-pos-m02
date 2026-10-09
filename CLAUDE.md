@@ -25,6 +25,7 @@ python3 -m http.server 8931                  # preview local (Reveal exige http,
 .venv/bin/python dados/gerar_painel_kovan.py # regera o painel
 .venv/bin/python tools/montar_notebook_aula01.py
 .venv/bin/python tools/montar_deck_aula01.py    # regera o deck (nao editar o HTML a mao)
+.venv/bin/python tools/montar_deck_aula09.py    # idem para a Aula 09, o fechamento conjunto
 .venv/bin/python tools/gerar_figuras_aula01.py  # regera os GIFs de dado
 .venv/bin/python tools/gerar_diagramas_svg.py   # regera os diagramas de ciclo
 .venv/bin/python tools/medir_ocupacao.py        # faixa morta e ocupacao por slide

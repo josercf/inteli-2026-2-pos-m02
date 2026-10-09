@@ -56,6 +56,8 @@ ARQUIVOS = [
     ("aulas/aula06.html", "aulas/aula06.html"),
     ("aulas/aula07.html", "aulas/aula07.html"),
     ("aulas/aula08.html", "aulas/aula08.html"),
+    ("aulas/aula09.html", "aulas/aula09.html"),
+    ("materiais/aula09-material-de-apoio.html", "materiais/aula09-material-de-apoio.html"),
     ("painel/index.html", "painel/index.html"),
     ("painel/modelo.js", "painel/modelo.js"),
     ("painel/workflow_n8n.json", "painel/workflow_n8n.json"),

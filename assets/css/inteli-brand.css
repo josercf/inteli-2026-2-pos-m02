@@ -165,3 +165,16 @@ body.portal .eyebrow {
    serifa da marca, como qualquer titulo. */
 .diagrama-ciclo .fase-titulo { font-family: var(--fonte-titulo); }
 .diagrama-ciclo .fase-num { font-family: var(--fonte-mono); }
+
+/* Aula 09: numeros grandes e rotulos de eixo. Declarados aqui pela regra do
+   check_brand (font-family so existe neste arquivo). */
+.tabela-duelo td.num,
+.cadeia .elo .metrica {
+  font-family: var(--fonte-titulo);
+}
+
+.matriz .eixo,
+.processo-fases.degraus .processo-fase .nivel,
+.end-slide .assinaturas .papel {
+  font-family: var(--fonte-mono);
+}

@@ -1436,3 +1436,173 @@
   max-height: 340px;
   margin: 0;
 }
+
+/* ---------------------------------------------------------------------------
+   Aula 09, o fechamento conjunto das duas trilhas
+   --------------------------------------------------------------------------- */
+
+/* Linha marcada com `destaque` pelo gerador. A classe ja era emitida pela
+   Aula 08 e nao tinha regra: a linha que o slide queria apontar saia igual as
+   outras. Fundo e filete lateral, pelo mesmo motivo de `td.vence`. */
+.tabela-criterios tr.destaque td {
+  background: color-mix(in srgb, var(--seg-secundaria) 16%, var(--seg-base));
+}
+.tabela-criterios tr.destaque td:first-child { border-left: 4px solid var(--seg-secundaria); }
+.tabela-criterios tr.entrega td {
+  background: color-mix(in srgb, var(--seg-destaque) 12%, var(--seg-base));
+  font-weight: 600;
+}
+.tabela-criterios tr.entrega td:first-child { border-left: 4px solid var(--seg-destaque); }
+
+/* Mapa do modulo: a coluna de cada trilha ganha o filete da propria cor no
+   cabecalho, para o olho separar as duas sem legenda. */
+.tabela-criterios.mapa { table-layout: fixed; }
+.tabela-criterios.mapa th:first-child,
+.tabela-criterios.mapa td:first-child { width: 150px; }
+.tabela-criterios.mapa td:nth-child(2),
+.tabela-criterios.mapa th:nth-child(2) { width: auto; }
+.tabela-criterios.mapa thead th.negocios { border-bottom: 3px solid var(--seg-primaria); }
+.tabela-criterios.mapa thead th.tecnologia { border-bottom: 3px solid var(--seg-secundaria); }
+.tabela-criterios.mapa td .material-symbols-outlined { vertical-align: -4px; margin-right: 6px; }
+
+/* Matriz 2x2. Os eixos ficam fora das celulas: a celula e o tratamento, o
+   eixo e o criterio. Cada quadrante tem cor de bloco propria e o texto segue
+   a regra de contraste do segmento (branco sobre roxo e verde escuro). */
+.matriz {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 170px 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 10px;
+}
+.matriz .eixo {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--seg-texto);
+  align-self: end;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--seg-primaria);
+}
+.matriz .eixo.linha {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  border-bottom: none;
+  border-right: 2px solid var(--seg-primaria);
+  padding: 0 12px 0 0;
+}
+.matriz .quadrante {
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--seg-superficie);
+  color: var(--seg-texto);
+}
+.matriz .quadrante h3 { margin: 0 0 6px; font-size: 26px; color: inherit; }
+.matriz .quadrante p { margin: 0; font-size: 18px; line-height: 1.45; }
+.matriz .quadrante.forte { background: var(--seg-primaria); color: var(--inteli-branco); }
+.matriz .quadrante.medio { background: var(--seg-secundaria); color: var(--seg-texto-sobre-secundaria); }
+.matriz .quadrante.saida { border-top: 4px solid var(--seg-destaque); }
+
+/* Cadeia de etapas com seta. A seta e um caractere de Material Symbols entre
+   os blocos, e nao um pseudo-elemento recortado: o tema zera border-radius e
+   box-shadow em todo descendente do slide, e o recorte some na impressao. */
+.cadeia {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: stretch;
+  gap: 6px;
+  margin: 8px 0 0;
+}
+.cadeia .elo {
+  border-top: 4px solid var(--seg-primaria);
+  background: var(--seg-superficie);
+  padding: 14px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cadeia .elo.destaque { border-top-color: var(--seg-destaque); }
+.cadeia .elo .material-symbols-outlined { font-size: 30px; color: var(--seg-secundaria); }
+.cadeia .elo h4 { margin: 0; font-size: 19px; line-height: 1.2; }
+.cadeia .elo p { margin: 0; font-size: 15px; line-height: 1.4; }
+.cadeia .elo .metrica { margin-top: auto; font-size: 26px; color: var(--seg-primaria); line-height: 1.1; }
+.cadeia .seta {
+  align-self: center;
+  color: var(--seg-secundaria);
+  font-size: 26px;
+}
+
+/* Comparacao em numero grande. Continua sendo tabela (linhas sao as medidas,
+   colunas os criterios), so com o numero no corpo de titulo para ser lido do
+   fundo da sala. */
+.tabela-duelo { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.tabela-duelo th {
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  text-align: left;
+  padding: 0 16px 10px;
+  border-bottom: 2px solid var(--seg-secundaria);
+}
+.tabela-duelo th:first-child { width: 330px; }
+.tabela-duelo th.vence { border-bottom: 4px solid var(--seg-destaque); }
+.tabela-duelo td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--seg-cinza-linha);
+  font-size: 19px;
+  vertical-align: middle;
+}
+.tabela-duelo td.num { font-size: 46px; line-height: 1.1; color: var(--seg-primaria); }
+.tabela-duelo td.num.vence {
+  background: color-mix(in srgb, var(--seg-secundaria) 16%, var(--seg-base));
+  border-left: 4px solid var(--seg-secundaria);
+}
+
+/* Variantes de contagem para componentes que nasceram com quatro ou seis
+   colunas. */
+.processo-fases.quatro { grid-template-columns: repeat(4, 1fr); }
+.stat-tiles.tres { grid-template-columns: repeat(3, 1fr); }
+
+/* Niveis em degrau: cada fase sobe um pouco, para a progressao se ler sem
+   seta. */
+.processo-fases.degraus { align-items: end; }
+.processo-fases.degraus .processo-fase { background: var(--seg-superficie); padding: 14px 14px 12px; }
+.processo-fases.degraus .processo-fase:nth-child(1) { min-height: 112px; }
+.processo-fases.degraus .processo-fase:nth-child(2) { min-height: 132px; }
+.processo-fases.degraus .processo-fase:nth-child(3) { min-height: 152px; }
+.processo-fases.degraus .processo-fase:nth-child(4) { min-height: 172px; }
+.processo-fases.degraus .processo-fase .nivel { font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--seg-secundaria); margin: 0 0 4px; }
+
+/* Encerramento do modulo: os dois nomes, lado a lado, sob o titulo. */
+.end-slide .assinaturas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 48px;
+  text-align: left;
+}
+.end-slide .assinaturas div { border-top: 2px solid var(--inteli-branco); padding-top: 12px; }
+.end-slide .assinaturas p { margin: 0; font-size: 19px; color: var(--inteli-branco); }
+.end-slide .assinaturas .papel { font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+
+/* Tabela de seis a nove linhas que divide o slide com contexto e faixa de
+   conclusao. A regra `.content-slide > .tabela-criterios td` fixa 14px de
+   respiro por celula e vence `compacta`; nove linhas assim estouravam por
+   79px. `enxuta` reduz o respiro e mantem 17px de corpo, legivel projetado. */
+.content-slide > .tabela-criterios.enxuta { font-size: 17px; }
+.content-slide > .tabela-criterios.enxuta td,
+.content-slide > .tabela-criterios.enxuta th { padding: 7px 16px; }
+.tabela-criterios.enxuta td:nth-child(2),
+.tabela-criterios.enxuta th:nth-child(2) { width: auto; }
+.tabela-criterios.rotulo-largo td:first-child,
+.tabela-criterios.rotulo-largo th:first-child { width: 330px; }
+.processo-fases.degraus { margin: 6px 0 14px; }
+.processo-fases.degraus .processo-fase h4 { font-size: 22px; margin-bottom: 4px; }
+.processo-fases.degraus .processo-fase p { font-size: 16px; }
+.matriz .quadrante { padding: 12px 20px; }
+.matriz .quadrante h3 { font-size: 24px; margin-bottom: 4px; }
+.matriz .quadrante p { font-size: 17px; }

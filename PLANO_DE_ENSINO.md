@@ -48,6 +48,11 @@ conduz também a manhã.
 Notas de calendário:
 
 - 07/09 é feriado e cai numa segunda-feira: não conflita com nenhum encontro.
+- O calendário real divergiu da tabela acima a partir da S7: a S7 ficou sem
+  encontro da trilha de Tecnologia, a UC2 Aula 4 virou a Aula 08, e a Entrega 2
+  passou para a Aula 09, um encontro conjunto das duas trilhas. As datas das
+  Aulas 08 e 09 estão pendentes em `PLANEJAMENTO_AULA_A_AULA.md`, que é onde o
+  calendário real fica registrado.
 - A ementa oficial prevê 10 semanas com a semana 6 livre e aulas remotas. O
   formato real da turma Lenovo é presencial em 9 sábados corridos. Onde os dois
   divergem, **este documento segue o calendário real**, e a divergência fica

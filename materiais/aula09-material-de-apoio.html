@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de apoio &middot; Aula 09 &middot; Fechamento do módulo</title>
+  <meta name="description" content="Material de apoio da Aula 09 do Módulo 2 do MBA Inteli x Lenovo, aula conjunta das trilhas de Negócios e Tecnologia: o que cada trilha deixou pronto, os dois checklists do Artefato 2, a passagem dos números do aplicativo para o deck executivo e o roteiro da apresentação ao Comitê de Receita.">
+
+  <!-- Este material NAO e o roteiro do deck em prosa. Onde o slide aponta, a
+       pagina explica por que o item existe e como ele e cobrado. Nenhum numero
+       novo do case entra aqui: todos vem de aulas anteriores e estao travados
+       em dados/tests. O recap de Negocios sintetiza o material do Prof. Rafael
+       Donaire sem republica-lo (docs/adrs/ADR-011). -->
+
+  <link rel="stylesheet" href="../assets/css/inteli-brand.css">
+  <link rel="stylesheet" href="../assets/css/inteli-material.css">
+</head>
+<body>
+  <div class="doc">
+
+    <header class="doc-header">
+      <p class="doc-eyebrow">MBA em IA e Dados para Negócios &middot; Inteli x Lenovo &middot; Módulo 2 &middot; Aula 09 &middot; Negócios e Tecnologia</p>
+      <h1>Fechamento do módulo</h1>
+      <p class="doc-subtitulo">A última aula do módulo é conduzida pelos professores das duas
+      trilhas, em quatro blocos: recap, tira-dúvidas, finalização dos artefatos e apresentação.
+      Esta página reúne o que o grupo precisa ter aberto durante a finalização: o que cada trilha
+      deixou pronto, os dois checklists do Artefato 2, a passagem de cada número do aplicativo para
+      o deck executivo e as perguntas que o Comitê de Receita vai fazer.</p>
+    </header>
+
+    <nav class="doc-toc" aria-label="Sumário">
+      <h2>Nesta página</h2>
+      <ol>
+        <li><a href="#encontro">1. Como o encontro funciona</a></li>
+        <li><a href="#negocios">2. O que a trilha de Negócios deixou pronto</a></li>
+        <li><a href="#tecnologia">3. O que a trilha de Tecnologia deixou pronto</a></li>
+        <li><a href="#criterio">4. O critério da fila como decisão do Comitê</a></li>
+        <li><a href="#checklists">5. Os dois checklists do Artefato 2</a></li>
+        <li><a href="#numeros">6. Do aplicativo ao deck executivo</a></li>
+        <li><a href="#controle">7. O grupo de controle</a></li>
+        <li><a href="#banca">8. A apresentação e as perguntas da mesa</a></li>
+        <li><a href="#leitura">9. Leitura complementar e referências</a></li>
+      </ol>
+    </nav>
+
+    <main class="doc-conteudo">
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="encontro">
+        <h2>1. Como o encontro funciona</h2>
+
+        <p>Os quatro blocos do encontro se alimentam em sequência. O recap reconstrói, aula a aula,
+        o que cada trilha entregou ao projeto, para que o grupo enxergue de onde vem cada peça do
+        Artefato 2. O tira-dúvidas recebe as perguntas que o recap levantou e separa cada uma pela
+        trilha que a responde: dúvida de persona, priorização ou ROI vai para o Prof. Rafael
+        Donaire; dúvida de rótulo, métrica, painel ou n8n vai para o Prof. José Romualdo. O que não
+        fecha no tira-dúvidas vira item na lista do grupo para a finalização, e a finalização
+        termina quando os dois checklists da seção 5 não têm item pendente. A apresentação é a
+        prova pública disso, feita no papel do Comitê de Receita da Kovan <a href="#r1">[1]</a>.</p>
+
+        <p>Os horários de cada bloco e o tempo de apresentação por grupo são definidos em sala
+        pelos dois professores. Esta página não os fixa.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="negocios">
+        <h2>2. O que a trilha de Negócios deixou pronto</h2>
+
+        <p>A trilha de Negócios <a href="#r2">[2]</a> percorreu o caminho que vai da pergunta à
+        intervenção. Cada etapa produziu uma peça que o deck executivo usa.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Aula</th><th>Conceito</th><th>Peça que o deck executivo usa</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Hipótese clara, mensurável e falseável; HIPPO; níveis de incerteza e posturas estratégicas</td><td>a formulação do alvo e da hipótese de driver</td></tr>
+              <tr><td>2</td><td>Segmentação B2B por firmografia e comportamento; critérios de Kotler; contas-chave como outliers</td><td>os segmentos de cancelamento</td></tr>
+              <tr><td>3</td><td>Persona como arquétipo de conta, ancorada em dado</td><td>as personas e a dor inferida de cada uma</td></tr>
+              <tr><td>4</td><td>Valor contra risco; decisões reversíveis e irreversíveis; matriz de importância e dificuldade</td><td>a priorização entre intervenção imediata e monitoramento</td></tr>
+              <tr><td>6 e 7</td><td>Caso HubSpot: jornada, CHI, prioridade por risco, valor, resposta e esforço</td><td>a ação, o mecanismo e o acompanhamento</td></tr>
+              <tr><td>Agentes</td><td>Os quatro níveis de venda com IA, o ecossistema de agentes e a regra 10/20/70 da BCG</td><td>o papel da IA generativa no plano</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Duas ideias atravessam todas as aulas e costumam ser as que mais pesam na leitura da
+        banca. A primeira vem da aula 1: uma hipótese só é útil quando pode ser refutada pelo dado
+        <a href="#r3">[3]</a>. Uma recomendação que se apoia em "o cliente está insatisfeito" sem
+        variável, janela e critério de refutação é opinião, por mais experiente que seja quem a
+        defende. A segunda vem do caso HubSpot: o critério de resposta, que pergunta se a ação muda o
+        resultado daquele cliente, é o único dos quatro critérios de prioridade que não sai de
+        nenhum modelo de risco. Um modelo de churn diz quem tende a sair; ele não diz quem fica
+        porque recebeu a intervenção. Essa diferença é a razão de existir do grupo de controle
+        tratado na seção 7.</p>
+
+        <div class="doc-nota">
+          <p>As contas-chave merecem tratamento separado antes da segmentação. Spoor
+          <a href="#r4">[4]</a> mostra que contas estatisticamente atípicas, misturadas ao resto da
+          carteira, distorcem qualquer agrupamento: o segmento acaba descrevendo a média entre a
+          conta gigante e as pequenas, e não descreve nenhuma das duas. Na Kovan, a Conta D, a maior
+          da carteira, é o exemplo concreto, e ela reaparece na seção 4.</p>
+        </div>
+
+        <p>A aula de agentes de IA em vendas B2B <a href="#r5">[5]</a> fecha o percurso com uma
+        restrição de gestão. A BCG descreve quatro níveis de uso de IA na venda (tradicional,
+        aumentada, assistida e autônoma) e recomenda colocar 10% do esforço em algoritmos, 20% em
+        tecnologia e dados e 70% em pessoas e processos. Para a Kovan isso significa que o plano de
+        10 semanas precisa dizer como os Account Managers vão adotar a fila e as respostas da
+        equipe de agentes, além de dizer o que os agentes fazem.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="tecnologia">
+        <h2>3. O que a trilha de Tecnologia deixou pronto</h2>
+
+        <p>A trilha de Tecnologia construiu a cadeia que vai da planilha original ao painel
+        publicado. Cada aula tem deck e, quando houve, material de apoio próprio, e os números
+        abaixo estão travados por teste no repositório.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Aula</th><th>O que ficou pronto</th><th>Número que sustenta</th><th>Onde rever</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>01</td><td>o caderno de hipóteses testáveis</td><td>variável, operação, janela e critério de refutação</td><td><a href="aula01-material-de-apoio.html">material</a></td></tr>
+              <tr><td>02</td><td>a decisão declarada para cada advertência de qualidade</td><td>R$ 217,4 milhões deslocados pelo sinal das devoluções</td><td><a href="aula02-material-de-apoio.html">material</a></td></tr>
+              <tr><td>03</td><td>o critério do <code>churn_label</code></td><td>última compra até 08/02/2025; 19,2% de 8.282 contas</td><td><a href="aula03-material-de-apoio.html">material</a></td></tr>
+              <tr><td>04</td><td>a população elegível e a perda por segmento</td><td>4.534 contas fora do alcance do rótulo; perda de 25,4% a 58,1%</td><td><a href="aula04-material-de-apoio.html">material</a></td></tr>
+              <tr><td>06</td><td>as colunas de entrada sem vazamento</td><td>AUC de 0,9999 com a coluna vazada, 0,834 sem ela</td><td><a href="aula06-material-de-apoio.html">material</a></td></tr>
+              <tr><td>07</td><td>a fila ordenada por valor esperado</td><td>68,4% da receita em risco alcançada</td><td><a href="../aulas/aula07.html">deck</a></td></tr>
+              <tr><td>08</td><td>o painel com três agentes, publicado pelo grupo</td><td>AUC de 0,814 em 4.593 contas; fila de 138</td><td><a href="aula08-guia.html">guia</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>O número da Aula 06 é o que mais protege o grupo na banca. Uma AUC de 0,9999 parece um
+        modelo excelente e é o sintoma clássico de vazamento <a href="#r6">[6]</a>: uma coluna
+        calculada depois do corte repete o rótulo, e o modelo aprende a ler a resposta em vez de
+        prevê-la. Se alguém da mesa perguntar por que a AUC do grupo é 0,814 e não mais alta, a
+        resposta é o corte temporal: nenhuma coluna do modelo enxerga compra posterior a
+        07/03/2024.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="criterio">
+        <h2>4. O critério da fila como decisão do Comitê</h2>
+
+        <p>O achado da Aula 07 é o ponto em que as duas trilhas mais se encontram. Com o mesmo
+        modelo e as mesmas 138 vagas de intervenção, a ordem da fila muda o que ela entrega.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead>
+              <tr><th>Fila de 138 contas</th><th>Por probabilidade</th><th>Por valor esperado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Precisão: perdas reais entre as sinalizadas</td><td>85,5%</td><td>29,7%</td></tr>
+              <tr><td>Receita em risco que a fila alcança</td><td>0,01%</td><td>68,4%</td></tr>
+              <tr><td>Posição da Conta D</td><td>3.024º</td><td>1º</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A fila por probabilidade é a fila do Diretor Comercial, Bruno: quase toda conta sinalizada
+        é perda real, e o time não perde tempo com alarme falso. A fila por valor esperado é a da
+        Head de Analytics e CS, Priscila Nakamura: ela erra mais conta a conta e alcança a receita
+        que importa. As duas filas são defensáveis. O que o grupo precisa fazer é declarar qual
+        critério escolheu, mostrar o custo dessa escolha na outra coluna e explicar por que o custo
+        vale a pena para a Kovan. O valor esperado da trilha de Tecnologia, que multiplica a
+        probabilidade de perda pela receita da conta, é a forma numérica da priorização por valor
+        contra risco da aula 4 de Negócios.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="checklists">
+        <h2>5. Os dois checklists do Artefato 2</h2>
+
+        <h3>Negócios: Plano de Inteligência de Retenção</h3>
+
+        <p>Deck executivo, elaborado como se fosse apresentado a um Conselho de Administração
+        <a href="#r2">[2]</a>.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead><tr><th>Seção</th><th>O que precisa conter</th><th>Por que a banca cobra</th></tr></thead>
+            <tbody>
+              <tr><td>Diagnóstico</td><td>o churn da Kovan em linguagem de negócio, com a receita em risco</td><td>sem valor financeiro, a recomendação não compete por orçamento</td></tr>
+              <tr><td>Segmentos</td><td>os segmentos de cancelamento identificados no módulo</td><td>é a continuidade do Artefato 1</td></tr>
+              <tr><td>Caminhos A e B</td><td>comparação em impacto financeiro, prazo, risco e posicionamento competitivo</td><td>o Comitê só aceita uma escolha que mostre o que foi recusado</td></tr>
+              <tr><td>Recomendação</td><td>o caminho escolhido, a oferta por persona e o papel da IA generativa</td><td>liga o diagnóstico à ação</td></tr>
+              <tr><td>Plano de ação</td><td>milestones das primeiras 10 semanas</td><td>transforma a recomendação em compromisso verificável</td></tr>
+              <tr><td>Grupo de controle</td><td>contas sinalizadas fora da intervenção</td><td>é a única forma de provar o ROI no fim do ano (seção 7)</td></tr>
+              <tr><td>Riscos</td><td>riscos e contingências</td><td>mostra que o grupo sabe como o plano falha</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Tecnologia: Aplicativo Web Preditivo-Generativo</h3>
+
+        <p>O aplicativo executa o modelo de churn e consome uma API generativa para produzir o texto
+        de retenção por conta (<code>PLANO_DE_ENSINO.md</code>, seção 4). A forma que ele tomou no
+        módulo é o painel da Aula 08 com a equipe de agentes no n8n.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead><tr><th>Item</th><th>Prova na apresentação</th><th>Erro que o item evita</th></tr></thead>
+            <tbody>
+              <tr><td>Modelo treinado</td><td>AUC fora da amostra na tela, sem coluna posterior ao corte</td><td>métrica inflada por vazamento</td></tr>
+              <tr><td>Fila priorizada</td><td>critério de ordenação declarado e as 138 contas</td><td>fila sem critério, que ninguém sabe defender</td></tr>
+              <tr><td>Camada generativa</td><td>texto de retenção por conta, escrito pela equipe de agentes</td><td>número sem origem na resposta do agente</td></tr>
+              <tr><td>Planos de ação</td><td>três planos com limiar numérico em cada item</td><td>plano escrito como intenção, que o agente parafraseia</td></tr>
+              <tr><td>Bateria de teste</td><td>placar e uma reprovação corrigida em <code>teste_agente.md</code></td><td>descobrir a falha da equipe na frente da banca</td></tr>
+              <tr><td>Interface publicada</td><td>URL do GitHub Pages aberta em outra máquina</td><td>aplicativo que só roda no computador de um integrante</td></tr>
+              <tr><td>Limitações</td><td>o que o modelo não sabe, escrito na própria tela</td><td>Account Manager que confia na fila além do que ela sustenta</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="doc-nota">
+          <p>A planilha, a chave de API e o endpoint do n8n nunca entram no repositório do
+          grupo. O repositório é público, a planilha é dado real de carteira e a chave é pessoal. Antes
+          de apresentar, confira o repositório publicado no navegador, em modo anônimo.</p>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="numeros">
+        <h2>6. Do aplicativo ao deck executivo</h2>
+
+        <p>O deck executivo e o aplicativo são avaliados na mesma apresentação. Quando o mesmo
+        número aparece com valores diferentes nos dois, a mesa conclui que um deles não foi
+        conferido, e a discussão sai da recomendação para a reconciliação. A tabela abaixo diz de
+        onde vem cada número que o deck precisa.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead><tr><th>Seção do deck</th><th>Número</th><th>Origem</th></tr></thead>
+            <tbody>
+              <tr><td>Diagnóstico</td><td>prevalência de 19,2% e perda de 25,4% a 58,1% por segmento</td><td>Artefato 1, Aulas 03 e 04</td></tr>
+              <tr><td>Caminhos A e B</td><td>precisão da fila contra receita em risco alcançada</td><td>Aula 07, ou a fila do painel com o critério do grupo</td></tr>
+              <tr><td>Plano de ação</td><td>138 contas por ciclo, na ordem do critério do grupo</td><td>painel</td></tr>
+              <tr><td>Business case de ROI</td><td>valor esperado da fila, USD 26,6 milhões na fila de referência</td><td>painel</td></tr>
+              <tr><td>Grupo de controle</td><td>a parte da fila que fica fora da intervenção</td><td>decisão do grupo, seção 7</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Se o grupo alterou o critério ou as colunas do painel, os números do grupo deixam de
+        coincidir com os de referência. Isso é esperado. O que a banca cobra é que o deck use os
+        números do painel do grupo e diga qual alteração os produziu.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="controle">
+        <h2>7. O grupo de controle</h2>
+
+        <p>A exigência de Cláudia Meireles, VP Financeira, tem uma razão estatística. Se todas as
+        contas da fila recebem a intervenção, a receita que elas retiverem no fim do ano mistura
+        duas coisas: o efeito da intervenção e o que essas contas fariam de qualquer jeito. Parte
+        das contas sinalizadas se recupera sozinha, e sem um grupo comparável que não recebeu a
+        ação não há como separar as duas parcelas.</p>
+
+        <p>O desenho mínimo que o deck precisa declarar tem três decisões:</p>
+
+        <ol>
+          <li><strong>Quem fica de fora.</strong> As contas do controle são sorteadas dentro da
+          própria fila, para terem o mesmo perfil de risco das tratadas. Escolher a dedo, por
+          exemplo deixando de fora as contas menores, cria uma diferença entre os grupos que não vem
+          da intervenção.</li>
+          <li><strong>Quantas ficam de fora.</strong> Cada conta no controle é uma conta de alto risco
+          sem ação, e isso tem custo. O grupo declara a proporção e o argumento: controle pequeno
+          demais não distingue efeito de ruído, e a Aula 04 mostrou que uma diferença de 10 pontos
+          entre grupos pequenos cabe inteira no acaso.</li>
+          <li><strong>Como medir.</strong> A métrica de sucesso é definida antes de começar (receita
+          retida, recompra, contas que saem do critério de risco) junto com a data da leitura, que
+          precisa caber no horizonte do plano de 10 semanas ou declarar que fica para depois dele.</li>
+        </ol>
+
+        <p>Na tela do aplicativo, o grupo de controle pode aparecer como uma marca na fila. No deck,
+        ele aparece no plano de ação e no business case de ROI, com a frase que o Comitê vai querer
+        ouvir: o retorno será medido como a diferença entre tratadas e controle.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="banca">
+        <h2>8. A apresentação e as perguntas da mesa</h2>
+
+        <p>O roteiro sugerido segue a ordem do argumento: diagnóstico, segmentos e personas, a
+        comparação dos caminhos A e B, o aplicativo ao vivo, o plano com ROI e os riscos. A
+        demonstração fica logo depois da recomendação, para servir de prova enquanto a mesa ainda
+        está formando opinião sobre ela.</p>
+
+        <p>As três vozes do case <a href="#r1">[1]</a> antecipam as perguntas da mesa.</p>
+
+        <div class="doc-tabela-rolagem">
+          <table class="doc-tabela">
+            <thead><tr><th>Voz</th><th>Pergunta provável</th><th>Como responder</th></tr></thead>
+            <tbody>
+              <tr><td>Bruno, Diretor Comercial</td><td>quantas contas sinalizadas são perda real?</td><td>a precisão da fila do grupo, e o que o time faz com o alarme falso</td></tr>
+              <tr><td>Priscila Nakamura, Head de Analytics e CS</td><td>quanto da receita em risco a fila alcança?</td><td>a receita alcançada, e o que fica de fora dela</td></tr>
+              <tr><td>Cláudia Meireles, VP Financeira</td><td>como o ROI será provado no fim do ano?</td><td>o desenho do grupo de controle da seção 7</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A banca também faz uma pergunta ao vivo para a equipe de agentes, fora da bateria do
+        grupo. A resposta pode sair errada, e isso não reprova o grupo por si só. O que a mesa
+        observa é se o grupo lê as três mensagens, reconhece o erro e sabe dizer qual regra do
+        prompt deveria tê-lo evitado, que é exatamente o exercício da bateria da Aula 08.</p>
+      </section>
+
+      <!-- ================================================================= -->
+      <section class="doc-secao" id="leitura">
+        <h2>9. Leitura complementar e referências</h2>
+
+        <h3>Leitura complementar do professor</h3>
+        <p>Os materiais de apoio das Aulas 01 a 06 e o guia da Aula 08, todos no
+        <a href="../index.html">portal do módulo</a>, são a leitura de revisão antes da apresentação.</p>
+
+        <h3>Referências citadas neste material</h3>
+        <ol class="doc-referencias">
+          <li id="r1">Kovan Technologies LATAM: A Definição do Alvo. Business case PL-02-2026,
+          versão v2.</li>
+          <li id="r2">Donaire, R. Inteligência de Mercado e Modelagem Preditiva. Aulas da trilha de
+          Negócios, Módulo 2, MBA em IA e Dados para Negócios, Inteli x Lenovo, 2026. Material
+          distribuído pelo professor; não republicado neste acervo.</li>
+          <li id="r3">Courtney, H.; Kirkland, J.; Viguerie, P. Strategy Under Uncertainty.
+          <em>Harvard Business Review</em>, 1997.</li>
+          <li id="r4">Spoor, J. M. Improving customer segmentation via classification of key
+          accounts as outliers. <em>Journal of Marketing Analytics</em>, v. 11, n. 4, p. 747-760,
+          2022.</li>
+          <li id="r5">Boston Consulting Group. How AI Agents Will Transform B2B Sales. 2025.</li>
+          <li id="r6">Kaufman, S.; Rosset, S.; Perlich, C.; Stitelman, O. Leakage in Data Mining:
+          Formulation, Detection, and Avoidance. <em>ACM Transactions on Knowledge Discovery from
+          Data</em>, v. 6, n. 4, 2012.</li>
+        </ol>
+      </section>
+
+    </main>
+
+    <footer class="doc-rodape">
+      <p>Módulo 2 &middot; Aula 09 &middot; Prof. Rafael Donaire e Prof. José Romualdo da Costa
+      Filho &middot; MBA em IA e Dados para Negócios, Inteli x Lenovo.</p>
+      <p>Nenhum número desta página é novo: cada um vem de uma aula anterior e está travado por
+      teste em <code>dados/tests</code>.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

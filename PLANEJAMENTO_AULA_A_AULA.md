@@ -558,11 +558,35 @@ sai sem data na capa até a confirmação.
 
 ---
 
-## S9, 03/10/2026: Entrega 2 e banca
+## Aula 09: fechamento conjunto e Entrega 2
+
+**Formato:** aula conjunta das duas trilhas, conduzida pelo Prof. Rafael
+Donaire e pelo professor da trilha de Tecnologia. Programação recebida em
+09/10/2026, em quatro blocos:
+
+1. recap da aula, com o material de Negócios e o de Tecnologia;
+2. sessão de tira-dúvidas;
+3. sessão para a finalização dos artefatos;
+4. sessão de apresentação dos artefatos.
 
 Cada grupo defende o projeto no papel do Comitê de Receita da Kovan LATAM.
 
-**Entregável avaliado:** Artefato 2 de Tecnologia, o Aplicativo Web
-Preditivo-Generativo. Avaliação por rubrica.
+Construída em `aulas/aula09.html`, gerado por `tools/montar_deck_aula09.py`,
+com o material de apoio em `materiais/aula09-material-de-apoio.html`. O recap
+de Negócios sintetiza os decks do Prof. Rafael Donaire recebidos em 08/10/2026
+(Aulas 1, 2, 3, 4, 6 e 7 e a aula de agentes de IA em vendas B2B), guardados em
+`recebidos/negocios/` e não republicados (ADR-011). Nenhum número novo do case:
+todo número vem das Aulas 03 a 08 e está travado em
+`tools/tests/test_deck_aula09.py`.
 
-**Pendência:** rubrica não recebida.
+**Entregáveis avaliados:** Artefato 2 de Tecnologia, o Aplicativo Web
+Preditivo-Generativo, e Artefato 2 de Negócios, o Plano de Inteligência de
+Retenção, apresentados na mesma sessão.
+
+**Pendências:**
+
+- data do encontro e horário de cada bloco não constam deste documento; o
+  deck sai sem data e sem horário;
+- tempo de apresentação por grupo não definido;
+- rubrica da entrega final não recebida. O deck traz os dois checklists, sem
+  peso.
